@@ -11,9 +11,12 @@
   "dependencies": {
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
+    "@mui/icons-material": "^6.1.8",
+    "@mui/lab": "^6.0.0-beta.16",
     "@mui/material": "^6.1.8",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
+    "react-contenteditable": "^3.3.7",
     "react-dom": "19.0.0-rc-66855b96-20241106"
   },
   "devDependencies": {
