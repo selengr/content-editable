@@ -1,6 +1,6 @@
 "use client"
 
-import React, { createRef, useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import Image from 'next/image';
 
 import ContentEditable from 'react-contenteditable'
@@ -8,10 +8,9 @@ import ContentEditable from 'react-contenteditable'
 //mui
 import Grid from '@mui/material/Grid2';
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Container, IconButton, Input, MenuItem, Select, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, MenuItem, Select, Stack, TextField, Typography } from "@mui/material";
 
 
-import Iconify from "@/components/iconify/Iconify";
 import CalculatorClear from "@/sections/calculator/calculator-clear";
 import CalculatorNumber from "@/sections/calculator/calculator-number";
 import CalculatorOperator from "@/sections/calculator/calculator-operator";
@@ -24,10 +23,7 @@ import JSONData from '../../public/assets/fake-data/add filed response_v1.json'
 
 
 type OPERATOR_TYPE = "OPERATOR" | "NUMBER" | "AVG" | string
-type CALCULATE_TYPE = {
-  type: OPERATOR_TYPE
-  content: string
-}
+
 
 
 const Page = () => {
@@ -41,24 +37,24 @@ const Page = () => {
 
 
   const handleUndo = useCallback(() => {
-    const selection: any = window.getSelection();
-    const editableDiv = contentEditable.current;
+    // const selection: any = window.getSelection();
+    // const editableDiv = contentEditable.current;
 
-    if (!editableDiv) return;
+    // if (!editableDiv) return;
 
-    const range = selection?.getRangeAt(0);
-    const startContainer = range?.startContainer;
-    if (startContainer?.childNodes?.length > 0) {
-      if (range.endOffset > 0) {
-        startContainer.childNodes[range.endOffset - 1].remove();
-      } else editableDiv.focus()
+    // const range = selection?.getRangeAt(0);
+    // const startContainer = range?.startContainer;
+    // if (startContainer?.childNodes?.length > 0) {
+    //   if (range.endOffset > 0) {
+    //     startContainer.childNodes[range.endOffset - 1].remove();
+    //   } else editableDiv.focus()
 
-    } else {
-      editableDiv.focus();
-    }
+    // } else {
+    //   editableDiv.focus();
+    // }
 
-    setHtml(editableDiv.innerHTML);
-    editableDiv.focus();
+    // setHtml(editableDiv.innerHTML);
+    // editableDiv.focus();
   }, []);
 
 

@@ -1,7 +1,6 @@
 import { Button } from "@mui/material";
 
 interface ICalculatorNumber {
-    size?: number
     number: string
     handleOperator: (content: string, type: string) => void
     idx?: number | any
@@ -9,7 +8,7 @@ interface ICalculatorNumber {
 
 
 
-const CalculatorNumber = ({ number, size, handleOperator, idx }: ICalculatorNumber) => {
+const CalculatorNumber = ({ number, handleOperator, idx }: ICalculatorNumber) => {
     return (
         <>
 
