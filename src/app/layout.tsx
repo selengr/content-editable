@@ -34,14 +34,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${iranSans.variable} font-sans`}>
         <ThemeRegistry>{children}</ThemeRegistry>
-        {/* <AppRouterCacheProvider>
-          <CacheProvider value={cacheRtl}>
-            <ThemeProvider theme={theme}>
-              <CssBaseline />
-              {children}
-            </ThemeProvider>
-          </CacheProvider>
-        </AppRouterCacheProvider> */}
       </body>
     </html>
   );
