@@ -3,6 +3,11 @@ import { iranSans } from './fonts/fonts'
 import "./globals.css";
 // mui
 import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';
+// import { ThemeProvider } from '@mui/material/styles'
+// import { CacheProvider } from '@emotion/react'
+// import CssBaseline from '@mui/material/CssBaseline'
+// import theme, { cacheRtl } from './../components/ThemeRegistry/theme'
+// import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter'
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -29,6 +34,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${iranSans.variable} font-sans`}>
         <ThemeRegistry>{children}</ThemeRegistry>
+        {/* <AppRouterCacheProvider>
+          <CacheProvider value={cacheRtl}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              {children}
+            </ThemeProvider>
+          </CacheProvider>
+        </AppRouterCacheProvider> */}
       </body>
     </html>
   );

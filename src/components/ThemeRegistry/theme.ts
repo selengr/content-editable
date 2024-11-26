@@ -1,7 +1,17 @@
 import { createTheme } from '@mui/material/styles';
-import { iranSans } from '../../app/fonts/fonts';
+import { iranSans } from './../../app/fonts/fonts';
+import rtlPlugin from 'stylis-plugin-rtl';
+import { prefixer } from 'stylis';
+import createCache from '@emotion/cache';
+
+// Create rtl cache
+export const cacheRtl = createCache({
+  key: 'muirtl',
+  stylisPlugins: [prefixer, rtlPlugin],
+});
 
 const theme = createTheme({
+  direction: 'rtl',
   typography: {
     fontFamily: iranSans.style.fontFamily,
   },
@@ -51,6 +61,20 @@ const theme = createTheme({
           src: local('IRANSans'), url('/IranSans/IRANSansMobile(FaNum)_Black.ttf') format('truetype');
         }
       `,
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: '8px', // Global border radius for buttons
+        },
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          borderRadius: '8px', // Global border radius for inputs
+        },
+      },
     },
   },
 });

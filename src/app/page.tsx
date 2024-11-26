@@ -375,7 +375,9 @@ const Page = () => {
               width: 145,
               height: 33,
               fontWeight: 500,
+              marginBottom: "2px",
               backgroundColor: "#9D2CDF1A",
+              borderRadius: '8px',
               color: "#9D2CDF",
               borderColor: "none",
               '&:before, &:after': {
@@ -468,19 +470,19 @@ const Page = () => {
           </Button>
           <Stack sx={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
 
-            <Grid gridColumn={3} sx={{ width: "20%", display: "flex", flexDirection: "column", marginRight: "4px" }} >
+            <Grid gridColumn={3} sx={{ width: "90%", display: "flex", flexDirection: "column", marginRight: "4px" }} >
 
               <CalculatorOperator operator={'('} handleOperator={handleOperator} />
-              {operators.map((op, index) => {
-                return <CalculatorOperator operator={op} handleOperator={handleOperator} key={index} />
+              {operators.map((op, key) => {
+                return <CalculatorOperator operator={op} handleOperator={handleOperator} key={key} />
               })
               }
             </Grid>
             <Grid gridColumn={3} sx={{}} spacing={5} gap={5} rowGap={5} columnGap={6}>
               <CalculatorOperator operator={')'} handleOperator={handleOperator} />
               <CalculatorClear handleClear={handleUndo} />
-              {numbers.reverse().map((num, index) => {
-                return <CalculatorNumber number={num} handleOperator={handleOperator} key={index} />
+              {numbers.reverse().map((num, key) => {
+                return <CalculatorNumber number={num} handleOperator={handleOperator} key={key} />
               })
               }
             </Grid>
@@ -500,7 +502,7 @@ const Page = () => {
   return (
     <Container maxWidth="sm" sx={{ mt: "35px" }}>
 
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+      {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
         <IconButton
           aria-label="close"
           // onClick={handleClose}
@@ -508,7 +510,7 @@ const Page = () => {
         >
           <Iconify icon="mingcute:close-line" sx={{ width: 25, height: 25 }} />
         </IconButton>
-      </Box>
+      </Box> */}
 
 
 
@@ -537,6 +539,7 @@ const Page = () => {
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
                   borderColor: '#DDE1E6',
+                  borderRadius: '8px',
                 },
                 '&:hover fieldset': {
                   borderColor: '#DDE1E6',
