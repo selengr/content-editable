@@ -12,7 +12,11 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        sans: ['var(--font-iransans)'],
+      },
     },
   },
   plugins: [],
 } satisfies Config;
+

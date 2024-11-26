@@ -1,15 +1,14 @@
 "use client"
 
 import React, { createRef, useCallback, useEffect, useRef, useState } from "react";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import SvgIcon from "@mui/material/SvgIcon";
 import Image from 'next/image';
 
 import ContentEditable from 'react-contenteditable'
 
 //mui
+import Grid from '@mui/material/Grid2';
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Container, Grid, IconButton, Input, MenuItem, Select, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, IconButton, Input, MenuItem, Select, Stack, TextField, Typography } from "@mui/material";
 
 
 import Iconify from "@/components/iconify/Iconify";
@@ -18,7 +17,7 @@ import CalculatorNumber from "@/sections/calculator/calculator-number";
 import CalculatorOperator from "@/sections/calculator/calculator-operator";
 
 
-import styles from '../../sections/calculator/advancedFormulaEditor.module.css'
+import styles from '@/sections/calculator/advancedFormulaEditor.module.css'
 import JSONData from '../../public/assets/fake-data/add filed response_v1.json'
 
 
@@ -480,8 +479,8 @@ const Page = () => {
             <Grid gridColumn={3} sx={{}} spacing={5} gap={5} rowGap={5} columnGap={6}>
               <CalculatorOperator operator={')'} handleOperator={handleOperator} />
               <CalculatorClear handleClear={handleUndo} />
-              {numbers.reverse().map((num, key) => {
-                return <CalculatorNumber number={num} handleOperator={handleOperator} key={key} />
+              {numbers.reverse().map((num, keyy) => {
+                return <CalculatorNumber number={num} handleOperator={handleOperator} key={keyy} />
               })
               }
             </Grid>
