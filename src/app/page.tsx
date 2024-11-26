@@ -470,7 +470,14 @@ const Page = () => {
 
               <CalculatorOperator operator={'('} handleOperator={handleOperator} />
               {operators.map((op, idx) => {
-                return <><CalculatorOperator operator={op} handleOperator={handleOperator} idx={idx} /></>
+                return (
+                  <Button sx={{ border: '1px solid white', width: 33, height: 33, minWidth: 33, color: "#1758BA", backgroundColor: "#1758BA1A", margin: "2px", fontWeight: 500 }}
+                    onClick={() => handleOperator(op, "OPERATOR")} key={idx}>
+                    {op}
+
+                  </Button>
+                )
+                //  <CalculatorOperator operator={op} handleOperator={handleOperator} idx={idx} />
               })
               }
             </Grid>
@@ -478,7 +485,18 @@ const Page = () => {
               <CalculatorOperator operator={')'} handleOperator={handleOperator} />
               <CalculatorClear handleClear={handleUndo} />
               {numbers.reverse().map((num, idx) => {
-                return <> <CalculatorNumber number={num} handleOperator={handleOperator} idx={idx} /></>
+                return (
+                  <Button sx={{
+                    border: '1px solid white', width: num === "0" ? 70 : 33, height: 33, minWidth: num === "0" ? 70 : 33, color: "#1758BA", backgroundColor: "#1758BA1A", margin: "2px",
+                    fontWeight: 500
+                  }}
+                    onClick={() => handleOperator(num, "NUMBER")}
+                    key={idx}
+                  >
+                    {num}
+                  </Button>
+                )
+                // return <CalculatorNumber number={num} handleOperator={handleOperator} idx={idx} />
               })
               }
             </Grid>
