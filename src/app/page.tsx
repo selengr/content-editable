@@ -473,16 +473,16 @@ const Page = () => {
             <Grid gridColumn={3} sx={{ width: "90%", display: "flex", flexDirection: "column", marginRight: "4px" }} >
 
               <CalculatorOperator operator={'('} handleOperator={handleOperator} />
-              {operators.map((op, key) => {
-                return <CalculatorOperator operator={op} handleOperator={handleOperator} key={key} />
+              {operators.map((op, idx) => {
+                return <CalculatorOperator operator={op} handleOperator={handleOperator} idx={idx} />
               })
               }
             </Grid>
             <Grid gridColumn={3} sx={{}} spacing={5} gap={5} rowGap={5} columnGap={6}>
               <CalculatorOperator operator={')'} handleOperator={handleOperator} />
               <CalculatorClear handleClear={handleUndo} />
-              {numbers.reverse().map((num, key) => {
-                return <CalculatorNumber number={num} handleOperator={handleOperator} key={key} />
+              {numbers.reverse().map((num, idx) => {
+                return <CalculatorNumber number={num} handleOperator={handleOperator} idx={idx} />
               })
               }
             </Grid>

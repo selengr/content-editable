@@ -4,12 +4,12 @@ interface ICalculatorNumber {
     size?: number
     number: string
     handleOperator: (content: string, type: string) => void
-    keyy?: number | any
+    idx?: number | any
 }
 
 
 
-const CalculatorNumber = ({ number, size, handleOperator, keyy }: ICalculatorNumber) => {
+const CalculatorNumber = ({ number, size, handleOperator, idx }: ICalculatorNumber) => {
     return (
         <>
 
@@ -18,7 +18,7 @@ const CalculatorNumber = ({ number, size, handleOperator, keyy }: ICalculatorNum
                 fontWeight: 500
             }}
                 onClick={() => handleOperator(number, "NUMBER",)}
-                key={keyy}
+                key={idx}
             >
                 {number as string}
             </Button>
