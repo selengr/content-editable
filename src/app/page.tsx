@@ -470,7 +470,7 @@ const Page = () => {
 
               <CalculatorOperator operator={'('} handleOperator={handleOperator} />
               {operators.map((op, idx) => {
-                return <CalculatorOperator operator={op} handleOperator={handleOperator} idx={idx} />
+                return <><CalculatorOperator operator={op} handleOperator={handleOperator} idx={idx} /></>
               })
               }
             </Grid>
@@ -478,7 +478,7 @@ const Page = () => {
               <CalculatorOperator operator={')'} handleOperator={handleOperator} />
               <CalculatorClear handleClear={handleUndo} />
               {numbers.reverse().map((num, idx) => {
-                return <CalculatorNumber number={num} handleOperator={handleOperator} idx={idx} />
+                return <> <CalculatorNumber number={num} handleOperator={handleOperator} idx={idx} /></>
               })
               }
             </Grid>

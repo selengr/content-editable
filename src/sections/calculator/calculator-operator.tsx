@@ -10,16 +10,13 @@ interface ICalculatorNumber {
 
 const CalculatorNumber = ({ operator, handleOperator, idx }: ICalculatorNumber) => {
     return (
-        <>
-
+    
             <Button sx={{ border: '1px solid white', width: 33, height: 33, minWidth: 33, color: "#1758BA", backgroundColor: "#1758BA1A", margin: "2px", fontWeight: 500 }}
                 onClick={() => handleOperator(operator, "OPERATOR")} key={idx}>
-                {operator as string}
+                {operator}
 
             </Button>
 
-
-        </>
     );
 }
 
