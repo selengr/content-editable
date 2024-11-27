@@ -155,7 +155,8 @@ const Page = () => {
     }
 
 
-    // console.log("html-to-formula ===>", formula)
+    console.clear()
+    console.log("html-to-formula ===>", formula)
     return formula
   }
 
