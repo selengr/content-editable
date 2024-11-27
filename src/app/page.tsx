@@ -97,7 +97,7 @@ const Page = () => {
   };
 
   function htmlToFormula(html: string): string {
-    
+
     const parser = new DOMParser()
     const doc = parser.parseFromString(html, 'text/html')
     const elements: HTMLCollection = doc.body.children
@@ -108,9 +108,14 @@ const Page = () => {
       if (element instanceof HTMLDivElement) {
         const classList = element.classList;
 
-        if (classList.contains('advancedFormulaEditor-module__uTdVNG__NUMBER')) {
+        if (element.getAttribute("data-type") === "NUMBER") {
           formula += element.textContent || '';
-        } else if (classList.contains('advancedFormulaEditor-module__uTdVNG__OPERATOR')) {
+          // } else if (element.getAttribute("data-type") === "OPERATOR") {
+
+
+        } else if (classList.value.includes('OPERATOR')) {
+
+
           if (element.textContent == "+") {
             formula += "+";
           } else if (element.textContent == "-") {
@@ -122,21 +127,27 @@ const Page = () => {
           } else if (element.textContent == "/") {
             formula += "/";
           } else if (element.textContent == "(") {
+
+            console.log(element.getAttribute("data-type"))
             if (element.getAttribute("data-type") === "avg") {
               formula += "({";
             } else {
               formula += "(";
             }
           } else if (element.textContent == ")") {
+            // debugger
             if (element.getAttribute("data-type") === "avg") {
               formula += "})";
             } else {
               formula += ")";
             }
-          } else {
-            formula += element.textContent + "" || '';
           }
-        } else if (classList.contains('advancedFormulaEditor-module__uTdVNG__NEW_FIELD')) {
+          // else {
+          //   formula += element.textContent + "" || '';
+          // }
+
+          // } else if (classList.contains('advancedFormulaEditor-module__uTdVNG__NEW_FIELD')) {
+        } else if (element.getAttribute("data-type") === "NEW_FIELD") {
           const select = element.querySelector('div');
           if (select) {
             // formula += '#q_' + (selectValues[select.id] || '')
@@ -146,7 +157,8 @@ const Page = () => {
               formula += '#' + (selectFieldRef.current[select.id] || '')
             }
           }
-        } else if (classList.contains('advancedFormulaEditor-module__uTdVNG__NEW_FnFx')) {
+        } else if (element.getAttribute("data-type") === "NEW_FnFx") {
+          // } else if (classList.contains('advancedFormulaEditor-module__uTdVNG__NEW_FnFx')) {
           const select = element.querySelector('div');
           if (select) {
             formula += '#avg' + (selectAvgRef.current[select.id] || '')
@@ -157,7 +169,8 @@ const Page = () => {
 
 
     console.clear()
-    console.log("html", html)
+    // console.log("html", html)
+    // console.log("element.textContent ===>", element.textContent)
     console.log("html-to-formula ===>", formula)
     return formula
   }
