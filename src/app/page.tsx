@@ -97,6 +97,7 @@ const Page = () => {
   };
 
   function htmlToFormula(html: string): string {
+    
     const parser = new DOMParser()
     const doc = parser.parseFromString(html, 'text/html')
     const elements: HTMLCollection = doc.body.children
@@ -156,6 +157,7 @@ const Page = () => {
 
 
     console.clear()
+    console.log("html", html)
     console.log("html-to-formula ===>", formula)
     return formula
   }
