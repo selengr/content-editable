@@ -29,6 +29,7 @@ type OPERATOR_TYPE = "OPERATOR" | "NUMBER" | "AVG" | string
 const Page = () => {
   const contentEditable = useRef<any>();
   const [html, setHtml] = useState<any>([])
+  const [lastOperator, setLastOperator] = useState<OPERATOR_TYPE>("")
   const [formula, setFormula] = useState<string>("")
   const selectFieldRef = useRef<{ [key: string]: string }>({})
   const selectAvgRef = useRef<{ [key: string]: string }>({})
@@ -37,24 +38,24 @@ const Page = () => {
 
 
   const handleUndo = useCallback(() => {
-    // const selection: any = window.getSelection();
-    // const editableDiv = contentEditable.current;
+    const selection: any = window.getSelection();
+    const editableDiv = contentEditable.current;
 
-    // if (!editableDiv) return;
+    if (!editableDiv) return;
 
-    // const range = selection?.getRangeAt(0);
-    // const startContainer = range?.startContainer;
-    // if (startContainer?.childNodes?.length > 0) {
-    //   if (range.endOffset > 0) {
-    //     startContainer.childNodes[range.endOffset - 1].remove();
-    //   } else editableDiv.focus()
+    const range = selection?.getRangeAt(0);
+    const startContainer = range?.startContainer;
+    if (startContainer?.childNodes?.length > 0) {
+      if (range.endOffset > 0) {
+        startContainer.childNodes[range.endOffset - 1].remove();
+      } else editableDiv.focus()
 
-    // } else {
-    //   editableDiv.focus();
-    // }
+    } else {
+      editableDiv.focus();
+    }
 
-    // setHtml(editableDiv.innerHTML);
-    // editableDiv.focus();
+    setHtml(editableDiv.innerHTML);
+    editableDiv.focus();
   }, []);
 
 
@@ -66,28 +67,39 @@ const Page = () => {
     if (!editableDiv) return;
 
     if (range?.endContainer.nodeName !== "#text") {
+      const lastChild = editableDiv.lastElementChild;
+      const isLastItemOperator = lastChild && lastChild.getAttribute('data-type') === 'OPERATOR';
+      const operatorTypes = ['-', '+', '*', '=', "/"];
 
-      const newElement = document.createElement('div')
-      newElement.className = `${styles.dynamicbtn} ${styles[type]}`;
-      newElement.textContent = content
-      newElement.contentEditable = 'false';
-      newElement.setAttribute('data-type', type)
-
-
-      if (range && editableDiv.contains(range.startContainer)) {
-        range.insertNode(newElement);
-        range.setStartAfter(newElement);
+      if (isLastItemOperator && lastOperator === type && operatorTypes.includes(lastChild.textContent)) {
+        // Replace the last operator
+        lastChild.textContent = content;
+        lastChild.className = `${styles.dynamicbtn} ${styles[type]}`;
+        lastChild.setAttribute('data-type', type);
       } else {
-        editableDiv.appendChild(newElement);
+        // Add a new operator
+        const newElement = document.createElement('div');
+        newElement.className = `${styles.dynamicbtn} ${styles[type]}`;
+        newElement.textContent = content;
+        newElement.contentEditable = 'false';
+        newElement.setAttribute('data-type', type);
+
+        if (range && editableDiv.contains(range.startContainer)) {
+          range.insertNode(newElement);
+          range.setStartAfter(newElement);
+        } else {
+          editableDiv.appendChild(newElement);
+        }
       }
 
       setHtml(editableDiv.innerHTML);
-
+      setLastOperator(type);
       editableDiv.focus();
     } else {
       editableDiv.focus();
     }
   };
+
 
 
 
@@ -169,7 +181,7 @@ const Page = () => {
 
 
     console.clear()
-    // console.log("html", html)
+    console.log("html", html)
     // console.log("element.textContent ===>", element.textContent)
     console.log("html-to-formula ===>", formula)
     return formula
@@ -254,6 +266,7 @@ const Page = () => {
       }
 
       setHtml(editableDiv.innerHTML);
+      setLastOperator("AVG")
 
       editableDiv.focus();
     } else {
@@ -347,6 +360,7 @@ const Page = () => {
         }
 
         setHtml(editableDiv.innerHTML);
+        setLastOperator("AVG")
 
       }
     } else {
