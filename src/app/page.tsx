@@ -18,6 +18,7 @@ import CalculatorOperator from "@/sections/calculator/calculator-operator";
 
 import styles from '@/sections/calculator/advancedFormulaEditor.module.css'
 import JSONData from '../../public/assets/fake-data/add filed response_v1.json'
+import CalculatorParenthesis from "@/sections/calculator/calculator-parenthesis";
 
 
 
@@ -58,51 +59,194 @@ const Page = () => {
     editableDiv.focus();
   }, []);
 
+  // const handleOperator = (content: string, type: OPERATOR_TYPE) => {
+  //   const selection = window.getSelection();
+  //   const range = selection?.getRangeAt(0);
+  //   const editableDiv = contentEditable.current;
 
-  const handleOperator = (content: string, type: OPERATOR_TYPE) => {
+  //   if (!editableDiv) return;
+
+  //   if (range?.endContainer.nodeName !== "#text") {
+  //     const lastChild = editableDiv.lastElementChild;
+  //     const isLastItemOperator = lastChild && lastChild.getAttribute('data-type') === 'OPERATOR';
+  //     const isLastItemNumber = lastChild && lastChild.getAttribute('data-type') === 'NUMBER';
+  //     const operatorTypes = ['-', '+', '*', '='];
+
+  //     if (isLastItemOperator && operatorTypes.includes(lastChild.textContent)) {
+  //       // Replace the last operator
+  //       lastChild.textContent = content;
+  //       lastChild.className = `${styles.dynamicbtn} ${styles[type]}`;
+  //       lastChild.setAttribute('data-type', type);
+  //     } else if (isLastItemNumber && type === 'NUMBER') {
+  //       // Combine with the last number
+  //       lastChild.textContent += content;
+  //     } else if (content === ')') {
+  //       // Add matching parentheses
+  //       const openingParenthesis = document.createElement('div');
+  //       openingParenthesis.className = `${styles.dynamicbtn} ${styles[type]}`;
+  //       openingParenthesis.textContent = '(';
+  //       openingParenthesis.contentEditable = 'false';
+  //       openingParenthesis.setAttribute('data-type', type);
+
+  //       const closingParenthesis = document.createElement('div');
+  //       closingParenthesis.className = `${styles.dynamicbtn} ${styles[type]}`;
+  //       closingParenthesis.textContent = ')';
+  //       closingParenthesis.contentEditable = 'false';
+  //       closingParenthesis.setAttribute('data-type', type);
+
+  //       if (range && editableDiv.contains(range.startContainer)) {
+  //         range.insertNode(closingParenthesis);
+  //         range.insertNode(openingParenthesis);
+  //         range.setStartAfter(closingParenthesis);
+  //       } else {
+  //         editableDiv.appendChild(openingParenthesis);
+  //         editableDiv.appendChild(closingParenthesis);
+  //       }
+  //     } else {
+  //       // Add a new element
+  //       const newElement = document.createElement('div');
+  //       newElement.className = `${styles.dynamicbtn} ${styles[type]}`;
+  //       newElement.textContent = content;
+  //       newElement.contentEditable = 'false';
+  //       newElement.setAttribute('data-type', type);
+
+  //       if (range && editableDiv.contains(range.startContainer)) {
+  //         range.insertNode(newElement);
+  //         range.setStartAfter(newElement);
+  //       } else {
+  //         editableDiv.appendChild(newElement);
+  //       }
+  //     }
+
+  //     setHtml(editableDiv.innerHTML);
+  //     setLastOperator(type);
+  //     editableDiv.focus();
+  //   } else {
+  //     editableDiv.focus();
+  //   }
+  // };
+
+  const createElement = (content: string, type: OperatorType) => {
+    const element = document.createElement('div');
+    element.className = `${styles.dynamicbtn} ${styles[type]}`;
+    element.textContent = content;
+    element.contentEditable = 'false';
+    element.setAttribute('data-type', type);
+    return element;
+  };
+
+  const insertElement = (element: HTMLElement) => {
     const selection = window.getSelection();
     const range = selection?.getRangeAt(0);
     const editableDiv = contentEditable.current;
 
     if (!editableDiv) return;
 
-    if (range?.endContainer.nodeName !== "#text") {
-      const lastChild = editableDiv.lastElementChild;
-      const isLastItemOperator = lastChild && lastChild.getAttribute('data-type') === 'OPERATOR';
-      const isLastItemNumber = lastChild && lastChild.getAttribute('data-type') === 'NUMBER';
-      const operatorTypes = ['-', '+', '*', '=', "/"];
-
-      if (isLastItemOperator && lastOperator === type && operatorTypes.includes(lastChild.textContent)) {
-        // Replace the last operator
-        lastChild.textContent = content;
-        lastChild.className = `${styles.dynamicbtn} ${styles[type]}`;
-        lastChild.setAttribute('data-type', type);
-      } else if (isLastItemNumber && type === 'NUMBER') {
-        // Combine with the last number
-        lastChild.textContent += content;
-      } else {
-        // Add a new operator
-        const newElement = document.createElement('div');
-        newElement.className = `${styles.dynamicbtn} ${styles[type]}`;
-        newElement.textContent = content;
-        newElement.contentEditable = 'false';
-        newElement.setAttribute('data-type', type);
-
-        if (range && editableDiv.contains(range.startContainer)) {
-          range.insertNode(newElement);
-          range.setStartAfter(newElement);
-        } else {
-          editableDiv.appendChild(newElement);
-        }
-      }
-
-      setHtml(editableDiv.innerHTML);
-      setLastOperator(type);
-      editableDiv.focus();
+    if (range && editableDiv.contains(range.startContainer)) {
+      range.insertNode(element);
+      range.setStartAfter(element);
     } else {
-      editableDiv.focus();
+      editableDiv.appendChild(element);
+    }
+
+    setHtml(editableDiv.innerHTML);
+    editableDiv.focus();
+  };
+
+  const handleOperator = (content: string) => {
+    const editableDiv = contentEditable.current;
+    if (!editableDiv) return;
+
+    const lastChild = editableDiv.lastElementChild;
+    const isLastItemOperator = lastChild && lastChild.getAttribute('data-type') === 'OPERATOR';
+    const operatorTypes = ['-', '+', '*', '/'];
+
+    if (isLastItemOperator && operatorTypes.includes(lastChild.textContent || '')) {
+      lastChild.textContent = content;
+    } else {
+      const newElement = createElement(content, 'OPERATOR');
+      insertElement(newElement);
     }
   };
+
+  const handleNumber = (content: string) => {
+    const editableDiv = contentEditable.current;
+    if (!editableDiv) return;
+
+    const lastChild = editableDiv.lastElementChild;
+    const isLastItemNumber = lastChild && lastChild.getAttribute('data-type') === 'NUMBER';
+
+    if (isLastItemNumber) {
+      lastChild.textContent += content;
+    } else {
+      const newElement = createElement(content, 'NUMBER');
+      insertElement(newElement);
+    }
+  };
+
+  const handleParenthesis = (content) => {
+    let isOpening = content === ")"
+    const openingParenthesis = createElement('(', 'PARENTHESIS');
+
+    insertElement(openingParenthesis);
+    if (!isOpening) {
+      const closingParenthesis = createElement(')', 'PARENTHESIS');
+      insertElement(closingParenthesis);
+    }
+
+
+    const selection = window.getSelection();
+    const range = selection?.getRangeAt(0);
+    if (range) {
+      range.setStartAfter(openingParenthesis);
+      range.collapse(true);
+    }
+  };
+
+  // const handleOperator = (content: string, type: OPERATOR_TYPE) => {
+  //   const selection = window.getSelection();
+  //   const range = selection?.getRangeAt(0);
+  //   const editableDiv = contentEditable.current;
+
+  //   if (!editableDiv) return;
+
+  //   if (range?.endContainer.nodeName !== "#text") {
+  //     const lastChild = editableDiv.lastElementChild;
+  //     const isLastItemOperator = lastChild && lastChild.getAttribute('data-type') === 'OPERATOR';
+  //     const isLastItemNumber = lastChild && lastChild.getAttribute('data-type') === 'NUMBER';
+  //     const operatorTypes = ['-', '+', '*', '=', "/"];
+
+  //     if (isLastItemOperator && lastOperator === type && operatorTypes.includes(lastChild.textContent)) {
+  //       // Replace the last operator
+  //       lastChild.textContent = content;
+  //       lastChild.className = `${styles.dynamicbtn} ${styles[type]}`;
+  //       lastChild.setAttribute('data-type', type);
+  //     } else if (isLastItemNumber && type === 'NUMBER') {
+  //       // Combine with the last number
+  //       lastChild.textContent += content;
+  //     } else {
+  //       // Add a new operator
+  //       const newElement = document.createElement('div');
+  //       newElement.className = `${styles.dynamicbtn} ${styles[type]}`;
+  //       newElement.textContent = content;
+  //       newElement.contentEditable = 'false';
+  //       newElement.setAttribute('data-type', type);
+
+  //       if (range && editableDiv.contains(range.startContainer)) {
+  //         range.insertNode(newElement);
+  //         range.setStartAfter(newElement);
+  //       } else {
+  //         editableDiv.appendChild(newElement);
+  //       }
+  //     }
+
+  //     setHtml(editableDiv.innerHTML);
+  //     setLastOperator(type);
+  //     editableDiv.focus();
+  //   } else {
+  //     editableDiv.focus();
+  //   }
+  // };
 
 
 
@@ -502,11 +646,11 @@ const Page = () => {
 
             <Grid gridColumn={3} sx={{ width: "90%", display: "flex", flexDirection: "column", marginRight: "4px" }} >
 
-              <CalculatorOperator operator={'('} handleOperator={handleOperator} />
+              <CalculatorParenthesis operator={'('} handleParenthesis={handleParenthesis} />
               {operators.map((op, idx) => {
                 return (
                   <Button sx={{ border: '1px solid white', width: 33, height: 33, minWidth: 33, color: "#1758BA", backgroundColor: "#1758BA1A", margin: "2px", fontWeight: 500 }}
-                    onClick={() => handleOperator(op, "OPERATOR")} key={idx}>
+                    onClick={() => handleOperator(op)} key={idx}>
                     {op}
 
                   </Button>
@@ -516,7 +660,7 @@ const Page = () => {
               }
             </Grid>
             <Grid gridColumn={3} sx={{}} spacing={5} gap={5} rowGap={5} columnGap={6}>
-              <CalculatorOperator operator={')'} handleOperator={handleOperator} />
+              <CalculatorParenthesis operator={')'} handleParenthesis={handleParenthesis} />
               <CalculatorClear handleClear={handleUndo} />
               {numbers.reverse().map((num, idx) => {
                 return (
@@ -524,7 +668,7 @@ const Page = () => {
                     border: '1px solid white', width: num === "0" ? 70 : 33, height: 33, minWidth: num === "0" ? 70 : 33, color: "#1758BA", backgroundColor: "#1758BA1A", margin: "2px",
                     fontWeight: 500
                   }}
-                    onClick={() => handleOperator(num, "NUMBER")}
+                    onClick={() => handleNumber(num)}
                     key={idx}
                   >
                     {num}

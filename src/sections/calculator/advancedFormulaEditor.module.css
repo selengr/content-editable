@@ -1,5 +1,6 @@
 .NUMBER,
 .OPERATOR,
+.PARENTHESIS,
 .asNumber {
   height: 33px;
   display: flex;
@@ -13,7 +14,8 @@
   margin-top: 0px !important;
 }
 
-.OPERATOR {
+.OPERATOR,
+.PARENTHESIS {
   color: #1758ba;
   background-color: #1758ba1a;
 }
