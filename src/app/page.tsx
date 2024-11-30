@@ -69,6 +69,7 @@ const Page = () => {
     if (range?.endContainer.nodeName !== "#text") {
       const lastChild = editableDiv.lastElementChild;
       const isLastItemOperator = lastChild && lastChild.getAttribute('data-type') === 'OPERATOR';
+      const isLastItemNumber = lastChild && lastChild.getAttribute('data-type') === 'NUMBER';
       const operatorTypes = ['-', '+', '*', '=', "/"];
 
       if (isLastItemOperator && lastOperator === type && operatorTypes.includes(lastChild.textContent)) {
@@ -76,6 +77,9 @@ const Page = () => {
         lastChild.textContent = content;
         lastChild.className = `${styles.dynamicbtn} ${styles[type]}`;
         lastChild.setAttribute('data-type', type);
+      } else if (isLastItemNumber && type === 'NUMBER') {
+        // Combine with the last number
+        lastChild.textContent += content;
       } else {
         // Add a new operator
         const newElement = document.createElement('div');
