@@ -28,14 +28,15 @@ type OPERATOR_TYPE = "OPERATOR" | "NUMBER" | "AVG" | string
 
 
 const Page = () => {
-  const contentEditable = useRef<any>();
+  const contentEditable = useRef<HTMLDivElement>(null);
   const [html, setHtml] = useState<any>([])
   const [lastOperator, setLastOperator] = useState<OPERATOR_TYPE>("")
   const [formula, setFormula] = useState<string>("")
   const selectFieldRef = useRef<{ [key: string]: string }>({})
   const selectAvgRef = useRef<{ [key: string]: string }>({})
 
-
+  const [elements, setElements] = useState<Element[]>([]);
+  const [cursorIndex, setCursorIndex] = useState(0);
 
 
   const handleUndo = useCallback(() => {
@@ -126,7 +127,7 @@ const Page = () => {
   //   }
   // };
 
-  const createElement = (content: string, type: OperatorType) => {
+  const createElement = (content: string, type: OPERATOR_TYPE) => {
     const element = document.createElement('div');
     element.className = `${styles.dynamicbtn} ${styles[type]}`;
     element.textContent = content;
@@ -153,55 +154,95 @@ const Page = () => {
     editableDiv.focus();
   };
 
-  const handleOperator = (content: string) => {
-    const editableDiv = contentEditable.current;
-    if (!editableDiv) return;
+  // const handleOperator = (content: string) => {
+  //   const editableDiv = contentEditable.current;
+  //   if (!editableDiv) return;
 
-    const lastChild = editableDiv.lastElementChild;
-    const isLastItemOperator = lastChild && lastChild.getAttribute('data-type') === 'OPERATOR';
+  //   const lastChild = editableDiv.lastElementChild;
+  //   const isLastItemOperator = lastChild && lastChild.getAttribute('data-type') === 'OPERATOR';
+  //   const operatorTypes = ['-', '+', '*', '/'];
+
+  //   if (isLastItemOperator && operatorTypes.includes(lastChild.textContent || '')) {
+  //     lastChild.textContent = content;
+  //   } else {
+  //     const newElement = createElement(content, 'OPERATOR');
+  //     insertElement(newElement);
+  //   }
+  // };
+
+
+
+  const renderElements = useCallback(() => {
+    return elements.map((elem: any, index) => (
+      <div
+        key={index}
+        contentEditable={false}
+        className={`${styles.dynamicbtn} ${styles[elem?.type]}`}
+        data-type={elem?.type}
+      >
+        {elem?.content}
+      </div>
+    ));
+  }, [elements]);
+
+  const updateElements = (newElements: Element[]) => {
+    setElements(newElements);
+    setTimeout(() => {
+      const editableDiv = contentEditable.current;
+      if (editableDiv) {
+        const range = document.createRange();
+        const sel = window.getSelection();
+        
+      
+        range.setStart(editableDiv, cursorIndex);
+        
+        
+        range.collapse(true);
+        sel?.removeAllRanges();
+        sel?.addRange(range);
+        editableDiv.focus();
+      }
+    }, 0);
+  };
+
+  const handleOperator = (content: string) => {
+    const newElements = [...elements];
     const operatorTypes = ['-', '+', '*', '/'];
 
-    if (isLastItemOperator && operatorTypes.includes(lastChild.textContent || '')) {``
-      lastChild.textContent = content;
+    if (cursorIndex > 0 && newElements[cursorIndex - 1].type === 'OPERATOR' && operatorTypes.includes(newElements[cursorIndex - 1].content)) {
+      newElements[cursorIndex - 1] = { type: 'OPERATOR', content };
     } else {
-      const newElement = createElement(content, 'OPERATOR');
-      insertElement(newElement);
+      newElements.splice(cursorIndex, 0, { type: 'OPERATOR', content });
+      setCursorIndex(cursorIndex + 1);
     }
+
+    updateElements(newElements);
   };
-// ssss
+
+
   const handleNumber = (content: string) => {
-    const editableDiv = contentEditable.current;
-    if (!editableDiv) return;
+    const newElements: any = [...elements];
 
-    const lastChild = editableDiv.lastElementChild;
-    const isLastItemNumber = lastChild && lastChild.getAttribute('data-type') === 'NUMBER';
-
-    if (isLastItemNumber) {
-      lastChild.textContent += content;
+    if (cursorIndex > 0 && newElements[cursorIndex - 1].type === 'NUMBER') {
+      newElements[cursorIndex - 1].content += content;
     } else {
-      const newElement = createElement(content, 'NUMBER');
-      insertElement(newElement);
+      newElements.splice(cursorIndex, 0, { type: 'NUMBER', content });
+      setCursorIndex(cursorIndex + 1);
     }
+
+    updateElements(newElements);
   };
 
-  const handleParenthesis = (content) => {
-    let isOpening = content === ")"
-    const openingParenthesis = createElement('(', 'PARENTHESIS');
-
-    insertElement(openingParenthesis);
-    if (!isOpening) {
-      const closingParenthesis = createElement(')', 'PARENTHESIS');
-      insertElement(closingParenthesis);
-    }
-
-
-    const selection = window.getSelection();
-    const range = selection?.getRangeAt(0);
-    if (range) {
-      range.setStartAfter(openingParenthesis);
-      range.collapse(true);
-    }
+  const handleParenthesis = () => {
+    const newElements: any = [...elements];
+    newElements.splice(cursorIndex, 0,
+      { type: 'PARENTHESIS', content: '(' },
+      { type: 'PARENTHESIS', content: ')' }
+    );
+    setCursorIndex(cursorIndex + 1);
+    updateElements(newElements);
   };
+
 
   // const handleOperator = (content: string, type: OPERATOR_TYPE) => {
   //   const selection = window.getSelection();
@@ -530,6 +571,16 @@ const Page = () => {
   };
 
 
+  const handleClick = (e: React.MouseEvent) => {
+    const editableDiv = contentEditable.current;
+    if (editableDiv) {
+      const range = document.caretRangeFromPoint(e.clientX, e.clientY);
+      if (range) {
+        const index = Array.from(editableDiv.childNodes).findIndex(node => node.contains(range.startContainer));
+        setCursorIndex(index === -1 ? elements.length : index);
+      }
+    }
+  };
 
 
   const renderKeypad = () => {
@@ -760,7 +811,7 @@ const Page = () => {
             <Typography variant="subtitle1" sx={{ display: "flex", justifyContent: "center", color: "#404040", fontWeight: 500 }}>اسکریپت:</Typography>
             <Stack spacing={4} sx={{ border: '1px solid #DDE1E6', borderRadius: 2, padding: 1, width: "100%", height: "100%", minHeight: 200, display: "flex", flexWrap: "wrap", flexDirection: "row" }}>
 
-
+              {/* 
               <ContentEditable
                 html={html}
                 tagName="div"
@@ -771,7 +822,25 @@ const Page = () => {
                 onKeyDown={handleKeyDown}
                 innerRef={contentEditable}
                 className={styles.ContentEditable}
-              />
+              /> */}
+              <div
+                ref={contentEditable}
+                // className={styles.editable}
+                contentEditable={true}
+                suppressContentEditableWarning={true}
+                onClick={handleClick}
+                className={styles.ContentEditable}
+              >
+                {renderElements()}
+              </div>
+              {/* <div
+                ref={contentEditable}
+                className={styles.editable}
+                contentEditable="true"
+                suppressContentEditableWarning={true}
+              /> */}
+
+
             </Stack>
 
 
