@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Image from 'next/image';
 
 import ContentEditable from 'react-contenteditable'
@@ -19,6 +19,23 @@ import CalculatorOperator from "@/sections/calculator/calculator-operator";
 import styles from '@/sections/calculator/advancedFormulaEditor.module.css'
 import JSONData from '../../public/assets/fake-data/add filed response_v1.json'
 import CalculatorParenthesis from "@/sections/calculator/calculator-parenthesis";
+
+
+const styless = { // Added styles object
+  dynamicbtn: 'dynamic-btn',
+  NEW_FIELD: 'new-field',
+  customDropdown: 'custom-dropdown',
+  optionsContainer: 'options-container',
+  PARENTHESIS: 'parenthesis',
+  NUMBER: 'number',
+  option: 'option' // Added option style
+};
+
+interface Element {
+  type: string;
+  content: string;
+  id?: string;
+}
 
 
 
@@ -172,18 +189,18 @@ const Page = () => {
 
 
 
-  const renderElements = useCallback(() => {
-    return elements.map((elem: any, index) => (
-      <div
-        key={index}
-        contentEditable={false}
-        className={`${styles.dynamicbtn} ${styles[elem?.type]}`}
-        data-type={elem?.type}
-      >
-        {elem?.content}
-      </div>
-    ));
-  }, [elements]);
+  // const renderElements = useCallback(() => {
+  //   return elements.map((elem: any, index) => (
+  //     <div
+  //       key={index}
+  //       contentEditable={false}
+  //       className={`${styles.dynamicbtn} ${styles[elem?.type]}`}
+  //       data-type={elem?.type}
+  //     >
+  //       {elem?.content}
+  //     </div>
+  //   ));
+  // }, [elements]);
 
   // const updateElements = (newElements: Element[]) => {
   //   setElements(newElements);
@@ -459,90 +476,206 @@ const Page = () => {
 
 
   const handleNewField = () => {
-    const selection = window.getSelection();
-    const range = selection?.getRangeAt(0);
     const editableDiv = contentEditable.current;
-
     if (!editableDiv) return;
 
-    if (range?.endContainer.nodeName !== "#text") {
+    const selectId = `select_${Date.now()}`;
+    const newElement: Element = {
+      type: 'NEW_FIELD',
+      content: 'انتخاب سوال',
+      id: selectId
+    };
 
+    const newElements = [...elements];
+    newElements.splice(cursorIndex, 0, newElement);
 
-      const newElement = document.createElement('div');
-      newElement.className = `${styles.dynamicbtn} ${styles["NEW_FIELD"]}`;
-      newElement.setAttribute('data-type', "NEW_FIELD");
-      newElement.contentEditable = 'false';
+    setElements(newElements);
 
+    // Use setTimeout to ensure the DOM has updated before setting the cursor
+    setTimeout(() => {
+      const range = document.createRange();
+      const sel = window.getSelection();
 
-      // Create custom dropdown
-      const customDropdown = document.createElement('div');
-      customDropdown.className = styles.customDropdown;
-      customDropdown.setAttribute('data-type', "down");
-      customDropdown.textContent = "انتخاب سوال";
-
-      const optionsContainer = document.createElement('div');
-      optionsContainer.className = styles.optionsContainer;
-      optionsContainer.style.display = 'none';
-
-      JSONData.dataList.forEach((item: any) => {
-        const optionElement = document.createElement('div');
-        optionElement.className = styles.option;
-        optionElement.textContent = item.caption;
-        optionElement.onclick = () => {
-          customDropdown.textContent = item.caption;
-          selectFieldRef.current[customDropdown.id] = item.extMap.UNIQUE_NAME
-          optionsContainer.style.display = 'none';
-
-          // customDropdown.setAttribute('data-unique-name', item.extMap.UNIQUE_NAME)
-        };
-        optionsContainer.appendChild(optionElement);
-      });
-
-
-      customDropdown.onclick = () => {
-        // editableDiv.focus();
-        optionsContainer.style.display = optionsContainer.style.display === 'none' ? 'block' : 'none'; // Toggle options
-        customDropdown.setAttribute('data-type', `${optionsContainer.style.display === 'none' ? "down" : "up"}`);
-      };
-
-      const selectId = `select_${Date.now()}`;
-      customDropdown.id = selectId;
-
-      const closeOptions = (event: any) => {
-        editableDiv.focus();
-        if (!newElement.contains(event.target)) {
-          optionsContainer.style.display = 'none';
-          customDropdown.setAttribute('data-type', "down");
-        }
-      };
-
-      document.addEventListener('click', closeOptions);
-
-      if (optionsContainer.style.display = 'none') {
-        if (range && editableDiv.contains(range.startContainer)) {
-
-
-          newElement.appendChild(customDropdown);
-          newElement.appendChild(optionsContainer);
-
-          range.insertNode(newElement);
-          range.setStartAfter(newElement);
-        } else {
-          newElement.appendChild(customDropdown);
-          newElement.appendChild(optionsContainer);
-          editableDiv.appendChild(newElement);
-        }
+      if (editableDiv.childNodes[cursorIndex]) {
+        range.setStartAfter(editableDiv.childNodes[cursorIndex]);
+      } else {
+        range.setStartAfter(editableDiv.lastChild || editableDiv);
       }
 
-      setHtml(editableDiv.innerHTML);
-      setLastOperator("AVG")
+      range.collapse(true);
+      sel?.removeAllRanges();
+      sel?.addRange(range);
 
+      setCursorIndex(cursorIndex + 1);
       editableDiv.focus();
-    } else {
-      editableDiv.focus();
-
-    }
+    }, 0);
   };
+  // const handleNewField = () => {
+  //   const selection = window.getSelection();
+  //   const range = selection?.getRangeAt(0);
+  //   const editableDiv = contentEditable.current;
+
+  //   if (!editableDiv) return;
+
+  //   if (range?.endContainer.nodeName !== "#text") {
+
+
+  //     const newElement = document.createElement('div');
+  //     newElement.className = `${styles.dynamicbtn} ${styles["NEW_FIELD"]}`;
+  //     newElement.setAttribute('data-type', "NEW_FIELD");
+  //     newElement.contentEditable = 'false';
+
+
+  //     // Create custom dropdown
+  //     const customDropdown = document.createElement('div');
+  //     customDropdown.className = styles.customDropdown;
+  //     customDropdown.setAttribute('data-type', "down");
+  //     customDropdown.textContent = "انتخاب سوال";
+
+  //     const optionsContainer = document.createElement('div');
+  //     optionsContainer.className = styles.optionsContainer;
+  //     optionsContainer.style.display = 'none';
+
+  //     JSONData.dataList.forEach((item: any) => {
+  //       const optionElement = document.createElement('div');
+  //       optionElement.className = styles.option;
+  //       optionElement.textContent = item.caption;
+  //       optionElement.onclick = () => {
+  //         customDropdown.textContent = item.caption;
+  //         selectFieldRef.current[customDropdown.id] = item.extMap.UNIQUE_NAME
+  //         optionsContainer.style.display = 'none';
+
+  //         // customDropdown.setAttribute('data-unique-name', item.extMap.UNIQUE_NAME)
+  //       };
+  //       optionsContainer.appendChild(optionElement);
+  //     });
+
+
+  //     customDropdown.onclick = () => {
+  //       // editableDiv.focus();
+  //       optionsContainer.style.display = optionsContainer.style.display === 'none' ? 'block' : 'none'; // Toggle options
+  //       customDropdown.setAttribute('data-type', `${optionsContainer.style.display === 'none' ? "down" : "up"}`);
+  //     };
+
+  //     const selectId = `select_${Date.now()}`;
+  //     customDropdown.id = selectId;
+
+  //     const closeOptions = (event: any) => {
+  //       editableDiv.focus();
+  //       if (!newElement.contains(event.target)) {
+  //         optionsContainer.style.display = 'none';
+  //         customDropdown.setAttribute('data-type', "down");
+  //       }
+  //     };
+
+  //     document.addEventListener('click', closeOptions);
+
+  //     if (optionsContainer.style.display = 'none') {
+  //       if (range && editableDiv.contains(range.startContainer)) {
+
+
+  //         newElement.appendChild(customDropdown);
+  //         newElement.appendChild(optionsContainer);
+
+  //         range.insertNode(newElement);
+  //         range.setStartAfter(newElement);
+  //       } else {
+  //         newElement.appendChild(customDropdown);
+  //         newElement.appendChild(optionsContainer);
+  //         editableDiv.appendChild(newElement);
+  //       }
+  //     }
+
+  //     setHtml(editableDiv.innerHTML);
+  //     setLastOperator("AVG")
+
+  //     editableDiv.focus();
+  //   } else {
+  //     editableDiv.focus();
+
+  //   }
+  // };
+
+  const renderElements = useCallback(() => {
+    return elements.map((elem, index) => {
+      if (elem.type === 'NEW_FIELD') {
+        return (
+          <div
+            key={elem.id}
+            contentEditable={false}
+            className={`${styles.dynamicbtn} ${styles.NEW_FIELD}`}
+            data-type="NEW_FIELD"
+          >
+            <div
+              className={styles.customDropdown}
+              data-type="down"
+              onClick={(e) => handleDropdownClick(e, elem.id!)}
+            >
+              {elem.content}
+            </div>
+            <div className={styles.optionsContainer} style={{ display: 'none' }}>
+              {JSONData.dataList.map((item: any) => (
+                <div
+                  key={item.extMap.UNIQUE_NAME}
+                  className={styles.option}
+                  onClick={() => handleOptionClick(item, elem.id!)}
+                >
+                  {item.caption}
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      }
+      return (
+        <div
+          key={index}
+          contentEditable={false}
+          className={`${styles.dynamicbtn} ${styles[elem.type]}`}
+          data-type={elem.type}
+        >
+          {elem.content}
+        </div>
+      );
+    });
+  }, [elements, styles]);
+
+  const handleDropdownClick = (e: React.MouseEvent, id: string) => {
+    e.stopPropagation();
+    const optionsContainer = (e.target as HTMLElement).nextElementSibling as HTMLElement;
+    const isHidden = optionsContainer.style.display === 'none';
+    optionsContainer.style.display = isHidden ? 'block' : 'none';
+    (e.target as HTMLElement).setAttribute('data-type', isHidden ? 'up' : 'down');
+  };
+
+  const handleOptionClick = (item: any, id: string) => {
+    const newElements = elements.map(elem =>
+      elem.id === id ? { ...elem, content: item.caption } : elem
+    );
+    setElements(newElements);
+    selectFieldRef.current[id] = item.extMap.UNIQUE_NAME;
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest(`.${styles.NEW_FIELD}`)) {
+        const allOptionContainers = document.querySelectorAll(`.${styles.optionsContainer}`);
+        allOptionContainers.forEach((container: Element) => {
+          (container as HTMLElement).style.display = 'none';
+        });
+        const allDropdowns = document.querySelectorAll(`.${styles.customDropdown}`);
+        allDropdowns.forEach((dropdown: Element) => {
+          dropdown.setAttribute('data-type', 'down');
+        });
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [styles]);
 
 
 
