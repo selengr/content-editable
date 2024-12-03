@@ -626,17 +626,46 @@ const Page = () => {
             </div>
           </div>
         );
+      } else if (elem.type === 'NEW_FnFx') {
+        return (
+          <div
+            key={elem.id}
+            contentEditable={false}
+            className={`${styles.dynamicbtn} ${styles.NEW_FnFx}`}
+            data-type="NEW_FnFx"
+          >
+            <div
+              className={styles.customDropdown}
+              data-type="down"
+              onClick={(e) => handleFnFXDropdownClick(e, elem.id!)}
+            >
+              {elem.content}
+            </div>
+            <div className={styles.optionsContainer} style={{ display: 'none' }}>
+              {[{ fnValue: "avg", fnCaption: "میانگین()" }].map((item) => (
+                <div
+                  key={item.fnValue}
+                  className={styles.option}
+                  onClick={() => handleFnFXOptionClick(item, elem.id!)}
+                >
+                  {item.fnCaption}
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div
+            key={index}
+            contentEditable={false}
+            className={`${styles.dynamicbtn} ${styles[elem.type]}`}
+            data-type={elem.type}
+          >
+            {elem.content}
+          </div>
+        );
       }
-      return (
-        <div
-          key={index}
-          contentEditable={false}
-          className={`${styles.dynamicbtn} ${styles[elem.type]}`}
-          data-type={elem.type}
-        >
-          {elem.content}
-        </div>
-      );
     });
   }, [elements, styles]);
 
@@ -659,7 +688,7 @@ const Page = () => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      if (!target.closest(`.${styles.NEW_FIELD}`)) {
+      if (!target.closest(`.${styles.NEW_FIELD}`) && !target.closest(`.${styles.NEW_FnFx}`)) {
         const allOptionContainers = document.querySelectorAll(`.${styles.optionsContainer}`);
         allOptionContainers.forEach((container: Element) => {
           (container as HTMLElement).style.display = 'none';
@@ -679,96 +708,157 @@ const Page = () => {
 
 
 
+  const handleFnFXDropdownClick = (e: React.MouseEvent, id: string) => {
+    e.stopPropagation();
+    const optionsContainer = (e.target as HTMLElement).nextElementSibling as HTMLElement;
+    const isHidden = optionsContainer.style.display === 'none';
+    optionsContainer.style.display = isHidden ? 'block' : 'none';
+    (e.target as HTMLElement).setAttribute('data-type', isHidden ? 'up' : 'down');
+  };
+
+  const handleFnFXOptionClick = (item: { fnValue: string, fnCaption: string }, id: string) => {
+    const newElements = elements.map(elem => 
+      elem.id === id ? { ...elem, content: item.fnCaption } : elem
+    );
+    setElements(newElements);
+    selectAvgRef.current[id] = item.fnValue;
+  };
+
 
   const handleFnFX = () => {
-    const selection = window.getSelection();
-    const range = selection?.getRangeAt(0);
     const editableDiv = contentEditable.current;
-
     if (!editableDiv) return;
 
-    if (range?.endContainer.nodeName !== "#text") {
+    const selectId = `select_${Date.now()}`;
+    const newElement: Element = {
+      type: 'NEW_FnFx',
+      content: 'میانگین()',
+      id: selectId,
+    };
+    // children: [
+    //   { type: 'OPERATOR', content: '(' },
+    //   { type: 'OPERATOR', content: ')' }
+    // ]
 
-      const newElement = document.createElement('div');
-      const newElement2 = document.createElement('div');
-      const newElement3 = document.createElement('div');
+    const newElements = [...elements];
+    newElements.splice(cursorIndex, 0, newElement);
+    newElements.splice(cursorIndex + 1, 0,
+      { type: 'PARENTHESIS', content: '(' });
+    newElements.splice(cursorIndex + 2, 0,
+      { type: 'PARENTHESIS', content: ')' });
 
-      newElement.className = `${styles.dynamicbtn} ${styles["NEW_FnFx"]}`;
-      newElement.setAttribute('data-type', "NEW_FnFx");
-      newElement.contentEditable = 'false';
-      newElement2.contentEditable = 'false';
-      newElement3.contentEditable = 'false';
-      newElement2.textContent = "(";
-      newElement3.textContent = ")";
-      newElement2.setAttribute('data-type', "avg");
-      newElement3.setAttribute('data-type', "avg");
-      newElement2.className = `${styles.dynamicbtn}  ${styles["OPERATOR"]}`;
-      newElement3.className = `${styles.dynamicbtn}  ${styles["OPERATOR"]}`;
+    setElements(newElements);
+    selectAvgRef.current[selectId] = 'avg';
 
-      // Create custom dropdown
-      const customDropdown = document.createElement('div');
-      customDropdown.className = `${styles.customDropdown}`;
-      customDropdown.setAttribute('data-type', "down");
-      customDropdown.textContent = "میانگین()";
+    // Use setTimeout to ensure the DOM has updated before setting the cursor
+    setTimeout(() => {
+      const range = document.createRange();
+      const sel = window.getSelection();
 
-      const optionsContainer = document.createElement('div');
-      optionsContainer.className = styles.optionsContainer;
-      optionsContainer.style.display = 'none';
-
-      // Define your function options
-      [{ fnValue: "avg", fnCaption: "میانگین()" }].forEach((item) => {
-        const optionElement = document.createElement('div');
-        optionElement.className = styles.option;
-        optionElement.textContent = item.fnCaption;
-        optionElement.onclick = () => {
-          customDropdown.textContent = item.fnCaption;
-          selectAvgRef.current[customDropdown.id] = item.fnValue;
-          optionsContainer.style.display = 'none';
-        };
-        optionsContainer.appendChild(optionElement);
-      });
-
-      customDropdown.onclick = (event) => {
-        event.stopPropagation();
-        optionsContainer.style.display = optionsContainer.style.display === 'none' ? 'block' : 'none'; // Toggle options
-        customDropdown.setAttribute('data-type', `${optionsContainer.style.display === 'none' ? "down" : "up"}`);
-      };
-
-      const closeOptions = (event: any) => {
-        editableDiv.focus();
-        if (!newElement.contains(event.target)) {
-          optionsContainer.style.display = 'none';
-          customDropdown.setAttribute('data-type', "down");
-        }
-      };
-
-      document.addEventListener('click', closeOptions);
-
-      const selectId = `select_${Date.now()}`;
-      customDropdown.id = selectId;
-
-      if (optionsContainer.style.display = 'none') {
-        if (range && editableDiv.contains(range.startContainer)) {
-          range.insertNode(newElement3);
-          range.insertNode(newElement2);
-          range.insertNode(newElement);
-          newElement.appendChild(customDropdown);
-          newElement.appendChild(optionsContainer);
-          range.setStartAfter(newElement3);
-        } else {
-          newElement.appendChild(customDropdown);
-          newElement.appendChild(optionsContainer);
-          editableDiv.appendChild(newElement);
-        }
-
-        setHtml(editableDiv.innerHTML);
-        setLastOperator("AVG")
-
+      if (editableDiv.childNodes[cursorIndex]) {
+        range.setStartAfter(editableDiv.childNodes[cursorIndex]);
+      } else {
+        range.setStartAfter(editableDiv.lastChild || editableDiv);
       }
-    } else {
+
+      range.collapse(true);
+      sel?.removeAllRanges();
+      sel?.addRange(range);
+
+      setCursorIndex(cursorIndex + 1);
       editableDiv.focus();
-    }
+    }, 0);
   };
+
+  // const handleFnFX = () => {
+  //   const selection = window.getSelection();
+  //   const range = selection?.getRangeAt(0);
+  //   const editableDiv = contentEditable.current;
+
+  //   if (!editableDiv) return;
+
+  //   if (range?.endContainer.nodeName !== "#text") {
+
+  //     const newElement = document.createElement('div');
+  //     const newElement2 = document.createElement('div');
+  //     const newElement3 = document.createElement('div');
+
+  //     newElement.className = `${styles.dynamicbtn} ${styles["NEW_FnFx"]}`;
+  //     newElement.setAttribute('data-type', "NEW_FnFx");
+  //     newElement.contentEditable = 'false';
+  //     newElement2.contentEditable = 'false';
+  //     newElement3.contentEditable = 'false';
+  //     newElement2.textContent = "(";
+  //     newElement3.textContent = ")";
+  //     newElement2.setAttribute('data-type', "avg");
+  //     newElement3.setAttribute('data-type', "avg");
+  //     newElement2.className = `${styles.dynamicbtn}  ${styles["OPERATOR"]}`;
+  //     newElement3.className = `${styles.dynamicbtn}  ${styles["OPERATOR"]}`;
+
+  //     // Create custom dropdown
+  //     const customDropdown = document.createElement('div');
+  //     customDropdown.className = `${styles.customDropdown}`;
+  //     customDropdown.setAttribute('data-type', "down");
+  //     customDropdown.textContent = "میانگین()";
+
+  //     const optionsContainer = document.createElement('div');
+  //     optionsContainer.className = styles.optionsContainer;
+  //     optionsContainer.style.display = 'none';
+
+  //     // Define your function options
+  //     [{ fnValue: "avg", fnCaption: "میانگین()" }].forEach((item) => {
+  //       const optionElement = document.createElement('div');
+  //       optionElement.className = styles.option;
+  //       optionElement.textContent = item.fnCaption;
+  //       optionElement.onclick = () => {
+  //         customDropdown.textContent = item.fnCaption;
+  //         selectAvgRef.current[customDropdown.id] = item.fnValue;
+  //         optionsContainer.style.display = 'none';
+  //       };
+  //       optionsContainer.appendChild(optionElement);
+  //     });
+
+  //     customDropdown.onclick = (event) => {
+  //       event.stopPropagation();
+  //       optionsContainer.style.display = optionsContainer.style.display === 'none' ? 'block' : 'none'; // Toggle options
+  //       customDropdown.setAttribute('data-type', `${optionsContainer.style.display === 'none' ? "down" : "up"}`);
+  //     };
+
+  //     const closeOptions = (event: any) => {
+  //       editableDiv.focus();
+  //       if (!newElement.contains(event.target)) {
+  //         optionsContainer.style.display = 'none';
+  //         customDropdown.setAttribute('data-type', "down");
+  //       }
+  //     };
+
+  //     document.addEventListener('click', closeOptions);
+
+  //     const selectId = `select_${Date.now()}`;
+  //     customDropdown.id = selectId;
+
+  //     if (optionsContainer.style.display = 'none') {
+  //       if (range && editableDiv.contains(range.startContainer)) {
+  //         range.insertNode(newElement3);
+  //         range.insertNode(newElement2);
+  //         range.insertNode(newElement);
+  //         newElement.appendChild(customDropdown);
+  //         newElement.appendChild(optionsContainer);
+  //         range.setStartAfter(newElement3);
+  //       } else {
+  //         newElement.appendChild(customDropdown);
+  //         newElement.appendChild(optionsContainer);
+  //         editableDiv.appendChild(newElement);
+  //       }
+
+  //       setHtml(editableDiv.innerHTML);
+  //       setLastOperator("AVG")
+
+  //     }
+  //   } else {
+  //     editableDiv.focus();
+  //   }
+  // };
 
 
 
@@ -1040,8 +1130,9 @@ const Page = () => {
               <div
                 ref={contentEditable}
                 // className={styles.editable}
-                contentEditable={true}
-                suppressContentEditableWarning={true}
+                contentEditable
+                suppressContentEditableWarning
+                onKeyDown={handleKeyDown}
                 onClick={handleClick}
                 className={styles.ContentEditable}
               >
