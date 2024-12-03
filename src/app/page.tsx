@@ -1,44 +1,28 @@
 "use client"
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
 import Image from 'next/image';
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
-import ContentEditable from 'react-contenteditable'
 
-//mui
+// mui
 import Grid from '@mui/material/Grid2';
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, Container, MenuItem, Select, Stack, TextField, Typography } from "@mui/material";
 
-
+// sections
 import CalculatorClear from "@/sections/calculator/calculator-clear";
-import CalculatorNumber from "@/sections/calculator/calculator-number";
-import CalculatorOperator from "@/sections/calculator/calculator-operator";
-
-
 import styles from '@/sections/calculator/advancedFormulaEditor.module.css'
-import JSONData from '../../public/assets/fake-data/add filed response_v1.json'
 import CalculatorParenthesis from "@/sections/calculator/calculator-parenthesis";
 
 
-const styless = { // Added styles object
-  dynamicbtn: 'dynamic-btn',
-  NEW_FIELD: 'new-field',
-  customDropdown: 'custom-dropdown',
-  optionsContainer: 'options-container',
-  PARENTHESIS: 'parenthesis',
-  NUMBER: 'number',
-  option: 'option' // Added option style
-};
+import JSONData from '../../public/assets/fake-data/add filed response_v1.json'
+
 
 interface Element {
   type: string;
   content: string;
   id?: string;
 }
-
-
-
 
 type OPERATOR_TYPE = "OPERATOR" | "NUMBER" | "AVG" | string
 
@@ -47,7 +31,6 @@ type OPERATOR_TYPE = "OPERATOR" | "NUMBER" | "AVG" | string
 const Page = () => {
   const contentEditable = useRef<HTMLDivElement>(null);
   const [html, setHtml] = useState<any>([])
-  const [lastOperator, setLastOperator] = useState<OPERATOR_TYPE>("")
   const [formula, setFormula] = useState<string>("")
   const selectFieldRef = useRef<{ [key: string]: string }>({})
   const selectAvgRef = useRef<{ [key: string]: string }>({})
