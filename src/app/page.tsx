@@ -144,32 +144,7 @@ const Page = () => {
   //   }
   // };
 
-  const createElement = (content: string, type: OPERATOR_TYPE) => {
-    const element = document.createElement('div');
-    element.className = `${styles.dynamicbtn} ${styles[type]}`;
-    element.textContent = content;
-    element.contentEditable = 'false';
-    element.setAttribute('data-type', type);
-    return element;
-  };
-
-  const insertElement = (element: HTMLElement) => {
-    const selection = window.getSelection();
-    const range = selection?.getRangeAt(0);
-    const editableDiv = contentEditable.current;
-
-    if (!editableDiv) return;
-
-    if (range && editableDiv.contains(range.startContainer)) {
-      range.insertNode(element);
-      range.setStartAfter(element);
-    } else {
-      editableDiv.appendChild(element);
-    }
-
-    setHtml(editableDiv.innerHTML);
-    editableDiv.focus();
-  };
+ 
 
   const updateElements = (newElements: Element[], newCursorIndex?: number) => {
     setElements(newElements);
