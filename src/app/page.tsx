@@ -19,7 +19,7 @@ import JSONData from '../../public/assets/fake-data/add filed response_v1.json'
 
 
 interface Element {
-  type: "OPERATOR" | "NUMBER" | "NEW_FIELD" | "PARENTHESIS" | "NEW_FnFx";
+  type: "OPERATOR" | "NUMBER" | "NEW_FIELD" | "PARENTHESIS" | "AVG_PARENTHESIS" | "NEW_FnFx";
   content: string;
   id?: string;
 }
@@ -39,26 +39,16 @@ const Page = () => {
   const [cursorIndex, setCursorIndex] = useState(0);
 
 
+
   const handleUndo = useCallback(() => {
-    const selection: any = window.getSelection();
-    const editableDiv = contentEditable.current;
+    if (elements.length === 0 || cursorIndex === 0) return;
 
-    if (!editableDiv) return;
+    const newElements = [...elements];
+    newElements.splice(cursorIndex - 1, 1);
+    const newCursorIndex = Math.max(0, cursorIndex - 1);
 
-    const range = selection?.getRangeAt(0);
-    const startContainer = range?.startContainer;
-    if (startContainer?.childNodes?.length > 0) {
-      if (range.endOffset > 0) {
-        startContainer.childNodes[range.endOffset - 1].remove();
-      } else editableDiv.focus()
-
-    } else {
-      editableDiv.focus();
-    }
-
-    setHtml(editableDiv.innerHTML);
-    editableDiv.focus();
-  }, []);
+    updateElements(newElements, newCursorIndex);
+  }, [elements, cursorIndex]);
 
 
   const updateElements = (newElements: Element[], newCursorIndex?: number) => {
@@ -143,50 +133,41 @@ const Page = () => {
     // setFormula(newFormula)
   };
 
-  function htmlToFormula(html: string): string {
-    debugger
-
+  function htmlToFormula(): string {
     let formula = ''
 
-    for (const element of Array.from(elements)) {
-      if (element) {
+    const elementHandlers = {
+      NUMBER: (content: string) => content,
+      OPERATOR: (content: string) => content,
+      PARENTHESIS: (content: string) => content,
+      AVG_PARENTHESIS: (content: string) => {
+        return content === "(" ? `${content}{` : `}${content}`;
+      },
+      NEW_FIELD: (content: string, id: string) => {
+        const isCalc = selectFieldRef.current[id]?.startsWith("calc")
+        const prefix = isCalc ? '{' : '#';
+        const suffix = isCalc ? '}' : '';
+        return `${prefix}${selectFieldRef.current[id]}${suffix}`;
+      },
+      NEW_FnFx: (content: string, id: string) => {
+        return selectAvgRef.current[id] || '';
+      }
+    };
 
-        if (element.type === "NUMBER") {
-          formula += element.content || '';
-        } else if (element.type === "OPERATOR") {
-          formula += element.content || '';
-
-        } else if (element.type === "PARENTHESIS") {
-          formula += element.content || '';
-          // if (element.getAttribute("data-type") === "avg") {
-          //   formula += "({";
-          // } else {
-          //   formula += "(";
-          // }
-
-        }
 
 
-      } else if (element.type === "NEW_FIELD") {
-        const select = element.querySelector('div');
-        if (select) {
-          // formula += '#q_' + (selectValues[select.id] || '')
-          if (selectFieldRef.current[select.id]?.startsWith("calc")) {
-            formula += '{' + (selectFieldRef.current[select.id] + '}' || '')
-          } else {
-            formula += '#' + (selectFieldRef.current[select.id] || '')
-          }
-        }
-      } else if (element.type === "NEW_FnFx") {
-        // } else if (classList.contains('advancedFormulaEditor-module__uTdVNG__NEW_FnFx')) {
-        const select = element.querySelector('div');
-        if (select) {
-          formula += '#avg' + (selectAvgRef.current[select.id] || '')
-        }
+    for (const element of elements) {
+      if (!element) continue; 
+
+      const { type, content, id } = element;
+      const handler = elementHandlers[type];
+
+      if (handler) {
+        formula += handler(content, id); 
       }
     }
-  }
 
+  
 
   console.clear()
   console.log("html", html)
@@ -195,6 +176,34 @@ const Page = () => {
   return formula
 }
 
+
+const handleDropdownClick = (e: React.MouseEvent, id: string) => {
+  e.stopPropagation();
+  const optionsContainer = (e.target as HTMLElement).nextElementSibling as HTMLElement;
+  const isHidden = optionsContainer.style.display === 'none';
+  optionsContainer.style.display = isHidden ? 'block' : 'none';
+  (e.target as HTMLElement).setAttribute('data-type', isHidden ? 'up' : 'down');
+};
+
+const handleOptionClick = (item: any, id: string) => {
+  const newElements = elements.map(elem =>
+    elem.id === id ? { ...elem, content: item.caption } : elem
+  );
+  setElements(newElements);
+  selectFieldRef.current[id] = item.extMap.UNIQUE_NAME;
+
+  // Close the options container
+  const optionsContainer = document.querySelector(`[data-id="${id}"] .${styles.optionsContainer}`) as HTMLElement;
+  if (optionsContainer) {
+    optionsContainer.style.display = 'none';
+  }
+
+  // Update the dropdown button state
+  const dropdownButton = document.querySelector(`[data-id="${id}"] .${styles.customDropdown}`) as HTMLElement;
+  if (dropdownButton) {
+    dropdownButton.setAttribute('data-type', 'down');
+  }
+};
 
 
 const handleNewField = () => {
@@ -308,33 +317,6 @@ const renderElements = useCallback(() => {
   });
 }, [elements, styles]);
 
-const handleDropdownClick = (e: React.MouseEvent, id: string) => {
-  e.stopPropagation();
-  const optionsContainer = (e.target as HTMLElement).nextElementSibling as HTMLElement;
-  const isHidden = optionsContainer.style.display === 'none';
-  optionsContainer.style.display = isHidden ? 'block' : 'none';
-  (e.target as HTMLElement).setAttribute('data-type', isHidden ? 'up' : 'down');
-};
-
-const handleOptionClick = (item: any, id: string) => {
-  const newElements = elements.map(elem =>
-    elem.id === id ? { ...elem, content: item.caption } : elem
-  );
-  setElements(newElements);
-  selectFieldRef.current[id] = item.extMap.UNIQUE_NAME;
-
-  // Close the options container
-  const optionsContainer = document.querySelector(`[data-id="${id}"] .${styles.optionsContainer}`) as HTMLElement;
-  if (optionsContainer) {
-    optionsContainer.style.display = 'none';
-  }
-
-  // Update the dropdown button state
-  const dropdownButton = document.querySelector(`[data-id="${id}"] .${styles.customDropdown}`) as HTMLElement;
-  if (dropdownButton) {
-    dropdownButton.setAttribute('data-type', 'down');
-  }
-};
 
 useEffect(() => {
   const handleClickOutside = (event: MouseEvent) => {
@@ -403,11 +385,11 @@ const handleFnFX = () => {
 
   const newElements = [...elements];
   newElements.splice(cursorIndex, 0, newElement);
-  newElements.splice(cursorIndex + 1, 0, { type: 'PARENTHESIS', content: '(' });
-  newElements.splice(cursorIndex + 2, 0, { type: 'PARENTHESIS', content: ')' });
+  newElements.splice(cursorIndex + 1, 0, { type: 'AVG_PARENTHESIS', content: '(' });
+  newElements.splice(cursorIndex + 2, 0, { type: 'AVG_PARENTHESIS', content: ')' });
 
   setElements(newElements);
-  selectAvgRef.current[selectId] = 'avg';
+  selectAvgRef.current[selectId] = '#avg';
 
   setTimeout(() => {
     const range = document.createRange();

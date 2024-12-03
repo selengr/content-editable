@@ -1,6 +1,7 @@
 .NUMBER,
 .OPERATOR,
 .PARENTHESIS,
+.AVG_PARENTHESIS,
 .asNumber {
   height: 33px;
   display: flex;
@@ -15,7 +16,8 @@
 }
 
 .OPERATOR,
-.PARENTHESIS {
+.PARENTHESIS,
+.AVG_PARENTHESIS {
   color: #1758ba;
   background-color: #1758ba1a;
 }
