@@ -290,20 +290,7 @@ const Page = () => {
 
 
 
-  // const handleNumber = (content: string) => {
-  //   const newElements: any = [...elements];
-
-  //   if (cursorIndex > 0 && newElements[cursorIndex - 1].type === 'NUMBER') {
-  //     newElements[cursorIndex - 1].content += content;
-  //     console.log("=========>3")
-  //   } else {
-  //     newElements.splice(cursorIndex, 0, { type: 'NUMBER', content });
-  //     console.log("=========>4")
-  //     setCursorIndex(cursorIndex + 1);
-  //   }
-
-  //   updateElements(newElements);
-  // };
+ 
 
   const handleNumber = (content: string) => {
     const newElements: Element[] = [...elements];
