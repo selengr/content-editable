@@ -340,51 +340,6 @@ const Page = () => {
     updateElements(newElements, newCursorIndex);
   };
 
-  // const handleOperator = (content: string, type: OPERATOR_TYPE) => {
-  //   const selection = window.getSelection();
-  //   const range = selection?.getRangeAt(0);
-  //   const editableDiv = contentEditable.current;
-
-  //   if (!editableDiv) return;
-
-  //   if (range?.endContainer.nodeName !== "#text") {
-  //     const lastChild = editableDiv.lastElementChild;
-  //     const isLastItemOperator = lastChild && lastChild.getAttribute('data-type') === 'OPERATOR';
-  //     const isLastItemNumber = lastChild && lastChild.getAttribute('data-type') === 'NUMBER';
-  //     const operatorTypes = ['-', '+', '*', '=', "/"];
-
-  //     if (isLastItemOperator && lastOperator === type && operatorTypes.includes(lastChild.textContent)) {
-  //       // Replace the last operator
-  //       lastChild.textContent = content;
-  //       lastChild.className = `${styles.dynamicbtn} ${styles[type]}`;
-  //       lastChild.setAttribute('data-type', type);
-  //     } else if (isLastItemNumber && type === 'NUMBER') {
-  //       // Combine with the last number
-  //       lastChild.textContent += content;
-  //     } else {
-  //       // Add a new operator
-  //       const newElement = document.createElement('div');
-  //       newElement.className = `${styles.dynamicbtn} ${styles[type]}`;
-  //       newElement.textContent = content;
-  //       newElement.contentEditable = 'false';
-  //       newElement.setAttribute('data-type', type);
-
-  //       if (range && editableDiv.contains(range.startContainer)) {
-  //         range.insertNode(newElement);
-  //         range.setStartAfter(newElement);
-  //       } else {
-  //         editableDiv.appendChild(newElement);
-  //       }
-  //     }
-
-  //     setHtml(editableDiv.innerHTML);
-  //     setLastOperator(type);
-  //     editableDiv.focus();
-  //   } else {
-  //     editableDiv.focus();
-  //   }
-  // };
-
 
 
 
