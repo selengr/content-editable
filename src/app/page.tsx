@@ -103,7 +103,7 @@ const Page = () => {
 
 
 
- 
+
 
   const handleNumber = (content: string) => {
     const newElements: Element[] = [...elements];
@@ -265,7 +265,7 @@ const Page = () => {
       editableDiv.focus();
     }, 0);
   };
- 
+
   const renderElements = useCallback(() => {
     return elements.map((elem, index) => {
       if (elem.type === 'NEW_FIELD') {
@@ -713,35 +713,17 @@ const Page = () => {
             <Typography variant="subtitle1" sx={{ display: "flex", justifyContent: "center", color: "#404040", fontWeight: 500 }}>اسکریپت:</Typography>
             <Stack spacing={4} sx={{ border: '1px solid #DDE1E6', borderRadius: 2, padding: 1, width: "100%", height: "100%", minHeight: 200, display: "flex", flexWrap: "wrap", flexDirection: "row" }}>
 
-              {/* 
-              <ContentEditable
-                html={html}
-                tagName="div"
-                autoFocus={true}
-                disabled={false}
-                onChange={handleChange}
-                contentEditable={"true"}
-                onKeyDown={handleKeyDown}
-                innerRef={contentEditable}
-                className={styles.ContentEditable}
-              /> */}
+
               <div
-                ref={contentEditable}
-                // className={styles.editable}
                 contentEditable
-                suppressContentEditableWarning
-                onKeyDown={handleKeyDown}
                 onClick={handleClick}
+                ref={contentEditable}
+                onKeyDown={handleKeyDown}
+                suppressContentEditableWarning
                 className={styles.ContentEditable}
               >
                 {renderElements()}
               </div>
-              {/* <div
-                ref={contentEditable}
-                className={styles.editable}
-                contentEditable="true"
-                suppressContentEditableWarning={true}
-              /> */}
 
 
             </Stack>
