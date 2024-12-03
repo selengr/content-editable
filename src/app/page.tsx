@@ -602,6 +602,7 @@ const Page = () => {
         return (
           <div
             key={elem.id}
+            data-id={elem.id}
             contentEditable={false}
             className={`${styles.dynamicbtn} ${styles.NEW_FIELD}`}
             data-type="NEW_FIELD"
@@ -630,6 +631,7 @@ const Page = () => {
         return (
           <div
             key={elem.id}
+            data-id={elem.id}
             contentEditable={false}
             className={`${styles.dynamicbtn} ${styles.NEW_FnFx}`}
             data-type="NEW_FnFx"
@@ -683,6 +685,18 @@ const Page = () => {
     );
     setElements(newElements);
     selectFieldRef.current[id] = item.extMap.UNIQUE_NAME;
+
+    // Close the options container
+    const optionsContainer = document.querySelector(`[data-id="${id}"] .${styles.optionsContainer}`) as HTMLElement;
+    if (optionsContainer) {
+      optionsContainer.style.display = 'none';
+    }
+
+    // Update the dropdown button state
+    const dropdownButton = document.querySelector(`[data-id="${id}"] .${styles.customDropdown}`) as HTMLElement;
+    if (dropdownButton) {
+      dropdownButton.setAttribute('data-type', 'down');
+    }
   };
 
   useEffect(() => {
@@ -707,7 +721,6 @@ const Page = () => {
   }, [styles]);
 
 
-
   const handleFnFXDropdownClick = (e: React.MouseEvent, id: string) => {
     e.stopPropagation();
     const optionsContainer = (e.target as HTMLElement).nextElementSibling as HTMLElement;
@@ -717,12 +730,25 @@ const Page = () => {
   };
 
   const handleFnFXOptionClick = (item: { fnValue: string, fnCaption: string }, id: string) => {
-    const newElements = elements.map(elem => 
+    const newElements = elements.map(elem =>
       elem.id === id ? { ...elem, content: item.fnCaption } : elem
     );
     setElements(newElements);
     selectAvgRef.current[id] = item.fnValue;
+
+    // Close the options container
+    const optionsContainer = document.querySelector(`[data-id="${id}"] .${styles.optionsContainer}`) as HTMLElement;
+    if (optionsContainer) {
+      optionsContainer.style.display = 'none';
+    }
+
+    // Update the dropdown button state
+    const dropdownButton = document.querySelector(`[data-id="${id}"] .${styles.customDropdown}`) as HTMLElement;
+    if (dropdownButton) {
+      dropdownButton.setAttribute('data-type', 'down');
+    }
   };
+
 
 
   const handleFnFX = () => {
@@ -735,28 +761,21 @@ const Page = () => {
       content: 'میانگین()',
       id: selectId,
     };
-    // children: [
-    //   { type: 'OPERATOR', content: '(' },
-    //   { type: 'OPERATOR', content: ')' }
-    // ]
 
     const newElements = [...elements];
     newElements.splice(cursorIndex, 0, newElement);
-    newElements.splice(cursorIndex + 1, 0,
-      { type: 'PARENTHESIS', content: '(' });
-    newElements.splice(cursorIndex + 2, 0,
-      { type: 'PARENTHESIS', content: ')' });
+    newElements.splice(cursorIndex + 1, 0, { type: 'PARENTHESIS', content: '(' });
+    newElements.splice(cursorIndex + 2, 0, { type: 'PARENTHESIS', content: ')' });
 
     setElements(newElements);
     selectAvgRef.current[selectId] = 'avg';
 
-    // Use setTimeout to ensure the DOM has updated before setting the cursor
     setTimeout(() => {
       const range = document.createRange();
       const sel = window.getSelection();
 
-      if (editableDiv.childNodes[cursorIndex]) {
-        range.setStartAfter(editableDiv.childNodes[cursorIndex]);
+      if (editableDiv.childNodes[cursorIndex + 1]) {
+        range.setStartAfter(editableDiv.childNodes[cursorIndex + 1]);
       } else {
         range.setStartAfter(editableDiv.lastChild || editableDiv);
       }
@@ -765,7 +784,7 @@ const Page = () => {
       sel?.removeAllRanges();
       sel?.addRange(range);
 
-      setCursorIndex(cursorIndex + 1);
+      setCursorIndex(cursorIndex + 2);
       editableDiv.focus();
     }, 0);
   };
