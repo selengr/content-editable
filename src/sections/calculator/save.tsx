@@ -192,11 +192,11 @@ const Page = () => {
       if (editableDiv) {
         const range = document.createRange();
         const sel = window.getSelection();
-        
-      
+
+
         range.setStart(editableDiv, cursorIndex);
-        
-        
+
+
         range.collapse(true);
         sel?.removeAllRanges();
         sel?.addRange(range);
