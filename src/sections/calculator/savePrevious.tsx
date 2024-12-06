@@ -17,7 +17,7 @@ import CalculatorOperator from "@/sections/calculator/calculator-operator";
 
 
 import styles from '@/sections/calculator/advancedFormulaEditor.module.css'
-import JSONData from '../../public/assets/fake-data/add filed response_v1.json'
+import JSONData from '../../../public/assets/fake-data/response_v1.json'
 import CalculatorParenthesis from "@/sections/calculator/calculator-parenthesis";
 
 
@@ -126,7 +126,7 @@ const Page = () => {
   //   }
   // };
 
-  const createElement = (content: string, type: OperatorType) => {
+  const createElement = (content: string, type: any) => {
     const element = document.createElement('div');
     element.className = `${styles.dynamicbtn} ${styles[type]}`;
     element.textContent = content;

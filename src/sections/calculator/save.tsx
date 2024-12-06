@@ -17,7 +17,7 @@ import CalculatorOperator from "@/sections/calculator/calculator-operator";
 
 
 import styles from '@/sections/calculator/advancedFormulaEditor.module.css'
-import JSONData from '../../public/assets/fake-data/add filed response_v1.json'
+import JSONData from '../../../public/assets/fake-data/response_v1.json'
 import CalculatorParenthesis from "@/sections/calculator/calculator-parenthesis";
 
 
@@ -206,7 +206,7 @@ const Page = () => {
   };
 
   const handleOperator = (content: string) => {
-    const newElements = [...elements];
+    const newElements :any = [...elements];
     const operatorTypes = ['-', '+', '*', '/'];
 
     if (cursorIndex > 0 && newElements[cursorIndex - 1].type === 'OPERATOR' && operatorTypes.includes(newElements[cursorIndex - 1].content)) {
