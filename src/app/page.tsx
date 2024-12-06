@@ -15,7 +15,7 @@ import styles from '@/sections/calculator/advancedFormulaEditor.module.css'
 import CalculatorParenthesis from "@/sections/calculator/calculator-parenthesis";
 
 
-import JSONData from '../../public/assets/fake-data/add filed response_v1.json'
+import JSONData from '../../public/assets/fake-data/response_v1.json'
 
 
 interface Element {
