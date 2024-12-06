@@ -29,12 +29,15 @@ const Page = () => {
   const [formula, setFormula] = useState<string>("")
   const [cursorIndex, setCursorIndex] = useState(0);
   const [elements, setElements] = useState<Element[]>([]);
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const contentEditable = useRef<HTMLDivElement>(null);
   const selectAvgRef = useRef<{ [key: string]: string }>({})
   const selectFieldRef = useRef<{ [key: string]: string }>({})
-
-
 
   const handleUndo = useCallback(() => {
     if (elements.length === 0 || cursorIndex === 0) return;
@@ -123,7 +126,7 @@ const Page = () => {
   };
 
   useEffect(() => {
-   let a  = "#q_1+#q_21+{calc_2}+#q_1+#q_21+{calc_2}-#avg({#q_1,#q_21,5,8})"
+    let a = "#q_1+#q_21+{calc_2}+#q_1+#q_21+{calc_2}-#avg({#q_1,#q_21,5,8})"
   }, [])
 
   function htmlToFormula(): string {
@@ -579,6 +582,7 @@ const Page = () => {
   };
 
 
+  if (!isClient) return
 
   return (
     <Container maxWidth="sm" sx={{ mt: "35px" }}>
@@ -609,11 +613,7 @@ const Page = () => {
       >
         <Stack spacing={1}>
           <Typography variant="subtitle2" color="#161616">نام:</Typography>
-          <Typography variant="subtitle2" color="#161616" sx={{
-            display: "flex",
-            justifyContent: "end",
-            direction: "ltr"
-          }}>{formula}</Typography>
+
 
           <TextField
             sx={{
