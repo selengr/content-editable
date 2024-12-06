@@ -133,7 +133,9 @@ const Page = () => {
     let formula = ''
 
     const elementHandlers = {
-      NUMBER: (content: string) => content,
+      NUMBER: (content: string) => {
+        return "{#v_" + content + "}"
+      },
       OPERATOR: (content: string) => content,
       PARENTHESIS: (content: string) => content,
       AVG_PARENTHESIS: (content: string) => {
@@ -141,9 +143,9 @@ const Page = () => {
       },
       NEW_FIELD: (content: string, id: string) => {
         const isCalc = selectFieldRef.current[id]?.startsWith("calc")
-        const prefix = isCalc ? '{' : '#';
-        const suffix = isCalc ? '}' : '';
-        return `${prefix}${selectFieldRef.current[id]}${suffix}`;
+        // const prefix = isCalc ? '{' : '#';
+        // const suffix = isCalc ? '}' : '';
+        return `${selectFieldRef.current[id]}`;
       },
       NEW_FnFx: (content: string, id: string) => {
         return selectAvgRef.current[id] || '';
@@ -183,7 +185,7 @@ const Page = () => {
       elem.id === id ? { ...elem, content: item.caption } : elem
     );
     setElements(newElements);
-    selectFieldRef.current[id] = item.extMap.UNIQUE_NAME;
+    selectFieldRef.current[id] = item.extMap.UNIC_NAME;
 
     const optionsContainer = document.querySelector(`[data-id="${id}"] .${styles.optionsContainer}`) as HTMLElement;
     if (optionsContainer) {
@@ -253,7 +255,7 @@ const Page = () => {
             <div className={styles.optionsContainer} style={{ display: 'none' }}>
               {JSONData.dataList.map((item: any) => (
                 <div
-                  key={item.extMap.UNIQUE_NAME}
+                  key={item.extMap.UNIC_NAME}
                   className={styles.option}
                   onClick={() => handleOptionClick(item, elem.id!)}
                 >
@@ -377,7 +379,7 @@ const Page = () => {
     newElements.splice(cursorIndex + 2, 0, { type: 'AVG_PARENTHESIS', content: ')' });
 
     setElements(newElements);
-    selectAvgRef.current[selectId] = '#avg';
+    selectAvgRef.current[selectId] = '#avgNumber';
 
     setTimeout(() => {
       const range = document.createRange();
