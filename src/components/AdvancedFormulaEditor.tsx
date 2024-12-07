@@ -344,6 +344,26 @@ const AdvancedFormulaEditor: React.FC = () => {
       }
     }
   };
+  const callApi = (e: React.MouseEvent) => {
+    let formula = ''
+    const newFormula = htmlToFormula(elements, selectFieldRef, selectAvgRef);
+    // console.log('newFormula :>> ', newFormula);
+    const avgNum = newFormula.split("#avg")
+    const test = avgNum.map(item => {
+      if (item.includes("Number")) {
+        console.log('.split("}{")', item?.replaceAll("}{", "},{"));
+        // console.log('item3 :>> ', item.includes("Number"));
+        formula += "#avg" + item?.replaceAll("}{", "},{")
+      } else {
+        formula += item
+      }
+    })
+    console.log(avgNum)
+    console.log("test", test)
+    console.log("formula", formula)
+
+    // let new2 = new.split("#avgNumber")
+  };
 
   if (!isClient) return null;
 
@@ -418,7 +438,7 @@ const AdvancedFormulaEditor: React.FC = () => {
           <LoadingButton
             type="button"
             onClick={() => {
-              const newFormula = htmlToFormula(elements, selectFieldRef, selectAvgRef);
+              callApi()
             }}
             variant="contained"
             sx={{
