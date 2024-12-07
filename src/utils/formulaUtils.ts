@@ -2,6 +2,7 @@ import { Element } from '../types/formulaEditor';
 
 export function htmlToFormula(elements: Element[], selectFieldRef: React.MutableRefObject<{ [key: string]: string }>, selectAvgRef: React.MutableRefObject<{ [key: string]: string }>): string {
   let formula = '';
+  let avgCheck = false;
 
   const elementHandlers = {
     NUMBER: (content: string) => {
@@ -10,6 +11,11 @@ export function htmlToFormula(elements: Element[], selectFieldRef: React.Mutable
     OPERATOR: (content: string) => content,
     PARENTHESIS: (content: string) => content,
     AVG_PARENTHESIS: (content: string) => {
+      if(content === "(") {
+        avgCheck = true
+      }  else {
+        avgCheck = false
+      }           
       return content === "(" ? `${content}{` : `}${content}`;
     },
     NEW_FIELD: (content: string, id: string) => {
@@ -30,7 +36,7 @@ export function htmlToFormula(elements: Element[], selectFieldRef: React.Mutable
       formula += handler(content, id || '');
     }
   }
-
+  
   console.clear();
   console.log("html-to-formula ===>", formula);
   return formula;
