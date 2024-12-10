@@ -177,7 +177,7 @@ const AdvancedFormulaEditor: React.FC = () => {
     const newElements = [...elements];
     newElements.splice(cursorIndex, 0, newElement);
     newElements.splice(cursorIndex + 1, 0, { type: 'PARENTHESIS', content: '(' });
-    newElements.splice(cursorIndex + 2, 0, { type: 'PARENTHESIS', content: ')' });
+    newElements.splice(cursorIndex + 2, 0, { type: 'PARENTHESIS', content: ')' }); 
 
     setElements(newElements);
     selectAvgRef.current[selectId] = 'avg';
