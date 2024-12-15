@@ -25,8 +25,35 @@ const AdvancedFormulaEditor: React.FC = () => {
   const handleUndo = useCallback(() => {
     if (elements.length === 0 || cursorIndex === 0) return;
 
+    if (elements[cursorIndex - 1].type === "AVG_PARENTHESIS") {
+      // debugger
+      return
+    }
+
     const newElements = [...elements];
-    newElements.splice(cursorIndex - 1, 1);
+
+    if (elements[cursorIndex - 1].type === "NEW_FnFx") {
+      let endIndex = cursorIndex - 1;
+      let parenthesisCount = 0;
+
+      for (let i = cursorIndex; i < elements.length; i++) {
+        if (elements[i].type === "AVG_PARENTHESIS") {
+          if (elements[i].content === "(") {
+            parenthesisCount++;
+          } else if (elements[i].content === ")") {
+            if (parenthesisCount === 1) {
+              endIndex = i;
+              break;
+            }
+            parenthesisCount--;
+          }
+        }
+      }
+      newElements.splice(cursorIndex - 1, endIndex - cursorIndex + 2);
+    } else {
+      newElements.splice(cursorIndex - 1, 1);
+    }
+
     const newCursorIndex = Math.max(0, cursorIndex - 1);
 
     updateElements(newElements, newCursorIndex);
@@ -325,12 +352,16 @@ const AdvancedFormulaEditor: React.FC = () => {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (!/^[0-9+\-*/().()]$/.test(event.key) &&
-      !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(event.key)) {
-      event.preventDefault();
-    }
+    // if (!/^[0-9+\-*/().()]$/.test(event.key) &&
+    //   !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(event.key)) {
+    //   event.preventDefault();
+    // }
     if (event.key === "Enter") {
       event.preventDefault();
+    }
+    if (event.key === "Backspace" || event.key === 'Delete') {
+      event.preventDefault();
+      handleUndo()
     }
   };
 

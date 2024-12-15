@@ -1,6 +1,23 @@
-// "use client"
+"use client"
+import dynamic from 'next/dynamic'
 
-import AdvancedFormulaEditor from "@/components/AdvancedFormulaEditor";
+const Page = () => {
+
+  const AdvancedFormulaEditor = dynamic(() => import('@/components/AdvancedFormulaEditor'), {
+    ssr: false
+  })
+
+  return (
+    <div>
+      <AdvancedFormulaEditor />
+    </div>
+  );
+}
+
+export default Page;
+
+
+
 
 // import Image from 'next/image';
 // import React, { useCallback, useEffect, useRef, useState } from "react";
@@ -730,12 +747,3 @@ import AdvancedFormulaEditor from "@/components/AdvancedFormulaEditor";
 // export default Page;
 
 
-const page = () => {
-  return (
-    <div>
-      <AdvancedFormulaEditor />
-    </div>
-  );
-}
-
-export default page;
