@@ -16,7 +16,7 @@ const AdvancedFormulaEditor: React.FC = () => {
 
   useEffect(() => {
     setIsClient(true);
-  }, []);
+  }, []);ss
 
   const contentEditable = useRef<HTMLDivElement>(null);
   const selectAvgRef = useRef<{ [key: string]: string }>({});
