@@ -16,7 +16,7 @@ const AdvancedFormulaEditor: React.FC = () => {
 
   useEffect(() => {
     setIsClient(true);
-  }, []);ss
+  }, []);
 
   const contentEditable = useRef<HTMLDivElement>(null);
   const selectAvgRef = useRef<{ [key: string]: string }>({});
@@ -26,7 +26,6 @@ const AdvancedFormulaEditor: React.FC = () => {
     if (elements.length === 0 || cursorIndex === 0) return;
 
     if (elements[cursorIndex - 1].type === "AVG_PARENTHESIS") {
-      // debugger
       return
     }
 
