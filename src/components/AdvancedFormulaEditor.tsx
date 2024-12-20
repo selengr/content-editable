@@ -8,6 +8,7 @@ import JSONData from '../../public/assets/fake-data/response_v1.json'
 import { Element, FnFxItem } from '../types/formulaEditor';
 import { htmlToFormula } from '../utils/htmlToFormula';
 import Keypad from './Keypad';
+import { parseFormula } from "@/utils/formulaParser";
 
 const AdvancedFormulaEditor: React.FC = () => {
   const [cursorIndex, setCursorIndex] = useState(0);
@@ -266,6 +267,12 @@ const AdvancedFormulaEditor: React.FC = () => {
     });
   }, [elements, styles]);
 
+  useEffect(() => {
+    const formula = "{#q_102}*#avgNumber({{#q_106}*{#v_3}+{#v_3}})";
+    // const formula = "{#q_105}*{#q_102}*{#v_36}*{#v_88}/{#v_22}+{#q_106}#avgNumber({{#q_107}*{#v_2},{#v_2}*{#v_6},{#q_108},{#q_109}*({#v_3}*{#v_6})})*({#v_3}*{#v_8})";
+    const parsedElements = parseFormula(formula);
+    setElements(parsedElements);
+  }, []);
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
