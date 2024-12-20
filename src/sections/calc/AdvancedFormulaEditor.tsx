@@ -365,6 +365,8 @@ const AdvancedFormulaEditor: React.FC = () => {
   }, [styles]);
 
 
+  console.log('elements :>> ', elements);
+
   return (
     <div>
       <div

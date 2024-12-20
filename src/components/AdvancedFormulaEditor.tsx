@@ -6,7 +6,7 @@ import { LoadingButton } from "@mui/lab";
 import styles from '@/sections/calculator/advancedFormulaEditor.module.css'
 import JSONData from '../../public/assets/fake-data/response_v1.json'
 import { Element, FnFxItem } from '../types/formulaEditor';
-import { htmlToFormula } from '../utils/formulaUtils';
+import { htmlToFormula } from '../utils/htmlToFormula';
 import Keypad from './Keypad';
 
 const AdvancedFormulaEditor: React.FC = () => {
@@ -396,6 +396,8 @@ const AdvancedFormulaEditor: React.FC = () => {
       }
     })
   };
+
+  console.log('elements :>> ', elements);
 
   if (!isClient) return null;
 
