@@ -19,14 +19,14 @@ const page = () => {
               }}
               sx={{ direction: 'rtl' }}
             >
-              <RHFTextField name="mediaSlug" label="عنوان بنر" dir="ltr" />
+              {/* <RHFTextField name="mediaSlug" label="عنوان بنر" dir="ltr" />
               <RHFSelect native name="appType" label="نوع اپ" sx={{ textAlign: 'right' }}>
                 {appTypeOptions.map((app: any) => (
                   <option key={app.value} value={app.value}>
                     {app.label}
                   </option>
                 ))}
-              </RHFSelect>
+              </RHFSelect> */}
 
               
               

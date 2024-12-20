@@ -12,7 +12,8 @@ import Keypad from './Keypad';
 const AdvancedFormulaEditor: React.FC = () => {
   const [cursorIndex, setCursorIndex] = useState(0);
   const [elements, setElements] = useState<Element[]>([]);
-  const [isClient, setIsClient] = useState(false);
+  const [error, setError] = useState<string>("");
+  const [isClient, setIsClient] = useState<boolean>(false);
 
   useEffect(() => {
     setIsClient(true);
@@ -377,6 +378,15 @@ const AdvancedFormulaEditor: React.FC = () => {
   const callApi = () => {
     let formula = ''
     const newFormula = htmlToFormula(elements, selectFieldRef, selectAvgRef);
+    if (newFormula.includes("undefined")) {
+      setError("please select all question field")
+      return
+    }
+    if (!!!newFormula) {
+      setError("please enter something")
+      return
+    }
+
     const avgNum = newFormula.split("#avg")
     avgNum.map(item => {
       if (item.includes("Number")) {
@@ -455,6 +465,14 @@ const AdvancedFormulaEditor: React.FC = () => {
             </Stack>
           </Box>
         </Box>
+
+
+        {error &&
+          <Stack spacing={1}>
+            <Typography variant="subtitle2" color="error">{error}</Typography>
+          </Stack>
+        }
+
 
         <Box display="flex" gap={3} width="100%" marginTop={5} marginBottom={2} sx={{ display: "flex", justifyContent: "center" }}>
           <LoadingButton
