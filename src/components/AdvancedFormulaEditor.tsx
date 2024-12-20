@@ -268,8 +268,8 @@ const AdvancedFormulaEditor: React.FC = () => {
   }, [elements, styles]);
 
   useEffect(() => {
-    const formula = "{#q_102}*#avgNumber({{#q_106}*{#v_3}+{#v_3}})";
-    // const formula = "{#q_105}*{#q_102}*{#v_36}*{#v_88}/{#v_22}+{#q_106}#avgNumber({{#q_107}*{#v_2},{#v_2}*{#v_6},{#q_108},{#q_109}*({#v_3}*{#v_6})})*({#v_3}*{#v_8})";
+    // const formula = "{#q_102}*#avgNumber({{#q_106}*{#v_3}+{#v_3}})";
+    const formula = "{#q_105}*{#q_102}*{#v_36}*{#v_88}/{#v_22}+{#q_106}#avgNumber({{#q_107}*{#v_2},{#v_2}*({#v_3}*{#v_6})})*({#v_3}*{#v_8})#avgNumber({{#q_107}*{#v_2}})";
     const parsedElements = parseFormula(formula);
     setElements(parsedElements);
   }, []);
