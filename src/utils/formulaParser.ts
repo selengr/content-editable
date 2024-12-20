@@ -38,6 +38,7 @@ const regex = /({#v_\d+})|({#q_\d+})|({#calc_\d+})|([+\-*/])|(#avgNumber)|(\(\{\
           elements.push({ type: 'AVG_PARENTHESIS', content: token });
        
       } else if (token === ')(') {
+        // elements.push({ type: 'OPERATOR', content: '/' });
         // elements.push({ type: 'PARENTHESIS', content: ')' });
         // elements.push({ type: 'OPERATOR', content: '*' });
         // elements.push({ type: 'PARENTHESIS', content: '(' });
