@@ -40,7 +40,7 @@ export function htmlToFormula(elements: Element[], selectFieldRef: React.Mutable
   
   console.clear();
   console.log("html-to-formula ===>", formula);
-  // return formula;
+  // return formula test git;
   return insertMissingOperators(formula)
 }
 
