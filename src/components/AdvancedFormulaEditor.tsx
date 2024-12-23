@@ -269,9 +269,9 @@ const AdvancedFormulaEditor: React.FC = () => {
 
   useEffect(() => {
     // const formula = "{#q_102}*#avgNumber({{#q_106}*{#v_3}+{#v_3}})";
-    const formula = "{#q_105}*{#q_102}*{#v_36}*{#v_88}/{#v_22}+{#q_106}#avgNumber({{#q_107}*{#v_2},{#v_2}*({#v_3}*{#v_6})})*({#v_3}*{#v_8})#avgNumber({{#q_107}*{#v_2}})";
-    const parsedElements = parseFormula(formula);
-    setElements(parsedElements);
+    // const formula = "{#q_105}*{#q_102}*{#v_36}*{#v_88}/{#v_22}+{#q_106}#avgNumber({{#q_107}*{#v_2},{#v_2}*({#v_3}*{#v_6})})*({#v_3}*{#v_8})#avgNumber({{#q_107}*{#v_2}})";
+    // const parsedElements = parseFormula(formula);
+    // setElements(parsedElements);
   }, []);
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

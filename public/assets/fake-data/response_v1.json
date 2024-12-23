@@ -1,349 +1,351 @@
 {
-
   "dataList": [
-
     {
-
       "value": "102",
-
       "caption": "عددی",
-
       "elementStr": "QUESTION",
-
       "extMap": {
-
         "QUESTION_TYPE": "TEXT_FIELD",
-
         "DESCRIPTION": "",
-
         "MAXIMUM_LEN": "",
-
         "UNIC_NAME": "{#q_102}",
-
         "REQUIRED": "false",
-
         "MINIMUM_LEN": "",
-
         "TEXT_FIELD_PATTERN": "NUMBER"
-
       }
-
     },
-
     {
-
       "value": "105",
-
       "caption": "چند گزینه تک انتخاب",
-
       "elementStr": "QUESTION",
-
       "extMap": {
-
         "RANDOMIZE_OPTIONS": "false",
-
         "QUESTION_TYPE": "MULTIPLE_CHOICE",
-
         "DESCRIPTION": "",
-
         "UNIC_NAME": "{#q_105}",
-
         "REQUIRED": "false",
-
         "MULTI_SELECT": "false",
-
         "OPTIONS": {
-
           "OP_2": [
-
             0,
-
             "گزینه 2"
-
           ],
-
           "OP_1": [
-
             0,
-
             "گزینه 1"
-
           ]
-
         },
-
         "OPTIONS_SIZE": 2
-
       }
-
     },
-
     {
-
       "value": "106",
-
       "caption": "چندگزینه چند انتخابی",
-
       "elementStr": "QUESTION",
-
       "extMap": {
-
         "RANDOMIZE_OPTIONS": "false",
-
         "QUESTION_TYPE": "MULTIPLE_CHOICE",
-
+        "STICKY_FUNC": "#avgMultiSelect({#q_106})",
         "DESCRIPTION": "",
-
         "UNIC_NAME": "{#q_106}",
-
         "REQUIRED": "false",
-
         "MULTI_SELECT": "true",
-
         "OPTIONS": {
-
           "OP_2": [
-
             0,
-
             "گزینه 2"
-
           ],
-
           "OP_1": [
-
             0,
-
             "گزینه 1"
-
           ]
-
         },
-
         "OPTIONS_SIZE": 2
-
       }
-
     },
-
     {
-
       "value": "107",
-
       "caption": "چند گزینه تصویری تک",
-
       "elementStr": "QUESTION",
-
       "extMap": {
-
         "RANDOMIZE_OPTIONS": "false",
-
         "QUESTION_TYPE": "MULTIPLE_CHOICE_IMAGE",
-
         "DESCRIPTION": "",
-
         "UNIC_NAME": "{#q_107}",
-
         "REQUIRED": "false",
-
         "MULTI_SELECT": "false",
-
         "OPTIONS": {
-
           "OP_2": [
-
             0,
-
             "67459dfd9030b64edf433558"
-
           ],
-
           "OP_1": [
-
             0,
-
             "67459df89030b64edf433556"
-
           ]
-
         },
-
         "OPTIONS_SIZE": 2
-
       }
-
     },
-
     {
-
       "value": "108",
-
       "caption": "چند گزینه تصویری چند",
-
       "elementStr": "QUESTION",
-
       "extMap": {
-
         "RANDOMIZE_OPTIONS": "false",
-
         "QUESTION_TYPE": "MULTIPLE_CHOICE_IMAGE",
-
+        "STICKY_FUNC": "#avgMultiSelect({#q_108})",
         "DESCRIPTION": "",
-
         "UNIC_NAME": "{#q_108}",
-
         "REQUIRED": "false",
-
         "MULTI_SELECT": "true",
-
         "OPTIONS": {
-
           "OP_2": [
-
             0,
-
             "67459dfd9030b64edf433558"
-
           ],
-
           "OP_1": [
-
             0,
-
             "67459df89030b64edf433556"
-
           ]
-
         },
-
         "OPTIONS_SIZE": 2
-
       }
-
     },
-
     {
-
       "value": "109",
-
       "caption": "طیفی تک",
-
       "elementStr": "QUESTION",
-
       "extMap": {
-
         "SPECTRAL_START": "0",
-
         "SPECTRAL_TYPE": "DISCRETE",
-
         "QUESTION_TYPE": "SPECTRAL",
-
         "DESCRIPTION": "",
-
         "UNIC_NAME": "{#q_109}",
-
         "REQUIRED": "false",
-
         "SELECTION_TYPE": "SPECTRAL",
-
         "STEP": "1",
-
         "SPECTRAL_END": "100"
-
       }
-
     },
-
     {
-
       "value": "110",
-
       "caption": "طیفی دونقطه",
-
       "elementStr": "QUESTION",
-
       "extMap": {
-
         "SPECTRAL_START": "0",
-
-        "SPECTRAL_TYPE": "DISCRETE",
-
+        "SPECTRAL_TYPE": "DOMAIN",
         "QUESTION_TYPE": "SPECTRAL",
-
+        "STICKY_FUNC": "#avgSpectralDouble({#q_110})",
         "DESCRIPTION": "",
-
         "UNIC_NAME": "{#q_110}",
-
         "REQUIRED": "false",
-
-        "SELECTION_TYPE": "DOMAIN",
-
+        "SELECTION_TYPE": "DISCRETE",
         "STEP": "1",
-
         "SPECTRAL_END": "100"
-
       }
-
     },
-
     {
-
+      "value": "56",
+      "caption": "{#calc_56}",
+      "elementStr": "CALCULATION",
+      "extMap": {
+        "UNIC_NAME": "{#calc_56}",
+        "FORMULA": "{#q_100}+{#q_109}"
+      }
+    },
+    {
+      "value": "57",
+      "caption": "{#calc_57}",
+      "elementStr": "CALCULATION",
+      "extMap": {
+        "UNIC_NAME": "{#calc_57}",
+        "FORMULA": "{#q_100}+{#q_109}"
+      }
+    },
+    {
+      "value": "59",
+      "caption": "{#calc_59}",
+      "elementStr": "CALCULATION",
+      "extMap": {
+        "UNIC_NAME": "{#calc_59}",
+        "FORMULA": "{#q_100}+{#q_109}"
+      }
+    },
+    {
+      "value": "60",
+      "caption": "{#calc_60}",
+      "elementStr": "CALCULATION",
+      "extMap": {
+        "UNIC_NAME": "{#calc_60}",
+        "FORMULA": "{#q_100}+{#q_109}"
+      }
+    },
+    {
+      "value": "61",
+      "caption": "{#calc_61}",
+      "elementStr": "CALCULATION",
+      "extMap": {
+        "UNIC_NAME": "{#calc_61}",
+        "FORMULA": "{#v_3}*{#v_2}"
+      }
+    },
+    {
       "value": "23",
-
-      "caption": "محاسبه گر شماره2",
-
+      "caption": "c5",
       "elementStr": "CALCULATION",
-
       "extMap": {
-
         "UNIC_NAME": "{#calc_23}",
-
         "FORMULA": "{#q_102}+{#q_109}"
-
       }
-
     },
-
-	{
-
-      "value": "2",
-
-      "caption": "محاسبه گر اول",
-
-      "elementStr": "CALCULATION",
-
-      "extMap": {
-
-        "FORMULA": "#avgNumber({{#q_1},{#q_21},{#v_5},{#v_8}})",
-        "UNIC_NAME": "#avgNumber({{#q_1},{#q_21},{#v_5},{#v_8}})"
-
-      }
-
-    },
-
     {
-
-      "value": "101",
-
-      "caption": "محاسبه گر آخر",
-
+      "value": "55",
+      "caption": "teehthst",
       "elementStr": "CALCULATION",
-
       "extMap": {
-
-        "FORMULA": "{#q_110}+{#q_107}+{#calc_2}",
-        "UNIC_NAME": "{#q_110}+{#q_107}+{#calc_2}"
-
+        "UNIC_NAME": "{#calc_55}",
+        "FORMULA": "{#q_105}"
       }
-
+    },
+    {
+      "value": "42",
+      "caption": "egtg",
+      "elementStr": "CALCULATION",
+      "extMap": {
+        "UNIC_NAME": "{#calc_42}",
+        "FORMULA": "{#q_105}"
+      }
+    },
+    {
+      "value": "44",
+      "caption": "testergeg",
+      "elementStr": "CALCULATION",
+      "extMap": {
+        "UNIC_NAME": "{#calc_44}",
+        "FORMULA": "{#q_100}+{#q_109}"
+      }
+    },
+    {
+      "value": "45",
+      "caption": "test34",
+      "elementStr": "CALCULATION",
+      "extMap": {
+        "UNIC_NAME": "{#calc_45}",
+        "FORMULA": "{#q_100}+{#q_109}"
+      }
+    },
+    {
+      "value": "46",
+      "caption": "test8765",
+      "elementStr": "CALCULATION",
+      "extMap": {
+        "UNIC_NAME": "{#calc_46}",
+        "FORMULA": "{#q_100}+{#q_109}"
+      }
+    },
+    {
+      "value": "49",
+      "caption": "test0",
+      "elementStr": "CALCULATION",
+      "extMap": {
+        "UNIC_NAME": "{#calc_49}",
+        "FORMULA": "{#q_100}+{#q_109}"
+      }
+    },
+    {
+      "value": "51",
+      "caption": "test9",
+      "elementStr": "CALCULATION",
+      "extMap": {
+        "UNIC_NAME": "{#calc_51}",
+        "FORMULA": "{#q_100}+{#q_109}"
+      }
+    },
+    {
+      "value": "52",
+      "caption": "test8",
+      "elementStr": "CALCULATION",
+      "extMap": {
+        "UNIC_NAME": "{#calc_52}",
+        "FORMULA": "{#q_100}+{#q_109}"
+      }
+    },
+    {
+      "value": "53",
+      "caption": "test7",
+      "elementStr": "CALCULATION",
+      "extMap": {
+        "UNIC_NAME": "{#calc_53}",
+        "FORMULA": "{#q_100}+{#q_109}"
+      }
+    },
+    {
+      "value": "54",
+      "caption": "test6",
+      "elementStr": "CALCULATION",
+      "extMap": {
+        "UNIC_NAME": "{#calc_54}",
+        "FORMULA": "{#q_102}+{#q_109}"
+      }
+    },
+    {
+      "value": "41",
+      "caption": "جدید11",
+      "elementStr": "CALCULATION",
+      "extMap": {
+        "UNIC_NAME": "{#calc_41}",
+        "FORMULA": "{#q_102}+{#q_109}"
+      }
+    },
+    {
+      "value": "43",
+      "caption": "test",
+      "elementStr": "CALCULATION",
+      "extMap": {
+        "UNIC_NAME": "{#calc_43}",
+        "FORMULA": "{#q_105}#avgNumber({{#v_2}}){#v_6}undefinedundefined(+)"
+      }
+    },
+    {
+      "value": "47",
+      "caption": "test2",
+      "elementStr": "CALCULATION",
+      "extMap": {
+        "UNIC_NAME": "{#calc_47}",
+        "FORMULA": "{#q_100}+{#q_109}"
+      }
+    },
+    {
+      "value": "48",
+      "caption": "test3",
+      "elementStr": "CALCULATION",
+      "extMap": {
+        "UNIC_NAME": "{#calc_48}",
+        "FORMULA": "{#q_100}+{#q_109}"
+      }
+    },
+    {
+      "value": "50",
+      "caption": "test4",
+      "elementStr": "CALCULATION",
+      "extMap": {
+        "UNIC_NAME": "{#calc_50}",
+        "FORMULA": "{#q_105}"
+      }
+    },
+    {
+      "value": "58",
+      "caption": "test",
+      "elementStr": "CALCULATION",
+      "extMap": {
+        "UNIC_NAME": "{#calc_58}",
+        "FORMULA": "{#q_106}{#q_105}{#q_102}"
+      }
     }
 
   ],
-
-  "totalCount": 10,
-
+  "totalCount": 29,
   "page": 0,
-
-  "rows": 1000
-
+  "rows": 10000
 }
