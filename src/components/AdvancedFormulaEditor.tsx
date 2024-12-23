@@ -140,11 +140,14 @@ const AdvancedFormulaEditor: React.FC = () => {
   };
 
   const handleOptionClick = (item: any, id: string) => {
-    const newElements = elements.map(elem =>
-      elem.id === id ? { ...elem, content: item.caption } : elem
+    const newElements = elements.map(elem => elem.id === id ? { ...elem, content: item.caption } : elem
     );
     setElements(newElements);
-    selectFieldRef.current[id] = item.extMap.UNIC_NAME;
+    if (item.extMap.STICKY_FUNC) {
+      selectFieldRef.current[id] = item.extMap.STICKY_FUNC;
+    } else {
+      selectFieldRef.current[id] = item.extMap.UNIC_NAME;
+    }
 
     const optionsContainer = document.querySelector(`[data-id="${id}"] .${styles.optionsContainer}`) as HTMLElement;
     if (optionsContainer) {
@@ -268,11 +271,12 @@ const AdvancedFormulaEditor: React.FC = () => {
   }, [elements, styles]);
 
   useEffect(() => {
-    // const formula = "{#q_102}*#avgNumber({{#q_106}*{#v_3}+{#v_3}})";
-    // const formula = "{#q_105}*{#q_102}*{#v_36}*{#v_88}/{#v_22}+{#q_106}#avgNumber({{#q_107}*{#v_2},{#v_2}*({#v_3}*{#v_6})})*({#v_3}*{#v_8})#avgNumber({{#q_107}*{#v_2}})";
-    // const parsedElements = parseFormula(formula);
-    // setElements(parsedElements);
+
+    if (localStorage.getItem("elements")) {
+      setElements(JSON.parse(localStorage.getItem("elements")));
+    }
   }, []);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
@@ -384,6 +388,8 @@ const AdvancedFormulaEditor: React.FC = () => {
   };
   const callApi = () => {
     let formula = ''
+    console.log(elements)
+    localStorage.setItem("elements", JSON.stringify(elements))
     const newFormula = htmlToFormula(elements, selectFieldRef, selectAvgRef);
     if (newFormula.includes("undefined")) {
       setError("please select all question field")
