@@ -140,6 +140,7 @@ const AdvancedFormulaEditor: React.FC = () => {
   };
 
   const handleOptionClick = (item: any, id: string) => {
+    // debugger
     const newElements = elements.map(elem => elem.id === id ? { ...elem, content: item.caption } : elem
     );
     setElements(newElements);
@@ -164,11 +165,11 @@ const AdvancedFormulaEditor: React.FC = () => {
     const editableDiv = contentEditable.current;
     if (!editableDiv) return;
 
-    const selectId = `select_${Date.now()}`;
+    const fieldId = `select_${Date.now()}`;
     const newElement: Element = {
       type: 'NEW_FIELD',
       content: 'انتخاب سوال',
-      id: selectId
+      id: fieldId
     };
 
     const newElements = [...elements];
@@ -269,12 +270,29 @@ const AdvancedFormulaEditor: React.FC = () => {
       }
     });
   }, [elements, styles]);
-
   useEffect(() => {
-
-    if (localStorage.getItem("elements")) {
-      setElements(JSON.parse(localStorage.getItem("elements")));
+    async function getData() {
+      const storedElements = localStorage.getItem("elements");
+      if (storedElements) {
+        const elements = JSON.parse(storedElements);
+        for (const elem of elements) {
+          if (elem.type === "NEW_FIELD") {
+            JSONData.dataList.forEach((item: any) => {
+              if (item.caption === elem.content) {
+                if (item.extMap.STICKY_FUNC) {
+                  selectFieldRef.current[elem.id] = item.extMap.STICKY_FUNC;
+                } else {
+                  selectFieldRef.current[elem.id] = item.extMap.UNIC_NAME;
+                }
+              }
+            });
+          }
+        }
+        setElements(elements);
+      }
     }
+
+    getData();
   }, []);
 
   useEffect(() => {
@@ -328,11 +346,11 @@ const AdvancedFormulaEditor: React.FC = () => {
     const editableDiv = contentEditable.current;
     if (!editableDiv) return;
 
-    const selectId = `select_${Date.now()}`;
+    const fieldId = `select_${Date.now()}`;
     const newElement: Element = {
       type: 'NEW_FnFx',
       content: 'میانگین()',
-      id: selectId,
+      id: fieldId,
     };
 
     const newElements = [...elements];
@@ -341,7 +359,7 @@ const AdvancedFormulaEditor: React.FC = () => {
     newElements.splice(cursorIndex + 2, 0, { type: 'AVG_PARENTHESIS', content: ')' });
 
     setElements(newElements);
-    selectAvgRef.current[selectId] = '#avgNumber';
+    selectAvgRef.current[fieldId] = '#avgNumber';
 
     setTimeout(() => {
       const range = document.createRange();

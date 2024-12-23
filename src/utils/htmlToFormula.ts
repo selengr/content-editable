@@ -19,7 +19,7 @@ export function htmlToFormula(elements: Element[], selectFieldRef: React.Mutable
       }           
       return content === "(" ? `${content}{` : `}${content}`;
     },
-    NEW_FIELD: (content: string, id: string) => {
+    NEW_FIELD: (content: string, id: string) => {debugger
       return `${selectFieldRef.current[id]}`;
     },
     NEW_FnFx: (content: string, id: string) => {
