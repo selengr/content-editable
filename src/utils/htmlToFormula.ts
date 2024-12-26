@@ -19,7 +19,8 @@ export function htmlToFormula(elements: Element[], selectFieldRef: React.Mutable
       }           
       return content === "(" ? `${content}{` : `}${content}`;
     },
-    NEW_FIELD: (content: string, id: string) => {debugger
+    NEW_FIELD: (content: string, id: string) => {
+      console.log("{selectFieldRef.current[id]",selectFieldRef.current[id])
       return `${selectFieldRef.current[id]}`;
     },
     NEW_FnFx: (content: string, id: string) => {
@@ -38,7 +39,7 @@ export function htmlToFormula(elements: Element[], selectFieldRef: React.Mutable
     }
   }
   
-  console.clear();
+  // console.clear();
   console.log("html-to-formula ===>", formula);
   // return formula test git;
   return insertMissingOperators(formula)

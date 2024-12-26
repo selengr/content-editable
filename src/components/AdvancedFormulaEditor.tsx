@@ -80,7 +80,7 @@ const AdvancedFormulaEditor: React.FC = () => {
         sel?.addRange(range);
         editableDiv.focus();
       }
-    }, 0);
+    }, 50);
   };
 
   const handleOperator = (content: string) => {
@@ -140,15 +140,16 @@ const AdvancedFormulaEditor: React.FC = () => {
   };
 
   const handleOptionClick = (item: any, id: string) => {
-    // debugger
-    const newElements = elements.map(elem => elem.id === id ? { ...elem, content: item.caption } : elem
+    const { UNIC_NAME, STICKY_FUNC } = item.extMap;
+    const newElements = elements.map(elem => elem.id === id ? { ...elem, content: item.caption, id: STICKY_FUNC ?? UNIC_NAME } : elem
     );
+
     setElements(newElements);
-    if (item.extMap.STICKY_FUNC) {
-      selectFieldRef.current[id] = item.extMap.STICKY_FUNC;
-    } else {
-      selectFieldRef.current[id] = item.extMap.UNIC_NAME;
-    }
+    // if (STICKY_FUNC) {
+    selectFieldRef.current[STICKY_FUNC || UNIC_NAME] = STICKY_FUNC || UNIC_NAME;
+    // } else {
+    //   selectFieldRef.current[UNIC_NAME] = UNIC_NAME;
+    // }
 
     const optionsContainer = document.querySelector(`[data-id="${id}"] .${styles.optionsContainer}`) as HTMLElement;
     if (optionsContainer) {
@@ -278,12 +279,9 @@ const AdvancedFormulaEditor: React.FC = () => {
         for (const elem of elements) {
           if (elem.type === "NEW_FIELD") {
             JSONData.dataList.forEach((item: any) => {
-              if (item.caption === elem.content) {
-                if (item.extMap.STICKY_FUNC) {
-                  selectFieldRef.current[elem.id] = item.extMap.STICKY_FUNC;
-                } else {
-                  selectFieldRef.current[elem.id] = item.extMap.UNIC_NAME;
-                }
+              const { UNIC_NAME, STICKY_FUNC } = item.extMap;
+              if (UNIC_NAME === elem.id || STICKY_FUNC === elem.id) {
+                selectFieldRef.current[elem.id] = STICKY_FUNC || UNIC_NAME;
               }
             });
           }
