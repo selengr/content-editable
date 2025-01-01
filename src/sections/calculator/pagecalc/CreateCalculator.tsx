@@ -1,6 +1,7 @@
 import { memo, useCallback, useState } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { SxProps, Theme } from "@mui/material";
+import useActionOpenDialog from "@/hook/useActionOpenDialog";
 
 
 const buttonSx: SxProps<Theme> = {
@@ -30,11 +31,13 @@ const CreateCalculator = () => {
 
 
 
+
+
     return (
         <LoadingButton
             variant="text"
-            onClick={handleCreateNewPage}
-            loading={newPageIsLoading}
+            onClick={() => setOpenDialog(true)}
+            // loading={}
             fullWidth
             sx={buttonSx}
         >
