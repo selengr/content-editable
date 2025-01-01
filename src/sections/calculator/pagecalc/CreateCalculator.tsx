@@ -20,7 +20,7 @@ const buttonSx: SxProps<Theme> = {
 
 
 const CreateCalculator = () => {
-    const [newPageIsLoading, setNewPageIsLoading] = useState<boolean>(false);
+    const setOpenDialog = useActionOpenDialog();
 
 
 
