@@ -1,0 +1,131 @@
+{
+    "dataList": 
+[
+    {
+      "id": 61,
+      "name": "جدید",
+      "formBuilderId": 81,
+      "theFormula": "{#v_3}*{#v_2}+",
+      "frontCalcData": ""
+    },
+    {
+      "id": 60,
+      "name": "",
+      "formBuilderId": 81,
+      "theFormula": "{#q_100}+{#q_1}",
+      "frontCalcData": ""
+    },
+    {
+      "id": 59,
+      "name": "",
+      "formBuilderId": 81,
+      "theFormula": "{#q_100}+{#q_1}",
+      "frontCalcData": ""
+    },
+    {
+      "id": 57,
+      "name": "",
+      "formBuilderId": 81,
+      "theFormula": "{#q_100}+{#q_1}",
+      "frontCalcData": ""
+    },
+    {
+      "id": 56,
+      "name": "",
+      "formBuilderId": 81,
+      "theFormula": "{#q_100}+{#q_1}",
+      "frontCalcData": ""
+    },
+    {
+      "id": 55,
+      "name": "",
+      "formBuilderId": 81,
+      "theFormula": "{#q_105}",
+      "frontCalcData": ""
+    },
+    {
+      "id": 53,
+      "name": "",
+      "formBuilderId": 81,
+      "theFormula": "{#q_100}+{#q_1}",
+      "frontCalcData": ""
+    },
+    {
+      "id": 52,
+      "name": "",
+      "formBuilderId": 81,
+      "theFormula": "{#q_100}+{#q_1}",
+      "frontCalcData": ""
+    },
+    {
+      "id": 51,
+      "name": "",
+      "formBuilderId": 81,
+      "theFormula": "{#q_100}+{#q_1}",
+      "frontCalcData": ""
+    },
+    {
+      "id": 50,
+      "name": "",
+      "formBuilderId": 81,
+      "theFormula": "{#q_105}",
+      "frontCalcData": ""
+    },
+    {
+      "id": 49,
+      "name": "",
+      "formBuilderId": 81,
+      "theFormula": "{#q_100}+{#q_1}",
+      "frontCalcData": ""
+    },
+    {
+      "id": 48,
+      "name": "",
+      "formBuilderId": 81,
+      "theFormula": "{#q_100}+{#q_1}",
+      "frontCalcData": ""
+    },
+    {
+      "id": 47,
+      "name": "",
+      "formBuilderId": 81,
+      "theFormula": "{#q_100}+{#q_1}",
+      "frontCalcData": ""
+    },
+    {
+      "id": 46,
+      "name": "",
+      "formBuilderId": 81,
+      "theFormula": "{#q_100}+{#q_1}",
+      "frontCalcData": ""
+    },
+    {
+      "id": 45,
+      "name": "",
+      "formBuilderId": 81,
+      "theFormula": "{#q_100}+{#q_1}",
+      "frontCalcData": ""
+    },
+    {
+      "id": 44,
+      "name": "",
+      "formBuilderId": 81,
+      "theFormula": "{#q_100}+{#q_1}",
+      "frontCalcData": ""
+    },
+    {
+      "id": 43,
+      "name": "",
+      "formBuilderId": 81,
+      "theFormula": "{#q_105}#avgNu+)",
+      "frontCalcData": ""
+    },
+    {
+      "id": 42,
+      "name": "",
+      "formBuilderId": 81,
+      "theFormula": "{#q_105}",
+      "frontCalcData": ""
+    }
+  ]
+}
