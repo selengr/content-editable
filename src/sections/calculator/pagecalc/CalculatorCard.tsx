@@ -1,5 +1,5 @@
-import { ICalculatorCardProps } from "@/types/calculator";
 import Image from "next/image";
+import { ICalculatorCardProps } from "@/types/calculator";
 
 
 export function CalculatorCard({ calculator }: ICalculatorCardProps) {
