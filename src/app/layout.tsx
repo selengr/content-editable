@@ -1,8 +1,12 @@
+"use client"
+
 import type { Metadata } from "next";
 import { iranSans } from './fonts/fonts'
 import "./globals.css";
 // mui
 import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';
+import { useState } from "react";
+import { ActionOpenDialogContext, OpenDialogContext } from "@/context/AllContexts";
 // import { ThemeProvider } from '@mui/material/styles'
 // import { CacheProvider } from '@emotion/react'
 // import CssBaseline from '@mui/material/CssBaseline'
@@ -30,12 +34,22 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+
+
   return (
     <html lang="en">
       <body className={`${iranSans.variable} font-sans`}>
-        <ThemeRegistry>{children}</ThemeRegistry>
+        <ThemeRegistry>
+          <ActionOpenDialogContext.Provider value={setOpenDialog}>
+            <OpenDialogContext.Provider value={openDialog}>
+              {children}
+            </OpenDialogContext.Provider>
+          </ActionOpenDialogContext.Provider>
+        </ThemeRegistry>
       </body>
-    </html>
+    </html >
   );
 }
 
