@@ -17,6 +17,7 @@ import {
     cancelText,
     cancelStatus = true,
     loading = false,
+    maxWidth = 'xs',
     ...other
   }: ConfirmDialogProps) {
     return (

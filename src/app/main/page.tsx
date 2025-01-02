@@ -4,7 +4,6 @@
 // import CalculatorList from '@/templates/calculator/CalculatorList';
 // import { AxiosResponse } from 'axios';
 import CalculatorList from '@/sections/calculator/pagecalc/CalculatorList';
-import dynamic from 'next/dynamic'
 import JSONData from '../../../public/assets/fake-data/calcList.json'
 
 

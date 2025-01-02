@@ -7,5 +7,6 @@ export interface ConfirmDialogProps {
     open: boolean;
     onClose: () => void;
     loading?: boolean;
+    maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
   }
   
