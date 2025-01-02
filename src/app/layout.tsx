@@ -40,15 +40,15 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+            <OpenDialogContext.Provider value={openDialog}>
       <body className={`${iranSans.variable} font-sans`}>
         <ThemeRegistry>
           <ActionOpenDialogContext.Provider value={setOpenDialog}>
-            <OpenDialogContext.Provider value={openDialog}>
               {children}
-            </OpenDialogContext.Provider>
           </ActionOpenDialogContext.Provider>
         </ThemeRegistry>
       </body>
+            </OpenDialogContext.Provider>
     </html >
   );
 }
