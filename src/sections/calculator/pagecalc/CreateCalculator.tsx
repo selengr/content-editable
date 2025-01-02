@@ -47,7 +47,7 @@ const CreateCalculator = () => {
                 ایجاد محاسبه‌گر
             </LoadingButton>
 
-            <CreateCalculatorDialog open={open} />
+            <CreateCalculatorDialog open={open} setOpen={setOpen} />
 
         </>
     );

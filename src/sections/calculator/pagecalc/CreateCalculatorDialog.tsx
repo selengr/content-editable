@@ -4,15 +4,16 @@ import { CgClose } from "react-icons/cg";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import AdvancedFormulaEditor from "@/components/AdvancedFormulaEditor";
+import { IconButton } from "@mui/material";
 
 
 
-const CreateCalculatorDialog = ({ open }: { open: boolean }) => {
+const CreateCalculatorDialog = ({ open, setOpen }: { open: boolean, setOpen: any }) => {
 
 
 
     const handleClose = () => {
-        // setOpen((prev) => !prev);
+        setOpen((prev) => !prev);
     };
 
     return (
@@ -33,26 +34,27 @@ const CreateCalculatorDialog = ({ open }: { open: boolean }) => {
                 },
             }}
         >
-            {!open && (
-                <div className="flex items-center justify-start">
-                    <button className="mx-4 mt-4 mb-0" onClick={handleClose}>
-                        <CgClose color="#404040" width={25} height={25} size="1.5rem" />
-                    </button>
-                </div>
-            )}
+
             <DialogContent
                 dir="rtl"
                 sx={{
                     maxHeight: "75vh",
                     scrollbarWidth: "thin",
                     maxWidth: "100%",
-                    // width: "450px",
-                    paddingX: 1,
-                    paddingBottom: 0,
-                    paddingTop: 0,
+                    paddingX: 3,
+                    paddingBottom: 3,
+                    paddingTop: 3,
                 }}
             >
+                <div className="flex items-center justify-end">
+                    <IconButton edge="end">
+                        <CgClose color="#404040" width={25} height={25}
+                            size="1.5rem"
+                            onClick={() => handleClose()}
+                        />
+                    </IconButton>
 
+                </div>
                 <AdvancedFormulaEditor />
 
             </DialogContent>
