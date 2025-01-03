@@ -1,9 +1,6 @@
-import { memo, useCallback, useState } from "react";
+import { useState } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { SxProps, Theme, Typography } from "@mui/material";
-import useActionOpenDialog from "@/hook/useActionOpenDialog";
-import ConfirmDialog from "@/components/confirm-dialog/ConfirmDialog";
-import AdvancedFormulaEditor from "@/components/AdvancedFormulaEditor";
 import CreateCalculatorDialog from "./CreateCalculatorDialog";
 
 
@@ -25,13 +22,6 @@ const buttonSx: SxProps<Theme> = {
 
 const CreateCalculator = () => {
     const [open, setOpen] = useState<boolean>(false);
-
-
-    const handleCreateNewPage = useCallback(async () => {
-
-    }, []);
-
-
 
 
 
