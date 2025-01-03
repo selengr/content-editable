@@ -481,7 +481,7 @@ const AdvancedFormulaEditor: React.FC = () => {
             contentEditable={contentEditable}
           />
 
-          <Box sx={{ width: { xs: "100%", sm: "70%" }, display: "flex", flexDirection: "column", alignItems: "start" }}>
+          <Box sx={{ width: { xs: "100%", sm: "73%" }, display: "flex", flexDirection: "column", alignItems: "start" }}>
             <Typography variant="subtitle1" sx={{ display: "flex", justifyContent: "center", color: "#404040", fontWeight: 500 }}>اسکریپت:</Typography>
             <Stack spacing={4} sx={{ border: '1px solid #DDE1E6', borderRadius: 2, padding: 1, width: "100%", height: "100%", minHeight: 200, display: "flex", flexWrap: "wrap", flexDirection: "row" }}>
               <div

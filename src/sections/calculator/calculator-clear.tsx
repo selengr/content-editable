@@ -10,7 +10,7 @@ const CalculatorClear = ({ handleClear }: ICalculatorClear) => {
         <>
 
             <Button sx={{
-                border: '1px solid white', width: 70, minWidth: 70, height: 33, color: "#FA4D56", backgroundColor: "#FA4D561A", margin: "2px",
+                border: '1px solid white', width: 65, minWidth: 65, height: 30, color: "#FA4D56", backgroundColor: "#FA4D561A", margin: "2px",
                 '&.MuiButtonBase-root:hover': {
                     backgroundColor: "#FA4D561A"
                 },

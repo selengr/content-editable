@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Select, MenuItem, Stack, Grid } from '@mui/material';
+import { Box, Button, Select, MenuItem, Stack, Grid, Grid2 } from '@mui/material';
 import Image from 'next/image';
 import CalculatorParenthesis from '@/sections/calculator/calculator-parenthesis';
 import CalculatorClear from '@/sections/calculator/calculator-clear';
@@ -29,14 +29,14 @@ const Keypad: React.FC<KeypadProps> = ({
   const numbers = ['0', '.', '7', '8', '9', '4', '5', '6', '1', '2', '3'];
 
   return (
-    <Box sx={{ width: { xs: "100%", sm: "30%" }, display: "flex", flexDirection: "column", justifyContent: "start", alignItems: "start", mt: 3 }} gap={"3px"}>
+    <Box sx={{ width: "26%", display: "flex", flexDirection: "column", justifyContent: "start", alignItems: "start", mt: 3 }} gap={"3px"}>
       <Select
         sx={{
           '& .MuiSelect-select': {
             padding: 1,
           },
-          width: 145,
-          height: 33,
+          width: 135,
+          height: 30,
           fontWeight: 500,
           marginBottom: "2px",
           backgroundColor: "#9D2CDF1A",
@@ -45,9 +45,11 @@ const Keypad: React.FC<KeypadProps> = ({
           borderColor: "none",
           '&:before, &:after': {
             border: 'none',
+            padding: 0,
           },
           '& .MuiOutlinedInput-notchedOutline': {
             border: 'none',
+            padding: 0,
           },
           '& .MuiSvgIcon-root': {
             color: "#9D2CDF",
@@ -102,13 +104,13 @@ const Keypad: React.FC<KeypadProps> = ({
         ))}
       </Select>
 
-      <Button 
+      <Button
         sx={{
           border: '1px solid white',
-          width: 145,
-          height: 33,
+          width: 135,
+          height: 30,
           fontWeight: 500,
-          color: "#1758BA", 
+          color: "#1758BA",
           backgroundColor: "#1758BA1A"
         }}
         onClick={handleNewField}
@@ -117,40 +119,40 @@ const Keypad: React.FC<KeypadProps> = ({
       </Button>
 
       <Stack sx={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-        <Grid gridColumn={3} sx={{ width: "90%", display: "flex", flexDirection: "column", marginRight: "4px" }} >
+        <Grid2 gridColumn={3} sx={{ width: "79%", display: "flex", flexDirection: "column", marginRight: "4px" }} >
           <CalculatorParenthesis operator={'('} handleParenthesis={handleParenthesis} />
           {operators.map((op, idx) => (
-            <Button 
+            <Button
               key={idx}
-              sx={{ 
-                border: '1px solid white', 
-                width: 33, 
-                height: 33, 
-                minWidth: 33, 
-                color: "#1758BA", 
-                backgroundColor: "#1758BA1A", 
-                margin: "2px", 
-                fontWeight: 500 
+              sx={{
+                border: '1px solid white',
+                width: 30,
+                height: 30,
+                minWidth: 30,
+                color: "#1758BA",
+                backgroundColor: "#1758BA1A",
+                margin: "2px",
+                fontWeight: 500
               }}
               onClick={() => handleOperator(op)}
             >
               {op}
             </Button>
           ))}
-        </Grid>
-        <Grid gridColumn={3} sx={{}} spacing={5} gap={5} rowGap={5} columnGap={6}>
+        </Grid2>
+        <Grid2 gridColumn={3} spacing={5} gap={5} rowGap={5} columnGap={6}>
           <CalculatorParenthesis operator={')'} handleParenthesis={handleParenthesis} />
           <CalculatorClear handleClear={handleUndo} />
           {numbers.reverse().map((num, idx) => (
-            <Button 
+            <Button
               key={idx}
               sx={{
-                border: '1px solid white', 
-                width: num === "0" ? 70 : 33, 
-                height: 33, 
-                minWidth: num === "0" ? 70 : 33, 
-                color: "#1758BA", 
-                backgroundColor: "#1758BA1A", 
+                border: '1px solid white',
+                width: num === "0" ? 64 : 30,
+                height: 30,
+                minWidth: num === "0" ? 64 : 30,
+                color: "#1758BA",
+                backgroundColor: "#1758BA1A",
                 margin: "2px",
                 fontWeight: 500
               }}
@@ -159,7 +161,7 @@ const Keypad: React.FC<KeypadProps> = ({
               {num}
             </Button>
           ))}
-        </Grid>
+        </Grid2>
       </Stack>
     </Box>
   );
