@@ -431,7 +431,7 @@ const AdvancedFormulaEditor: React.FC = () => {
   if (!isClient) return null;
 
   return (
-    <Container maxWidth="sm" sx={{ paddingX: "0px !important" }}>
+    <Container maxWidth="sm" sx={{ paddingX: "0px !important", marginTop: "-15px !important" }}>
       <Typography variant="subtitle1" sx={{ display: "flex", justifyContent: "center", color: "#404040",fontWeight : 700 }}>محاسبه گر</Typography>
 
       <Box
@@ -506,7 +506,7 @@ const AdvancedFormulaEditor: React.FC = () => {
         }
 
 
-        <Box display="flex" gap={3} width="100%" marginTop={5} marginBottom={2} sx={{ display: "flex", justifyContent: "center" }}>
+        <Box display="flex" gap={3} width="100%"  marginBottom={2} sx={{ display: "flex", justifyContent: "center" }}>
           <LoadingButton
             type="button"
             onClick={() => {

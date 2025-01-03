@@ -70,7 +70,7 @@ const Keypad: React.FC<KeypadProps> = ({
         )}
         MenuProps={{
           PaperProps: {
-            sx: { px: 1, maxHeight: 280, minHeight: 180, mt: "3px" },
+            sx: { px: 1, maxHeight: 280, minHeight: 180, mt: "3px", borderRadius: 2 },
           },
         }}
         onClick={(e: any) => {
@@ -91,7 +91,7 @@ const Keypad: React.FC<KeypadProps> = ({
             sx={{
               py: 1,
               px: 2,
-              height: 33,
+              height: 30,
               borderRadius: 1.75,
               typography: 'body2',
               backgroundColor: "#9D2CDF !important",
@@ -109,7 +109,7 @@ const Keypad: React.FC<KeypadProps> = ({
           border: '1px solid white',
           width: 135,
           height: 30,
-          fontWeight: 500,
+          fontWeight: 600,
           color: "#1758BA",
           backgroundColor: "#1758BA1A"
         }}
@@ -132,7 +132,7 @@ const Keypad: React.FC<KeypadProps> = ({
                 color: "#1758BA",
                 backgroundColor: "#1758BA1A",
                 margin: "2px",
-                fontWeight: 500
+                fontWeight: 600
               }}
               onClick={() => handleOperator(op)}
             >
@@ -154,7 +154,7 @@ const Keypad: React.FC<KeypadProps> = ({
                 color: "#1758BA",
                 backgroundColor: "#1758BA1A",
                 margin: "2px",
-                fontWeight: 500
+                fontWeight: 600
               }}
               onClick={() => handleNumber(num)}
             >
