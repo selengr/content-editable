@@ -431,15 +431,15 @@ const AdvancedFormulaEditor: React.FC = () => {
   if (!isClient) return null;
 
   return (
-    <Container maxWidth="sm" sx={{ mt: "35px" }}>
-      <Typography variant="subtitle1" sx={{ display: "flex", justifyContent: "center", color: "#404040" }}>محاسبه گر</Typography>
+    <Container maxWidth="sm" sx={{ paddingX: "0px !important" }}>
+      <Typography variant="subtitle1" sx={{ display: "flex", justifyContent: "center", color: "#404040",fontWeight : 700 }}>محاسبه گر</Typography>
 
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
           height: '100%',
-          paddingX: 1.5,
+          // paddingX: 1.5,
           direction: 'ltr',
           width: '100%',
         }}
@@ -461,7 +461,8 @@ const AdvancedFormulaEditor: React.FC = () => {
                 },
               },
               '& input': {
-                padding: 1,
+                paddingX: 1,
+                paddingY: 0,
                 height: "50px",
               },
             }}

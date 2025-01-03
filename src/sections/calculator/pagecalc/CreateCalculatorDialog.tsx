@@ -41,14 +41,14 @@ const CreateCalculatorDialog = ({ open, setOpen }: { open: boolean, setOpen: any
                     maxHeight: "75vh",
                     scrollbarWidth: "thin",
                     maxWidth: "100%",
-                    paddingX: 3,
-                    paddingBottom: 3,
-                    paddingTop: 3,
+                    paddingX: 3.8,
+                    paddingBottom: 3.8,
+                    paddingTop: 3.8,
                 }}
             >
-                <div className="flex items-center justify-end">
+                <div className="flex items-center justify-end h-6">
                     <IconButton edge="end">
-                        <CgClose color="#404040" width={25} height={25}
+                        <CgClose color="#404040" width={25} height={20}
                             size="1.5rem"
                             onClick={() => handleClose()}
                         />
