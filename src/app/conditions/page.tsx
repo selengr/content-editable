@@ -66,6 +66,15 @@ import JSONData from '../../../public/assets/fake-data/response_v1.json'
 
 // export default page;
 
+
+enum QuestionType {
+  TEXT_FIELD = "TEXT_FIELD",
+  MULTIPLE_CHOICE = "MULTIPLE_CHOICE",
+  MULTIPLE_CHOICE_IMAGE = "MULTIPLE_CHOICE_IMAGE",
+  SPECTRAL = "SPECTRAL"
+}
+ 
+
 export interface ExtMap {
   QUESTION_TYPE?: string;
   DESCRIPTION?: string;
@@ -126,6 +135,13 @@ export default function DependentSelectForm() {
   // Get operators based on question type
   const getOperators = (type: string): SelectOption[] => {
     switch (type) {
+      case 'MULTIPLE_CHOICE':
+        return [
+          { value: 'greater', label: 'بزرگتر بود از' },
+          { value: 'less', label: 'کوچکتر بود از' },
+          { value: 'equal', label: 'برابر بود با' },
+          { value: 'not_equal', label: 'نابرابر بود با' }
+        ]
       case 'TEXT_FIELD':
         return [
           { value: 'greater', label: 'بزرگتر بود از' },
