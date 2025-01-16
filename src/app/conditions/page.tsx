@@ -58,11 +58,6 @@ import JSONData from '../../../public/assets/fake-data/response_v1.json'
 //             </option>
 //           ))} */}
 
-//         </Select>
-
-
-
-
 
 enum QuestionType {
   TEXT_FIELD = "TEXT_FIELD",
