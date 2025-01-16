@@ -1,62 +1,8 @@
 "use client"
 
-// import { Select } from "@/components/select/Select";
-// import { Box, Divider, MenuItem } from "@mui/material";
+import { useState, useEffect } from 'react'
+import { Box, FormControl, InputLabel, MenuItem, Select, Button, Divider } from '@mui/material'
 import JSONData from '../../../public/assets/fake-data/response_v1.json'
-
-
-// const page = () => {
-//   return (
-//     <div dir="rtl" className="flex items-center justify-end h-full w-full p-24">
-
-//       <Box
-//         rowGap={3}
-//         columnGap={2}
-//         display="grid"
-//         gridTemplateColumns={{
-//           xs: 'repeat(1, 1fr)',
-//           sm: 'repeat(2, 1fr)'
-//         }}
-//       // sx={{ direction: 'rtl' }}
-//       >
-//         <Select name="appType" label="نوع اپ"
-//           sx={{
-//             // textAlign: 'right',
-//             minWidth: { md: 220 },
-//           }}
-//         >
-//           <MenuItem
-//             value=""
-//             // onClick={() => handleClearService(index)}
-//             sx={{
-//               fontStyle: 'italic', color: 'text.secondary',
-//               display: "flex",
-//               justifyContent: "end"
-//             }}
-//           >
-//             None
-//           </MenuItem>
-//           <Divider />
-
-//           {JSONData.dataList?.map((service) => (
-//             <MenuItem
-//               key={service.value}
-//               value={service.value}
-//               sx={{
-//                 display: "flex",
-//                 justifyContent: "end"
-//               }}
-//             // onClick={() => handleSelectService(index, service.name)}
-//             >
-//               {service.caption}
-//             </MenuItem>
-//           ))}
-
-//           {/* {JSONData.dataList?.map((app: any) => (
-//             <option key={app.value} value={app.value}>
-//               {app.caption}
-//             </option>
-//           ))} */}
 
 
 enum QuestionType {
@@ -65,7 +11,7 @@ enum QuestionType {
   MULTIPLE_CHOICE_IMAGE = "MULTIPLE_CHOICE_IMAGE",
   SPECTRAL = "SPECTRAL"
 }
- 
+
 
 export interface ExtMap {
   QUESTION_TYPE?: string;
@@ -98,9 +44,7 @@ export interface SelectOption {
 
 
 
-import { useState, useEffect } from 'react'
-import { Box, FormControl, InputLabel, MenuItem, Select, Button } from '@mui/material'
-// import { DataItem, SelectOption } from '../types/select-types'
+
 
 interface DependentSelectFormProps {
   data: DataItem[]
@@ -150,7 +94,7 @@ export default function DependentSelectForm() {
   }
 
   // Get values based on question type and operatorType
-  const getCondition = (type: string,operator: string): SelectOption[] => {
+  const getCondition = (type: string, operator: string): SelectOption[] => {
     const combinedKey = `${type}_${operator}`
     // const question = data.find(
     //   item => item.elementStr === 'QUESTION' && item.extMap.QUESTION_TYPE === type
@@ -168,7 +112,7 @@ export default function DependentSelectForm() {
     switch (combinedKey) {
       case 'MULTIPLE_CHOICE_VALUE':
       case 'MULTIPLE_CHOICE_QUESTION':
-        case 'MULTIPLE_CHOICE_OPTION':
+      case 'MULTIPLE_CHOICE_OPTION':
       case 'MULTIPLE_CHOICE_CALCULATION':
         return [
           { value: 'greater', label: 'بزرگتر بود' },
@@ -235,16 +179,49 @@ export default function DependentSelectForm() {
 
   return (
     <Box sx={{ minWidth: 800, p: 3, direction: "ltr" }}>
-      <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+      <Box
+        rowGap={3}
+        columnGap={2}
+        display="grid"
+        gridTemplateColumns={{
+          xs: 'repeat(1, 1fr)',
+          sm: 'repeat(2, 1fr)',
+          md: 'repeat(3, 1fr)',
+        }}
+        sx={{ direction: 'rtl' }}
+      >
         <FormControl sx={{ minWidth: 200 }}>
           <InputLabel>نوع سوال</InputLabel>
+
+
           <Select
             value={questionType}
             label="نوع سوال"
+            sx={{
+              textAlign: 'right',
+              minWidth: { md: 220 },
+            }}
             onChange={(e) => setQuestionType(e.target.value)}
           >
+            <MenuItem
+              value=""
+              onClick={() => setQuestionType("")}
+              sx={{
+                fontStyle: 'italic', color: 'text.secondary',
+                display: "flex",
+                justifyContent: "end"
+              }}
+            >
+              None
+            </MenuItem>
+            <Divider />
             {questionTypes.map((type) => (
-              <MenuItem key={type.value} value={type.value}>
+              <MenuItem key={type.value} value={type.value}
+                sx={{
+                  display: "flex",
+                  justifyContent: "end"
+                }}
+              >
                 {type.label}
               </MenuItem>
             ))}
@@ -275,7 +252,7 @@ export default function DependentSelectForm() {
             onChange={(e) => setConditionType(e.target.value)}
             disabled={!operatorType}
           >
-            {getCondition(questionType,operatorType).map((val) => (
+            {getCondition(questionType, operatorType).map((val) => (
               <MenuItem key={val.value} value={val.value}>
                 {val.label}
               </MenuItem>
@@ -284,7 +261,7 @@ export default function DependentSelectForm() {
         </FormControl>
 
 
-          
+
 
 
         {/* <FormControl sx={{ minWidth: 200 }}>
