@@ -64,7 +64,6 @@ import JSONData from '../../../public/assets/fake-data/response_v1.json'
 //   );
 // }
 
-// export default page;
 
 
 enum QuestionType {
