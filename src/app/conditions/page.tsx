@@ -98,8 +98,6 @@ export interface SelectOption {
 
 
 
-
-
 import { useState, useEffect } from 'react'
 import { Box, FormControl, InputLabel, MenuItem, Select, Button } from '@mui/material'
 // import { DataItem, SelectOption } from '../types/select-types'
@@ -197,7 +195,7 @@ export default function DependentSelectForm() {
 
   const getQuestion = (type: string): SelectOption[] => {
     switch (type) {
-      case 'MULTIPLE_CHOICE2':
+      case 'MULTIPLE_CHOICE':
         return [
           { value: 'VALUE', label: 'VALUE' },
           { value: 'QUESTION', label: 'QUESTIONion' },
@@ -285,7 +283,11 @@ export default function DependentSelectForm() {
           </Select>
         </FormControl>
 
-        <FormControl sx={{ minWidth: 200 }}>
+
+          
+
+
+        {/* <FormControl sx={{ minWidth: 200 }}>
           <InputLabel>شرط</InputLabel>
           <Select
             value={conditionType}
@@ -299,7 +301,7 @@ export default function DependentSelectForm() {
               </MenuItem>
             ))}
           </Select>
-        </FormControl>
+        </FormControl> */}
 
         <Button
           variant="contained"
