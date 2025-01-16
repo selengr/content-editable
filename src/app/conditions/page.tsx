@@ -117,10 +117,11 @@ interface DependentSelectFormProps {
 }
 
 export default function DependentSelectForm() {
+
   const [questionType, setQuestionType] = useState('')
-  const [operator, setOperator] = useState('')
-  const [value, setValue] = useState('')
-  const [condition, setCondition] = useState('')
+  const [operatorType, setOperatorType] = useState('')
+  const [conditionType, setConditionType] = useState('')
+  // const [condition, setCondition] = useState('')
 
   let data: any = JSONData.dataList
 
@@ -158,8 +159,9 @@ export default function DependentSelectForm() {
     }
   }
 
-  // Get values based on question type and operator
-  const getValues = (type: string): SelectOption[] => {
+  // Get values based on question type and operatorType
+  const getCondition = (type: string,operator: string): SelectOption[] => {
+    const combinedKey = `${type}_${operator}`
     // const question = data.find(
     //   item => item.elementStr === 'QUESTION' && item.extMap.QUESTION_TYPE === type
     // )
@@ -173,11 +175,13 @@ export default function DependentSelectForm() {
     //   }))
     // }
 
-
-    switch (type) {
-      case 'MULTIPLE_CHOICE':
+    switch (combinedKey) {
+      case 'MULTIPLE_CHOICE_VALUE':
+      case 'MULTIPLE_CHOICE_QUESTION':
+        case 'MULTIPLE_CHOICE_OPTION':
+      case 'MULTIPLE_CHOICE_CALCULATION':
         return [
-          { value: 'greater', label: 'بزرگتر بود از' },
+          { value: 'greater', label: 'بزرگتر بود' },
           { value: 'less', label: 'کوچکتر بود از' },
           { value: 'equal', label: 'برابر بود با' },
           { value: 'not_equal', label: 'نابرابر بود با' }
@@ -199,9 +203,23 @@ export default function DependentSelectForm() {
 
   }
 
+  const getQuestion = (type: string): SelectOption[] => {
+    switch (type) {
+      case 'MULTIPLE_CHOICE2':
+        return [
+          { value: 'VALUE', label: 'VALUE' },
+          { value: 'QUESTION', label: 'QUESTIONion' },
+          { value: 'CALCULATION', label: 'CALCULATION' },
+          { value: 'OPTION', label: 'OPTIONon' }
+        ]
+      default:
+        return []
+    }
+  }
+
   // Get conditions based on previous selections
   const getConditions = (): SelectOption[] => {
-    if (!questionType || !operator || !value) return []
+    if (!questionType || !operatorType || !conditionType) return []
 
     return [
       { value: 'and', label: 'و' },
@@ -211,19 +229,19 @@ export default function DependentSelectForm() {
 
   // Reset dependent fields when parent selection changes
   useEffect(() => {
-    setOperator('')
-    setValue('')
-    setCondition('')
+    setOperatorType('')
+    setConditionType('')
+    // setCondition('')
   }, [questionType])
 
   useEffect(() => {
-    setValue('')
-    setCondition('')
-  }, [operator])
+    setConditionType('')
+    // setCondition('')
+  }, [operatorType])
 
   useEffect(() => {
-    setCondition('')
-  }, [value])
+    // setCondition('')
+  }, [conditionType])
 
   return (
     <Box sx={{ minWidth: 800, p: 3, direction: "ltr" }}>
@@ -244,14 +262,14 @@ export default function DependentSelectForm() {
         </FormControl>
 
         <FormControl sx={{ minWidth: 200 }}>
-          <InputLabel>عملگر</InputLabel>
+          <InputLabel>حالت</InputLabel>
           <Select
-            value={operator}
-            label="عملگر"
-            onChange={(e) => setOperator(e.target.value)}
+            value={operatorType}
+            label="حالت"
+            onChange={(e) => setOperatorType(e.target.value)}
             disabled={!questionType}
           >
-            {getOperators(questionType).map((op) => (
+            {getQuestion(questionType).map((op) => (
               <MenuItem key={op.value} value={op.value}>
                 {op.label}
               </MenuItem>
@@ -260,14 +278,14 @@ export default function DependentSelectForm() {
         </FormControl>
 
         <FormControl sx={{ minWidth: 200 }}>
-          <InputLabel>مقدار</InputLabel>
+          <InputLabel>شرط</InputLabel>
           <Select
-            value={value}
-            label="مقدار"
-            onChange={(e) => setValue(e.target.value)}
-            disabled={!operator}
+            value={conditionType}
+            label="شرط"
+            onChange={(e) => setConditionType(e.target.value)}
+            disabled={!operatorType}
           >
-            {getValues(questionType).map((val) => (
+            {getCondition(questionType,operatorType).map((val) => (
               <MenuItem key={val.value} value={val.value}>
                 {val.label}
               </MenuItem>
@@ -278,10 +296,10 @@ export default function DependentSelectForm() {
         <FormControl sx={{ minWidth: 200 }}>
           <InputLabel>شرط</InputLabel>
           <Select
-            value={condition}
+            value={conditionType}
             label="شرط"
-            onChange={(e) => setCondition(e.target.value)}
-            disabled={!value}
+            // onChange={(e) => setCondition(e.target.value)}
+            disabled={!conditionType}
           >
             {getConditions().map((cond) => (
               <MenuItem key={cond.value} value={cond.value}>
@@ -294,7 +312,7 @@ export default function DependentSelectForm() {
         <Button
           variant="contained"
           color="primary"
-          disabled={!condition}
+          disabled={!conditionType}
           sx={{ height: 56 }}
         >
           تایید
