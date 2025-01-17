@@ -1,54 +1,11 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { Box, FormControl, InputLabel, MenuItem, Select, Button, Divider } from '@mui/material'
+import { SelectOption } from './_types/conditions'
 import JSONData from '../../../public/assets/fake-data/response_v1.json'
+import { Box, FormControl, InputLabel, MenuItem, Select, Button, Divider } from '@mui/material'
 
 
-enum QuestionType {
-  TEXT_FIELD = "TEXT_FIELD",
-  MULTIPLE_CHOICE = "MULTIPLE_CHOICE",
-  MULTIPLE_CHOICE_IMAGE = "MULTIPLE_CHOICE_IMAGE",
-  SPECTRAL = "SPECTRAL"
-}
-
-
-export interface ExtMap {
-  QUESTION_TYPE?: string;
-  DESCRIPTION?: string;
-  MAXIMUM_LEN?: string;
-  UNIC_NAME?: string;
-  REQUIRED?: string;
-  MINIMUM_LEN?: string;
-  TEXT_FIELD_PATTERN?: string;
-  MULTI_SELECT?: string;
-  OPTIONS?: {
-    [key: string]: [number, string];
-  };
-  OPTIONS_SIZE?: number;
-  FORMULA?: string;
-}
-
-export interface DataItem {
-  value: string;
-  caption: string;
-  elementStr: string;
-  extMap: ExtMap;
-}
-
-export interface SelectOption {
-  value: string;
-  label: string;
-}
-
-
-
-
-
-
-interface DependentSelectFormProps {
-  data: DataItem[]
-}
 
 export default function DependentSelectForm() {
 
@@ -179,16 +136,22 @@ export default function DependentSelectForm() {
 
   return (
     <Box sx={{ minWidth: 800, p: 3, direction: "ltr" }}>
+
+{/* 
+<header>
+
+</header> */}
+
       <Box
         rowGap={3}
         columnGap={2}
         display="grid"
         gridTemplateColumns={{
           xs: 'repeat(1, 1fr)',
-          sm: 'repeat(2, 1fr)',
-          md: 'repeat(3, 1fr)',
+          sm: 'repeat(3, 1fr)',
+          md: 'repeat(4, 1fr)',
         }}
-        sx={{ direction: 'rtl' }}
+        // sx={{ direction: 'rtl' }}
       >
         <FormControl sx={{ minWidth: 200 }}>
           <InputLabel>نوع سوال</InputLabel>
@@ -198,8 +161,8 @@ export default function DependentSelectForm() {
             value={questionType}
             label="نوع سوال"
             sx={{
-              textAlign: 'right',
-              minWidth: { md: 220 },
+              // textAlign: 'right',
+              minWidth: { md: 200 },
             }}
             onChange={(e) => setQuestionType(e.target.value)}
           >
@@ -260,10 +223,7 @@ export default function DependentSelectForm() {
           </Select>
         </FormControl>
 
-
-
-
-
+              
         {/* <FormControl sx={{ minWidth: 200 }}>
           <InputLabel>شرط</InputLabel>
           <Select
