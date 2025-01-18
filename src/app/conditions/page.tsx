@@ -50,6 +50,18 @@ export default function DependentSelectForm() {
     }
   }
 
+
+  const getInput = (type: string, operator: string,condition:string) => { 
+    const combinedKey = `${type}_${operator}_${condition}`
+    switch (combinedKey) {
+      case 'MULTIPLE_CHOICE_VALUE':
+      case 'MULTIPLE_CHOICE_QUESTION':
+      case 'MULTIPLE_CHOICE_OPTION':
+      case 'MULTIPLE_CHOICE_CALCULATION':
+
+    }
+  }
+
   // Get values based on question type and operatorType
   const getCondition = (type: string, operator: string): SelectOption[] => {
     const combinedKey = `${type}_${operator}`
@@ -137,11 +149,6 @@ export default function DependentSelectForm() {
   return (
     <Box sx={{ minWidth: 800, p: 3, direction: "ltr" }}>
 
-{/* 
-<header>
-
-</header> */}
-
       <Box
         rowGap={3}
         columnGap={2}
@@ -223,22 +230,18 @@ export default function DependentSelectForm() {
           </Select>
         </FormControl>
 
-              
-        {/* <FormControl sx={{ minWidth: 200 }}>
-          <InputLabel>شرط</InputLabel>
-          <Select
-            value={conditionType}
-            label="شرط"
-            // onChange={(e) => setCondition(e.target.value)}
-            disabled={!conditionType}
-          >
-            {getConditions().map((cond) => (
-              <MenuItem key={cond.value} value={cond.value}>
-                {cond.label}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl> */}
+         {/* add here input type */}
+
+         <FormControl sx={{ minWidth: 200 }}>
+          <InputLabel>ورودی</InputLabel>
+         
+        </FormControl>
+
+
+        {getInput(questionType, operatorType,conditionType)}
+
+
+
 
         <Button
           variant="contained"
@@ -252,4 +255,7 @@ export default function DependentSelectForm() {
     </Box>
   )
 }
+
+
+
 
