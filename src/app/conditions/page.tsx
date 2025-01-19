@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
+import TextField from '@mui/material/TextField';
 import { SelectOption } from './_types/conditions'
 import JSONData from '../../../public/assets/fake-data/response_v1.json'
 import { Box, FormControl, InputLabel, MenuItem, Select, Button, Divider } from '@mui/material'
@@ -54,11 +55,105 @@ export default function DependentSelectForm() {
   const getInput = (type: string, operator: string,condition:string) => { 
     const combinedKey = `${type}_${operator}_${condition}`
     switch (combinedKey) {
-      case 'MULTIPLE_CHOICE_VALUE':
-      case 'MULTIPLE_CHOICE_QUESTION':
-      case 'MULTIPLE_CHOICE_OPTION':
-      case 'MULTIPLE_CHOICE_CALCULATION':
+      case 'MULTIPLE_CHOICE_VALUE_less':    
+      case 'MULTIPLE_CHOICE_VALUE_greater':
+        case 'MULTIPLE_CHOICE_VALUE_equal':
+          case 'MULTIPLE_CHOICE_VALUE_not_equal':
+       return <FormControl sx={{ minWidth: 200 }}>
+          <InputLabel>ورودی</InputLabel>
+            <TextField 
+            label="Quantity" 
+            type="number" 
+            defaultValue="1"
+            />
+        </FormControl>
+         case 'MULTIPLE_CHOICE_QUESTION_less':    
+         case 'MULTIPLE_CHOICE_QUESTION_greater':
+           case 'MULTIPLE_CHOICE_QUESTION_equal':
+             case 'MULTIPLE_CHOICE_QUESTION_not_equal':
+          return   <FormControl sx={{ minWidth: 200 }}>
+          <Select
+            value={questionType}
+            label="نوع سوال"
+            sx={{
+              // textAlign: 'right',
+              minWidth: { md: 200 },
+            }}
+            onChange={(e) => setQuestionType(e.target.value)}
+          >
+            {questionTypes.map((type) => (
+              <MenuItem key={type.value} value={type.value}
+                sx={{
+                  display: "flex",
+                  justifyContent: "end"
+                }}
+              >
+                {type.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+            case 'MULTIPLE_CHOICE_OPTION_less':    
+            case 'MULTIPLE_CHOICE_OPTION_greater':
+              case 'MULTIPLE_CHOICE_OPTION_equal':
+                case 'MULTIPLE_CHOICE_OPTION_not_equal':
+             return <FormControl sx={{ minWidth: 200 }}>
+             <Select
+               value={questionType}
+               label="نوع سوال2"
+               sx={{
+                 // textAlign: 'right',
+                 minWidth: { md: 200 },
+               }}
+               onChange={(e) => setQuestionType(e.target.value)}
+             >
+               {questionTypes.map((type) => (
+                 <MenuItem key={type.value} value={type.value}
+                   sx={{
+                     display: "flex",
+                     justifyContent: "end"
+                   }}
+                 >
+                   {type.label}
+                 </MenuItem>
+               ))}
+             </Select>
+           </FormControl>
 
+case 'MULTIPLE_CHOICE_CALCULATION_less':    
+case 'MULTIPLE_CHOICE_CALCULATION_greater':
+  case 'MULTIPLE_CHOICE_CALCULATION_equal':
+    case 'MULTIPLE_CHOICE_CALCULATION_not_equal':
+ return <FormControl sx={{ minWidth: 200 }}>
+ <Select
+   value={questionType}
+   label="نوع سوال2"
+   sx={{
+     // textAlign: 'right',
+     minWidth: { md: 200 },
+   }}
+   onChange={(e) => setQuestionType(e.target.value)}
+ >
+   {questionTypes.map((type) => (
+     <MenuItem key={type.value} value={type.value}
+       sx={{
+         display: "flex",
+         justifyContent: "end"
+       }}
+     >
+       {type.label}
+     </MenuItem>
+   ))}
+ </Select>
+</FormControl>
+
+
+        default:
+          return  <TextField 
+          label="" 
+          defaultValue=""
+          disabled
+          />
     }
   }
 
@@ -232,10 +327,7 @@ export default function DependentSelectForm() {
 
          {/* add here input type */}
 
-         <FormControl sx={{ minWidth: 200 }}>
-          <InputLabel>ورودی</InputLabel>
          
-        </FormControl>
 
 
         {getInput(questionType, operatorType,conditionType)}
