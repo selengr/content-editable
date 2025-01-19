@@ -357,7 +357,7 @@ export default function DependentSelectForm() {
     value: ''
   }])
 
-  
+
   const addCondition = () => {
     setConditions(prevConditions => [...prevConditions, {
       questionType: '',
@@ -424,15 +424,25 @@ export default function DependentSelectForm() {
       case 'MULTIPLE_CHOICE_QUESTION_equal':
       case 'MULTIPLE_CHOICE_QUESTION_not_equal':
         return <FormControl sx={{ minWidth: 200 }}>
-            <Select
-              value={value}
-              label="نوع سوال"
-              sx={{
-                minWidth: { md: 200 },
-              }}
-              onChange={(e) => setValue(e.target.value)}
-            >
-              {questionTypes.map((type) => (
+          <Select
+            value={value}
+            label="نوع سوال"
+            sx={{
+              minWidth: { md: 200 },
+            }}
+            onChange={(e) => setValue(e.target.value)}
+          >
+            {questionTypes.map((type) => (
+              <MenuItem key={type.value} value={type.value}
+                sx={{
+                  display: "flex",
+                  justifyContent: "end"
+                }}
+              >
+                {type.label}
+              </MenuItem>
+            ))}
+            {/* {questionTypes.map((type) => (
                 Object.entries(type.extMap.OPTIONS || {}).map(([key, [_, label]]) => (
                   <MenuItem key={key} value={label.toString()}
                     sx={{
@@ -443,8 +453,8 @@ export default function DependentSelectForm() {
                     {label.toString()}
                   </MenuItem>
                 ))
-              ))}
-            </Select>
+              ))} */}
+          </Select>
         </FormControl>
       case 'MULTIPLE_CHOICE_OPTION_less':
       case 'MULTIPLE_CHOICE_OPTION_greater':
@@ -581,17 +591,17 @@ export default function DependentSelectForm() {
     }
   }
 
-  
+
 
   useEffect(() => {
     setConditions(prevConditions => prevConditions.map(condition => {
       if (condition.questionType === '') {
-        return {...condition, operatorType: '', conditionType: '', value: ''}
+        return { ...condition, operatorType: '', conditionType: '', value: '' }
       }
       return condition;
     }))
   }, [])
-  
+
 
   const handleSubmit = () => {
     console.log('Submitted conditions:', conditions);
