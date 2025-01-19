@@ -13,70 +13,48 @@ export default function DependentSelectForm() {
   const [questionType, setQuestionType] = useState('')
   const [operatorType, setOperatorType] = useState('')
   const [conditionType, setConditionType] = useState('')
-  // const [condition, setCondition] = useState('')
+
 
   let data: any = JSONData.dataList
 
-  // Filter unique question types
   const questionTypes = data
     .filter(item => item.elementStr === 'QUESTION')
     .map(item => ({
       value: item.extMap.QUESTION_TYPE || '',
       label: item.caption
     }))
-
-  // Get operators based on question type
-  const getOperators = (type: string): SelectOption[] => {
-    switch (type) {
-      case 'MULTIPLE_CHOICE':
-        return [
-          { value: 'greater', label: 'بزرگتر بود از' },
-          { value: 'less', label: 'کوچکتر بود از' },
-          { value: 'equal', label: 'برابر بود با' },
-          { value: 'not_equal', label: 'نابرابر بود با' }
-        ]
-      case 'TEXT_FIELD':
-        return [
-          { value: 'greater', label: 'بزرگتر بود از' },
-          { value: 'less', label: 'کوچکتر بود از' },
-          { value: 'equal', label: 'برابر بود با' }
-        ]
-      case 'MULTIPLE_CHOICE':
-        return [
-          { value: 'selected', label: 'انتخاب شده' },
-          { value: 'not_selected', label: 'انتخاب نشده' }
-        ]
-      default:
-        return []
-    }
-  }
+  const calculationTypes = data
+    .filter(item => item.elementStr === 'CALCULATION')
+    .map(item => ({
+      value: item.extMap.QUESTION_TYPE || '',
+      label: item.caption
+    }))
 
 
-  const getInput = (type: string, operator: string,condition:string) => { 
+
+  const getInput = (type: string, operator: string, condition: string) => {
     const combinedKey = `${type}_${operator}_${condition}`
     switch (combinedKey) {
-      case 'MULTIPLE_CHOICE_VALUE_less':    
+      case 'MULTIPLE_CHOICE_VALUE_less':
       case 'MULTIPLE_CHOICE_VALUE_greater':
-        case 'MULTIPLE_CHOICE_VALUE_equal':
-          case 'MULTIPLE_CHOICE_VALUE_not_equal':
-       return <FormControl sx={{ minWidth: 200 }}>
-          <InputLabel>ورودی</InputLabel>
-            <TextField 
-            label="Quantity" 
-            type="number" 
+      case 'MULTIPLE_CHOICE_VALUE_equal':
+      case 'MULTIPLE_CHOICE_VALUE_not_equal':
+        return <FormControl sx={{ minWidth: 200 }}>
+          <TextField
+            label="Quantity"
+            type="number"
             defaultValue="1"
-            />
+          />
         </FormControl>
-         case 'MULTIPLE_CHOICE_QUESTION_less':    
-         case 'MULTIPLE_CHOICE_QUESTION_greater':
-           case 'MULTIPLE_CHOICE_QUESTION_equal':
-             case 'MULTIPLE_CHOICE_QUESTION_not_equal':
-          return   <FormControl sx={{ minWidth: 200 }}>
+      case 'MULTIPLE_CHOICE_QUESTION_less':
+      case 'MULTIPLE_CHOICE_QUESTION_greater':
+      case 'MULTIPLE_CHOICE_QUESTION_equal':
+      case 'MULTIPLE_CHOICE_QUESTION_not_equal':
+        return <FormControl sx={{ minWidth: 200 }}>
           <Select
             value={questionType}
             label="نوع سوال"
             sx={{
-              // textAlign: 'right',
               minWidth: { md: 200 },
             }}
             onChange={(e) => setQuestionType(e.target.value)}
@@ -93,85 +71,102 @@ export default function DependentSelectForm() {
             ))}
           </Select>
         </FormControl>
-            case 'MULTIPLE_CHOICE_OPTION_less':    
-            case 'MULTIPLE_CHOICE_OPTION_greater':
-              case 'MULTIPLE_CHOICE_OPTION_equal':
-                case 'MULTIPLE_CHOICE_OPTION_not_equal':
-             return <FormControl sx={{ minWidth: 200 }}>
-             <Select
-               value={questionType}
-               label="نوع سوال2"
-               sx={{
-                 // textAlign: 'right',
-                 minWidth: { md: 200 },
-               }}
-               onChange={(e) => setQuestionType(e.target.value)}
-             >
-               {questionTypes.map((type) => (
-                 <MenuItem key={type.value} value={type.value}
-                   sx={{
-                     display: "flex",
-                     justifyContent: "end"
-                   }}
-                 >
-                   {type.label}
-                 </MenuItem>
-               ))}
-             </Select>
-           </FormControl>
+      case 'MULTIPLE_CHOICE_OPTION_less':
+      case 'MULTIPLE_CHOICE_OPTION_greater':
+      case 'MULTIPLE_CHOICE_OPTION_equal':
+      case 'MULTIPLE_CHOICE_OPTION_not_equal':
+        return <FormControl sx={{ minWidth: 200 }}>
+          <Select
+            value={questionType}
+            label="نوع سوال2"
+            sx={{
+              minWidth: { md: 200 },
+            }}
+            onChange={(e) => setQuestionType(e.target.value)}
+          >
+            {questionTypes.map((type) => (
+              <MenuItem key={type.value} value={type.value}
+                sx={{
+                  display: "flex",
+                  justifyContent: "end"
+                }}
+              >
+                {type.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
-case 'MULTIPLE_CHOICE_CALCULATION_less':    
-case 'MULTIPLE_CHOICE_CALCULATION_greater':
-  case 'MULTIPLE_CHOICE_CALCULATION_equal':
-    case 'MULTIPLE_CHOICE_CALCULATION_not_equal':
- return <FormControl sx={{ minWidth: 200 }}>
- <Select
-   value={questionType}
-   label="نوع سوال2"
-   sx={{
-     // textAlign: 'right',
-     minWidth: { md: 200 },
-   }}
-   onChange={(e) => setQuestionType(e.target.value)}
- >
-   {questionTypes.map((type) => (
-     <MenuItem key={type.value} value={type.value}
-       sx={{
-         display: "flex",
-         justifyContent: "end"
-       }}
-     >
-       {type.label}
-     </MenuItem>
-   ))}
- </Select>
-</FormControl>
+      case 'MULTIPLE_CHOICE_CALCULATION_less':
+      case 'MULTIPLE_CHOICE_CALCULATION_greater':
+      case 'MULTIPLE_CHOICE_CALCULATION_equal':
+      case 'MULTIPLE_CHOICE_CALCULATION_not_equal':
+        return <FormControl sx={{ minWidth: 200 }}>
+          <Select
+            value={questionType}
+            label="calc"
+            sx={{
+              minWidth: { md: 200 },
+            }}
+            onChange={(e) => setQuestionType(e.target.value)}
+          >
+            {calculationTypes.map((type) => (
+              <MenuItem key={type.value} value={type.value}
+                sx={{
+                  display: "flex",
+                  justifyContent: "end"
+                }}
+              >
+                {type.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
 
-        default:
-          return  <TextField 
-          label="" 
+      // { value: 'VALUE', label: 'ارزش' },
+      // { value: 'TEXT', label: 'متنی' }
+
+      case 'TEXT_FIELD_TEXT_startWith':
+      case 'TEXT_FIELD_TEXT_endWith':
+        return <TextField
+          label=""
+          // type="number"
+          defaultValue=""
+        />
+
+      case 'TEXT_FIELD_TEXT_startWith':
+      case 'TEXT_FIELD_TEXT_endWith':
+        return <TextField
+          label=""
+          // type="number"
+          // need to change
+          defaultValue=""
+        />
+
+      case 'TEXT_FIELD_VALUE_lenEqualText':
+      case 'TEXT_FIELD_VALUE_lenGraterThan':
+      case 'TEXT_FIELD_VALUE_lenLessThanText':
+        return <TextField
+          label=""
+          type="number"
+          defaultValue=""
+        />
+
+
+      default:
+        return <TextField
+          label=""
           defaultValue=""
           disabled
-          />
+        />
+
     }
   }
 
-  // Get values based on question type and operatorType
+
   const getCondition = (type: string, operator: string): SelectOption[] => {
     const combinedKey = `${type}_${operator}`
-    // const question = data.find(
-    //   item => item.elementStr === 'QUESTION' && item.extMap.QUESTION_TYPE === type
-    // )
-
-    // if (!question) return []
-
-    // if (type === 'MULTIPLE_CHOICE' && question.extMap.OPTIONS) {
-    //   return Object.entries(question.extMap.OPTIONS).map(([key, [_, label]]) => ({
-    //     value: key,
-    //     label: label.toString()
-    //   }))
-    // }
 
     switch (combinedKey) {
       case 'MULTIPLE_CHOICE_VALUE':
@@ -184,11 +179,16 @@ case 'MULTIPLE_CHOICE_CALCULATION_greater':
           { value: 'equal', label: 'برابر بود با' },
           { value: 'not_equal', label: 'نابرابر بود با' }
         ]
-      case 'TEXT_FIELD':
+      case 'TEXT_FIELD_VALUE':
+      case 'TEXT_FIELD_TEXT':
         return [
-          { value: 'greater', label: 'بزرگتر بود از' },
-          { value: 'less', label: 'کوچکتر بود از' },
-          { value: 'equal', label: 'برابر بود با' }
+          { value: 'startWith', label: 'شروع شدن با ' },
+          { value: 'endWith', label: 'پایان یافتن با' },
+          { value: 'containAny', label: 'شامل شدن' },
+          { value: 'not_containAny', label: 'شامل نشدن' },
+          { value: 'lenEqualText', label: 'طول متن برابر با ' },
+          { value: 'lenGraterThan', label: 'طول متن بیشتر از' },
+          { value: 'lenLessThanText', label: ' طول متن کمتر از' }
         ]
       case 'MULTIPLE_CHOICE':
         return [
@@ -205,41 +205,31 @@ case 'MULTIPLE_CHOICE_CALCULATION_greater':
     switch (type) {
       case 'MULTIPLE_CHOICE':
         return [
-          { value: 'VALUE', label: 'VALUE' },
-          { value: 'QUESTION', label: 'QUESTIONion' },
-          { value: 'CALCULATION', label: 'CALCULATION' },
-          { value: 'OPTION', label: 'OPTIONon' }
+          { value: 'VALUE', label: 'ارزش' },
+          { value: 'QUESTION', label: 'سوال ' },
+          { value: 'CALCULATION', label: 'محاسبه‌گر' },
+          { value: 'OPTION', label: 'گزینه' }
+        ]
+      case 'TEXT_FIELD':
+        return [
+          { value: 'VALUE', label: 'ارزش' },
+          { value: 'TEXT', label: 'متنی' }
         ]
       default:
         return []
     }
   }
 
-  // Get conditions based on previous selections
-  const getConditions = (): SelectOption[] => {
-    if (!questionType || !operatorType || !conditionType) return []
-
-    return [
-      { value: 'and', label: 'و' },
-      { value: 'or', label: 'یا' }
-    ]
-  }
-
-  // Reset dependent fields when parent selection changes
   useEffect(() => {
     setOperatorType('')
     setConditionType('')
-    // setCondition('')
   }, [questionType])
 
   useEffect(() => {
     setConditionType('')
-    // setCondition('')
   }, [operatorType])
 
-  useEffect(() => {
-    // setCondition('')
-  }, [conditionType])
+
 
   return (
     <Box sx={{ minWidth: 800, p: 3, direction: "ltr" }}>
@@ -253,17 +243,13 @@ case 'MULTIPLE_CHOICE_CALCULATION_greater':
           sm: 'repeat(3, 1fr)',
           md: 'repeat(4, 1fr)',
         }}
-        // sx={{ direction: 'rtl' }}
       >
         <FormControl sx={{ minWidth: 200 }}>
           <InputLabel>نوع سوال</InputLabel>
-
-
           <Select
             value={questionType}
             label="نوع سوال"
             sx={{
-              // textAlign: 'right',
               minWidth: { md: 200 },
             }}
             onChange={(e) => setQuestionType(e.target.value)}
@@ -325,14 +311,8 @@ case 'MULTIPLE_CHOICE_CALCULATION_greater':
           </Select>
         </FormControl>
 
-         {/* add here input type */}
 
-         
-
-
-        {getInput(questionType, operatorType,conditionType)}
-
-
+        {getInput(questionType, operatorType, conditionType)}
 
 
         <Button
