@@ -357,8 +357,9 @@ export default function DependentSelectForm() {
     value: ''
   }])
 
+  
   const addCondition = () => {
-    setConditions([...conditions, {
+    setConditions(prevConditions => [...prevConditions, {
       questionType: '',
       operatorType: '',
       conditionType: '',
@@ -366,14 +367,32 @@ export default function DependentSelectForm() {
     }])
   }
 
+
   const removeCondition = (index: number) => {
     setConditions(conditions.filter((_, i) => i !== index))
   }
 
+  // const updateCondition = (index: number, field: keyof Condition, value: string) => {
+  //   const newConditions = [...conditions]
+  //   newConditions[index][field] = value
+  //   setConditions(newConditions)
+  // }
   const updateCondition = (index: number, field: keyof Condition, value: string) => {
-    const newConditions = [...conditions]
-    newConditions[index][field] = value
-    setConditions(newConditions)
+    setConditions(prevConditions => {
+      const newConditions = [...prevConditions];
+      newConditions[index] = { ...newConditions[index], [field]: value };
+
+      if (field === 'questionType') {
+        newConditions[index].operatorType = '';
+        newConditions[index].conditionType = '';
+        newConditions[index].value = '';
+      } else if (field === 'operatorType') {
+        newConditions[index].conditionType = '';
+        newConditions[index].value = '';
+      }
+
+      return newConditions;
+    });
   }
 
   let data: any = JSONData.dataList
@@ -567,9 +586,19 @@ export default function DependentSelectForm() {
     }
   }
 
+  // useEffect(() => {
+  //   setConditions(conditions.map(condition => ({...condition, operatorType: '', conditionType: '', value: ''})))
+  // }, [conditions.map(c => c.questionType).join(',')])
+
   useEffect(() => {
-    setConditions(conditions.map(condition => ({...condition, operatorType: '', conditionType: '', value: ''})))
-  }, [conditions.map(c => c.questionType).join(',')])
+    setConditions(prevConditions => prevConditions.map(condition => {
+      if (condition.questionType === '') {
+        return {...condition, operatorType: '', conditionType: '', value: ''}
+      }
+      return condition;
+    }))
+  }, [])
+  
 
   const handleSubmit = () => {
     console.log('Submitted conditions:', conditions);
