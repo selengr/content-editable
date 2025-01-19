@@ -586,9 +586,7 @@ export default function DependentSelectForm() {
     }
   }
 
-  // useEffect(() => {
-  //   setConditions(conditions.map(condition => ({...condition, operatorType: '', conditionType: '', value: ''})))
-  // }, [conditions.map(c => c.questionType).join(',')])
+  
 
   useEffect(() => {
     setConditions(prevConditions => prevConditions.map(condition => {
@@ -602,7 +600,7 @@ export default function DependentSelectForm() {
 
   const handleSubmit = () => {
     console.log('Submitted conditions:', conditions);
-    // Here you can send the data to an API or perform any other action
+
   }
 
   return (
