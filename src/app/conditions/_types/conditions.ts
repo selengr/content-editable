@@ -1,9 +1,9 @@
-enum QuestionType {
-    TEXT_FIELD = "TEXT_FIELD",
-    MULTIPLE_CHOICE = "MULTIPLE_CHOICE",
-    MULTIPLE_CHOICE_IMAGE = "MULTIPLE_CHOICE_IMAGE",
-    SPECTRAL = "SPECTRAL"
-  }
+// enum QuestionType {
+//     TEXT_FIELD = "TEXT_FIELD",
+//     MULTIPLE_CHOICE = "MULTIPLE_CHOICE",
+//     MULTIPLE_CHOICE_IMAGE = "MULTIPLE_CHOICE_IMAGE",
+//     SPECTRAL = "SPECTRAL"
+//   }
   
   
   export interface ExtMap {
@@ -37,3 +37,41 @@ enum QuestionType {
   interface DependentSelectFormProps {
     data: DataItem[]
   }
+
+
+
+
+
+
+
+
+
+
+  export interface SelectOption {
+    value: string;
+    label: string;
+  }
+  
+  export interface QuestionType {
+    value: string;
+    label: string;
+    elementStr: string;
+    extMap: {
+      QUESTION_TYPE?: string;
+    };
+  }
+  
+  export interface FormState {
+    questionType: string;
+    operatorType: string;
+    conditionType: string;
+    inputValue: string | number;
+  }
+  
+  export type FormAction =
+    | { type: 'SET_QUESTION_TYPE'; payload: string }
+    | { type: 'SET_OPERATOR_TYPE'; payload: string }
+    | { type: 'SET_CONDITION_TYPE'; payload: string }
+    | { type: 'SET_INPUT_VALUE'; payload: string | number };
+  
+  
