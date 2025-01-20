@@ -443,6 +443,29 @@ export default function DependentSelectForm() {
     });
   }
 
+
+  const updateSubCondition = (conditionIndex: number, subIndex: number, field: keyof SubCondition, value: string) => {
+    setConditions((prevConditions) => {
+      const newConditions = [...prevConditions]
+      const subCondition = { ...newConditions[conditionIndex].subConditions[subIndex] }
+
+      subCondition[field] = value
+
+      if (field === "questionType") {
+        subCondition.operatorType = ""
+        subCondition.conditionType = ""
+        subCondition.value = ""
+      } else if (field === "operatorType") {
+        subCondition.conditionType = ""
+        subCondition.value = ""
+      }
+
+      newConditions[conditionIndex].subConditions[subIndex] = subCondition
+      return newConditions
+    })
+  }
+
+
   let data: any = JSONData.dataList
 
   const questionTypes = data
