@@ -848,6 +848,7 @@ export default function DependentSelectForm() {
                 ))}
               </Select>
             )}
+             </Box>
             {/* <Box
               rowGap={3}
               columnGap={2}
@@ -985,7 +986,37 @@ export default function DependentSelectForm() {
   </Box>
 ))}
 
+ {/* Go To Section */}
+ <Box sx={{ mt: 2, ml: 4, display: "flex", alignItems: "center", gap: 2 }}>
+            <Typography>:برو به</Typography>
+            <FormControl sx={{ minWidth: 200 }}>
+              <Select value={condition.goTo.type} onChange={(e) => updateCondition(index, "goTo", e.target.value)}>
+                <MenuItem value="item">آیتم</MenuItem>
+                <MenuItem value="section">بخش</MenuItem>
+                <MenuItem value="page">صفحه</MenuItem>
+              </Select>
+            </FormControl>
+            {condition.goTo.type && (
+              <FormControl sx={{ minWidth: 200 }}>
+                <Select
+                  value={condition.goTo.value}
+                  onChange={(e) => {
+                    setConditions((prev) => {
+                      const newConditions = [...prev]
+                      newConditions[index].goTo.value = e.target.value
+                      return newConditions
+                    })
+                  }}
+                >
+                  <MenuItem value="1">گزینه 1</MenuItem>
+                  <MenuItem value="2">گزینه 2</MenuItem>
+                  <MenuItem value="3">گزینه 3</MenuItem>
+                </Select>
+              </FormControl>
+            )}
           </Box>
+
+         
         </Box>
       ))}
 
@@ -1000,6 +1031,8 @@ export default function DependentSelectForm() {
       >
         تایید
       </Button>
+
+      
     </Box>
   )
 }
