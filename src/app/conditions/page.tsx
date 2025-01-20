@@ -337,7 +337,13 @@ interface Condition {
 
 
 
-
+interface Condition {
+  questionType: string;
+  operatorType: string;
+  conditionType: string;
+  value: string;
+  logicalOperator: 'AND' | 'OR' | null;
+}
 
 
 
