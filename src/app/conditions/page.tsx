@@ -326,15 +326,7 @@
 
 
 
-
-export interface SubCondition {
-  questionType: string
-  operatorType: string
-  conditionType: string
-  value: string
-}
-
-export interface Condition {
+interface Condition {
   questionType: string
   operatorType: string
   conditionType: string
@@ -345,6 +337,13 @@ export interface Condition {
     type: string
     value: string
   }
+}
+
+interface SubCondition {
+  questionType: string
+  operatorType: string
+  conditionType: string
+  value: string
 }
 
 
@@ -375,9 +374,13 @@ export default function DependentSelectForm() {
       conditionType: "",
       value: "",
       logicalOperator: null,
+      subConditions: [],
+      goTo: {
+        type: "",
+        value: "",
+      },
     },
   ])
-
 
   const addCondition = () => {
     setConditions((prevConditions) => [
@@ -388,9 +391,15 @@ export default function DependentSelectForm() {
         conditionType: "",
         value: "",
         logicalOperator: "AND",
+        subConditions: [],
+        goTo: {
+          type: "",
+          value: "",
+        },
       },
     ])
   }
+
 
 
   const removeCondition = (index: number) => {
