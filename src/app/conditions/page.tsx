@@ -356,12 +356,6 @@ import { Add, Delete } from '@mui/icons-material';
 
 
 export default function DependentSelectForm() {
-  // const [conditions, setConditions] = useState<Condition[]>([{
-  //   questionType: '',
-  //   operatorType: '',
-  //   conditionType: '',
-  //   value: ''
-  // }])
   const [conditions, setConditions] = useState<Condition[]>([
     {
       questionType: "",
@@ -385,7 +379,7 @@ export default function DependentSelectForm() {
       },
     ])
   }
-  
+
 
   const removeCondition = (index: number) => {
     setConditions(conditions.filter((_, i) => i !== index))
@@ -631,29 +625,29 @@ export default function DependentSelectForm() {
     <Box sx={{ minWidth: 800, p: 3, direction: "ltr" }}>
       {conditions.map((condition, index) => (
         <Box key={index} sx={{ mb: 2 }}>
-          {/* <Typography variant="h6">Condition {index + 1}</Typography> */}
-          <Box sx={{ display: "flex",alignItems : "center" }}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
             {index === 0 && <Typography sx={{ width: 100 }} variant="h6">اگر {index + 1}</Typography>}
-            {index !== 0 && conditions.length > 0  &&  <Select
-                  value={condition.questionType}
-                  // label="نوع سوال"
-                  sx={{
-                     width: 90,
-                     mr: 1
-                  }}
-                  onChange={(e) => updateCondition(index, 'questionType', e.target.value)}
-                >
-                  {[{value: "AND", label : "و"},{value: "OR", label : "یا" }].map((type) => (
-                    <MenuItem key={type.value} value={type.value}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "end"
-                      }}
-                    >
-                      {type.label}
-                    </MenuItem>
-                  ))}
-                </Select>}
+            {index !== 0 && conditions.length > 0 && (
+              <Select
+                value={condition.logicalOperator || ''}
+                sx={{
+                  width: 90,
+                  mr: 1
+                }}
+                onChange={(e) => updateCondition(index, 'logicalOperator', e.target.value)}
+              >
+                {[{ value: "AND", label: "و" }, { value: "OR", label: "یا" }].map((type) => (
+                  <MenuItem key={type.value} value={type.value}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "end"
+                    }}
+                  >
+                    {type.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            )}
             <Box
               rowGap={3}
               columnGap={2}
