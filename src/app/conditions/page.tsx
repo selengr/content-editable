@@ -346,7 +346,7 @@ import TextField from '@mui/material/TextField';
 import { SelectOption } from './_types/conditions'
 import JSONData from '../../../public/assets/fake-data/response_v1.json'
 import { Box, FormControl, InputLabel, MenuItem, Select, Button, Divider, IconButton, Typography } from '@mui/material'
-import { Add, Delete  } from '@mui/icons-material';
+import { Add, Delete } from '@mui/icons-material';
 
 
 export default function DependentSelectForm() {
@@ -613,144 +613,162 @@ export default function DependentSelectForm() {
       {conditions.map((condition, index) => (
         <Box key={index} sx={{ mb: 2 }}>
           {/* <Typography variant="h6">Condition {index + 1}</Typography> */}
-            <Box sx={{display:"flex"}}>
-                   {index === 0 && <Typography sx={{maxWidth : "20px"}} variant="h6">اگر {index + 1}</Typography>}
-           
-          <Box
-            rowGap={3}
-            columnGap={2}
-            display="grid"
-            gridTemplateColumns={{
-              xs: 'repeat(2, 1fr)',
-              sm: 'repeat(4, 1fr)',
-              md: 'repeat(6, 1fr)',
-            }}
-            >
-            <FormControl sx={{ minWidth: 200 }}>
-              <InputLabel>نوع سوال</InputLabel>
-              <Select
-                value={condition.questionType}
-                label="نوع سوال"
-                sx={{
-                  minWidth: { md: 200 },
-                }}
-                onChange={(e) => updateCondition(index, 'questionType', e.target.value)}
-              >
-                <MenuItem
-                  value=""
-                  onClick={() => updateCondition(index, 'questionType', "")}
+          <Box sx={{ display: "flex",alignItems : "center" }}>
+            {index === 0 && <Typography sx={{ width: 100 }} variant="h6">اگر {index + 1}</Typography>}
+            {conditions.length > 0  &&  <Select
+                  value={condition.questionType}
+                  // label="نوع سوال"
                   sx={{
-                    fontStyle: 'italic', color: 'text.secondary',
-                    display: "flex",
-                    justifyContent: "end"
+                    minWidth: { md: 200 },
                   }}
+                  onChange={(e) => updateCondition(index, 'questionType', e.target.value)}
                 >
-                  None
-                </MenuItem>
-                <Divider />
-                {questionTypes.map((type) => (
-                  <MenuItem key={type.value} value={type.value}
+                  {[{value: "AND", label : "و"},{value: "OR", label : "یا" }].map((type) => (
+                    <MenuItem key={type.value} value={type.value}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "end"
+                      }}
+                    >
+                      {type.label}
+                    </MenuItem>
+                  ))}
+                </Select>}
+            <Box
+              rowGap={3}
+              columnGap={2}
+              display="grid"
+              gridTemplateColumns={{
+                xs: 'repeat(2, 1fr)',
+                sm: 'repeat(4, 1fr)',
+                md: 'repeat(6, 1fr)',
+              }}
+            >
+              <FormControl sx={{ minWidth: 200 }}>
+                <InputLabel>نوع سوال</InputLabel>
+                <Select
+                  value={condition.questionType}
+                  label="نوع سوال"
+                  sx={{
+                    minWidth: { md: 200 },
+                  }}
+                  onChange={(e) => updateCondition(index, 'questionType', e.target.value)}
+                >
+                  <MenuItem
+                    value=""
+                    onClick={() => updateCondition(index, 'questionType', "")}
                     sx={{
+                      fontStyle: 'italic', color: 'text.secondary',
                       display: "flex",
                       justifyContent: "end"
                     }}
                   >
-                    {type.label}
+                    None
                   </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+                  <Divider />
+                  {questionTypes.map((type) => (
+                    <MenuItem key={type.value} value={type.value}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "end"
+                      }}
+                    >
+                      {type.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
 
-            <FormControl sx={{ minWidth: 200 }}>
-              <InputLabel>حالت</InputLabel>
-              <Select
-                value={condition.operatorType}
-                label="حالت"
-                onChange={(e) => updateCondition(index, 'operatorType', e.target.value)}
-                disabled={!condition.questionType}
-              >
-                {getQuestion(condition.questionType).map((op) => (
-                  <MenuItem key={op.value} value={op.value}>
-                    {op.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+              <FormControl sx={{ minWidth: 200 }}>
+                <InputLabel>حالت</InputLabel>
+                <Select
+                  value={condition.operatorType}
+                  label="حالت"
+                  onChange={(e) => updateCondition(index, 'operatorType', e.target.value)}
+                  disabled={!condition.questionType}
+                >
+                  {getQuestion(condition.questionType).map((op) => (
+                    <MenuItem key={op.value} value={op.value}>
+                      {op.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
 
-            <FormControl sx={{ minWidth: 200 }}>
-              <InputLabel>شرط</InputLabel>
-              <Select
-                value={condition.conditionType}
-                label="شرط"
-                onChange={(e) => updateCondition(index, 'conditionType', e.target.value)}
-                disabled={!condition.operatorType}
-              >
-                {getCondition(condition.questionType, condition.operatorType).map((val) => (
-                  <MenuItem key={val.value} value={val.value}>
-                    {val.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+              <FormControl sx={{ minWidth: 200 }}>
+                <InputLabel>شرط</InputLabel>
+                <Select
+                  value={condition.conditionType}
+                  label="شرط"
+                  onChange={(e) => updateCondition(index, 'conditionType', e.target.value)}
+                  disabled={!condition.operatorType}
+                >
+                  {getCondition(condition.questionType, condition.operatorType).map((val) => (
+                    <MenuItem key={val.value} value={val.value}>
+                      {val.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
 
-            {getInput(
-              condition.questionType,
-              condition.operatorType,
-              condition.conditionType,
-              condition.value,
-              (value) => updateCondition(index, 'value', value)
-            )}
-            <Box sx={{display:"flex",flexDirection : "row",gap:1}}>
-           <Button
-                  variant="contained"
-                color="secondary"
-                onClick={addCondition}
-                startIcon={<Add />}
-                sx={{
-                  background : "#FFF",
-                  color : "#1758BA",
-                  border : "2px solid #1758BA",
-                  display : "flex",
-                  p:1.5,
-                  pl : 2.5,
-                  maxWidth : "52px",
-                  justifyContent:"center",
-                  alignItems:"center",
-                  borderRadius : 2
-                }}
-              >
-              </Button>
-                {conditions.length > 1 && index !== 0 &&
+              {getInput(
+                condition.questionType,
+                condition.operatorType,
+                condition.conditionType,
+                condition.value,
+                (value) => updateCondition(index, 'value', value)
+              )}
+              <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
                 <Button
-                variant="contained"
-              color="secondary"
-              onClick={()=>removeCondition(index)}
-              startIcon={<Delete />}
-              sx={{
-                background : "#FFF",
-                color : "#FA4D56",
-                border : "2px solid #FA4D56",
-                display : "flex",
-                p:1.5,
-                pl : 2.5,
-                maxWidth : "52px",
-                justifyContent:"center",
-                alignItems:"center",
-                borderRadius : 2
-              }}
-            >
-            </Button>
-                //  <IconButton onClick={() => } sx={{ height: 56 }}>
-                //       <Delete />
-                //   </IconButton>
+                  variant="contained"
+                  color="secondary"
+                  onClick={addCondition}
+                  startIcon={<Add />}
+                  sx={{
+                    background: "#FFF",
+                    color: "#1758BA",
+                    border: "2px solid #1758BA",
+                    display: "flex",
+                    p: 1.5,
+                    pl: 2.5,
+                    maxWidth: "52px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: 2
+                  }}
+                >
+                </Button>
+                {conditions.length > 1 && index !== 0 &&
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => removeCondition(index)}
+                    startIcon={<Delete />}
+                    sx={{
+                      background: "#FFF",
+                      color: "#FA4D56",
+                      border: "2px solid #FA4D56",
+                      display: "flex",
+                      p: 1.5,
+                      pl: 2.5,
+                      maxWidth: "52px",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: 2
+                    }}
+                  >
+                  </Button>
+                  //  <IconButton onClick={() => } sx={{ height: 56 }}>
+                  //       <Delete />
+                  //   </IconButton>
                 }
+              </Box>
             </Box>
-          </Box>
           </Box>
         </Box>
       ))}
 
-     
+
 
       <Button
         variant="contained"
