@@ -356,12 +356,21 @@ import { Add, Delete } from '@mui/icons-material';
 
 
 export default function DependentSelectForm() {
-  const [conditions, setConditions] = useState<Condition[]>([{
-    questionType: '',
-    operatorType: '',
-    conditionType: '',
-    value: ''
-  }])
+  // const [conditions, setConditions] = useState<Condition[]>([{
+  //   questionType: '',
+  //   operatorType: '',
+  //   conditionType: '',
+  //   value: ''
+  // }])
+  const [conditions, setConditions] = useState<Condition[]>([
+    {
+      questionType: "",
+      operatorType: "",
+      conditionType: "",
+      value: "",
+      logicalOperator: null,
+    },
+  ])
 
 
   const addCondition = () => {
