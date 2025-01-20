@@ -615,11 +615,12 @@ export default function DependentSelectForm() {
           {/* <Typography variant="h6">Condition {index + 1}</Typography> */}
           <Box sx={{ display: "flex",alignItems : "center" }}>
             {index === 0 && <Typography sx={{ width: 100 }} variant="h6">اگر {index + 1}</Typography>}
-            {conditions.length > 0  &&  <Select
+            {index !== 0 && conditions.length > 0  &&  <Select
                   value={condition.questionType}
                   // label="نوع سوال"
                   sx={{
-                    minWidth: { md: 200 },
+                     width: 90,
+                     mr: 1
                   }}
                   onChange={(e) => updateCondition(index, 'questionType', e.target.value)}
                 >
