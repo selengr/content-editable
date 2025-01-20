@@ -1022,7 +1022,7 @@ export default function DependentSelectForm() {
 
 
 
-      <Button
+      {/* <Button
         variant="contained"
         color="primary"
         onClick={handleSubmit}
@@ -1030,8 +1030,27 @@ export default function DependentSelectForm() {
         sx={{ mt: 2, ml: 2 }}
       >
         تایید
-      </Button>
+      </Button> */}
 
+      <Box sx={{ display: "flex", gap: 2, justifyContent: "flex-end", mt: 4 }}>
+        <Button variant="outlined" onClick={addCondition} sx={{ minWidth: 150 }}>
+          افزودن شرط جدید
+        </Button>
+
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSubmit}
+          disabled={conditions.some((c) => !c.conditionType)}
+          sx={{ minWidth: 150 }}
+        >
+          تایید
+        </Button>
+
+        <Button variant="outlined" color="error" sx={{ minWidth: 150 }}>
+          انصراف
+        </Button>
+      </Box>
       
     </Box>
   )
