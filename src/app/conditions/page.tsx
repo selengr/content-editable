@@ -612,17 +612,20 @@ export default function DependentSelectForm() {
     <Box sx={{ minWidth: 800, p: 3, direction: "ltr" }}>
       {conditions.map((condition, index) => (
         <Box key={index} sx={{ mb: 2 }}>
-          <Typography variant="h6">Condition {index + 1}</Typography>
+          {/* <Typography variant="h6">Condition {index + 1}</Typography> */}
+            <Box sx={{display:"flex"}}>
+                   {index === 0 && <Typography sx={{maxWidth : "20px"}} variant="h6">اگر {index + 1}</Typography>}
+           
           <Box
             rowGap={3}
             columnGap={2}
             display="grid"
             gridTemplateColumns={{
-              xs: 'repeat(1, 1fr)',
-              sm: 'repeat(3, 1fr)',
-              md: 'repeat(5, 1fr)',
+              xs: 'repeat(2, 1fr)',
+              sm: 'repeat(4, 1fr)',
+              md: 'repeat(6, 1fr)',
             }}
-          >
+            >
             <FormControl sx={{ minWidth: 200 }}>
               <InputLabel>نوع سوال</InputLabel>
               <Select
@@ -742,6 +745,7 @@ export default function DependentSelectForm() {
                 //   </IconButton>
                 }
             </Box>
+          </Box>
           </Box>
         </Box>
       ))}
