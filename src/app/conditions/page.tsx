@@ -346,7 +346,7 @@ import TextField from '@mui/material/TextField';
 import { SelectOption } from './_types/conditions'
 import JSONData from '../../../public/assets/fake-data/response_v1.json'
 import { Box, FormControl, InputLabel, MenuItem, Select, Button, Divider, IconButton, Typography } from '@mui/material'
-import { Add, Delete } from '@mui/icons-material';
+import { Add, Delete  } from '@mui/icons-material';
 
 
 export default function DependentSelectForm() {
@@ -697,23 +697,56 @@ export default function DependentSelectForm() {
               condition.value,
               (value) => updateCondition(index, 'value', value)
             )}
-
-            <IconButton onClick={() => removeCondition(index)} sx={{ height: 56 }}>
-              <Delete />
-            </IconButton>
+            <Box sx={{display:"flex",flexDirection : "row",gap:1}}>
+           <Button
+                  variant="contained"
+                color="secondary"
+                onClick={addCondition}
+                startIcon={<Add />}
+                sx={{
+                  background : "#FFF",
+                  color : "#1758BA",
+                  border : "2px solid #1758BA",
+                  display : "flex",
+                  p:1.5,
+                  pl : 2.5,
+                  maxWidth : "52px",
+                  justifyContent:"center",
+                  alignItems:"center",
+                  borderRadius : 2
+                }}
+              >
+              </Button>
+                {conditions.length > 1 && index !== 0 &&
+                <Button
+                variant="contained"
+              color="secondary"
+              onClick={()=>removeCondition(index)}
+              startIcon={<Delete />}
+              sx={{
+                background : "#FFF",
+                color : "#FA4D56",
+                border : "2px solid #FA4D56",
+                display : "flex",
+                p:1.5,
+                pl : 2.5,
+                maxWidth : "52px",
+                justifyContent:"center",
+                alignItems:"center",
+                borderRadius : 2
+              }}
+            >
+            </Button>
+                //  <IconButton onClick={() => } sx={{ height: 56 }}>
+                //       <Delete />
+                //   </IconButton>
+                }
+            </Box>
           </Box>
         </Box>
       ))}
 
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={addCondition}
-        startIcon={<Add />}
-        sx={{ mt: 2 }}
-      >
-        Add Condition
-      </Button>
+     
 
       <Button
         variant="contained"
