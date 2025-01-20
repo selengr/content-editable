@@ -385,17 +385,7 @@ export default function DependentSelectForm() {
       },
     ])
   }
-
-
-  // const addCondition = () => {
-  //   setConditions(prevConditions => [...prevConditions, {
-  //     questionType: '',
-  //     operatorType: '',
-  //     conditionType: '',
-  //     value: ''
-  //   }])
-  // }
-
+  
 
   const removeCondition = (index: number) => {
     setConditions(conditions.filter((_, i) => i !== index))
