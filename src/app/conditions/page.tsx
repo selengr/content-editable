@@ -417,6 +417,14 @@ export default function DependentSelectForm() {
     setConditions(conditions.filter((_, i) => i !== index))
   }
 
+  const removeSubCondition = (conditionIndex: number, subIndex: number) => {
+    setConditions((prevConditions) => {
+      const newConditions = [...prevConditions]
+      newConditions[conditionIndex].subConditions.splice(subIndex, 1)
+      return newConditions
+    })
+  }
+
   const updateCondition = (index: number, field: keyof Condition, value: string) => {
     setConditions(prevConditions => {
       const newConditions = [...prevConditions];
