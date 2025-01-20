@@ -327,17 +327,29 @@
 
 
 
+export interface SubCondition {
+  questionType: string
+  operatorType: string
+  conditionType: string
+  value: string
+}
 
-interface Condition {
-  questionType: string;
-  operatorType: string;
-  conditionType: string;
-  value: string;
+export interface Condition {
+  questionType: string
+  operatorType: string
+  conditionType: string
+  value: string
+  logicalOperator: "AND" | "OR" | null
+  subConditions: SubCondition[]
+  goTo: {
+    type: string
+    value: string
+  }
 }
 
 
 
-interface Condition {
+interface Condition2 {
   questionType: string;
   operatorType: string;
   conditionType: string;
