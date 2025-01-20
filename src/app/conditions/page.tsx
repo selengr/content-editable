@@ -679,6 +679,143 @@ export default function DependentSelectForm() {
   }, [])
 
 
+
+  const renderConditionInputs = (
+    condition: Condition | SubCondition,
+    index: number,
+    isSubCondition = false,
+    parentIndex?: number,
+  ) => {
+    const updateFn =
+      isSubCondition && parentIndex !== undefined
+        ? (field: keyof SubCondition, value: string) => updateSubCondition(parentIndex, index, field, value)
+        : (field: keyof Condition, value: string) => updateCondition(index, field, value)
+
+    return (
+      <Box
+        rowGap={3}
+        columnGap={2}
+        display="grid"
+        gridTemplateColumns={{
+          xs: "repeat(2, 1fr)",
+          sm: "repeat(4, 1fr)",
+          md: "repeat(6, 1fr)",
+        }}
+      >
+        <FormControl sx={{ minWidth: 200 }}>
+          <InputLabel>نوع سوال</InputLabel>
+          <Select
+            value={condition.questionType}
+            label="نوع سوال"
+            onChange={(e) => updateFn("questionType", e.target.value)}
+          >
+            <MenuItem
+              value=""
+              onClick={() => updateFn("questionType", "")}
+              sx={{
+                fontStyle: "italic",
+                color: "text.secondary",
+                display: "flex",
+                justifyContent: "end",
+              }}
+            >
+              None
+            </MenuItem>
+            <Divider />
+            {questionTypes.map((type) => (
+              <MenuItem
+                key={type.value}
+                value={type.value}
+                sx={{
+                  display: "flex",
+                  justifyContent: "end",
+                }}
+              >
+                {type.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl sx={{ minWidth: 200 }}>
+          <InputLabel>حالت</InputLabel>
+          <Select
+            value={condition.operatorType}
+            label="حالت"
+            onChange={(e) => updateFn("operatorType", e.target.value)}
+            disabled={!condition.questionType}
+          >
+            {getQuestion(condition.questionType).map((op) => (
+              <MenuItem key={op.value} value={op.value}>
+                {op.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl sx={{ minWidth: 200 }}>
+          <InputLabel>شرط</InputLabel>
+          <Select
+            value={condition.conditionType}
+            label="شرط"
+            onChange={(e) => updateFn("conditionType", e.target.value)}
+            disabled={!condition.operatorType}
+          >
+            {getCondition(condition.questionType, condition.operatorType).map((val) => (
+              <MenuItem key={val.value} value={val.value}>
+                {val.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        {getInput(condition.questionType, condition.operatorType, condition.conditionType, condition.value, (value) =>
+          updateFn("value", value),
+        )}
+
+        <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
+          {!isSubCondition && (
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => addSubCondition(index)}
+              startIcon={<Add />}
+              sx={{
+                background: "#FFF",
+                color: "#1758BA",
+                border: "2px solid #1758BA",
+                p: 1.5,
+                maxWidth: "52px",
+                borderRadius: 2,
+              }}
+            />
+          )}
+          {(conditions.length > 1 || isSubCondition) && (
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() =>
+                isSubCondition && parentIndex !== undefined
+                  ? removeSubCondition(parentIndex, index)
+                  : removeCondition(index)
+              }
+              startIcon={<Delete />}
+              sx={{
+                background: "#FFF",
+                color: "#FA4D56",
+                border: "2px solid #FA4D56",
+                p: 1.5,
+                maxWidth: "52px",
+                borderRadius: 2,
+              }}
+            />
+          )}
+        </Box>
+      </Box>
+    )
+  }
+
+
   const handleSubmit = () => {
     console.log('Submitted conditions:', conditions);
 
@@ -711,7 +848,7 @@ export default function DependentSelectForm() {
                 ))}
               </Select>
             )}
-            <Box
+            {/* <Box
               rowGap={3}
               columnGap={2}
               display="grid"
@@ -837,7 +974,17 @@ export default function DependentSelectForm() {
                   </Button>
                 }
               </Box>
-            </Box>
+            </Box> */}
+
+{renderConditionInputs(condition, index)}
+
+{/* Sub-conditions */}
+{condition.subConditions.map((subCondition, subIndex) => (
+  <Box key={`${index}-${subIndex}`} sx={{ ml: 4, mt: 2 }}>
+    {renderConditionInputs(subCondition, subIndex, true, index)}
+  </Box>
+))}
+
           </Box>
         </Box>
       ))}
