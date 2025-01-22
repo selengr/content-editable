@@ -348,15 +348,6 @@ interface SubCondition {
 
 
 
-interface Condition2 {
-  questionType: string;
-  operatorType: string;
-  conditionType: string;
-  value: string;
-  logicalOperator: 'AND' | 'OR' | null;
-}
-
-
 
 import { useState, useEffect } from 'react'
 import TextField from '@mui/material/TextField';
