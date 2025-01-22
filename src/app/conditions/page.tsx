@@ -686,9 +686,7 @@ export default function DependentSelectForm() {
     isSubCondition = false,
     parentIndex?: number,
   ) => {
-    // console.log("test",conditions[index]?.subConditions.length)
     console.log(
-      // "condition", condition,
       "index",index,
       "isSubCondition",isSubCondition,
       "parentIndex",parentIndex,
