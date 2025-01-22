@@ -355,9 +355,9 @@ export default function DependentSelectForm() {
     parentIndex?: number,
   ) => {
     console.log(
-      "index",index,
-      "isSubCondition",isSubCondition,
-      "parentIndex",parentIndex,
+      "index", index,
+      "isSubCondition", isSubCondition,
+      "parentIndex", parentIndex,
     )
 
     const updateFn =
@@ -366,152 +366,152 @@ export default function DependentSelectForm() {
         : (field: keyof Condition, value: string) => updateCondition(index, field, value)
 
     return (
-      <Box sx={{ mb: 2,display: "flex", flexDirection : "row" }}>
-         <Box sx={{ display: "flex", alignItems: "center" }}>
-            {conditions[index]?.subConditions.length === 0 && <Typography sx={{ width: 90 }} variant="h6">اگر </Typography>}
-            {/* {index !== 0 && conditions.length > 0 && ( */}
-              <Select
-                value={condition.logicalOperator || ''}
-                sx={{
-                  width: 90,
-                  mr: 1
-                }}
-                onChange={(e) => updateCondition(index, 'logicalOperator', e.target.value)}
-              >
-                {[{ value: "AND", label: "و" }, { value: "OR", label: "یا" }].map((type) => (
-                  <MenuItem key={type.value} value={type.value}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "end"
-                    }}
-                  >
-                    {type.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            {/* )} */}
-             </Box>
-      <Box
-        rowGap={3}
-        columnGap={2}
-        display="grid"
-        gridTemplateColumns={{
-          xs: "repeat(2, 1fr)",
-          sm: "repeat(4, 1fr)",
-          md: "repeat(6, 1fr)",
-        }}
-      >
-        
-        <FormControl sx={{ minWidth: 200 }}>
-          <InputLabel>نوع سوال</InputLabel>
+      <Box sx={{ mb: 2, display: "flex", flexDirection: "row" }}>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          {conditions[index]?.subConditions.length === 0 && <Typography sx={{ width: 90 }} variant="h6">اگر </Typography>}
+          {/* {index !== 0 && conditions.length > 0 && ( */}
           <Select
-            value={condition.questionType}
-            label="نوع سوال"
-            onChange={(e) => updateFn("questionType", e.target.value)}
+            value={condition.logicalOperator || ''}
+            sx={{
+              width: 90,
+              mr: 1
+            }}
+            onChange={(e) => updateCondition(index, 'logicalOperator', e.target.value)}
           >
-            <MenuItem
-              value=""
-              onClick={() => updateFn("questionType", "")}
-              sx={{
-                fontStyle: "italic",
-                color: "text.secondary",
-                display: "flex",
-                justifyContent: "end",
-              }}
-            >
-              None
-            </MenuItem>
-            <Divider />
-            {questionTypes.map((type) => (
-              <MenuItem
-                key={type.value}
-                value={type.value}
+            {[{ value: "AND", label: "و" }, { value: "OR", label: "یا" }].map((type) => (
+              <MenuItem key={type.value} value={type.value}
                 sx={{
                   display: "flex",
-                  justifyContent: "end",
+                  justifyContent: "end"
                 }}
               >
                 {type.label}
               </MenuItem>
             ))}
           </Select>
-        </FormControl>
-
-        <FormControl sx={{ minWidth: 200 }}>
-          <InputLabel>حالت</InputLabel>
-          <Select
-            value={condition.operatorType}
-            label="حالت"
-            onChange={(e) => updateFn("operatorType", e.target.value)}
-            disabled={!condition.questionType}
-          >
-            {getQuestion(condition.questionType).map((op) => (
-              <MenuItem key={op.value} value={op.value}>
-                {op.label}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-
-        <FormControl sx={{ minWidth: 200 }}>
-          <InputLabel>شرط</InputLabel>
-          <Select
-            value={condition.conditionType}
-            label="شرط"
-            onChange={(e) => updateFn("conditionType", e.target.value)}
-            disabled={!condition.operatorType}
-          >
-            {getCondition(condition.questionType, condition.operatorType).map((val) => (
-              <MenuItem key={val.value} value={val.value}>
-                {val.label}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-
-        {getInput(condition.questionType, condition.operatorType, condition.conditionType, condition.value, (value) =>
-          updateFn("value", value),
-        )}
-
-        <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
-          {(isSubCondition || index === 0) &&  (
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => addSubCondition(parentIndex)}
-              startIcon={<Add />}
-              sx={{
-                background: "#FFF",
-                color: "#1758BA",
-                border: "2px solid #1758BA",
-                p: 1.5,
-                maxWidth: "52px",
-                borderRadius: 2,
-              }}
-            />
-           )} 
-          {(isSubCondition) && (
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() =>
-                isSubCondition && parentIndex !== undefined
-                  ? removeSubCondition(parentIndex, index)
-                  : removeCondition(index)
-              }
-              startIcon={<Delete />}
-              sx={{
-                background: "#FFF",
-                color: "#FA4D56",
-                border: "2px solid #FA4D56",
-                p: 1.5,
-                maxWidth: "52px",
-                borderRadius: 2,
-              }}
-            />
-          )}
+          {/* )} */}
         </Box>
-      </Box>
+        <Box
+          rowGap={3}
+          columnGap={2}
+          display="grid"
+          gridTemplateColumns={{
+            xs: "repeat(2, 1fr)",
+            sm: "repeat(4, 1fr)",
+            md: "repeat(6, 1fr)",
+          }}
+        >
+
+          <FormControl sx={{ minWidth: 200 }}>
+            <InputLabel>نوع سوال</InputLabel>
+            <Select
+              value={condition.questionType}
+              label="نوع سوال"
+              onChange={(e) => updateFn("questionType", e.target.value)}
+            >
+              <MenuItem
+                value=""
+                onClick={() => updateFn("questionType", "")}
+                sx={{
+                  fontStyle: "italic",
+                  color: "text.secondary",
+                  display: "flex",
+                  justifyContent: "end",
+                }}
+              >
+                None
+              </MenuItem>
+              <Divider />
+              {questionTypes.map((type) => (
+                <MenuItem
+                  key={type.value}
+                  value={type.value}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "end",
+                  }}
+                >
+                  {type.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <FormControl sx={{ minWidth: 200 }}>
+            <InputLabel>حالت</InputLabel>
+            <Select
+              value={condition.operatorType}
+              label="حالت"
+              onChange={(e) => updateFn("operatorType", e.target.value)}
+              disabled={!condition.questionType}
+            >
+              {getQuestion(condition.questionType).map((op) => (
+                <MenuItem key={op.value} value={op.value}>
+                  {op.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <FormControl sx={{ minWidth: 200 }}>
+            <InputLabel>شرط</InputLabel>
+            <Select
+              value={condition.conditionType}
+              label="شرط"
+              onChange={(e) => updateFn("conditionType", e.target.value)}
+              disabled={!condition.operatorType}
+            >
+              {getCondition(condition.questionType, condition.operatorType).map((val) => (
+                <MenuItem key={val.value} value={val.value}>
+                  {val.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          {getInput(condition.questionType, condition.operatorType, condition.conditionType, condition.value, (value) =>
+            updateFn("value", value),
+          )}
+
+          <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
+            {(isSubCondition || index === 0) && (
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => addSubCondition(parentIndex)}
+                startIcon={<Add />}
+                sx={{
+                  background: "#FFF",
+                  color: "#1758BA",
+                  border: "2px solid #1758BA",
+                  p: 1.5,
+                  maxWidth: "52px",
+                  borderRadius: 2,
+                }}
+              />
+            )}
+            {(isSubCondition) && (
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() =>
+                  isSubCondition && parentIndex !== undefined
+                    ? removeSubCondition(parentIndex, index)
+                    : removeCondition(index)
+                }
+                startIcon={<Delete />}
+                sx={{
+                  background: "#FFF",
+                  color: "#FA4D56",
+                  border: "2px solid #FA4D56",
+                  p: 1.5,
+                  maxWidth: "52px",
+                  borderRadius: 2,
+                }}
+              />
+            )}
+          </Box>
+        </Box>
       </Box>
     )
   }
@@ -523,20 +523,20 @@ export default function DependentSelectForm() {
   }
 
   return (
-    <Box sx={{ width: "100%", p: 3,display : "flex",flexDirection : "column",justifyContent:"center", direction: "ltr" }}>
+    <Box sx={{ width: "100%", p: 3, display: "flex", flexDirection: "column", justifyContent: "center", direction: "ltr" }}>
       {conditions.map((condition, index) => (
         <Box key={index} sx={{ mb: 2, width: "100%" }}>
-         
-           
 
-              {renderConditionInputs(condition, index)}
 
-              {/* Sub-conditions */}
-              {condition.subConditions.map((subCondition, subIndex) => (
-                <Box key={`${index}-${subIndex}`} sx={{ ml: 4, mt: 2 }}>
-                  {renderConditionInputs(subCondition, subIndex, true, index)}
-                </Box>
-              ))}
+
+          {renderConditionInputs(condition, index)}
+
+          {/* Sub-conditions */}
+          {condition.subConditions.map((subCondition, subIndex) => (
+            <Box key={`${index}-${subIndex}`} sx={{ ml: 4, mt: 2 }}>
+              {renderConditionInputs(subCondition, subIndex, true, index)}
+            </Box>
+          ))}
 
           {/* Go To Section */}
           <Box sx={{ mt: 2, ml: 4, display: "flex", alignItems: "center", gap: 2 }}>
@@ -567,7 +567,7 @@ export default function DependentSelectForm() {
               </FormControl>
             )}
 
-     <Typography sx={{mr : 7.6}}>در غیر اینصورت برو به:</Typography>
+            <Typography sx={{ mr: 7.6 }}>در غیر اینصورت برو به:</Typography>
             <FormControl sx={{ minWidth: 382 }}>
               <Select value={condition.goTo.type} onChange={(e) => updateCondition(index, "goTo", e.target.value)}>
                 <MenuItem value="item">آیتم</MenuItem>
@@ -576,25 +576,25 @@ export default function DependentSelectForm() {
               </Select>
             </FormControl>
             {/* removeCondition */}
-            <Button variant="outlined" color="error" sx={{ minWidth: 150,py: 2, }} onClick={()=>removeCondition(index)}>
-                   حذف این شرط  
+            <Button variant="outlined" color="error" sx={{ minWidth: 150, py: 2, }} onClick={() => removeCondition(index)}>
+              حذف این شرط
             </Button>
-            
+
           </Box>
 
-          <Divider sx={{my : 3 }}/>
+          <Divider sx={{ my: 3 }} />
         </Box>
       ))}
 
 
 
-    
-      <Button variant="outlined" onClick={addCondition} sx={{ maxWidth: 150 ,ml:10}}>
-          افزودن شرط جدید
-        </Button>
+
+      <Button variant="outlined" onClick={addCondition} sx={{ maxWidth: 150, ml: 10 }}>
+        افزودن شرط جدید
+      </Button>
 
       <Box sx={{ display: "flex", gap: 2, justifyContent: "center", mt: 4 }}>
-       
+
 
         <Button
           variant="contained"
@@ -610,7 +610,7 @@ export default function DependentSelectForm() {
           انصراف
         </Button>
       </Box>
-      
+
     </Box>
   )
 }
