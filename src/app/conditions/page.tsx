@@ -64,19 +64,27 @@ export default function DependentSelectForm() {
     ])
   }
 
-  const addSubCondition = (conditionIndex: number) => {
-    console.log("00",conditionIndex)
+
+  const addSubCondition = (conditionIndex: number, subConditionIndex: number) => {
     setConditions((prevConditions) => {
-      const newConditions = [...prevConditions]
-      newConditions[conditionIndex]?.subConditions.push({
-        questionType: "",
-        operatorType: "",
-        conditionType: "",
-        value: "",
-      })
-      return newConditions
-    })
-  }
+      const newConditions = [...prevConditions];
+
+      const newSubConditions = [
+        {
+          questionType: "",
+          operatorType: "",
+          conditionType: "",
+          value: "",
+        },
+      ];
+      
+      if (newConditions[conditionIndex]?.subConditions) {
+        newConditions[conditionIndex].subConditions.splice(subConditionIndex + 1, 0, ...newSubConditions);
+      }
+  
+      return newConditions;
+    });
+  };
 
   const removeCondition = (index: number) => {
     setConditions(conditions.filter((_, i) => i !== index))
@@ -349,17 +357,17 @@ export default function DependentSelectForm() {
     condition: SubCondition,
     index: number,
     isSubCondition = false,
-    parentIndex?: number,
+    subIndex?: number,
   ) => {
     console.log(
       "index", index,
       "isSubCondition", isSubCondition,
-      "parentIndex", parentIndex,
+      "subIndex", subIndex,
     )
 
     const updateFn =
-      // isSubCondition && parentIndex !== undefined
-         (field: keyof SubCondition, value: string) => updateSubCondition(parentIndex, index, field, value)
+      // isSubCondition && subIndex !== undefined
+         (field: keyof SubCondition, value: string) => updateSubCondition(subIndex, index, field, value)
         // : (field: keyof Condition, value: string) => updateCondition(index, field, value)
 
     return (
@@ -471,11 +479,11 @@ export default function DependentSelectForm() {
           )}
 
           <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
-            {(isSubCondition || index === 0) && (
+            {/* {(isSubCondition || index === 0) && ( */}
               <Button
                 variant="contained"
                 color="secondary"
-                onClick={() => addSubCondition(index)}
+                onClick={() => addSubCondition(index,subIndex)}
                 startIcon={<Add />}
                 sx={{
                   background: "#FFF",
@@ -486,14 +494,14 @@ export default function DependentSelectForm() {
                   borderRadius: 2,
                 }}
               />
-            )}
+            {/* // )} */}
             {(isSubCondition) && (
               <Button
                 variant="contained"
                 color="secondary"
                 onClick={() =>
-                  isSubCondition && parentIndex !== undefined
-                    ? removeSubCondition(parentIndex, index)
+                  isSubCondition && subIndex !== undefined
+                    ? removeSubCondition(subIndex, index)
                     : removeCondition(index)
                 }
                 startIcon={<Delete />}
