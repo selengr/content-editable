@@ -403,7 +403,7 @@ export default function DependentSelectForm() {
   const addSubCondition = (conditionIndex: number) => {
     setConditions((prevConditions) => {
       const newConditions = [...prevConditions]
-      newConditions[conditionIndex].subConditions.push({
+      newConditions[conditionIndex]?.subConditions.push({
         questionType: "",
         operatorType: "",
         conditionType: "",
@@ -686,6 +686,7 @@ export default function DependentSelectForm() {
     isSubCondition = false,
     parentIndex?: number,
   ) => {
+    console.log("test",conditions[index]?.subConditions.length)
     const updateFn =
       isSubCondition && parentIndex !== undefined
         ? (field: keyof SubCondition, value: string) => updateSubCondition(parentIndex, index, field, value)
@@ -694,8 +695,8 @@ export default function DependentSelectForm() {
     return (
       <Box sx={{ mb: 2,display: "flex", flexDirection : "row" }}>
          <Box sx={{ display: "flex", alignItems: "center" }}>
-            {index === 0 && <Typography sx={{ width: 90 }} variant="h6">اگر </Typography>}
-            {index !== 0 && conditions.length > 0 && (
+            {conditions[index]?.subConditions.length === 0 && <Typography sx={{ width: 90 }} variant="h6">اگر </Typography>}
+            {/* {index !== 0 && conditions.length > 0 && ( */}
               <Select
                 value={condition.logicalOperator || ''}
                 sx={{
@@ -715,7 +716,7 @@ export default function DependentSelectForm() {
                   </MenuItem>
                 ))}
               </Select>
-            )}
+            {/* )} */}
              </Box>
       <Box
         rowGap={3}
@@ -800,7 +801,7 @@ export default function DependentSelectForm() {
         )}
 
         <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
-          {isSubCondition && (
+          {/* {isSubCondition && ( */}
             <Button
               variant="contained"
               color="secondary"
@@ -815,8 +816,8 @@ export default function DependentSelectForm() {
                 borderRadius: 2,
               }}
             />
-          )}
-          {(conditions.length > 1 || isSubCondition) && (
+          {/* )} */}
+          {(isSubCondition) && (
             <Button
               variant="contained"
               color="secondary"
@@ -919,7 +920,7 @@ export default function DependentSelectForm() {
           افزودن شرط جدید
         </Button>
 
-      <Box sx={{ display: "flex", gap: 2, justifyContent: "flex-end", mt: 4 }}>
+      <Box sx={{ display: "flex", gap: 2, justifyContent: "center", mt: 4 }}>
        
 
         <Button
