@@ -2,10 +2,6 @@
 
 
 interface Condition {
-  questionType: string
-  operatorType: string
-  conditionType: string
-  value: string
   logicalOperator: "AND" | "OR" | null
   subConditions: SubCondition[]
   goTo: {
@@ -35,12 +31,13 @@ import { Add, Delete } from '@mui/icons-material';
 export default function DependentSelectForm() {
   const [conditions, setConditions] = useState<Condition[]>([
     {
-      questionType: "",
+      logicalOperator: null,
+      subConditions: [{
+        questionType: "",
       operatorType: "",
       conditionType: "",
       value: "",
-      logicalOperator: null,
-      subConditions: [],
+      }],
       goTo: {
         type: "",
         value: "",
@@ -52,12 +49,13 @@ export default function DependentSelectForm() {
     setConditions((prevConditions) => [
       ...prevConditions,
       {
-        questionType: "",
-        operatorType: "",
-        conditionType: "",
-        value: "",
         logicalOperator: "AND",
-        subConditions: [],
+        subConditions: [{
+          questionType: "",
+          operatorType: "",
+          conditionType: "",
+          value: "",
+        }],
         goTo: {
           type: "",
           value: "",
@@ -67,6 +65,7 @@ export default function DependentSelectForm() {
   }
 
   const addSubCondition = (conditionIndex: number) => {
+    console.log("00",conditionIndex)
     setConditions((prevConditions) => {
       const newConditions = [...prevConditions]
       newConditions[conditionIndex]?.subConditions.push({
@@ -97,12 +96,12 @@ export default function DependentSelectForm() {
       newConditions[index] = { ...newConditions[index], [field]: value };
 
       if (field === 'questionType') {
-        newConditions[index].operatorType = '';
-        newConditions[index].conditionType = '';
-        newConditions[index].value = '';
+        newConditions[index].subConditions.operatorType = '';
+        newConditions[index].subConditions.conditionType = '';
+        newConditions[index].subConditions.value = '';
       } else if (field === 'operatorType') {
-        newConditions[index].conditionType = '';
-        newConditions[index].value = '';
+        newConditions[index].subConditions.conditionType = '';
+        newConditions[index].subConditions.value = '';
       }
 
       return newConditions;
@@ -347,7 +346,7 @@ export default function DependentSelectForm() {
 
 
   const renderConditionInputs = (
-    condition: Condition | SubCondition,
+    condition: SubCondition,
     index: number,
     isSubCondition = false,
     parentIndex?: number,
@@ -359,9 +358,9 @@ export default function DependentSelectForm() {
     )
 
     const updateFn =
-      isSubCondition && parentIndex !== undefined
-        ? (field: keyof SubCondition, value: string) => updateSubCondition(parentIndex, index, field, value)
-        : (field: keyof Condition, value: string) => updateCondition(index, field, value)
+      // isSubCondition && parentIndex !== undefined
+         (field: keyof SubCondition, value: string) => updateSubCondition(parentIndex, index, field, value)
+        // : (field: keyof Condition, value: string) => updateCondition(index, field, value)
 
     return (
       <Box sx={{ mb: 2, display: "flex", flexDirection: "row" }}>
@@ -476,7 +475,7 @@ export default function DependentSelectForm() {
               <Button
                 variant="contained"
                 color="secondary"
-                onClick={() => addSubCondition(parentIndex)}
+                onClick={() => addSubCondition(index)}
                 startIcon={<Add />}
                 sx={{
                   background: "#FFF",
@@ -515,8 +514,8 @@ export default function DependentSelectForm() {
   }
 
 
+  // console.log('Submitted conditions:', condition.subConditions);
   const handleSubmit = () => {
-    console.log('Submitted conditions:', conditions);
     console.log('Submitted conditions:', conditions[0]);
 
   }
@@ -528,7 +527,7 @@ export default function DependentSelectForm() {
 
 
 
-          {renderConditionInputs(condition, index)}
+          {/* {renderConditionInputs(condition, index)} */}
 
           {/* Sub-conditions */}
           {condition.subConditions.map((subCondition, subIndex) => (
