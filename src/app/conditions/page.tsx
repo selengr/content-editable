@@ -686,7 +686,14 @@ export default function DependentSelectForm() {
     isSubCondition = false,
     parentIndex?: number,
   ) => {
-    console.log("test",conditions[index]?.subConditions.length)
+    // console.log("test",conditions[index]?.subConditions.length)
+    console.log(
+      // "condition", condition,
+      "index",index,
+      "isSubCondition",isSubCondition,
+      "parentIndex",parentIndex,
+    )
+
     const updateFn =
       isSubCondition && parentIndex !== undefined
         ? (field: keyof SubCondition, value: string) => updateSubCondition(parentIndex, index, field, value)
@@ -801,11 +808,11 @@ export default function DependentSelectForm() {
         )}
 
         <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
-          {/* {isSubCondition && ( */}
+          {(isSubCondition || index === 0) &&  (
             <Button
               variant="contained"
               color="secondary"
-              onClick={() => addSubCondition(index)}
+              onClick={() => addSubCondition(parentIndex)}
               startIcon={<Add />}
               sx={{
                 background: "#FFF",
@@ -816,7 +823,7 @@ export default function DependentSelectForm() {
                 borderRadius: 2,
               }}
             />
-          {/* )} */}
+           )} 
           {(isSubCondition) && (
             <Button
               variant="contained"
