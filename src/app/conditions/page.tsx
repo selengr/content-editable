@@ -2,7 +2,6 @@
 
 
 interface Condition {
-  logicalOperator: "AND" | "OR" | string
   subConditions: SubCondition[]
   goTo: {
     type: string
@@ -11,6 +10,7 @@ interface Condition {
 }
 
 interface SubCondition {
+  logicalOperator: "AND" | "OR" | string
   questionType: string
   operatorType: string
   conditionType: string
@@ -31,12 +31,12 @@ import { Add, Delete } from '@mui/icons-material';
 export default function DependentSelectForm() {
   const [conditions, setConditions] = useState<Condition[]>([
     {
-      logicalOperator: null,
       subConditions: [{
+        logicalOperator: null,
         questionType: "",
-      operatorType: "",
-      conditionType: "",
-      value: "",
+        operatorType: "",
+        conditionType: "",
+        value: "",
       }],
       goTo: {
         type: "",
@@ -49,8 +49,8 @@ export default function DependentSelectForm() {
     setConditions((prevConditions) => [
       ...prevConditions,
       {
-        logicalOperator: "",
         subConditions: [{
+          logicalOperator: "",
           questionType: "",
           operatorType: "",
           conditionType: "",
@@ -71,6 +71,7 @@ export default function DependentSelectForm() {
 
       const newSubConditions = [
         {
+          logicalOperator: "",
           questionType: "",
           operatorType: "",
           conditionType: "",
@@ -352,34 +353,34 @@ export default function DependentSelectForm() {
   }, [])
 
 
+  console.log("555",conditions[0]?.subConditions.length)
 
   const renderConditionInputs = (
     condition: SubCondition,
     index: number,
     subIndex?: number,
   ) => {
-    console.log(
-      "index", index,
-      "subIndex", subIndex,
-    )
+
+    console.log("subIndex",subIndex)
+    console.log("555",conditions[index]?.subConditions.length)
 
     const updateFn =
       // isSubCondition && subIndex !== undefined
-         (field: keyof SubCondition, value: string) => updateSubCondition(subIndex, index, field, value)
+         (field: keyof SubCondition, value: string) => updateSubCondition(index, subIndex, field, value)
         // : (field: keyof Condition, value: string) => updateCondition(index, field, value)
 
     return (
       <Box sx={{ mb: 2, display: "flex", flexDirection: "row" }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          {conditions[index]?.subConditions.length === 0 && <Typography sx={{ width: 90 }} variant="h6">اگر </Typography>}
-          {/* {index !== 0 && conditions.length > 0 && ( */}
+          {subIndex === 0 && <Typography sx={{ width: 90, mr :1 }} variant="h6">اگر </Typography>}
+          {subIndex > 0 && (
           <Select
             value={condition.logicalOperator || ''}
             sx={{
               width: 90,
               mr: 1
             }}
-            onChange={(e) => updateCondition(index, 'logicalOperator', e.target.value)}
+            onChange={(e) => updateFn('logicalOperator', e.target.value)}
           >
             {[{ value: "AND", label: "و" }, { value: "OR", label: "یا" }].map((type) => (
               <MenuItem key={type.value} value={type.value}
@@ -392,7 +393,7 @@ export default function DependentSelectForm() {
               </MenuItem>
             ))}
           </Select>
-          {/* )} */}
+          )}
         </Box>
         <Box
           rowGap={3}
