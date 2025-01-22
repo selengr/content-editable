@@ -1,8 +1,6 @@
 "use client"
 
 
-
-
 interface Condition {
   questionType: string
   operatorType: string
