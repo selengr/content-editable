@@ -593,7 +593,7 @@ export default function DependentSelectForm() {
           افزودن شرط جدید
         </Button>
 
-      <Box sx={{ display: "flex", gap: 2, justifyContent: "center", mt: 4 }}>
+      {/* <Box sx={{ display: "flex", gap: 2, justifyContent: "center", mt: 4 }}>
        
 
         <Button
@@ -608,7 +608,7 @@ export default function DependentSelectForm() {
 
         <Button variant="outlined" color="error" sx={{ minWidth: 150 }}>
           انصراف
-        </Button>
+        </Button> */}
       </Box>
       
     </Box>
