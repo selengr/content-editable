@@ -692,6 +692,31 @@ export default function DependentSelectForm() {
         : (field: keyof Condition, value: string) => updateCondition(index, field, value)
 
     return (
+      <Box sx={{ mb: 2,display: "flex", flexDirection : "row" }}>
+         <Box sx={{ display: "flex", alignItems: "center" }}>
+            {index === 0 && <Typography sx={{ width: 90 }} variant="h6">اگر </Typography>}
+            {index !== 0 && conditions.length > 0 && (
+              <Select
+                value={condition.logicalOperator || ''}
+                sx={{
+                  width: 90,
+                  mr: 1
+                }}
+                onChange={(e) => updateCondition(index, 'logicalOperator', e.target.value)}
+              >
+                {[{ value: "AND", label: "و" }, { value: "OR", label: "یا" }].map((type) => (
+                  <MenuItem key={type.value} value={type.value}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "end"
+                    }}
+                  >
+                    {type.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            )}
+             </Box>
       <Box
         rowGap={3}
         columnGap={2}
@@ -702,6 +727,7 @@ export default function DependentSelectForm() {
           md: "repeat(6, 1fr)",
         }}
       >
+        
         <FormControl sx={{ minWidth: 200 }}>
           <InputLabel>نوع سوال</InputLabel>
           <Select
@@ -774,7 +800,7 @@ export default function DependentSelectForm() {
         )}
 
         <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
-          {!isSubCondition && (
+          {isSubCondition && (
             <Button
               variant="contained"
               color="secondary"
@@ -812,6 +838,7 @@ export default function DependentSelectForm() {
           )}
         </Box>
       </Box>
+      </Box>
     )
   }
 
@@ -822,46 +849,23 @@ export default function DependentSelectForm() {
   }
 
   return (
-    <Box sx={{ minWidth: 800, p: 3, direction: "ltr" }}>
+    <Box sx={{ width: "100%", p: 3,display : "flex",flexDirection : "column",justifyContent:"center", direction: "ltr" }}>
       {conditions.map((condition, index) => (
-        <Box key={index} sx={{ mb: 2 }}>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            {index === 0 && <Typography sx={{ width: 100 }} variant="h6">اگر {index + 1}</Typography>}
-            {index !== 0 && conditions.length > 0 && (
-              <Select
-                value={condition.logicalOperator || ''}
-                sx={{
-                  width: 90,
-                  mr: 1
-                }}
-                onChange={(e) => updateCondition(index, 'logicalOperator', e.target.value)}
-              >
-                {[{ value: "AND", label: "و" }, { value: "OR", label: "یا" }].map((type) => (
-                  <MenuItem key={type.value} value={type.value}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "end"
-                    }}
-                  >
-                    {type.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            )}
-             </Box>
+        <Box key={index} sx={{ mb: 2, width: "100%" }}>
+         
            
 
-{renderConditionInputs(condition, index)}
+              {renderConditionInputs(condition, index)}
 
-{/* Sub-conditions */}
-{condition.subConditions.map((subCondition, subIndex) => (
-  <Box key={`${index}-${subIndex}`} sx={{ ml: 4, mt: 2 }}>
-    {renderConditionInputs(subCondition, subIndex, true, index)}
-  </Box>
-))}
+              {/* Sub-conditions */}
+              {condition.subConditions.map((subCondition, subIndex) => (
+                <Box key={`${index}-${subIndex}`} sx={{ ml: 4, mt: 2 }}>
+                  {renderConditionInputs(subCondition, subIndex, true, index)}
+                </Box>
+              ))}
 
- {/* Go To Section */}
- <Box sx={{ mt: 2, ml: 4, display: "flex", alignItems: "center", gap: 2 }}>
+          {/* Go To Section */}
+          <Box sx={{ mt: 2, ml: 4, display: "flex", alignItems: "center", gap: 2 }}>
             <Typography>:برو به</Typography>
             <FormControl sx={{ minWidth: 200 }}>
               <Select value={condition.goTo.type} onChange={(e) => updateCondition(index, "goTo", e.target.value)}>
@@ -889,8 +893,8 @@ export default function DependentSelectForm() {
               </FormControl>
             )}
 
-     <Typography>در غیر اینصورت برو به:</Typography>
-            <FormControl sx={{ minWidth: 440 }}>
+     <Typography sx={{mr : 7.6}}>در غیر اینصورت برو به:</Typography>
+            <FormControl sx={{ minWidth: 382 }}>
               <Select value={condition.goTo.type} onChange={(e) => updateCondition(index, "goTo", e.target.value)}>
                 <MenuItem value="item">آیتم</MenuItem>
                 <MenuItem value="section">بخش</MenuItem>
@@ -904,26 +908,19 @@ export default function DependentSelectForm() {
             
           </Box>
 
-         
+          <Divider sx={{my : 3 }}/>
         </Box>
       ))}
 
 
 
-      {/* <Button
-        variant="contained"
-        color="primary"
-        onClick={handleSubmit}
-        disabled={conditions.some(c => !c.conditionType)}
-        sx={{ mt: 2, ml: 2 }}
-      >
-        تایید
-      </Button> */}
-
-      <Box sx={{ display: "flex", gap: 2, justifyContent: "flex-end", mt: 4 }}>
-        <Button variant="outlined" onClick={addCondition} sx={{ minWidth: 150 }}>
+    
+      <Button variant="outlined" onClick={addCondition} sx={{ maxWidth: 150 ,ml:10}}>
           افزودن شرط جدید
         </Button>
+
+      <Box sx={{ display: "flex", gap: 2, justifyContent: "flex-end", mt: 4 }}>
+       
 
         <Button
           variant="contained"
