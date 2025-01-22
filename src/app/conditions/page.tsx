@@ -356,12 +356,10 @@ export default function DependentSelectForm() {
   const renderConditionInputs = (
     condition: SubCondition,
     index: number,
-    isSubCondition = false,
     subIndex?: number,
   ) => {
     console.log(
       "index", index,
-      "isSubCondition", isSubCondition,
       "subIndex", subIndex,
     )
 
@@ -495,14 +493,11 @@ export default function DependentSelectForm() {
                 }}
               />
             {/* // )} */}
-            {(isSubCondition) && (
+            {/* {(isSubCondition) && ( */}
               <Button
                 variant="contained"
                 color="secondary"
-                onClick={() =>
-                  isSubCondition && subIndex !== undefined
-                    ? removeSubCondition(subIndex, index)
-                    : removeCondition(index)
+                onClick={() => removeSubCondition(subIndex, index)
                 }
                 startIcon={<Delete />}
                 sx={{
@@ -514,7 +509,7 @@ export default function DependentSelectForm() {
                   borderRadius: 2,
                 }}
               />
-            )}
+            {/* )} */}
           </Box>
         </Box>
       </Box>
@@ -534,13 +529,9 @@ export default function DependentSelectForm() {
         <Box key={index} sx={{ mb: 2, width: "100%" }}>
 
 
-
-          {/* {renderConditionInputs(condition, index)} */}
-
-          {/* Sub-conditions */}
           {condition.subConditions.map((subCondition, subIndex) => (
             <Box key={`${index}-${subIndex}`} sx={{ ml: 4, mt: 2 }}>
-              {renderConditionInputs(subCondition, subIndex, true, index)}
+              {renderConditionInputs(subCondition, index, subIndex)}
             </Box>
           ))}
 
