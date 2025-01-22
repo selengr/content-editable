@@ -2,7 +2,7 @@
 
 
 interface Condition {
-  logicalOperator: "AND" | "OR" | null
+  logicalOperator: "AND" | "OR" | string
   subConditions: SubCondition[]
   goTo: {
     type: string
@@ -49,7 +49,7 @@ export default function DependentSelectForm() {
     setConditions((prevConditions) => [
       ...prevConditions,
       {
-        logicalOperator: "AND",
+        logicalOperator: "",
         subConditions: [{
           questionType: "",
           operatorType: "",
@@ -102,15 +102,6 @@ export default function DependentSelectForm() {
     setConditions(prevConditions => {
       const newConditions = [...prevConditions];
       newConditions[index] = { ...newConditions[index], [field]: value };
-
-      if (field === 'questionType') {
-        newConditions[index].subConditions.operatorType = '';
-        newConditions[index].subConditions.conditionType = '';
-        newConditions[index].subConditions.value = '';
-      } else if (field === 'operatorType') {
-        newConditions[index].subConditions.conditionType = '';
-        newConditions[index].subConditions.value = '';
-      }
 
       return newConditions;
     });
@@ -492,8 +483,8 @@ export default function DependentSelectForm() {
                   borderRadius: 2,
                 }}
               />
-            {/* // )} */}
-            {/* {(isSubCondition) && ( */}
+ 
+            {(subIndex  !== 0) && (
               <Button
                 variant="contained"
                 color="secondary"
@@ -509,15 +500,13 @@ export default function DependentSelectForm() {
                   borderRadius: 2,
                 }}
               />
-            {/* )} */}
+             )} 
           </Box>
         </Box>
       </Box>
     )
   }
 
-
-  // console.log('Submitted conditions:', condition.subConditions);
   const handleSubmit = () => {
     console.log('Submitted conditions:', conditions[0]);
 
@@ -597,7 +586,7 @@ export default function DependentSelectForm() {
           variant="contained"
           color="primary"
           onClick={handleSubmit}
-          disabled={conditions.some((c) => !c.conditionType)}
+          // disabled={conditions.some((c) => !c.conditionType)}
           sx={{ minWidth: 150 }}
         >
           تایید
