@@ -1014,6 +1014,20 @@ export default function DependentSelectForm() {
                 </Select>
               </FormControl>
             )}
+
+     <Typography>در غیر اینصورت برو به:</Typography>
+            <FormControl sx={{ minWidth: 440 }}>
+              <Select value={condition.goTo.type} onChange={(e) => updateCondition(index, "goTo", e.target.value)}>
+                <MenuItem value="item">آیتم</MenuItem>
+                <MenuItem value="section">بخش</MenuItem>
+                <MenuItem value="page">صفحه</MenuItem>
+              </Select>
+            </FormControl>
+            {/* removeCondition */}
+            <Button variant="outlined" color="error" sx={{ minWidth: 150,py: 2, }} onClick={()=>removeCondition(index)}>
+                   حذف این شرط  
+            </Button>
+            
           </Box>
 
          
