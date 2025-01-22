@@ -413,19 +413,6 @@ export default function DependentSelectForm() {
               label="نوع سوال"
               onChange={(e) => updateFn("questionType", e.target.value)}
             >
-              <MenuItem
-                value=""
-                onClick={() => updateFn("questionType", "")}
-                sx={{
-                  fontStyle: "italic",
-                  color: "text.secondary",
-                  display: "flex",
-                  justifyContent: "end",
-                }}
-              >
-                None
-              </MenuItem>
-              <Divider />
               {questionTypes.map((type) => (
                 <MenuItem
                   key={type.value}
@@ -478,7 +465,7 @@ export default function DependentSelectForm() {
           )}
 
           <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
-            {/* {(isSubCondition || index === 0) && ( */}
+            
               <Button
                 variant="contained"
                 color="secondary"
@@ -498,7 +485,7 @@ export default function DependentSelectForm() {
               <Button
                 variant="contained"
                 color="secondary"
-                onClick={() => removeSubCondition(subIndex, index)
+                onClick={() => removeSubCondition(index, subIndex)
                 }
                 startIcon={<Delete />}
                 sx={{
