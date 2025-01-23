@@ -159,7 +159,7 @@ export default function DependentSelectForm() {
       value: item.extMap.QUESTION_TYPE || '',
       label: item.caption
     }))
-  const questionGoTo = data
+  const questionGoTo = JSONData_goTo.dataList
     .map(item => ({
       value: item.extMap.QUESTION_TYPE || '',
       label: item.caption
@@ -665,7 +665,10 @@ export default function DependentSelectForm() {
 
 
             </FormControl>
-            {condition.goTo.type && (
+
+            <Typography sx={{ color: "#393939", fontSize: "14px", mr: 7.6 }}>در غیر اینصورت برو به:</Typography>
+            <FormControl sx={{ minWidth: 410 }}>
+
               <FormControl sx={{ minWidth: 200 }}>
 
                 <Select
@@ -692,14 +695,8 @@ export default function DependentSelectForm() {
                       border: "none",
                     },
                   }}
-                  value={condition.goTo.value}
-                  onChange={(e) => {
-                    setConditions((prev) => {
-                      const newConditions = [...prev]
-                      newConditions[index].goTo.value = e.target.value
-                      return newConditions
-                    })
-                  }}
+                  value={condition.goTo.type}
+                  onChange={(e) => updateCondition(index, "goTo", e.target.value)}
                 >
                   {questionGoTo.map((type: any) => {
                     return (
@@ -724,15 +721,6 @@ export default function DependentSelectForm() {
 
 
               </FormControl>
-            )}
-
-            <Typography sx={{ color: "#393939", fontSize: "14px", mr: 7.6 }}>در غیر اینصورت برو به:</Typography>
-            <FormControl sx={{ minWidth: 410 }}>
-              <Select value={condition.goTo.type} onChange={(e) => updateCondition(index, "goTo", e.target.value)}>
-                <MenuItem value="item">آیتم</MenuItem>
-                <MenuItem value="section">بخش</MenuItem>
-                <MenuItem value="page">صفحه</MenuItem>
-              </Select>
             </FormControl>
 
 
