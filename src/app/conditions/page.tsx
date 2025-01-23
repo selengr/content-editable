@@ -26,7 +26,7 @@ import TextField from '@mui/material/TextField';
 import { SelectOption } from './_types/conditions'
 import JSONData from '../../../public/assets/fake-data/response_v1.json'
 import { Box, FormControl, InputLabel, MenuItem, Select, Button, Divider, IconButton, Typography } from '@mui/material'
-import { Add, Delete } from '@mui/icons-material';
+import TrashIcon from "@/../public/images/home-page/trash.svg";
 import PlusIcon from "@/../public/images/home-page/Add-fill.svg";
 
 
@@ -400,11 +400,11 @@ export default function DependentSelectForm() {
         <Box
           rowGap={3}
           columnGap={2}
-          display="grid"
+          display="flex"
           gridTemplateColumns={{
-            xs: "repeat(2, 1fr)",
-            sm: "repeat(4, 1fr)",
-            md: "repeat(6, 1fr)",
+            // xs: "repeat(2, 1fr)",
+            // sm: "repeat(4, 1fr)",
+            // md: "repeat(6, 1fr)",
           }}
         >
 
@@ -467,31 +467,13 @@ export default function DependentSelectForm() {
           )}
 
           <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
-            
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => addSubCondition(index,subIndex)}
-                startIcon={<Add />}
+                <IconButton
+                 onClick={() => addSubCondition(index,subIndex)}
                 sx={{
-                  background: "#FFF",
-                  color: "#1758BA",
-                  border: "2px solid #1758BA",
-                  p: 1.5,
-                  maxWidth: "52px",
-                  borderRadius: 2,
-                }}
-              />
-
- 
-            {(subIndex  !== 0) && (
-
-        <IconButton
-                onClick={() => removeSubCondition(index, subIndex)}
-                sx={{
-                  width: "100%",
-                  height: "100%",
+                  width: "52px",
+                  height: "52px",
                   // bgcolor: "#ECFAFF",
+                  bgcolor: "#1758BA0D",
                   borderRadius: "16px",
                   border : "1px solid #1758BA",
                 }}
@@ -499,6 +481,16 @@ export default function DependentSelectForm() {
         <Image src={PlusIcon} alt="" width={22} height={22} />
       </IconButton>
 
+ 
+            {(subIndex  !== 0) && (
+               <IconButton
+               onClick={() => {
+                 setOpenConfirmDialog((prev) => !prev);
+               }}
+               disabled={loadingInvalidData}
+             >
+               <Image src={TrashIcon} alt="" width={24} height={24} />
+             </IconButton>
               // <Button
               //   variant="contained"
               //   color="secondary"
