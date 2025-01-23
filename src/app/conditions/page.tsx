@@ -666,7 +666,7 @@ export default function DependentSelectForm() {
 
             </FormControl>
 
-            <Typography sx={{ color: "#393939", fontSize: "14px", mr: 7.6 }}>در غیر اینصورت برو به:</Typography>
+            <Typography sx={{ color: "#393939", fontSize: "14px", mr: 9.5}}>در غیر اینصورت برو به:</Typography>
             <FormControl sx={{ minWidth: 410 }}>
 
               <FormControl sx={{ minWidth: 200 }}>
