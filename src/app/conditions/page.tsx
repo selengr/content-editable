@@ -616,58 +616,82 @@ export default function DependentSelectForm() {
             <Typography sx={{ color: "#393939", fontSize: "14px" }}>:برو به</Typography>
             <FormControl sx={{ minWidth: 200, ml: 5 }}>
 
-                   <Select
-                   IconComponent={IoIosArrowDown}
-                   sx={{
-                     "& .MuiSelect-select.MuiSelect-outlined": {
-                       fontFamily: "inherit",
-                       paddingRight: "33px",
-                       paddingLeft: "0 !important",
-                     },
-                     "&.MuiInputBase-root": {
-                       borderRadius: "8px",
-                       paddingLeft: 2,
-                       border: "1px solid #DDE1E6",
-                     },
-                     "& .MuiSelect-icon": {
-                       left: "auto",
-                       right: "16px",
-                       color: "#1758BA",
-                       fontSize: "1.5rem"
-                     },
-                     "& .MuiSelect-select": {},
-                     "& .MuiOutlinedInput-notchedOutline": {
-                       border: "none",
-                     },
-                   }}
-                   value={condition.goTo.type} 
-                   onChange={(e) => updateCondition(index, "goTo", e.target.value)}
-                 >
-                   {questionGoTo.map((type: any) => {
-                     return (
-                       <MenuItem
-                         key={type.value}
-                         value={type.value}
-                         sx={{
-                           display: "flex",
-                           alignItems: "center",
-                           justifyContent: "end",
-                           backgroundColor: "#1758BA0D",
-                           padding: "10px",
-                           paddingX: "15px",
-                         }}
-                       >
-                         {type.label}
-                       </MenuItem>
-                     );
-                   })}
-                 </Select>
-     
+              <Select
+                IconComponent={IoIosArrowDown}
+                sx={{
+                  "& .MuiSelect-select.MuiSelect-outlined": {
+                    fontFamily: "inherit",
+                    paddingRight: "33px",
+                    paddingLeft: "0 !important",
+                  },
+                  "&.MuiInputBase-root": {
+                    borderRadius: "8px",
+                    paddingLeft: 2,
+                    border: "1px solid #DDE1E6",
+                  },
+                  "& .MuiSelect-icon": {
+                    left: "auto",
+                    right: "16px",
+                    color: "#1758BA",
+                    fontSize: "1.5rem"
+                  },
+                  "& .MuiSelect-select": {},
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    border: "none",
+                  },
+                }}
+                value={condition.goTo.type}
+                onChange={(e) => updateCondition(index, "goTo", e.target.value)}
+              >
+                {questionGoTo.map((type: any) => {
+                  return (
+                    <MenuItem
+                      key={type.value}
+                      value={type.value}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "end",
+                        backgroundColor: "#1758BA0D",
+                        padding: "10px",
+                        paddingX: "15px",
+                      }}
+                    >
+                      {type.label}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+
 
             </FormControl>
             {condition.goTo.type && (
               <FormControl sx={{ minWidth: 200 }}>
+
                 <Select
+                  IconComponent={IoIosArrowDown}
+                  sx={{
+                    "& .MuiSelect-select.MuiSelect-outlined": {
+                      fontFamily: "inherit",
+                      paddingRight: "33px",
+                      paddingLeft: "0 !important",
+                    },
+                    "&.MuiInputBase-root": {
+                      borderRadius: "8px",
+                      paddingLeft: 2,
+                      border: "1px solid #DDE1E6",
+                    },
+                    "& .MuiSelect-icon": {
+                      left: "auto",
+                      right: "16px",
+                      color: "#1758BA",
+                      fontSize: "1.5rem"
+                    },
+                    "& .MuiSelect-select": {},
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      border: "none",
+                    },
+                  }}
                   value={condition.goTo.value}
                   onChange={(e) => {
                     setConditions((prev) => {
@@ -677,10 +701,28 @@ export default function DependentSelectForm() {
                     })
                   }}
                 >
-                  <MenuItem value="1">گزینه 1</MenuItem>
-                  <MenuItem value="2">گزینه 2</MenuItem>
-                  <MenuItem value="3">گزینه 3</MenuItem>
+                  {questionGoTo.map((type: any) => {
+                    return (
+                      <MenuItem
+                        key={type.value}
+                        value={type.value}
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "end",
+                          backgroundColor: "#1758BA0D",
+                          padding: "10px",
+                          paddingX: "15px",
+                        }}
+                      >
+                        {type.label}
+                      </MenuItem>
+                    );
+                  })}
                 </Select>
+
+
+
               </FormControl>
             )}
 
@@ -720,71 +762,73 @@ export default function DependentSelectForm() {
 
 
 
-      <Button variant="outlined" onClick={addCondition} 
-          sx={{ maxWidth: 155, ml: 10, bgcolor : "#1758BA",  borderRadius: "8px", 
-          height: 52, color : "white" }} 
+      <Button variant="outlined" onClick={addCondition}
+        sx={{
+          maxWidth: 155, ml: 10, bgcolor: "#1758BA", borderRadius: "8px",
+          height: 52, color: "white"
+        }}
       >
         افزودن شرط جدید
       </Button>
 
 
-        <Box
-          display="flex"
-          gap={3}
-          width="100%"
-          marginBottom={2}
+      <Box
+        display="flex"
+        gap={3}
+        width="100%"
+        marginBottom={2}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <LoadingButton
+          type="button"
+          onClick={handleSubmit}
+          variant="contained"
           sx={{
-            display: "flex",
-            justifyContent: "center",
+            backgroundColor: "#1758BA",
+            borderRadius: "8px",
+            height: "52px",
+            "&.MuiButtonBase-root:hover": {
+              backgroundColor: "#1758BA",
+            },
+            minWidth: 113,
           }}
         >
-          <LoadingButton
-            type="button"
-            onClick={handleSubmit}
-            variant="contained"
-            sx={{
-              backgroundColor: "#1758BA",
-              borderRadius: "8px",
-              height: "52px",
-              "&.MuiButtonBase-root:hover": {
-                backgroundColor: "#1758BA",
-              },
-              minWidth: 113,
-            }}
+          <Typography
+            variant="body2"
+            component={"p"}
+            py={0.5}
+            sx={{ color: "#fff", fontWeight: 500 }}
           >
-            <Typography
-              variant="body2"
-              component={"p"}
-              py={0.5}
-              sx={{ color: "#fff", fontWeight: 500 }}
-            >
-              تایید
-            </Typography>
-          </LoadingButton>
+            تایید
+          </Typography>
+        </LoadingButton>
 
-          <Button
-            type="button"
-            variant="outlined"
-            sx={{
-              height: "52px",
-              minWidth: 113,
-              borderRadius: "8px",
-              borderColor: "#1758BA",
-              background: "#FFF",
-            }}
-            // onClick={handleClose}
+        <Button
+          type="button"
+          variant="outlined"
+          sx={{
+            height: "52px",
+            minWidth: 113,
+            borderRadius: "8px",
+            borderColor: "#1758BA",
+            background: "#FFF",
+          }}
+        // onClick={handleClose}
+        >
+          <Typography
+            variant="body2"
+            component={"p"}
+            py={0.5}
+            color={"#1758BA"}
+            sx={{ fontWeight: 500 }}
           >
-            <Typography
-              variant="body2"
-              component={"p"}
-              py={0.5}
-              color={"#1758BA"}
-              sx={{ fontWeight: 500 }}
-            >
-              انصراف
-            </Typography>
-          </Button>
-        </Box>
+            انصراف
+          </Typography>
+        </Button>
+      </Box>
 
 
     </Box>
