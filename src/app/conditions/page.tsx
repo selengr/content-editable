@@ -27,7 +27,8 @@ import TextField from '@mui/material/TextField';
 import { SelectOption } from './_types/conditions'
 // import JSONData from '../../../public/assets/fake-data/response_v2.json'
 import JSONData_First from '../../../public/assets/fake-data/first.json'
-import { Box, FormControl, InputLabel, MenuItem, Select, Button, Divider, IconButton, Typography } from '@mui/material'
+import JSONData_goTo from '../../../public/assets/fake-data/goTo.json'
+import { Box, FormControl, MenuItem, Select, Button, Divider, IconButton, Typography } from '@mui/material'
 import TrashIcon from "@/../public/images/home-page/trash.svg";
 import PlusIcon from "@/../public/images/home-page/Add-fill.svg";
 import { LoadingButton } from '@mui/lab'
@@ -154,6 +155,11 @@ export default function DependentSelectForm() {
     }))
   const calculationTypes = data
     .filter(item => item.elementStr === 'CALCULATION')
+    .map(item => ({
+      value: item.extMap.QUESTION_TYPE || '',
+      label: item.caption
+    }))
+  const questionGoTo = data
     .map(item => ({
       value: item.extMap.QUESTION_TYPE || '',
       label: item.caption
@@ -609,11 +615,55 @@ export default function DependentSelectForm() {
           <Box sx={{ mt: 2, ml: 4, display: "flex", alignItems: "center", gap: 2 }}>
             <Typography sx={{ color: "#393939", fontSize: "14px" }}>:برو به</Typography>
             <FormControl sx={{ minWidth: 200, ml: 5 }}>
-              <Select value={condition.goTo.type} onChange={(e) => updateCondition(index, "goTo", e.target.value)}>
-                <MenuItem value="item">آیتم</MenuItem>
-                <MenuItem value="section">بخش</MenuItem>
-                <MenuItem value="page">صفحه</MenuItem>
-              </Select>
+
+                   <Select
+                   IconComponent={IoIosArrowDown}
+                   sx={{
+                     "& .MuiSelect-select.MuiSelect-outlined": {
+                       fontFamily: "inherit",
+                       paddingRight: "33px",
+                       paddingLeft: "0 !important",
+                     },
+                     "&.MuiInputBase-root": {
+                       borderRadius: "8px",
+                       paddingLeft: 2,
+                       border: "1px solid #DDE1E6",
+                     },
+                     "& .MuiSelect-icon": {
+                       left: "auto",
+                       right: "16px",
+                       color: "#1758BA",
+                       fontSize: "1.5rem"
+                     },
+                     "& .MuiSelect-select": {},
+                     "& .MuiOutlinedInput-notchedOutline": {
+                       border: "none",
+                     },
+                   }}
+                   value={condition.goTo.type} 
+                   onChange={(e) => updateCondition(index, "goTo", e.target.value)}
+                 >
+                   {questionGoTo.map((type: any) => {
+                     return (
+                       <MenuItem
+                         key={type.value}
+                         value={type.value}
+                         sx={{
+                           display: "flex",
+                           alignItems: "center",
+                           justifyContent: "end",
+                           backgroundColor: "#1758BA0D",
+                           padding: "10px",
+                           paddingX: "15px",
+                         }}
+                       >
+                         {type.label}
+                       </MenuItem>
+                     );
+                   })}
+                 </Select>
+     
+
             </FormControl>
             {condition.goTo.type && (
               <FormControl sx={{ minWidth: 200 }}>
@@ -677,7 +727,7 @@ export default function DependentSelectForm() {
         افزودن شرط جدید
       </Button>
 
-      <Box sx={{ display: "flex", gap: 2, justifyContent: "center", mt: 4 }}>
+
         <Box
           display="flex"
           gap={3}
@@ -694,14 +744,12 @@ export default function DependentSelectForm() {
             variant="contained"
             sx={{
               backgroundColor: "#1758BA",
-              fontWeight: "500",
-              fontSize: "15px",
               borderRadius: "8px",
-              height: "50px",
+              height: "52px",
               "&.MuiButtonBase-root:hover": {
                 backgroundColor: "#1758BA",
               },
-              minWidth: "132px",
+              minWidth: 113,
             }}
           >
             <Typography
@@ -718,13 +766,11 @@ export default function DependentSelectForm() {
             type="button"
             variant="outlined"
             sx={{
-              height: "50px",
-              minWidth: "132px",
-              fontWeight: "500",
+              height: "52px",
+              minWidth: 113,
               borderRadius: "8px",
-              fontSize: "15px",
               borderColor: "#1758BA",
-              background: "#F7F7FF",
+              background: "#FFF",
             }}
             // onClick={handleClose}
           >
@@ -739,7 +785,7 @@ export default function DependentSelectForm() {
             </Typography>
           </Button>
         </Box>
-      </Box>
+
 
     </Box>
   )
