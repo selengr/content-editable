@@ -114,7 +114,48 @@
                 },
                 "OPTIONS_SIZE": 2
             }
-        
+        },
+        {
+            "value": "108",
+            "caption": "چند گزینه تصویری چند",
+            "elementStr": "QUESTION",
+            "extMap": {
+                "RANDOMIZE_OPTIONS": "false",
+                "QUESTION_TYPE": "MULTIPLE_CHOICE_IMAGE",
+                "STICKY_FUNC": "#avgMultiSelect({#q_108})",
+                "DESCRIPTION": "",
+                "UNIC_NAME": "{#q_108}",
+                "REQUIRED": "false",
+                "MULTI_SELECT": "true",
+                "OPTIONS": {
+                    "OP_2": [
+                        0,
+                        "67459dfd9030b64edf433558"
+                    ],
+                    "OP_1": [
+                        0,
+                        "67459df89030b64edf433556"
+                    ]
+                },
+                "OPTIONS_SIZE": 2
+            }
+        },
+        {
+            "value": "109",
+            "caption": "طیفی تک",
+            "elementStr": "QUESTION",
+            "extMap": {
+                "SPECTRAL_START": "0",
+                "SPECTRAL_TYPE": "DISCRETE",
+                "QUESTION_TYPE": "SPECTRAL",
+                "DESCRIPTION": "",
+                "UNIC_NAME": "{#q_109}",
+                "REQUIRED": "false",
+                "SELECTION_TYPE": "SPECTRAL",
+                "STEP": "1",
+                "SPECTRAL_END": "100"
+            }
+        }
         }
     ],
     "totalCount": 9,
