@@ -22,6 +22,7 @@ interface SubCondition {
 
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
+import { IoIosArrowDown } from "react-icons/io";
 import TextField from '@mui/material/TextField';
 import { SelectOption } from './_types/conditions'
 import JSONData from '../../../public/assets/fake-data/response_v1.json'
@@ -374,7 +375,8 @@ export default function DependentSelectForm() {
     return (
       <Box sx={{ mb: 2, display: "flex", flexDirection: "row" }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          {subIndex === 0 && <Typography sx={{ width: 90, mr: 1 }} variant="h6">اگر </Typography>}
+          {subIndex === 0 && <Typography sx={{ color : "#393939", fontSize : "14px", width: 90  }}>اگر</Typography>}
+          
           {subIndex > 0 && (
             <Select
               value={condition.logicalOperator || ''}
@@ -428,6 +430,73 @@ export default function DependentSelectForm() {
                 </MenuItem>
               ))}
             </Select>
+
+
+            <Select
+        IconComponent={IoIosArrowDown}
+        sx={{
+          "& .MuiSelect-select.MuiSelect-outlined": {
+            fontFamily: "inherit",
+            paddingRight: "33px",
+            paddingLeft: "0 !important",
+          },
+          "&.MuiInputBase-root": {
+            borderRadius: "20px",
+            height: "72px",
+            bgcolor: "#F2F4F8",
+            paddingX: "12px",
+            paddingY: "20px",
+          },
+          "& .MuiSelect-icon": {
+            left: "auto",
+            right: "15px",
+            top: "28px",
+            fontSize: "1.3rem",
+            color: "#292D32",
+          },
+          "& .MuiSelect-select": {
+            display: "flex",
+            justifyContent: "space-between",
+            padding: "0",
+          },
+          "& .MuiOutlinedInput-notchedOutline": {
+            border: "none",
+          },
+        }}
+        labelId="roles"
+        value={condition.questionType}
+              label="نوع سوال"
+              onChange={(e) => updateFn("questionType", e.target.value)}
+      >
+        {questionTypes.map((role: any) => {
+          return (
+            <MenuItem
+              key={role.id}
+              value={role.value}
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "5px",
+                width: "100%",
+                gap: "16px",
+              }}
+            >
+              <div className="flex justify-between items-center gap-1">
+                {/* <Image src={UserIcon} alt="" width={32} height={32} /> */}
+                <p className="text-black text-[14px] font-bold">شرکت فرداپ</p>
+              </div>
+              <div className="flex justify-between items-center gap-2">
+                <p className="text-[#00A692] bg-[#96FAEE] text-[9px] font-bold py-0 h-[22px] flex items-center px-5 rounded-[10px]">
+                  مدیر
+                </p>
+              </div>
+            </MenuItem>
+          );
+        })}
+      </Select>
+
+
           </FormControl>
 
           <FormControl sx={{ minWidth: 200 }}>
@@ -511,6 +580,9 @@ export default function DependentSelectForm() {
 
   return (
     <Box sx={{ width: "100%", p: 3, display: "flex", flexDirection: "column", justifyContent: "center", direction: "ltr" }}>
+      
+      <Typography variant="subtitle1" sx={{ display: "flex", justifyContent: "center", color: "#404040",fontWeight : 700 }}>شرط</Typography>
+
       {conditions.map((condition, index) => (
         <Box key={index} sx={{ mb: 2, width: "100%" }}>
 
@@ -523,7 +595,7 @@ export default function DependentSelectForm() {
 
           {/* Go To Section */}
           <Box sx={{ mt: 2, ml: 4, display: "flex", alignItems: "center", gap: 2 }}>
-            <Typography>:برو به</Typography>
+            <Typography sx={{ color : "#393939", fontSize : "14px" }}>:برو به</Typography>
             <FormControl sx={{ minWidth: 200, ml : 5 }}>
               <Select value={condition.goTo.type} onChange={(e) => updateCondition(index, "goTo", e.target.value)}>
                 <MenuItem value="item">آیتم</MenuItem>
@@ -550,7 +622,7 @@ export default function DependentSelectForm() {
               </FormControl>
             )}
 
-            <Typography sx={{ mr: 7.6 }}>در غیر اینصورت برو به:</Typography>
+            <Typography sx={{ color : "#393939", fontSize : "14px", mr: 7.6  }}>در غیر اینصورت برو به:</Typography>
             <FormControl sx={{ minWidth: 410 }}>
               <Select value={condition.goTo.type} onChange={(e) => updateCondition(index, "goTo", e.target.value)}>
                 <MenuItem value="item">آیتم</MenuItem>
