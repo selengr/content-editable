@@ -406,6 +406,70 @@
                 "UNIC_NAME": "{#calc_82}",
                 "FORMULA": "{#v_2}"
             }
+        },
+        {
+            "value": "43",
+            "caption": "",
+            "elementStr": "CALCULATION",
+            "extMap": {
+                "UNIC_NAME": "{#calc_43}",
+                "FORMULA":
+"{#q_105}#avgNumber({{#v_2}}){#v_6}undefinedundefined(+)"
+            }
+        },
+        {
+            "value": "47",
+            "caption": "",
+            "elementStr": "CALCULATION",
+            "extMap": {
+                "UNIC_NAME": "{#calc_47}",
+                "FORMULA": "{#q_100}+{#q_109}"
+            }
+        },
+        {
+            "value": "48",
+            "caption": "",
+            "elementStr": "CALCULATION",
+            "extMap": {
+                "UNIC_NAME": "{#calc_48}",
+                "FORMULA": "{#q_100}+{#q_109}"
+            }
+        },
+        {
+            "value": "50",
+            "caption": "",
+            "elementStr": "CALCULATION",
+            "extMap": {
+                "UNIC_NAME": "{#calc_50}",
+                "FORMULA": "{#q_105}"
+            }
+        },
+        {
+            "value": "83",
+            "caption": "dgrfe",
+            "elementStr": "CALCULATION",
+            "extMap": {
+                "UNIC_NAME": "{#calc_83}",
+                "FORMULA": "{#v_2}"
+            }
+        },
+        {
+            "value": "81",
+            "caption": "jgjhef",
+            "elementStr": "CALCULATION",
+            "extMap": {
+                "UNIC_NAME": "{#calc_81}",
+                "FORMULA": "MultiSelect({#q_106})*{#v_6}"
+            }
+        },
+        {
+            "value": "84",
+            "caption": "jfgh",
+            "elementStr": "CALCULATION",
+            "extMap": {
+                "UNIC_NAME": "{#calc_84}",
+                "FORMULA": "{#v_22}"
+            }
         }
     ],
     "totalCount": 42,
