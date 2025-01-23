@@ -27,6 +27,94 @@
                 "MINIMUM_LEN": "",
                 "TEXT_FIELD_PATTERN": "DATE"
             }
+        },
+        {
+            "value": "104",
+            "caption": "تلفن",
+            "elementStr": "QUESTION",
+            "extMap": {
+                "QUESTION_TYPE": "TEXT_FIELD",
+                "DESCRIPTION": "",
+                "MAXIMUM_LEN": "",
+                "UNIC_NAME": "{#q_104}",
+                "REQUIRED": "false",
+                "MINIMUM_LEN": "",
+                "TEXT_FIELD_PATTERN": "PHONE"
+            }
+        },
+        {
+            "value": "105",
+            "caption": "چند گزینه تک انتخاب",
+            "elementStr": "QUESTION",
+            "extMap": {
+                "RANDOMIZE_OPTIONS": "false",
+                "QUESTION_TYPE": "MULTIPLE_CHOICE",
+                "DESCRIPTION": "",
+                "UNIC_NAME": "{#q_105}",
+                "REQUIRED": "false",
+                "MULTI_SELECT": "false",
+                "OPTIONS": {
+                    "OP_2": [
+                        0,
+                        "گزینه 2"
+                    ],
+                    "OP_1": [
+                        0,
+                        "گزینه 1"
+                    ]
+                },
+                "OPTIONS_SIZE": 2
+            }
+        },
+        {
+            "value": "106",
+            "caption": "چندگزینه چند انتخابی",
+            "elementStr": "QUESTION",
+            "extMap": {
+                "RANDOMIZE_OPTIONS": "false",
+                "QUESTION_TYPE": "MULTIPLE_CHOICE",
+                "STICKY_FUNC": "#avgMultiSelect({#q_106})",
+                "DESCRIPTION": "",
+                "UNIC_NAME": "{#q_106}",
+                "REQUIRED": "false",
+                "MULTI_SELECT": "true",
+                "OPTIONS": {
+                    "OP_2": [
+                        0,
+                        "گزینه 2"
+                    ],
+                    "OP_1": [
+                        0,
+                        "گزینه 1"
+                    ]
+                },
+                "OPTIONS_SIZE": 2
+            }
+        },
+        {
+            "value": "107",
+            "caption": "چند گزینه تصویری تک",
+            "elementStr": "QUESTION",
+            "extMap": {
+                "RANDOMIZE_OPTIONS": "false",
+                "QUESTION_TYPE": "MULTIPLE_CHOICE_IMAGE",
+                "DESCRIPTION": "",
+                "UNIC_NAME": "{#q_107}",
+                "REQUIRED": "false",
+                "MULTI_SELECT": "false",
+                "OPTIONS": {
+                    "OP_2": [
+                        0,
+                        "67459dfd9030b64edf433558"
+                    ],
+                    "OP_1": [
+                        0,
+                        "67459df89030b64edf433556"
+                    ]
+                },
+                "OPTIONS_SIZE": 2
+            }
+        
         }
     ],
     "totalCount": 9,
