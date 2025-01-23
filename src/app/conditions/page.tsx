@@ -20,12 +20,14 @@ interface SubCondition {
 
 
 
+import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import TextField from '@mui/material/TextField';
 import { SelectOption } from './_types/conditions'
 import JSONData from '../../../public/assets/fake-data/response_v1.json'
 import { Box, FormControl, InputLabel, MenuItem, Select, Button, Divider, IconButton, Typography } from '@mui/material'
 import { Add, Delete } from '@mui/icons-material';
+import PlusIcon from "@/../public/images/home-page/Add-fill.svg";
 
 
 export default function DependentSelectForm() {
@@ -480,23 +482,38 @@ export default function DependentSelectForm() {
                   borderRadius: 2,
                 }}
               />
+
  
             {(subIndex  !== 0) && (
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => removeSubCondition(index, subIndex)
-                }
-                startIcon={<Delete />}
+
+        <IconButton
+                onClick={() => removeSubCondition(index, subIndex)}
                 sx={{
-                  background: "#FFF",
-                  color: "#FA4D56",
-                  border: "2px solid #FA4D56",
-                  p: 1.5,
-                  maxWidth: "52px",
-                  borderRadius: 2,
+                  width: "100%",
+                  height: "100%",
+                  // bgcolor: "#ECFAFF",
+                  borderRadius: "16px",
+                  border : "1px solid #1758BA",
                 }}
-              />
+              >
+        <Image src={PlusIcon} alt="" width={22} height={22} />
+      </IconButton>
+
+              // <Button
+              //   variant="contained"
+              //   color="secondary"
+              //   onClick={() => removeSubCondition(index, subIndex)
+              //   }
+              //   startIcon={<Delete />}
+              //   sx={{
+              //     background: "#FFF",
+              //     color: "#FA4D56",
+              //     border: "2px solid #FA4D56",
+              //     p: 1.5,
+              //     maxWidth: "52px",
+              //     borderRadius: 2,
+              //   }}
+              // />
              )} 
           </Box>
         </Box>
