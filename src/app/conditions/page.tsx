@@ -669,7 +669,10 @@ export default function DependentSelectForm() {
 
 
 
-      <Button variant="outlined" onClick={addCondition} sx={{ maxWidth: 150, ml: 10 }}>
+      <Button variant="outlined" onClick={addCondition} 
+          sx={{ maxWidth: 155, ml: 10, bgcolor : "#1758BA",  borderRadius: "8px", 
+          height: 52, color : "white" }} 
+      >
         افزودن شرط جدید
       </Button>
 
