@@ -25,7 +25,8 @@ import { useState, useEffect } from 'react'
 import { IoIosArrowDown } from "react-icons/io";
 import TextField from '@mui/material/TextField';
 import { SelectOption } from './_types/conditions'
-import JSONData from '../../../public/assets/fake-data/response_v2.json'
+// import JSONData from '../../../public/assets/fake-data/response_v2.json'
+import JSONData_First from '../../../public/assets/fake-data/first.json'
 import { Box, FormControl, InputLabel, MenuItem, Select, Button, Divider, IconButton, Typography } from '@mui/material'
 import TrashIcon from "@/../public/images/home-page/trash.svg";
 import PlusIcon from "@/../public/images/home-page/Add-fill.svg";
@@ -143,7 +144,7 @@ export default function DependentSelectForm() {
   }
 
 
-  let data: any = JSONData.dataList
+  let data: any = JSONData_First.dataList
 
   const questionTypes = data
     .map(item => ({
@@ -375,8 +376,8 @@ export default function DependentSelectForm() {
     return (
       <Box sx={{ mb: 2, display: "flex", flexDirection: "row" }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          {subIndex === 0 && <Typography sx={{ color : "#393939", fontSize : "14px", width: 90  }}>اگر</Typography>}
-          
+          {subIndex === 0 && <Typography sx={{ color: "#393939", fontSize: "14px", width: 90 }}>اگر</Typography>}
+
           {subIndex > 0 && (
             <Select
               value={condition.logicalOperator || ''}
@@ -433,51 +434,51 @@ export default function DependentSelectForm() {
 
 
             <Select
-        IconComponent={IoIosArrowDown}
-        sx={{
-          "& .MuiSelect-select.MuiSelect-outlined": {
-            fontFamily: "inherit",
-            paddingRight: "33px",
-            paddingLeft: "0 !important",
-          },
-          "&.MuiInputBase-root": {
-            borderRadius: "8px",
-            paddingLeft: 2,
-            border: "1px solid #DDE1E6",
-          },
-          "& .MuiSelect-icon": {
-            left:"auto",
-            right: "16px",
-            color: "#1758BA",
-            fontSize: "1.5rem"
-          },
-          "& .MuiSelect-select": {},
-          "& .MuiOutlinedInput-notchedOutline": {
-            border: "none",
-          },
-        }}
-        value={condition.questionType}
+              IconComponent={IoIosArrowDown}
+              sx={{
+                "& .MuiSelect-select.MuiSelect-outlined": {
+                  fontFamily: "inherit",
+                  paddingRight: "33px",
+                  paddingLeft: "0 !important",
+                },
+                "&.MuiInputBase-root": {
+                  borderRadius: "8px",
+                  paddingLeft: 2,
+                  border: "1px solid #DDE1E6",
+                },
+                "& .MuiSelect-icon": {
+                  left: "auto",
+                  right: "16px",
+                  color: "#1758BA",
+                  fontSize: "1.5rem"
+                },
+                "& .MuiSelect-select": {},
+                "& .MuiOutlinedInput-notchedOutline": {
+                  border: "none",
+                },
+              }}
+              value={condition.questionType}
               label="نوع سوال"
               onChange={(e) => updateFn("questionType", e.target.value)}
-      >
-        {questionTypes.map((type: any) => {
-          return (
-            <MenuItem
-              key={type.id}
-              value={type.value}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "end",
-                bgColor : "#1758BA0D",
-                padding: "5px",
-              }}
             >
-              {type.label}
-            </MenuItem>
-          );
-        })}
-      </Select>
+              {questionTypes.map((type: any) => {
+                return (
+                  <MenuItem
+                    key={type.value}
+                    value={type.value}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "end",
+                      bgColor: "#1758BA0D",
+                      padding: "5px",
+                    }}
+                  >
+                    {type.label}
+                  </MenuItem>
+                );
+              })}
+            </Select>
 
 
           </FormControl>
@@ -563,8 +564,8 @@ export default function DependentSelectForm() {
 
   return (
     <Box sx={{ width: "100%", p: 3, display: "flex", flexDirection: "column", justifyContent: "center", direction: "ltr" }}>
-      
-      <Typography variant="subtitle1" sx={{ display: "flex", justifyContent: "center", color: "#404040",fontWeight : 700 }}>شرط</Typography>
+
+      <Typography variant="subtitle1" sx={{ display: "flex", justifyContent: "center", color: "#404040", fontWeight: 700 }}>شرط</Typography>
 
       {conditions.map((condition, index) => (
         <Box key={index} sx={{ mb: 2, width: "100%" }}>
@@ -578,8 +579,8 @@ export default function DependentSelectForm() {
 
           {/* Go To Section */}
           <Box sx={{ mt: 2, ml: 4, display: "flex", alignItems: "center", gap: 2 }}>
-            <Typography sx={{ color : "#393939", fontSize : "14px" }}>:برو به</Typography>
-            <FormControl sx={{ minWidth: 200, ml : 5 }}>
+            <Typography sx={{ color: "#393939", fontSize: "14px" }}>:برو به</Typography>
+            <FormControl sx={{ minWidth: 200, ml: 5 }}>
               <Select value={condition.goTo.type} onChange={(e) => updateCondition(index, "goTo", e.target.value)}>
                 <MenuItem value="item">آیتم</MenuItem>
                 <MenuItem value="section">بخش</MenuItem>
@@ -605,7 +606,7 @@ export default function DependentSelectForm() {
               </FormControl>
             )}
 
-            <Typography sx={{ color : "#393939", fontSize : "14px", mr: 7.6  }}>در غیر اینصورت برو به:</Typography>
+            <Typography sx={{ color: "#393939", fontSize: "14px", mr: 7.6 }}>در غیر اینصورت برو به:</Typography>
             <FormControl sx={{ minWidth: 410 }}>
               <Select value={condition.goTo.type} onChange={(e) => updateCondition(index, "goTo", e.target.value)}>
                 <MenuItem value="item">آیتم</MenuItem>
@@ -613,24 +614,24 @@ export default function DependentSelectForm() {
                 <MenuItem value="page">صفحه</MenuItem>
               </Select>
             </FormControl>
-            
+
 
             <IconButton
-                onClick={() => removeCondition(index)}
-                sx={{
-                  width: 113,
-                  height: "52px",
+              onClick={() => removeCondition(index)}
+              sx={{
+                width: 113,
+                height: "52px",
+                bgcolor: "#FA4D560D",
+                borderRadius: "8px",
+                border: "1px solid #FA4D56",
+                '&: hover': {
                   bgcolor: "#FA4D560D",
-                  borderRadius: "8px",
-                  border: "1px solid #FA4D56",
-                  '&: hover': {
-                    bgcolor: "#FA4D560D",
-                  }
-                }}
-              >
-                <Typography sx={{ color : "#FA4D56", fontSize : "14px" }}>حذف این شرط</Typography>
-                
-              </IconButton>
+                }
+              }}
+            >
+              <Typography sx={{ color: "#FA4D56", fontSize: "14px" }}>حذف این شرط</Typography>
+
+            </IconButton>
 
           </Box>
 
