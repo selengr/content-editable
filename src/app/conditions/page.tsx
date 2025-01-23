@@ -30,6 +30,7 @@ import JSONData_First from '../../../public/assets/fake-data/first.json'
 import { Box, FormControl, InputLabel, MenuItem, Select, Button, Divider, IconButton, Typography } from '@mui/material'
 import TrashIcon from "@/../public/images/home-page/trash.svg";
 import PlusIcon from "@/../public/images/home-page/Add-fill.svg";
+import { LoadingButton } from '@mui/lab'
 
 
 export default function DependentSelectForm() {
@@ -677,21 +678,67 @@ export default function DependentSelectForm() {
       </Button>
 
       <Box sx={{ display: "flex", gap: 2, justifyContent: "center", mt: 4 }}>
-
-
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleSubmit}
-          // disabled={conditions.some((c) => !c.conditionType)}
-          sx={{ minWidth: 150 }}
+        <Box
+          display="flex"
+          gap={3}
+          width="100%"
+          marginBottom={2}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+          }}
         >
-          تایید
-        </Button>
+          <LoadingButton
+            type="button"
+            onClick={handleSubmit}
+            variant="contained"
+            sx={{
+              backgroundColor: "#1758BA",
+              fontWeight: "500",
+              fontSize: "15px",
+              borderRadius: "8px",
+              height: "50px",
+              "&.MuiButtonBase-root:hover": {
+                backgroundColor: "#1758BA",
+              },
+              minWidth: "132px",
+            }}
+          >
+            <Typography
+              variant="body2"
+              component={"p"}
+              py={0.5}
+              sx={{ color: "#fff", fontWeight: 500 }}
+            >
+              تایید
+            </Typography>
+          </LoadingButton>
 
-        <Button variant="outlined" color="error" sx={{ minWidth: 150 }}>
-          انصراف
-        </Button>
+          <Button
+            type="button"
+            variant="outlined"
+            sx={{
+              height: "50px",
+              minWidth: "132px",
+              fontWeight: "500",
+              borderRadius: "8px",
+              fontSize: "15px",
+              borderColor: "#1758BA",
+              background: "#F7F7FF",
+            }}
+            // onClick={handleClose}
+          >
+            <Typography
+              variant="body2"
+              component={"p"}
+              py={0.5}
+              color={"#1758BA"}
+              sx={{ fontWeight: 500 }}
+            >
+              انصراف
+            </Typography>
+          </Button>
+        </Box>
       </Box>
 
     </Box>
