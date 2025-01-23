@@ -80,11 +80,11 @@ export default function DependentSelectForm() {
           value: "",
         },
       ];
-      
+
       if (newConditions[conditionIndex]?.subConditions) {
         newConditions[conditionIndex].subConditions.splice(subConditionIndex + 1, 0, ...newSubConditions);
       }
-  
+
       return newConditions;
     });
   };
@@ -355,7 +355,7 @@ export default function DependentSelectForm() {
   }, [])
 
 
-  console.log("555",conditions[0]?.subConditions.length)
+  console.log("555", conditions[0]?.subConditions.length)
 
   const renderConditionInputs = (
     condition: SubCondition,
@@ -363,38 +363,38 @@ export default function DependentSelectForm() {
     subIndex?: number,
   ) => {
 
-    console.log("subIndex",subIndex)
-    console.log("555",conditions[index]?.subConditions.length)
+    console.log("subIndex", subIndex)
+    console.log("555", conditions[index]?.subConditions.length)
 
     const updateFn =
       // isSubCondition && subIndex !== undefined
-         (field: keyof SubCondition, value: string) => updateSubCondition(index, subIndex, field, value)
-        // : (field: keyof Condition, value: string) => updateCondition(index, field, value)
+      (field: keyof SubCondition, value: string) => updateSubCondition(index, subIndex, field, value)
+    // : (field: keyof Condition, value: string) => updateCondition(index, field, value)
 
     return (
       <Box sx={{ mb: 2, display: "flex", flexDirection: "row" }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          {subIndex === 0 && <Typography sx={{ width: 90, mr :1 }} variant="h6">اگر </Typography>}
+          {subIndex === 0 && <Typography sx={{ width: 90, mr: 1 }} variant="h6">اگر </Typography>}
           {subIndex > 0 && (
-          <Select
-            value={condition.logicalOperator || ''}
-            sx={{
-              width: 90,
-              mr: 1
-            }}
-            onChange={(e) => updateFn('logicalOperator', e.target.value)}
-          >
-            {[{ value: "AND", label: "و" }, { value: "OR", label: "یا" }].map((type) => (
-              <MenuItem key={type.value} value={type.value}
-                sx={{
-                  display: "flex",
-                  justifyContent: "end"
-                }}
-              >
-                {type.label}
-              </MenuItem>
-            ))}
-          </Select>
+            <Select
+              value={condition.logicalOperator || ''}
+              sx={{
+                width: 90,
+                mr: 1
+              }}
+              onChange={(e) => updateFn('logicalOperator', e.target.value)}
+            >
+              {[{ value: "AND", label: "و" }, { value: "OR", label: "یا" }].map((type) => (
+                <MenuItem key={type.value} value={type.value}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "end"
+                  }}
+                >
+                  {type.label}
+                </MenuItem>
+              ))}
+            </Select>
           )}
         </Box>
         <Box
@@ -467,46 +467,37 @@ export default function DependentSelectForm() {
           )}
 
           <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
-                <IconButton
-                 onClick={() => addSubCondition(index,subIndex)}
+            <IconButton
+              onClick={() => addSubCondition(index, subIndex)}
+              sx={{
+                width: "52px",
+                height: "52px",
+                bgcolor: "#1758BA0D",
+                borderRadius: "10px",
+                border: "1px solid #1758BA",
+              }}
+            >
+              <Image src={PlusIcon} alt="" width={22} height={22} />
+            </IconButton>
+
+
+            {(subIndex !== 0) && (
+              <IconButton
+                onClick={() => removeSubCondition(index, subIndex)}
                 sx={{
                   width: "52px",
                   height: "52px",
-                  // bgcolor: "#ECFAFF",
-                  bgcolor: "#1758BA0D",
-                  borderRadius: "16px",
-                  border : "1px solid #1758BA",
+                  bgcolor: "#FA4D560D",
+                  borderRadius: "10px",
+                  border: "1px solid #FA4D56",
+                  '&: hover': {
+                    bgcolor: "#FA4D560D",
+                  }
                 }}
               >
-        <Image src={PlusIcon} alt="" width={22} height={22} />
-      </IconButton>
-
- 
-            {(subIndex  !== 0) && (
-               <IconButton
-               onClick={() => {
-                 setOpenConfirmDialog((prev) => !prev);
-               }}
-               disabled={loadingInvalidData}
-             >
-               <Image src={TrashIcon} alt="" width={24} height={24} />
-             </IconButton>
-              // <Button
-              //   variant="contained"
-              //   color="secondary"
-              //   onClick={() => removeSubCondition(index, subIndex)
-              //   }
-              //   startIcon={<Delete />}
-              //   sx={{
-              //     background: "#FFF",
-              //     color: "#FA4D56",
-              //     border: "2px solid #FA4D56",
-              //     p: 1.5,
-              //     maxWidth: "52px",
-              //     borderRadius: 2,
-              //   }}
-              // />
-             )} 
+                <Image src={TrashIcon} alt="" width={24} height={24} />
+              </IconButton>
+            )}
           </Box>
         </Box>
       </Box>
@@ -533,7 +524,7 @@ export default function DependentSelectForm() {
           {/* Go To Section */}
           <Box sx={{ mt: 2, ml: 4, display: "flex", alignItems: "center", gap: 2 }}>
             <Typography>:برو به</Typography>
-            <FormControl sx={{ minWidth: 200 }}>
+            <FormControl sx={{ minWidth: 200, ml : 5 }}>
               <Select value={condition.goTo.type} onChange={(e) => updateCondition(index, "goTo", e.target.value)}>
                 <MenuItem value="item">آیتم</MenuItem>
                 <MenuItem value="section">بخش</MenuItem>
@@ -560,17 +551,31 @@ export default function DependentSelectForm() {
             )}
 
             <Typography sx={{ mr: 7.6 }}>در غیر اینصورت برو به:</Typography>
-            <FormControl sx={{ minWidth: 382 }}>
+            <FormControl sx={{ minWidth: 410 }}>
               <Select value={condition.goTo.type} onChange={(e) => updateCondition(index, "goTo", e.target.value)}>
                 <MenuItem value="item">آیتم</MenuItem>
                 <MenuItem value="section">بخش</MenuItem>
                 <MenuItem value="page">صفحه</MenuItem>
               </Select>
             </FormControl>
-            {/* removeCondition */}
-            <Button variant="outlined" color="error" sx={{ minWidth: 150, py: 2, }} onClick={() => removeCondition(index)}>
-              حذف این شرط
-            </Button>
+            
+
+            <IconButton
+                onClick={() => removeCondition(index)}
+                sx={{
+                  width: 113,
+                  height: "52px",
+                  bgcolor: "#FA4D560D",
+                  borderRadius: "8px",
+                  border: "1px solid #FA4D56",
+                  '&: hover': {
+                    bgcolor: "#FA4D560D",
+                  }
+                }}
+              >
+                <Typography sx={{ color : "#FA4D56", fontSize : "14px" }}>حذف این شرط</Typography>
+                
+              </IconButton>
 
           </Box>
 
