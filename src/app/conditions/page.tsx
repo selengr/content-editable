@@ -25,7 +25,7 @@ import { useState, useEffect } from 'react'
 import { IoIosArrowDown } from "react-icons/io";
 import TextField from '@mui/material/TextField';
 import { SelectOption } from './_types/conditions'
-import JSONData from '../../../public/assets/fake-data/response_v1.json'
+import JSONData from '../../../public/assets/fake-data/response_v2.json'
 import { Box, FormControl, InputLabel, MenuItem, Select, Button, Divider, IconButton, Typography } from '@mui/material'
 import TrashIcon from "@/../public/images/home-page/trash.svg";
 import PlusIcon from "@/../public/images/home-page/Add-fill.svg";
@@ -411,8 +411,8 @@ export default function DependentSelectForm() {
         >
 
           <FormControl sx={{ minWidth: 200 }}>
-            <InputLabel>نوع سوال</InputLabel>
-            <Select
+            {/* <InputLabel>نوع سوال</InputLabel> */}
+            {/* <Select
               value={condition.questionType}
               label="نوع سوال"
               onChange={(e) => updateFn("questionType", e.target.value)}
@@ -429,7 +429,7 @@ export default function DependentSelectForm() {
                   {type.label}
                 </MenuItem>
               ))}
-            </Select>
+            </Select> */}
 
 
             <Select
@@ -441,56 +441,39 @@ export default function DependentSelectForm() {
             paddingLeft: "0 !important",
           },
           "&.MuiInputBase-root": {
-            borderRadius: "20px",
-            height: "72px",
-            bgcolor: "#F2F4F8",
-            paddingX: "12px",
-            paddingY: "20px",
+            borderRadius: "8px",
+            paddingLeft: 2,
+            border: "1px solid #DDE1E6",
           },
           "& .MuiSelect-icon": {
-            left: "auto",
-            right: "15px",
-            top: "28px",
-            fontSize: "1.3rem",
-            color: "#292D32",
+            left:"auto",
+            right: "16px",
+            color: "#1758BA",
+            fontSize: "1.5rem"
           },
-          "& .MuiSelect-select": {
-            display: "flex",
-            justifyContent: "space-between",
-            padding: "0",
-          },
+          "& .MuiSelect-select": {},
           "& .MuiOutlinedInput-notchedOutline": {
             border: "none",
           },
         }}
-        labelId="roles"
         value={condition.questionType}
               label="نوع سوال"
               onChange={(e) => updateFn("questionType", e.target.value)}
       >
-        {questionTypes.map((role: any) => {
+        {questionTypes.map((type: any) => {
           return (
             <MenuItem
-              key={role.id}
-              value={role.value}
+              key={type.id}
+              value={type.value}
               sx={{
                 display: "flex",
-                justifyContent: "space-between",
                 alignItems: "center",
+                justifyContent: "end",
+                bgColor : "#1758BA0D",
                 padding: "5px",
-                width: "100%",
-                gap: "16px",
               }}
             >
-              <div className="flex justify-between items-center gap-1">
-                {/* <Image src={UserIcon} alt="" width={32} height={32} /> */}
-                <p className="text-black text-[14px] font-bold">شرکت فرداپ</p>
-              </div>
-              <div className="flex justify-between items-center gap-2">
-                <p className="text-[#00A692] bg-[#96FAEE] text-[9px] font-bold py-0 h-[22px] flex items-center px-5 rounded-[10px]">
-                  مدیر
-                </p>
-              </div>
+              {type.label}
             </MenuItem>
           );
         })}
