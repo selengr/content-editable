@@ -155,7 +155,23 @@
                 "STEP": "1",
                 "SPECTRAL_END": "100"
             }
-        }
+        },
+        {
+            "value": "110",
+            "caption": "طیفی دونقطه",
+            "elementStr": "QUESTION",
+            "extMap": {
+                "SPECTRAL_START": "0",
+                "SPECTRAL_TYPE": "DOMAIN",
+                "QUESTION_TYPE": "SPECTRAL",
+                "STICKY_FUNC": "#avgSpectralDouble({#q_110})",
+                "DESCRIPTION": "",
+                "UNIC_NAME": "{#q_110}",
+                "REQUIRED": "false",
+                "SELECTION_TYPE": "DISCRETE",
+                "STEP": "1",
+                "SPECTRAL_END": "100"
+            }
         }
     ],
     "totalCount": 9,
