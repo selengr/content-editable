@@ -413,26 +413,6 @@ export default function DependentSelectForm() {
 
           <FormControl sx={{ minWidth: 200 }}>
             {/* <InputLabel>نوع سوال</InputLabel> */}
-            {/* <Select
-              value={condition.questionType}
-              label="نوع سوال"
-              onChange={(e) => updateFn("questionType", e.target.value)}
-            >
-              {questionTypes.map((type) => (
-                <MenuItem
-                  key={type.value}
-                  value={type.value}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "end",
-                  }}
-                >
-                  {type.label}
-                </MenuItem>
-              ))}
-            </Select> */}
-
-
             <Select
               IconComponent={IoIosArrowDown}
               sx={{
@@ -470,8 +450,9 @@ export default function DependentSelectForm() {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "end",
-                      bgColor: "#1758BA0D",
-                      padding: "5px",
+                      backgroundColor: "#1758BA0D",
+                      padding: "10px",
+                      paddingX: "15px",
                     }}
                   >
                     {type.label}
@@ -484,8 +465,31 @@ export default function DependentSelectForm() {
           </FormControl>
 
           <FormControl sx={{ minWidth: 200 }}>
-            <InputLabel>حالت</InputLabel>
+            {/* <InputLabel>حالت</InputLabel> */}
             <Select
+              IconComponent={IoIosArrowDown}
+              sx={{
+                "& .MuiSelect-select.MuiSelect-outlined": {
+                  fontFamily: "inherit",
+                  paddingRight: "33px",
+                  paddingLeft: "0 !important",
+                },
+                "&.MuiInputBase-root": {
+                  borderRadius: "8px",
+                  paddingLeft: 2,
+                  border: "1px solid #DDE1E6",
+                },
+                "& .MuiSelect-icon": {
+                  left: "auto",
+                  right: "16px",
+                  color: "#1758BA",
+                  fontSize: "1.5rem"
+                },
+                "& .MuiSelect-select": {},
+                "& .MuiOutlinedInput-notchedOutline": {
+                  border: "none",
+                },
+              }}
               value={condition.operatorType}
               label="حالت"
               onChange={(e) => updateFn("operatorType", e.target.value)}
@@ -500,8 +504,31 @@ export default function DependentSelectForm() {
           </FormControl>
 
           <FormControl sx={{ minWidth: 200 }}>
-            <InputLabel>شرط</InputLabel>
+            {/* <InputLabel>شرط</InputLabel> */}
             <Select
+              IconComponent={IoIosArrowDown}
+              sx={{
+                "& .MuiSelect-select.MuiSelect-outlined": {
+                  fontFamily: "inherit",
+                  paddingRight: "33px",
+                  paddingLeft: "0 !important",
+                },
+                "&.MuiInputBase-root": {
+                  borderRadius: "8px",
+                  paddingLeft: 2,
+                  border: "1px solid #DDE1E6",
+                },
+                "& .MuiSelect-icon": {
+                  left: "auto",
+                  right: "16px",
+                  color: "#1758BA",
+                  fontSize: "1.5rem"
+                },
+                "& .MuiSelect-select": {},
+                "& .MuiOutlinedInput-notchedOutline": {
+                  border: "none",
+                },
+              }}
               value={condition.conditionType}
               label="شرط"
               onChange={(e) => updateFn("conditionType", e.target.value)}
