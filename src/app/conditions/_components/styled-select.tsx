@@ -1,12 +1,13 @@
 import React from 'react';
-import { Select, MenuItem } from '@mui/material';
+import { Select, MenuItem, SxProps, Theme } from '@mui/material';
 import { IoIosArrowDown } from "react-icons/io";
 
 interface CustomSelectProps {
   options: { value: string; label: string }[];
+  sx?: SxProps<Theme>
 }
 
-const CustomSelect: React.FC<CustomSelectProps> = ({ options, ...props }) => {
+const CustomSelect: React.FC<CustomSelectProps> = ({ options, sx, ...props }) => {
   return (
     <Select
       IconComponent={IoIosArrowDown}
@@ -30,7 +31,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ options, ...props }) => {
         "& .MuiOutlinedInput-notchedOutline": {
           border: "none",
         },
-        ...props.sx
+        ...(sx as SxProps<Theme>),
       }}
       {...props}
     >
