@@ -452,94 +452,19 @@ export default function DependentSelectForm() {
                 sx={{ minWidth: 200 }}
             />
 
-            <Select
-              IconComponent={IoIosArrowDown}
-              sx={{
-                "& .MuiSelect-select.MuiSelect-outlined": {
-                  fontFamily: "inherit",
-                  paddingRight: "33px",
-                  paddingLeft: "0 !important",
-                },
-                "&.MuiInputBase-root": {
-                  borderRadius: "8px",
-                  paddingLeft: 2,
-                  border: "1px solid #DDE1E6",
-                },
-                "& .MuiSelect-icon": {
-                  left: "auto",
-                  right: "16px",
-                  color: "#1758BA",
-                  fontSize: "1.5rem"
-                },
-                "& .MuiSelect-select": {},
-                "& .MuiOutlinedInput-notchedOutline": {
-                  border: "none",
-                },
-              }}
-              value={condition.questionType}
-              label="نوع سوال"
-              onChange={(e) => updateFn("questionType", e.target.value)}
-            >
-              {questionTypes.map((type: any) => {
-                return (
-                  <MenuItem
-                    key={type.value}
-                    value={type.value}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "end",
-                      backgroundColor: "#1758BA0D",
-                      padding: "10px",
-                      paddingX: "15px",
-                    }}
-                  >
-                    {type.label}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-
 
           </FormControl>
 
           <FormControl sx={{ minWidth: 200 }}>
-            {/* <InputLabel>حالت</InputLabel> */}
-            <Select
-              IconComponent={IoIosArrowDown}
-              sx={{
-                "& .MuiSelect-select.MuiSelect-outlined": {
-                  fontFamily: "inherit",
-                  paddingRight: "33px",
-                  paddingLeft: "0 !important",
-                },
-                "&.MuiInputBase-root": {
-                  borderRadius: "8px",
-                  paddingLeft: 2,
-                  border: "1px solid #DDE1E6",
-                },
-                "& .MuiSelect-icon": {
-                  left: "auto",
-                  right: "16px",
-                  color: "#1758BA",
-                  fontSize: "1.5rem"
-                },
-                "& .MuiSelect-select": {},
-                "& .MuiOutlinedInput-notchedOutline": {
-                  border: "none",
-                },
-              }}
-              value={condition.operatorType}
-              label="حالت"
-              onChange={(e) => updateFn("operatorType", e.target.value)}
-              disabled={!condition.questionType}
-            >
-              {getQuestion(condition.questionType).map((op) => (
-                <MenuItem key={op.value} value={op.value}>
-                  {op.label}
-                </MenuItem>
-              ))}
-            </Select>
+          <CustomSelect
+               value={condition.operatorType}
+               label="حالت"
+               onChange={(e) => updateFn("operatorType", e.target.value as string)}
+               disabled={!condition.questionType}
+                options={getQuestion(condition.questionType)}
+                sx={{ minWidth: 200 }}
+            />
+
           </FormControl>
 
           <FormControl sx={{ minWidth: 200 }}>
