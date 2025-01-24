@@ -511,54 +511,12 @@ export default function DependentSelectForm() {
           <Box sx={{ mt: 2, ml: 4, display: "flex", alignItems: "center", gap: 2 }}>
             <Typography sx={{ color: "#393939", fontSize: "14px" }}>:برو به</Typography>
             <FormControl sx={{ minWidth: 200, ml: 5 }}>
-
-              <Select
-                IconComponent={IoIosArrowDown}
-                sx={{
-                  "& .MuiSelect-select.MuiSelect-outlined": {
-                    fontFamily: "inherit",
-                    paddingRight: "33px",
-                    paddingLeft: "0 !important",
-                  },
-                  "&.MuiInputBase-root": {
-                    borderRadius: "8px",
-                    paddingLeft: 2,
-                    border: "1px solid #DDE1E6",
-                  },
-                  "& .MuiSelect-icon": {
-                    left: "auto",
-                    right: "16px",
-                    color: "#1758BA",
-                    fontSize: "1.5rem"
-                  },
-                  "& .MuiSelect-select": {},
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    border: "none",
-                  },
-                }}
+            <CustomSelect
                 value={condition.goTo.type}
-                onChange={(e) => updateCondition(index, "goTo", e.target.value)}
-              >
-                {questionGoTo.map((type: any) => {
-                  return (
-                    <MenuItem
-                      key={type.value}
-                      value={type.value}
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "end",
-                        backgroundColor: "#1758BA0D",
-                        padding: "10px",
-                        paddingX: "15px",
-                      }}
-                    >
-                      {type.label}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-
+                onChange={(e) => updateCondition(index, "goTo", e.target.value as string)}
+                options={questionGoTo}
+                sx={{ minWidth: 200 }}
+            />
 
             </FormControl>
 
@@ -566,55 +524,12 @@ export default function DependentSelectForm() {
             <FormControl sx={{ minWidth: 410 }}>
 
               <FormControl sx={{ minWidth: 200 }}>
-
-                <Select
-                  IconComponent={IoIosArrowDown}
-                  sx={{
-                    "& .MuiSelect-select.MuiSelect-outlined": {
-                      fontFamily: "inherit",
-                      paddingRight: "33px",
-                      paddingLeft: "0 !important",
-                    },
-                    "&.MuiInputBase-root": {
-                      borderRadius: "8px",
-                      paddingLeft: 2,
-                      border: "1px solid #DDE1E6",
-                    },
-                    "& .MuiSelect-icon": {
-                      left: "auto",
-                      right: "16px",
-                      color: "#1758BA",
-                      fontSize: "1.5rem"
-                    },
-                    "& .MuiSelect-select": {},
-                    "& .MuiOutlinedInput-notchedOutline": {
-                      border: "none",
-                    },
-                  }}
-                  value={condition.goTo.type}
-                  onChange={(e) => updateCondition(index, "goTo", e.target.value)}
-                >
-                  {questionGoTo.map((type: any) => {
-                    return (
-                      <MenuItem
-                        key={type.value}
-                        value={type.value}
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "end",
-                          backgroundColor: "#1758BA0D",
-                          padding: "10px",
-                          paddingX: "15px",
-                        }}
-                      >
-                        {type.label}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-
-
+              <CustomSelect
+                value={condition.goTo.type}
+                onChange={(e) => updateCondition(index, "goTo", e.target.value as string)}
+                options={questionGoTo}
+                sx={{ minWidth: 200 }}
+            />
 
               </FormControl>
             </FormControl>
