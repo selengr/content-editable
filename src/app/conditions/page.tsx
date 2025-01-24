@@ -385,47 +385,13 @@ export default function DependentSelectForm() {
 
           {subIndex > 0 && (
 
-            <Select
-              IconComponent={IoIosArrowDown}
-              sx={{
-                "& .MuiSelect-select.MuiSelect-outlined": {
-                  fontFamily: "inherit",
-                  paddingRight: "33px",
-                  paddingLeft: "0 !important",
 
-                },
-                "&.MuiInputBase-root": {
-                  borderRadius: "8px",
-                  paddingLeft: 2,
-                  border: "1px solid #DDE1E6",
-                  width: 78,
-                  mr: 1
-                },
-                "& .MuiSelect-icon": {
-                  left: "auto",
-                  right: "16px",
-                  color: "#1758BA",
-                  fontSize: "1.5rem"
-                },
-                "& .MuiSelect-select": {},
-                "& .MuiOutlinedInput-notchedOutline": {
-                  border: "none",
-                },
-              }}
-              value={condition.logicalOperator || ''}
-              onChange={(e) => updateFn('logicalOperator', e.target.value)}
-            >
-              {[{ value: "AND", label: "و" }, { value: "OR", label: "یا" }].map((type) => (
-                <MenuItem key={type.value} value={type.value}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "end"
-                  }}
-                >
-                  {type.label}
-                </MenuItem>
-              ))}
-            </Select>
+            <CustomSelect
+            value={condition.logicalOperator || ''}
+            onChange={(e) => updateFn('logicalOperator', e.target.value as string)}
+            options={[{ value: "AND", label: "و" }, { value: "OR", label: "یا" }]}
+            sx={{ minWidth: 78 }}
+            />
 
 
           )}
@@ -468,42 +434,15 @@ export default function DependentSelectForm() {
           </FormControl>
 
           <FormControl sx={{ minWidth: 200 }}>
-            {/* <InputLabel>شرط</InputLabel> */}
-            <Select
-              IconComponent={IoIosArrowDown}
-              sx={{
-                "& .MuiSelect-select.MuiSelect-outlined": {
-                  fontFamily: "inherit",
-                  paddingRight: "33px",
-                  paddingLeft: "0 !important",
-                },
-                "&.MuiInputBase-root": {
-                  borderRadius: "8px",
-                  paddingLeft: 2,
-                  border: "1px solid #DDE1E6",
-                },
-                "& .MuiSelect-icon": {
-                  left: "auto",
-                  right: "16px",
-                  color: "#1758BA",
-                  fontSize: "1.5rem"
-                },
-                "& .MuiSelect-select": {},
-                "& .MuiOutlinedInput-notchedOutline": {
-                  border: "none",
-                },
-              }}
-              value={condition.conditionType}
-              label="شرط"
-              onChange={(e) => updateFn("conditionType", e.target.value)}
-              disabled={!condition.operatorType}
-            >
-              {getCondition(condition.questionType, condition.operatorType).map((val) => (
-                <MenuItem key={val.value} value={val.value}>
-                  {val.label}
-                </MenuItem>
-              ))}
-            </Select>
+          <CustomSelect
+               value={condition.conditionType}
+               label="شرط"
+               onChange={(e) => updateFn("conditionType", e.target.value as string)}
+               disabled={!condition.operatorType}
+                options={getCondition(condition.questionType, condition.operatorType)}
+                sx={{ minWidth: 200 }}
+            />
+
           </FormControl>
 
           {getInput(condition.questionType, condition.operatorType, condition.conditionType, condition.value, (value) =>
