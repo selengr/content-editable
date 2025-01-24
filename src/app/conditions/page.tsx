@@ -386,12 +386,35 @@ export default function DependentSelectForm() {
           {subIndex === 0 && <Typography sx={{ color: "#393939", fontSize: "14px", width: 90 }}>اگر</Typography>}
 
           {subIndex > 0 && (
+
             <Select
-              value={condition.logicalOperator || ''}
+              IconComponent={IoIosArrowDown}
               sx={{
-                width: 90,
-                mr: 1
+                "& .MuiSelect-select.MuiSelect-outlined": {
+                  fontFamily: "inherit",
+                  paddingRight: "33px",
+                  paddingLeft: "0 !important",
+
+                },
+                "&.MuiInputBase-root": {
+                  borderRadius: "8px",
+                  paddingLeft: 2,
+                  border: "1px solid #DDE1E6",
+                  width: 78,
+                  mr: 1
+                },
+                "& .MuiSelect-icon": {
+                  left: "auto",
+                  right: "16px",
+                  color: "#1758BA",
+                  fontSize: "1.5rem"
+                },
+                "& .MuiSelect-select": {},
+                "& .MuiOutlinedInput-notchedOutline": {
+                  border: "none",
+                },
               }}
+              value={condition.logicalOperator || ''}
               onChange={(e) => updateFn('logicalOperator', e.target.value)}
             >
               {[{ value: "AND", label: "و" }, { value: "OR", label: "یا" }].map((type) => (
@@ -405,6 +428,8 @@ export default function DependentSelectForm() {
                 </MenuItem>
               ))}
             </Select>
+
+
           )}
         </Box>
         <Box
@@ -666,7 +691,7 @@ export default function DependentSelectForm() {
 
             </FormControl>
 
-            <Typography sx={{ color: "#393939", fontSize: "14px", mr: 9.5}}>در غیر اینصورت برو به:</Typography>
+            <Typography sx={{ color: "#393939", fontSize: "14px", mr: 9.5 }}>در غیر اینصورت برو به:</Typography>
             <FormControl sx={{ minWidth: 410 }}>
 
               <FormControl sx={{ minWidth: 200 }}>
