@@ -32,6 +32,7 @@ import { Box, FormControl, MenuItem, Select, Button, Divider, IconButton, Typogr
 import TrashIcon from "@/../public/images/home-page/trash.svg";
 import PlusIcon from "@/../public/images/home-page/Add-fill.svg";
 import { LoadingButton } from '@mui/lab'
+import CustomSelect from './_components/custom-select'
 
 
 export default function DependentSelectForm() {
@@ -372,9 +373,6 @@ export default function DependentSelectForm() {
     subIndex?: number,
   ) => {
 
-    console.log("subIndex", subIndex)
-    console.log("555", conditions[index]?.subConditions.length)
-
     const updateFn =
       // isSubCondition && subIndex !== undefined
       (field: keyof SubCondition, value: string) => updateSubCondition(index, subIndex, field, value)
@@ -445,6 +443,15 @@ export default function DependentSelectForm() {
 
           <FormControl sx={{ minWidth: 200 }}>
             {/* <InputLabel>نوع سوال</InputLabel> */}
+
+            <CustomSelect
+                value={condition.questionType}
+                label="نوع سوال"
+                onChange={(e) => updateFn("questionType", e.target.value)}
+              options={questionTypes}
+              sx={{ minWidth: 200 }}
+            />
+
             <Select
               IconComponent={IoIosArrowDown}
               sx={{

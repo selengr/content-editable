@@ -1,16 +1,18 @@
 import React from 'react';
-import { Select, MenuItem, SxProps, Theme } from '@mui/material';
+import { Select, MenuItem, SxProps, Theme, SelectProps } from '@mui/material';
 import { IoIosArrowDown } from "react-icons/io";
 
-interface CustomSelectProps {
+
+interface CustomSelectProps extends Omit<SelectProps, 'sx'> {
   options: { value: string; label: string }[];
-  sx?: SxProps<Theme>
+  sx?: SxProps<Theme>;
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = ({ options, sx, ...props }) => {
   return (
     <Select
       IconComponent={IoIosArrowDown}
+      variant="outlined"
       sx={{
         "& .MuiSelect-select.MuiSelect-outlined": {
           fontFamily: "inherit",
