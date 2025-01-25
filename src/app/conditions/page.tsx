@@ -279,6 +279,80 @@ export default function DependentSelectForm() {
           onChange={(e) => setValue(e.target.value)}
         />
 
+
+
+        // { value: 'greater', label: 'بزرگتر بود' },
+        // { value: 'less', label: 'کوچکتر بود از' },
+        // { value: 'greaterEqual', label: 'بزرگتر مساوی' },
+        // { value: 'lessEqual', label: ' کوچکتر مساوی' },
+        // { value: 'equal', label: 'برابر بود با' }
+        case 'SPECTRAL_VALUE_greater':
+        case 'SPECTRAL_VALUE_less':
+        case 'SPECTRAL_VALUE_greaterEqual':
+        case 'SPECTRAL_VALUE_lessEqual':
+        case 'SPECTRAL_VALUE_equal':
+        return <TextField
+          label=""
+          type="number"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+        />
+
+        case 'SPECTRAL_QUESTION_greater':
+        case 'SPECTRAL_QUESTION_less':
+        case 'SPECTRAL_QUESTION_greaterEqual':
+        case 'SPECTRAL_QUESTION_lessEqual':
+        case 'SPECTRAL_QUESTION_equal':
+        // case 'SPECTRAL_CALCULATION':
+        return <FormControl sx={{ minWidth: 200 }}>
+        <Select
+          value={value}
+          label=""
+          sx={{
+            minWidth: { md: 200 },
+          }}
+          onChange={(e) => setValue(e.target.value)}
+        >
+          {questionTypes.map((type) => (
+            <MenuItem key={type.value} value={type.value}
+              sx={{
+                display: "flex",
+                justifyContent: "end"
+              }}
+            >
+              {type.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+        case 'SPECTRAL_CALCULATION_greater':
+        case 'SPECTRAL_CALCULATION_less':
+        case 'SPECTRAL_CALCULATION_greaterEqual':
+        case 'SPECTRAL_CALCULATION_lessEqual':
+        case 'SPECTRAL_CALCULATION_equal':
+        return <FormControl sx={{ minWidth: 200 }}>
+        <Select
+          value={value}
+          label=""
+          sx={{
+            minWidth: { md: 200 },
+          }}
+          onChange={(e) => setValue(e.target.value)}
+        >
+          {questionTypes.map((type) => (
+            <MenuItem key={type.value} value={type.value}
+              sx={{
+                display: "flex",
+                justifyContent: "end"
+              }}
+            >
+              {type.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
       default:
         return <TextField
           label=""
