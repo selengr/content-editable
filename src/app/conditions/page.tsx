@@ -331,21 +331,17 @@ export default function DependentSelectForm() {
         case 'SPECTRAL_CALCULATION_greaterEqual':
         case 'SPECTRAL_CALCULATION_lessEqual':
         case 'SPECTRAL_CALCULATION_equal':
-        return <FormControl sx={{ minWidth: 200 }}>
+        return <FormControl>
         <Select
           value={value}
-          label=""
+          label="calculation"
           sx={{
             minWidth: { md: 200 },
           }}
           onChange={(e) => setValue(e.target.value)}
         >
-          {questionTypes.map((type) => (
+          {calculationTypes.map((type) => (
             <MenuItem key={type.value} value={type.value}
-              sx={{
-                display: "flex",
-                justifyContent: "end"
-              }}
             >
               {type.label}
             </MenuItem>
