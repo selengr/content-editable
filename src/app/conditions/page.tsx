@@ -281,11 +281,11 @@ export default function DependentSelectForm() {
 
 
 
-        case 'SPECTRAL_VALUE_greater':
-        case 'SPECTRAL_VALUE_less':
-        case 'SPECTRAL_VALUE_greaterEqual':
-        case 'SPECTRAL_VALUE_lessEqual':
-        case 'SPECTRAL_VALUE_equal':
+      case 'SPECTRAL_VALUE_greater':
+      case 'SPECTRAL_VALUE_less':
+      case 'SPECTRAL_VALUE_greaterEqual':
+      case 'SPECTRAL_VALUE_lessEqual':
+      case 'SPECTRAL_VALUE_equal':
         return <TextField
           label=""
           type="number"
@@ -293,120 +293,120 @@ export default function DependentSelectForm() {
           onChange={(e) => setValue(e.target.value)}
         />
 
-        case 'SPECTRAL_QUESTION_greater':
-        case 'SPECTRAL_QUESTION_less':
-        case 'SPECTRAL_QUESTION_greaterEqual':
-        case 'SPECTRAL_QUESTION_lessEqual':
-        case 'SPECTRAL_QUESTION_equal':
+      case 'SPECTRAL_QUESTION_greater':
+      case 'SPECTRAL_QUESTION_less':
+      case 'SPECTRAL_QUESTION_greaterEqual':
+      case 'SPECTRAL_QUESTION_lessEqual':
+      case 'SPECTRAL_QUESTION_equal':
         // case 'SPECTRAL_CALCULATION':
         return <FormControl sx={{ minWidth: 200 }}>
-        <Select
-          value={value}
+          <Select
+            value={value}
+            label=""
+            sx={{
+              minWidth: { md: 200 },
+            }}
+            onChange={(e) => setValue(e.target.value)}
+          >
+            {questionTypes.map((type) => (
+              <MenuItem key={type.value} value={type.value}
+                sx={{
+                  display: "flex",
+                  justifyContent: "end"
+                }}
+              >
+                {type.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+      case 'SPECTRAL_CALCULATION_greater':
+      case 'SPECTRAL_CALCULATION_less':
+      case 'SPECTRAL_CALCULATION_greaterEqual':
+      case 'SPECTRAL_CALCULATION_lessEqual':
+      case 'SPECTRAL_CALCULATION_equal':
+        return <FormControl>
+          <Select
+            value={value}
+            label="calculation"
+            sx={{
+              minWidth: { md: 200 },
+            }}
+            onChange={(e) => setValue(e.target.value)}
+          >
+            {calculationTypes.map((type) => (
+              <MenuItem key={type.value} value={type.value}
+              >
+                {type.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+
+
+      case 'CALCULATION_VALUE_greater':
+      case 'CALCULATION_VALUE_less':
+      case 'CALCULATION_VALUE_greaterEqual':
+      case 'CALCULATION_VALUE_lessEqual':
+      case 'CALCULATION_VALUE_equal':
+        return <TextField
           label=""
-          sx={{
-            minWidth: { md: 200 },
-          }}
-          onChange={(e) => setValue(e.target.value)}
-        >
-          {questionTypes.map((type) => (
-            <MenuItem key={type.value} value={type.value}
-              sx={{
-                display: "flex",
-                justifyContent: "end"
-              }}
-            >
-              {type.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-
-        case 'SPECTRAL_CALCULATION_greater':
-        case 'SPECTRAL_CALCULATION_less':
-        case 'SPECTRAL_CALCULATION_greaterEqual':
-        case 'SPECTRAL_CALCULATION_lessEqual':
-        case 'SPECTRAL_CALCULATION_equal':
-        return <FormControl>
-        <Select
+          type="number"
           value={value}
-          label="calculation"
-          sx={{
-            minWidth: { md: 200 },
-          }}
           onChange={(e) => setValue(e.target.value)}
-        >
-          {calculationTypes.map((type) => (
-            <MenuItem key={type.value} value={type.value}
-            >
-              {type.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+        />
 
+      case 'CALCULATION_QUESTION_greater':
+      case 'CALCULATION_QUESTION_less':
+      case 'CALCULATION_QUESTION_greaterEqual':
+      case 'CALCULATION_QUESTION_lessEqual':
+      case 'CALCULATION_QUESTION_equal':
+        return <FormControl sx={{ minWidth: 200 }}>
+          <Select
+            value={value}
+            label=""
+            sx={{
+              minWidth: { md: 200 },
+            }}
+            onChange={(e) => setValue(e.target.value)}
+          >
+            {questionTypes.map((type) => (
+              <MenuItem key={type.value} value={type.value}
+                sx={{
+                  display: "flex",
+                  justifyContent: "end"
+                }}
+              >
+                {type.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
-
-case 'CALCULATION_VALUE_greater':
-  case 'CALCULATION_VALUE_less':
-  case 'CALCULATION_VALUE_greaterEqual':
-  case 'CALCULATION_VALUE_lessEqual':
-  case 'CALCULATION_VALUE_equal':
-  return <TextField
-    label=""
-    type="number"
-    value={value}
-    onChange={(e) => setValue(e.target.value)}
-  />
-
-  case 'CALCULATION_QUESTION_greater':
-  case 'CALCULATION_QUESTION_less':
-  case 'CALCULATION_QUESTION_greaterEqual':
-  case 'CALCULATION_QUESTION_lessEqual':
-  case 'CALCULATION_QUESTION_equal':
-  return <FormControl sx={{ minWidth: 200 }}>
-  <Select
-    value={value}
-    label=""
-    sx={{
-      minWidth: { md: 200 },
-    }}
-    onChange={(e) => setValue(e.target.value)}
-  >
-    {questionTypes.map((type) => (
-      <MenuItem key={type.value} value={type.value}
-        sx={{
-          display: "flex",
-          justifyContent: "end"
-        }}
-      >
-        {type.label}
-      </MenuItem>
-    ))}
-  </Select>
-</FormControl>
-
-        case 'CALCULATION_CALCULATION_greater':
-        case 'CALCULATION_CALCULATION_less':
-        case 'CALCULATION_CALCULATION_greaterEqual':
-        case 'CALCULATION_CALCULATION_lessEqual':
-        case 'CALCULATION_CALCULATION_equal':
+      case 'CALCULATION_CALCULATION_greater':
+      case 'CALCULATION_CALCULATION_less':
+      case 'CALCULATION_CALCULATION_greaterEqual':
+      case 'CALCULATION_CALCULATION_lessEqual':
+      case 'CALCULATION_CALCULATION_equal':
         return <FormControl>
-        <Select
-          value={value}
-          label="calculation"
-          sx={{
-            minWidth: { md: 200 },
-          }}
-          onChange={(e) => setValue(e.target.value)}
-        >
-          {calculationTypes.map((type) => (
-            <MenuItem key={type.value} value={type.value}
-            >
-              {type.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+          <Select
+            value={value}
+            label="calculation"
+            sx={{
+              minWidth: { md: 200 },
+            }}
+            onChange={(e) => setValue(e.target.value)}
+          >
+            {calculationTypes.map((type) => (
+              <MenuItem key={type.value} value={type.value}
+              >
+                {type.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
 
 
@@ -460,7 +460,7 @@ case 'CALCULATION_VALUE_greater':
           { value: 'lessEqual', label: ' کوچکتر مساوی' },
           { value: 'equal', label: 'برابر  با' }
         ]
-        
+
       case 'CALCULATION_VALUE':
       case 'CALCULATION_QUESTION':
       case 'CALCULATION_CALCULATION':
