@@ -28,7 +28,7 @@ import { SelectOption } from './_types/conditions'
 // import JSONData from '../../../public/assets/fake-data/response_v2.json'
 import JSONData_First from '../../../public/assets/fake-data/first.json'
 import JSONData_goTo from '../../../public/assets/fake-data/goTo.json'
-import { Box, FormControl, MenuItem, Select, Button, Divider, IconButton, Typography } from '@mui/material'
+import { Box, FormControl, MenuItem, Select, Button, Divider, IconButton, Typography, styled } from '@mui/material'
 import TrashIcon from "@/../public/images/home-page/trash.svg";
 import PlusIcon from "@/../public/images/home-page/Add-fill.svg";
 import { LoadingButton } from '@mui/lab'
@@ -554,7 +554,8 @@ export default function DependentSelectForm() {
 
           </Box>
 
-          <Divider sx={{ my: 3 }} />
+
+          <CircleDivider sx={{ my: 3 }}/>
         </Box>
       ))}
 
@@ -634,3 +635,28 @@ export default function DependentSelectForm() {
   )
 }
 
+
+
+const Circle = styled(Box)(({ theme }) => ({
+  width: '6px', 
+  height: '6px',
+  borderRadius: '50%',
+  backgroundColor: "#DDE1E6",
+  margin: '0 8px', 
+}));
+
+const DashedDivider = styled(Divider)(({ theme }) => ({
+  borderStyle: 'dashed',
+  borderColor: theme.palette.divider,
+  flexGrow: 1,
+}));
+
+const CircleDivider = () => {
+  return (
+    <Box display="flex" alignItems="center">
+      <Circle />
+      <DashedDivider />
+      <Circle />
+    </Box>
+  );
+};
