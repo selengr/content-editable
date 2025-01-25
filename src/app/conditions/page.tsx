@@ -281,11 +281,6 @@ export default function DependentSelectForm() {
 
 
 
-        // { value: 'greater', label: 'بزرگتر بود' },
-        // { value: 'less', label: 'کوچکتر بود از' },
-        // { value: 'greaterEqual', label: 'بزرگتر مساوی' },
-        // { value: 'lessEqual', label: ' کوچکتر مساوی' },
-        // { value: 'equal', label: 'برابر بود با' }
         case 'SPECTRAL_VALUE_greater':
         case 'SPECTRAL_VALUE_less':
         case 'SPECTRAL_VALUE_greaterEqual':
@@ -349,6 +344,76 @@ export default function DependentSelectForm() {
         </Select>
       </FormControl>
 
+
+
+case 'CALCULATION_VALUE_greater':
+  case 'CALCULATION_VALUE_less':
+  case 'CALCULATION_VALUE_greaterEqual':
+  case 'CALCULATION_VALUE_lessEqual':
+  case 'CALCULATION_VALUE_equal':
+  return <TextField
+    label=""
+    type="number"
+    value={value}
+    onChange={(e) => setValue(e.target.value)}
+  />
+
+  case 'CALCULATION_QUESTION_greater':
+  case 'CALCULATION_QUESTION_less':
+  case 'CALCULATION_QUESTION_greaterEqual':
+  case 'CALCULATION_QUESTION_lessEqual':
+  case 'CALCULATION_QUESTION_equal':
+  return <FormControl sx={{ minWidth: 200 }}>
+  <Select
+    value={value}
+    label=""
+    sx={{
+      minWidth: { md: 200 },
+    }}
+    onChange={(e) => setValue(e.target.value)}
+  >
+    {questionTypes.map((type) => (
+      <MenuItem key={type.value} value={type.value}
+        sx={{
+          display: "flex",
+          justifyContent: "end"
+        }}
+      >
+        {type.label}
+      </MenuItem>
+    ))}
+  </Select>
+</FormControl>
+
+        case 'CALCULATION_CALCULATION_greater':
+        case 'CALCULATION_CALCULATION_less':
+        case 'CALCULATION_CALCULATION_greaterEqual':
+        case 'CALCULATION_CALCULATION_lessEqual':
+        case 'CALCULATION_CALCULATION_equal':
+        return <FormControl>
+        <Select
+          value={value}
+          label="calculation"
+          sx={{
+            minWidth: { md: 200 },
+          }}
+          onChange={(e) => setValue(e.target.value)}
+        >
+          {calculationTypes.map((type) => (
+            <MenuItem key={type.value} value={type.value}
+            >
+              {type.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+
+
+
+
+
+
       default:
         return <TextField
           label=""
@@ -389,11 +454,23 @@ export default function DependentSelectForm() {
       case 'SPECTRAL_QUESTION':
       case 'SPECTRAL_CALCULATION':
         return [
-          { value: 'greater', label: 'بزرگتر بود' },
-          { value: 'less', label: 'کوچکتر بود از' },
+          { value: 'greater', label: 'بزرگتر از' },
+          { value: 'less', label: 'کوچکتر  از' },
           { value: 'greaterEqual', label: 'بزرگتر مساوی' },
           { value: 'lessEqual', label: ' کوچکتر مساوی' },
-          { value: 'equal', label: 'برابر بود با' }
+          { value: 'equal', label: 'برابر  با' }
+        ]
+        
+      case 'CALCULATION_VALUE':
+      case 'CALCULATION_QUESTION':
+      case 'CALCULATION_CALCULATION':
+        return [
+          { value: 'greater', label: 'بزرگتر از' },
+          { value: 'less', label: 'کوچکتر از' },
+          { value: 'greaterEqual', label: 'بزرگتر مساوی' },
+          { value: 'lessEqual', label: ' کوچکتر مساوی' },
+          { value: 'equal', label: 'برابر  با' },
+          { value: 'not_equal', label: 'نابرابر با' }
         ]
 
       case 'MULTIPLE_CHOICE':
@@ -421,6 +498,12 @@ export default function DependentSelectForm() {
           { value: 'TEXT', label: 'متنی' }
         ]
       case 'SPECTRAL':
+        return [
+          { value: 'VALUE', label: 'ارزش' },
+          { value: 'QUESTION', label: 'سوال ' },
+          { value: 'CALCULATION', label: 'محاسبه‌گر' }
+        ]
+      case 'CALCULATION':
         return [
           { value: 'VALUE', label: 'ارزش' },
           { value: 'QUESTION', label: 'سوال ' },
