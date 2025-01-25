@@ -205,18 +205,7 @@ export default function DependentSelectForm() {
                 {type.label}
               </MenuItem>
             ))}
-            {/* {questionTypes.map((type) => (
-                Object.entries(type.extMap.OPTIONS || {}).map(([key, [_, label]]) => (
-                  <MenuItem key={key} value={label.toString()}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "end"
-                    }}
-                  >
-                    {label.toString()}
-                  </MenuItem>
-                ))
-              ))} */}
+           
           </Select>
         </FormControl>
       case 'MULTIPLE_CHOICE_OPTION_less':
@@ -325,6 +314,16 @@ export default function DependentSelectForm() {
           { value: 'lenGraterThan', label: 'طول متن بیشتر از' },
           { value: 'lenLessThanText', label: ' طول متن کمتر از' }
         ]
+
+          case 'SPECTRAL_VALUE':
+          case 'SPECTRAL_QUESTION':
+          case 'SPECTRAL_CALCULATION':
+
+          return [
+            { value: 'greater', label: 'بزرگتر بود' },
+            { value: 'less', label: 'کوچکتر بود از' },
+          ]
+
       case 'MULTIPLE_CHOICE':
         return [
           { value: 'selected', label: 'انتخاب شده' },
@@ -348,6 +347,12 @@ export default function DependentSelectForm() {
         return [
           { value: 'VALUE', label: 'ارزش' },
           { value: 'TEXT', label: 'متنی' }
+        ]
+      case 'SPECTRAL':
+        return [
+          { value: 'VALUE', label: 'ارزش' },
+          { value: 'QUESTION', label: 'سوال ' },
+          { value: 'CALCULATION', label: 'محاسبه‌گر' }
         ]
       default:
         return []
