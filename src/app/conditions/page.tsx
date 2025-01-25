@@ -33,6 +33,7 @@ import TrashIcon from "@/../public/images/home-page/trash.svg";
 import PlusIcon from "@/../public/images/home-page/Add-fill.svg";
 import { LoadingButton } from '@mui/lab'
 import CustomSelect from './_components/custom-select'
+import { CircleDivider } from './_components/circle-divider'
 
 
 export default function DependentSelectForm() {
@@ -555,7 +556,7 @@ export default function DependentSelectForm() {
           </Box>
 
 
-          <CircleDivider sx={{ my: 3 }}/>
+          <CircleDivider />
         </Box>
       ))}
 
@@ -635,28 +636,3 @@ export default function DependentSelectForm() {
   )
 }
 
-
-
-const Circle = styled(Box)(({ theme }) => ({
-  width: '6px', 
-  height: '6px',
-  borderRadius: '50%',
-  backgroundColor: "#DDE1E6",
-  margin: '0 8px', 
-}));
-
-const DashedDivider = styled(Divider)(({ theme }) => ({
-  borderStyle: 'dashed',
-  borderColor: theme.palette.divider,
-  flexGrow: 1,
-}));
-
-const CircleDivider = () => {
-  return (
-    <Box display="flex" alignItems="center">
-      <Circle />
-      <DashedDivider />
-      <Circle />
-    </Box>
-  );
-};
