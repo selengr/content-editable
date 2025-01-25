@@ -205,7 +205,7 @@ export default function DependentSelectForm() {
                 {type.label}
               </MenuItem>
             ))}
-           
+
           </Select>
         </FormControl>
       case 'MULTIPLE_CHOICE_OPTION_less':
@@ -315,14 +315,16 @@ export default function DependentSelectForm() {
           { value: 'lenLessThanText', label: ' طول متن کمتر از' }
         ]
 
-          case 'SPECTRAL_VALUE':
-          case 'SPECTRAL_QUESTION':
-          case 'SPECTRAL_CALCULATION':
-
-          return [
-            { value: 'greater', label: 'بزرگتر بود' },
-            { value: 'less', label: 'کوچکتر بود از' },
-          ]
+      case 'SPECTRAL_VALUE':
+      case 'SPECTRAL_QUESTION':
+      case 'SPECTRAL_CALCULATION':
+        return [
+          { value: 'greater', label: 'بزرگتر بود' },
+          { value: 'less', label: 'کوچکتر بود از' },
+          { value: 'greaterEqual', label: 'بزرگتر مساوی' },
+          { value: 'lessEqual', label: ' کوچکتر مساوی' },
+          { value: 'equal', label: 'برابر بود با' }
+        ]
 
       case 'MULTIPLE_CHOICE':
         return [
@@ -393,10 +395,10 @@ export default function DependentSelectForm() {
 
 
             <CustomSelect
-            value={condition.logicalOperator || ''}
-            onChange={(e) => updateFn('logicalOperator', e.target.value as string)}
-            options={[{ value: "AND", label: "و" }, { value: "OR", label: "یا" }]}
-            sx={{ minWidth: 78 }}
+              value={condition.logicalOperator || ''}
+              onChange={(e) => updateFn('logicalOperator', e.target.value as string)}
+              options={[{ value: "AND", label: "و" }, { value: "OR", label: "یا" }]}
+              sx={{ minWidth: 78 }}
             />
 
 
@@ -417,36 +419,36 @@ export default function DependentSelectForm() {
             {/* <InputLabel>نوع سوال</InputLabel> */}
 
             <CustomSelect
-                value={condition.questionType}
-                label="نوع سوال"
-                onChange={(e) => updateFn("questionType", e.target.value as string)}
-                options={questionTypes}
-                sx={{ minWidth: 200 }}
+              value={condition.questionType}
+              label="نوع سوال"
+              onChange={(e) => updateFn("questionType", e.target.value as string)}
+              options={questionTypes}
+              sx={{ minWidth: 200 }}
             />
 
 
           </FormControl>
 
           <FormControl sx={{ minWidth: 200 }}>
-          <CustomSelect
-               value={condition.operatorType}
-               label="حالت"
-               onChange={(e) => updateFn("operatorType", e.target.value as string)}
-               disabled={!condition.questionType}
-                options={getQuestion(condition.questionType)}
-                sx={{ minWidth: 200 }}
+            <CustomSelect
+              value={condition.operatorType}
+              label="حالت"
+              onChange={(e) => updateFn("operatorType", e.target.value as string)}
+              disabled={!condition.questionType}
+              options={getQuestion(condition.questionType)}
+              sx={{ minWidth: 200 }}
             />
 
           </FormControl>
 
           <FormControl sx={{ minWidth: 200 }}>
-          <CustomSelect
-               value={condition.conditionType}
-               label="شرط"
-               onChange={(e) => updateFn("conditionType", e.target.value as string)}
-               disabled={!condition.operatorType}
-                options={getCondition(condition.questionType, condition.operatorType)}
-                sx={{ minWidth: 200 }}
+            <CustomSelect
+              value={condition.conditionType}
+              label="شرط"
+              onChange={(e) => updateFn("conditionType", e.target.value as string)}
+              disabled={!condition.operatorType}
+              options={getCondition(condition.questionType, condition.operatorType)}
+              sx={{ minWidth: 200 }}
             />
 
           </FormControl>
@@ -517,12 +519,12 @@ export default function DependentSelectForm() {
           <Box sx={{ mt: 2, ml: 4, display: "flex", alignItems: "center", gap: 2 }}>
             <Typography sx={{ color: "#393939", fontSize: "14px" }}>:برو به</Typography>
             <FormControl sx={{ minWidth: 200, ml: 5 }}>
-            <CustomSelect
+              <CustomSelect
                 value={condition.goTo.type}
                 onChange={(e) => updateCondition(index, "goTo", e.target.value as string)}
                 options={questionGoTo}
                 sx={{ minWidth: 200 }}
-            />
+              />
 
             </FormControl>
 
@@ -530,12 +532,12 @@ export default function DependentSelectForm() {
             <FormControl sx={{ minWidth: 410 }}>
 
               <FormControl sx={{ minWidth: 200 }}>
-              <CustomSelect
-                value={condition.goTo.type}
-                onChange={(e) => updateCondition(index, "goTo", e.target.value as string)}
-                options={questionGoTo}
-                sx={{ minWidth: 200 }}
-            />
+                <CustomSelect
+                  value={condition.goTo.type}
+                  onChange={(e) => updateCondition(index, "goTo", e.target.value as string)}
+                  options={questionGoTo}
+                  sx={{ minWidth: 200 }}
+                />
 
               </FormControl>
             </FormControl>
