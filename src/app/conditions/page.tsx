@@ -627,8 +627,7 @@ export default function DependentSelectForm() {
           }}
         >
 
-          <FormControl sx={{ minWidth: 200 }}>
-            {/* <InputLabel>نوع سوال</InputLabel> */}
+          <FormControl sx={{ minWidth: 200 }}>ee
 
             <CustomSelect
               value={condition.questionType}
