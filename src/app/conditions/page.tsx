@@ -294,6 +294,10 @@ export default function DependentSelectForm() {
         />
 
 
+      case 'TEXT_FIELD_DATE_DATE_beforeDate':
+      case 'TEXT_FIELD_DATE_QUESTION_afterDate':
+        return 
+
 
       case 'SPECTRAL_VALUE_greater':
       case 'SPECTRAL_VALUE_less':
@@ -464,6 +468,13 @@ export default function DependentSelectForm() {
           { value: 'lenLessThanText', label: ' طول متن کمتر از' }
         ]
 
+      case 'TEXT_FIELD_DATE_DATE':
+      case 'TEXT_FIELD_DATE_QUESTION':
+        return [
+          { value: 'beforeDate', label: 'قبل از' },
+          { value: 'afterDate', label: 'بعد از' }
+        ]
+
       case 'SPECTRAL_VALUE':
       case 'SPECTRAL_QUESTION':
       case 'SPECTRAL_CALCULATION':
@@ -509,7 +520,12 @@ export default function DependentSelectForm() {
       case 'TEXT_FIELD':
         return [
           { value: 'VALUE', label: 'ارزش' },
-          { value: 'TEXT', label: 'متنی' }
+          { value: 'TEXT', label: 'متن' }
+        ]
+      case 'TEXT_FIELD_DATE':
+        return [
+          { value: 'QUESTION', label: 'سوال' },
+          { value: 'DATE', label: 'تاریخ' },
         ]
       case 'SPECTRAL':
         return [
