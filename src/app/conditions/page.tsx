@@ -709,6 +709,7 @@ export default function DependentSelectForm() {
 
   const handleSubmit = () => {
     console.log('Submitted conditions:', conditions[0]);
+    console.log('Submitted conditions:', conditions);
 
   }
 
