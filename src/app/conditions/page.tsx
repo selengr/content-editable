@@ -526,7 +526,6 @@ export default function DependentSelectForm() {
   }, [])
 
 
-  console.log("555", conditions[0]?.subConditions.length)
 
   const renderConditionInputs = (
     condition: SubCondition,
