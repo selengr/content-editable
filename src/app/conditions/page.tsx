@@ -15,6 +15,7 @@ interface SubCondition {
   operatorType: string
   conditionType: string
   value: string
+  id: string
 }
 
 
@@ -45,6 +46,7 @@ export default function DependentSelectForm() {
         operatorType: "",
         conditionType: "",
         value: "",
+        id : ""
       }],
       goTo: {
         type: "",
