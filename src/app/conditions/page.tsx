@@ -36,8 +36,14 @@ import { LoadingButton } from '@mui/lab'
 import CustomSelect from './_components/custom-select'
 import { CircleDivider } from './_components/circle-divider'
 
+import DatePicker from "react-multi-date-picker";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import "react-multi-date-picker/styles/layouts/mobile.css";
+
 
 export default function DependentSelectForm() {
+  const [calendarValue, setCalendarValue] = useState(new Date());
   const [conditions, setConditions] = useState<Condition[]>([
     {
       subConditions: [{
@@ -313,7 +319,7 @@ export default function DependentSelectForm() {
               locale={persian_fa}
               value={calendarValue}
               onChange={(e: any) => setCalendarValue(e)}
-              className={isMobile ? "rmdp-mobile" : ""}
+              className={"rmdp-mobile"}
               zIndex={9999}
               inputClass="h-[50px] px-4 border-[1px] w-full border-neutral-300 rounded-xl text-left p-1"
               highlightToday
