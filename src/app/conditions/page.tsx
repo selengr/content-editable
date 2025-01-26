@@ -23,7 +23,6 @@ interface SubCondition {
 
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
-import { IoIosArrowDown } from "react-icons/io";
 import TextField from '@mui/material/TextField';
 import { SelectOption } from './_types/conditions'
 import JSONData_First from '../../../public/assets/fake-data/first.json'
