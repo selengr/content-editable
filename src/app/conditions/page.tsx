@@ -65,6 +65,7 @@ export default function DependentSelectForm() {
           operatorType: "",
           conditionType: "",
           value: "",
+          id: ""
         }],
         goTo: {
           type: "",
@@ -86,6 +87,7 @@ export default function DependentSelectForm() {
           operatorType: "",
           conditionType: "",
           value: "",
+          id: ""
         },
       ];
 
@@ -128,7 +130,8 @@ export default function DependentSelectForm() {
   }
 
 
-  const updateSubCondition = (conditionIndex: number, subIndex: number, field: keyof SubCondition, value: string) => {debugger
+  const updateSubCondition = (conditionIndex: number, subIndex: number, field: keyof SubCondition, value: string) => {
+    console.log("value",value)
     setConditions((prevConditions) => {
       const newConditions = [...prevConditions]
       const subCondition = { ...newConditions[conditionIndex].subConditions[subIndex] }
@@ -152,11 +155,18 @@ export default function DependentSelectForm() {
 
   let data: any = JSONData_First.dataList
 
-  const questionTypes = data
-    .map(item => ({
-      value: item.extMap.QUESTION_TYPE || '',
-      label: item.caption
-    }))
+  const questionTypes = data.map(item => {
+    const isCalculation = item.elementStr === 'CALCULATION';
+    const questionType = isCalculation 
+        ? `${item.elementStr}*${item.extMap.UNIC_NAME}` 
+        : `${item.extMap.QUESTION_TYPE}*${item.extMap.UNIC_NAME || ''}`;
+
+    return {
+        value: questionType,
+        label: item.caption
+    };
+});
+
   const calculationTypes = data
     .filter(item => item.elementStr === 'CALCULATION')
     .map(item => ({
@@ -170,7 +180,7 @@ export default function DependentSelectForm() {
     }))
 
   const getInput = (type: string, operator: string, condition: string, value: string, setValue: (value: string) => void) => {
-    const combinedKey = `${type}_${operator}_${condition}`
+    const combinedKey = `${type.split('*')[0]}_${operator}_${condition}`
     switch (combinedKey) {
       case 'MULTIPLE_CHOICE_VALUE_less':
       case 'MULTIPLE_CHOICE_VALUE_greater':
@@ -427,7 +437,7 @@ export default function DependentSelectForm() {
   }
 
   const getCondition = (type: string, operator: string): SelectOption[] => {
-    const combinedKey = `${type}_${operator}`
+    const combinedKey = `${type.split('*')[0]}_${operator}`
 
     switch (combinedKey) {
       case 'MULTIPLE_CHOICE_VALUE':
@@ -486,7 +496,7 @@ export default function DependentSelectForm() {
   }
 
   const getQuestion = (type: string): SelectOption[] => {
-    switch (type) {
+    switch (type.split('*')[0]) {
       case 'MULTIPLE_CHOICE':
         return [
           { value: 'VALUE', label: 'ارزش' },
