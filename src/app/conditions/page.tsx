@@ -52,7 +52,7 @@ export default function DependentSelectForm() {
         operatorType: "",
         conditionType: "",
         value: "",
-        id : ""
+        id: ""
       }],
       goTo: {
         type: "",
@@ -137,7 +137,7 @@ export default function DependentSelectForm() {
 
 
   const updateSubCondition = (conditionIndex: number, subIndex: number, field: keyof SubCondition, value: string) => {
-    console.log("value",value)
+    console.log("value", value)
     setConditions((prevConditions) => {
       const newConditions = [...prevConditions]
       const subCondition = { ...newConditions[conditionIndex].subConditions[subIndex] }
@@ -164,16 +164,16 @@ export default function DependentSelectForm() {
   const questionTypes = data.map(item => {
     const isCalculation = item.elementStr === 'CALCULATION';
     const isTextFieldDate = item.extMap.TEXT_FIELD_PATTERN === 'DATE';
-    const questionType = isCalculation 
-        ? `${item.elementStr}*${item.extMap.UNIC_NAME}` : isTextFieldDate 
-        ? `${item.extMap.QUESTION_TYPE}_${item.extMap.TEXT_FIELD_PATTERN}*${item.extMap.UNIC_NAME}` 
+    const questionType = isCalculation
+      ? `${item.elementStr}*${item.extMap.UNIC_NAME}` : isTextFieldDate
+        ? `${item.extMap.QUESTION_TYPE}_${item.extMap.TEXT_FIELD_PATTERN}*${item.extMap.UNIC_NAME}`
         : `${item.extMap.QUESTION_TYPE}*${item.extMap.UNIC_NAME || ''}`;
 
     return {
-        value: questionType,
-        label: item.caption
+      value: questionType,
+      label: item.caption
     };
-});
+  });
 
   const calculationTypes = data
     .filter(item => item.elementStr === 'CALCULATION')
@@ -303,7 +303,7 @@ export default function DependentSelectForm() {
       case 'TEXT_FIELD_DATE_DATE_beforeDate':
       case 'TEXT_FIELD_DATE_QUESTION_afterDate':
         return <>
-         <Box
+          <Box
             display="flex"
             justifyContent="center"
             alignItems="center"
