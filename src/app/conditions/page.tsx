@@ -19,8 +19,6 @@ interface SubCondition {
 }
 
 
-
-
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import TextField from '@mui/material/TextField';
