@@ -81,7 +81,6 @@ export default function DependentSelectForm() {
     ])
   }
 
-
   const addSubCondition = (conditionIndex: number, subConditionIndex: number) => {
     setConditions((prevConditions) => {
       const newConditions = [...prevConditions];
