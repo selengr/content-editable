@@ -126,7 +126,7 @@ export default function DependentSelectForm() {
   }
 
 
-  const updateSubCondition = (conditionIndex: number, subIndex: number, field: keyof SubCondition, value: string) => {
+  const updateSubCondition = (conditionIndex: number, subIndex: number, field: keyof SubCondition, value: string) => {debugger
     setConditions((prevConditions) => {
       const newConditions = [...prevConditions]
       const subCondition = { ...newConditions[conditionIndex].subConditions[subIndex] }

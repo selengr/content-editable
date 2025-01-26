@@ -22,7 +22,7 @@
     FORMULA?: string;
   }
   
-  export interface DataItem {
+  export interface IQuestionType {
     value: string;
     caption: string;
     elementStr: string;
@@ -35,7 +35,7 @@
   }
 
   interface DependentSelectFormProps {
-    data: DataItem[]
+    data: IQuestionType[]
   }
 
 
