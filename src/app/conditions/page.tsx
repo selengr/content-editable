@@ -836,7 +836,6 @@ export default function DependentSelectForm() {
             borderColor: "#1758BA",
             background: "#FFF",
           }}
-        // onClick={handleClose}
         >
           <Typography
             variant="body2"
