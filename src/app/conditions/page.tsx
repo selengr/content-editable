@@ -130,7 +130,6 @@ export default function DependentSelectForm() {
       //   newConditions[index].subConditions.conditionType = '';
       //   newConditions[index].subConditions.value = '';
       // }
-
       return newConditions;
     });
   }
