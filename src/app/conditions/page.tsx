@@ -296,7 +296,31 @@ export default function DependentSelectForm() {
 
       case 'TEXT_FIELD_DATE_DATE_beforeDate':
       case 'TEXT_FIELD_DATE_QUESTION_afterDate':
-        return 
+        return <>
+         <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            sx={{
+              "& .rmdp-wrapper.rmdp-border": {
+                borderRadius: "20px",
+              },
+            }}
+          >
+            <DatePicker
+              shadow={false}
+              calendar={persian}
+              locale={persian_fa}
+              value={calendarValue}
+              onChange={(e: any) => setCalendarValue(e)}
+              className={isMobile ? "rmdp-mobile" : ""}
+              zIndex={9999}
+              inputClass="h-[50px] px-4 border-[1px] w-full border-neutral-300 rounded-xl text-left p-1"
+              highlightToday
+              portal
+            />
+          </Box>
+        </>
 
 
       case 'SPECTRAL_VALUE_greater':
