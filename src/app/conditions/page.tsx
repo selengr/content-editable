@@ -26,7 +26,6 @@ import { useState, useEffect } from 'react'
 import { IoIosArrowDown } from "react-icons/io";
 import TextField from '@mui/material/TextField';
 import { SelectOption } from './_types/conditions'
-// import JSONData from '../../../public/assets/fake-data/response_v2.json'
 import JSONData_First from '../../../public/assets/fake-data/first.json'
 import JSONData_goTo from '../../../public/assets/fake-data/goTo.json'
 import { Box, FormControl, MenuItem, Select, Button, Divider, IconButton, Typography, styled } from '@mui/material'
