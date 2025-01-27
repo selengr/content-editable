@@ -165,6 +165,7 @@ export default function DependentSelectForm() {
       label: item.caption
     };
   });
+  d
 
   const calculationTypes = data
     .filter(item => item.elementStr === 'CALCULATION')
