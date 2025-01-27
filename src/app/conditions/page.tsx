@@ -277,26 +277,27 @@ export default function DependentSelectForm() {
       case 'MULTIPLE_CHOICE_MULTI_SELECT_OPTION_not_containAny':
       case 'MULTIPLE_CHOICE_MULTI_SELECT_OPTION_equal':
       case 'MULTIPLE_CHOICE_MULTI_SELECT_OPTION_not_equal':
-        return <CustomSelect
-        value={value || ''}
-        onChange={(e) => setValue(e.target.value as string)}
-        options={
-          questionTypes.map((item) => {
-           if(item?.extMap?.UNIC_NAME === type.split('*')[1]){debugger
-              const options = item?.extMap?.OPTIONS;
+       return data?.map((item) => {debugger
+          if(item?.extMap?.UNIC_NAME === type.split('*')[1]){
+             const options = item?.extMap?.OPTIONS;
 
-              const optionsList = Object.keys(options).map(key => {
-                  return {
-                      value: key, 
-                      label: options[key][1] 
-                  };
-              });    
-              return optionsList
-            }
-          })
-        }
-        sx={{ minWidth: 78 }}
-        />
+             const optionsList = []
+              Object.keys(options).forEach(key => {
+                optionsList.push({
+                     value: key, 
+                     label: options[key][1] 
+                 })
+             });    
+             return <CustomSelect
+             value={value || ''}
+             onChange={(e) => setValue(e.target.value as string)}
+             options={optionsList}
+             sx={{ minWidth: 200 }}
+             />
+           }
+         }) 
+        
+        
         
         
         // <FormControl>
@@ -682,7 +683,7 @@ export default function DependentSelectForm() {
           }}
         >
 
-          <FormControl sx={{ minWidth: 200 }}>ee
+          <FormControl sx={{ minWidth: 200 }}>
 
             <CustomSelect
               value={condition.questionType}
