@@ -440,6 +440,16 @@ export default function DependentSelectForm() {
         </FormControl>
 
 
+      case 'SPECTRAL_DOMAIN_VALUE_greater':
+      case 'SPECTRAL_DOMAIN_VALUE_less':
+        return <TextField
+        label=""
+        type="number"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+
+
 
       case 'CALCULATION_VALUE_greater':
       case 'CALCULATION_VALUE_less':
@@ -569,6 +579,11 @@ export default function DependentSelectForm() {
           { value: 'lessEqual', label: ' کوچکتر مساوی' },
           { value: 'equal', label: 'برابر  با' }
         ]
+      case 'SPECTRAL_DOMAIN_VALUE':
+        return [
+          { value: 'greater', label: 'بزرگتر از' },
+          { value: 'less', label: 'کوچکتر  از' }
+        ]
 
       case 'CALCULATION_VALUE':
       case 'CALCULATION_QUESTION':
@@ -620,6 +635,10 @@ export default function DependentSelectForm() {
           { value: 'VALUE', label: 'ارزش' },
           { value: 'QUESTION', label: 'سوال ' },
           { value: 'CALCULATION', label: 'محاسبه‌گر' }
+        ]
+      case 'SPECTRAL_DOMAIN':
+        return [
+          { value: 'VALUE', label: 'ارزش' }
         ]
       case 'CALCULATION':
         return [
