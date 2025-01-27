@@ -32,7 +32,7 @@ import { LoadingButton } from '@mui/lab'
 import CustomSelect from './_components/custom-select'
 import { CircleDivider } from './_components/circle-divider'
 
-import DatePicker from "react-multi-date-picker";
+import DatePicker, { DateObject } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import "react-multi-date-picker/styles/layouts/mobile.css";
@@ -158,9 +158,11 @@ export default function DependentSelectForm() {
   const questionTypes = data.map(item => {
     const isCalculation = item.elementStr === 'CALCULATION';
     const isTextFieldDate = item.extMap.TEXT_FIELD_PATTERN === 'DATE';
+    const isMultiSelect = Boolean(item.extMap.MULTI_SELECT);
     const questionType = isCalculation
       ? `${item.elementStr}*${item.extMap.UNIC_NAME}` : isTextFieldDate
-        ? `${item.extMap.QUESTION_TYPE}_${item.extMap.TEXT_FIELD_PATTERN}*${item.extMap.UNIC_NAME}`
+        ? `${item.extMap.QUESTION_TYPE}_${item.extMap.TEXT_FIELD_PATTERN}*${item.extMap.UNIC_NAME}` : isMultiSelect
+        ? `${item.extMap.QUESTION_TYPE}_MULTI_SELECT`
         : `${item.extMap.QUESTION_TYPE}*${item.extMap.UNIC_NAME || ''}`;
 
     return {
@@ -270,6 +272,29 @@ export default function DependentSelectForm() {
           </Select>
         </FormControl>
 
+
+      case 'MULTIPLE_CHOICE_MULTI_SELECT_OPTION_containAny':
+      case 'MULTIPLE_CHOICE_MULTI_SELECT_OPTION_not_containAny':
+      case 'MULTIPLE_CHOICE_MULTI_SELECT_OPTION_equal':
+      case 'MULTIPLE_CHOICE_MULTI_SELECT_OPTION_not_equal':
+        return <FormControl>
+          <Select
+            value={value}
+            label="calculation"
+            sx={{
+              minWidth: { md: 200 },
+            }}
+            onChange={(e) => setValue(e.target.value)}
+          >
+            {calculationTypes.map((type) => (
+              <MenuItem key={type.value} value={type.value}
+              >
+                {type.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
       case 'TEXT_FIELD_TEXT_startWith':
       case 'TEXT_FIELD_TEXT_endWith':
         return <TextField
@@ -312,7 +337,8 @@ export default function DependentSelectForm() {
               calendar={persian}
               locale={persian_fa}
               value={calendarValue}
-              onChange={(e: any) => setCalendarValue(e)}
+              // onChange={(e: any) => setCalendarValue(e)}
+              onChange={(e : any) => setValue(e as string)}
               className={"rmdp-mobile"}
               zIndex={9999}
               inputClass="h-[50px] px-4 border-[1px] w-full border-neutral-300 rounded-xl text-left p-1"
@@ -480,6 +506,13 @@ export default function DependentSelectForm() {
           { value: 'equal', label: 'برابر بود با' },
           { value: 'not_equal', label: 'نابرابر بود با' }
         ]
+      case 'MULTIPLE_CHOICE_MULTI_SELECT_OPTION':
+        return [
+          { value: 'containAny', label: 'شامل شدن' },
+          { value: 'not_containAny', label: 'شامل نشدن' },
+          { value: 'equal', label: 'برابر  با' },
+          { value: 'not_equal', label: 'نابرابر با' }
+        ]
       case 'TEXT_FIELD_VALUE':
       case 'TEXT_FIELD_TEXT':
         return [
@@ -539,6 +572,10 @@ export default function DependentSelectForm() {
           { value: 'VALUE', label: 'ارزش' },
           { value: 'QUESTION', label: 'سوال ' },
           { value: 'CALCULATION', label: 'محاسبه‌گر' },
+          { value: 'OPTION', label: 'گزینه' }
+        ]
+      case 'MULTIPLE_CHOICE_MULTI_SELECT':
+        return [
           { value: 'OPTION', label: 'گزینه' }
         ]
       case 'TEXT_FIELD':
