@@ -277,23 +277,33 @@ export default function DependentSelectForm() {
       case 'MULTIPLE_CHOICE_MULTI_SELECT_OPTION_not_containAny':
       case 'MULTIPLE_CHOICE_MULTI_SELECT_OPTION_equal':
       case 'MULTIPLE_CHOICE_MULTI_SELECT_OPTION_not_equal':
-        return <FormControl>
-          <Select
-            value={value}
-            label="calculation"
-            sx={{
-              minWidth: { md: 200 },
-            }}
-            onChange={(e) => setValue(e.target.value)}
-          >
-            {calculationTypes.map((type) => (
-              <MenuItem key={type.value} value={type.value}
-              >
-                {type.label}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        return <CustomSelect
+        value={value || ''}
+        onChange={(e) => setValue(e.target.value as string)}
+        options={[{ value: "AND", label: "و" }, { value: "OR", label: "یا" }]}
+        sx={{ minWidth: 78 }}
+        />
+        
+        
+        // <FormControl>
+        //   <Select
+        //     value={value}
+        //     label="calculation"
+        //     sx={{
+        //       minWidth: { md: 200 },
+        //     }}
+        //     onChange={(e) => setValue(e.target.value)}
+        //   >
+        //     {calculationTypes.map((type) => (
+        //       <MenuItem key={type.value} value={type.value}
+        //       >
+        //         {type.label}
+        //       </MenuItem>
+        //     ))}
+        //   </Select>
+        // </FormControl>
+
+
 
       case 'TEXT_FIELD_TEXT_startWith':
       case 'TEXT_FIELD_TEXT_endWith':
