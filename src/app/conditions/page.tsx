@@ -279,7 +279,7 @@ export default function DependentSelectForm() {
       case 'MULTIPLE_CHOICE_MULTI_SELECT_OPTION_not_containAny':
       case 'MULTIPLE_CHOICE_MULTI_SELECT_OPTION_equal':
       case 'MULTIPLE_CHOICE_MULTI_SELECT_OPTION_not_equal':
-       return data?.map((item) => {debugger
+       return data?.map((item) => {
           if(item?.extMap?.UNIC_NAME === type.split('*')[1]){
              const options = item?.extMap?.OPTIONS;
 
@@ -378,7 +378,8 @@ export default function DependentSelectForm() {
             sx={{
               minWidth: { md: 200 },
             }}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={(e) => {
+              setValue(e.target.value.split("*")[1])}}
           >
             {questionTypes.map((type) => (
               <MenuItem key={type.value} value={type.value}
