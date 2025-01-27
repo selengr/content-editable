@@ -3,11 +3,8 @@
 
 interface Condition {
   subConditions: SubCondition[]
-  goTo: {
-    type: string
-    value: string
-  }
-}
+  elseQuestionId : string
+  returnQuestionId : string}
 
 interface SubCondition {
   logicalOperator: "AND" | "OR" | string
@@ -50,10 +47,8 @@ export default function DependentSelectForm() {
         value: "",
         id: ""
       }],
-      goTo: {
-        type: "",
-        value: "",
-      },
+      elseQuestionId : "",
+      returnQuestionId : ""
     },
   ])
 
@@ -69,10 +64,8 @@ export default function DependentSelectForm() {
           value: "",
           id: ""
         }],
-        goTo: {
-          type: "",
-          value: "",
-        },
+        elseQuestionId : "",
+        returnQuestionId : ""
       },
     ])
   }
@@ -181,7 +174,7 @@ export default function DependentSelectForm() {
     }))
   const questionGoTo = JSONData_goTo.dataList
     .map(item => ({
-      value: item.extMap.QUESTION_TYPE || '',
+      value: item.extMap.UNIC_NAME || '',
       label: item.caption
     }))
 
@@ -370,52 +363,24 @@ export default function DependentSelectForm() {
       case 'SPECTRAL_QUESTION_greaterEqual':
       case 'SPECTRAL_QUESTION_lessEqual':
       case 'SPECTRAL_QUESTION_equal':
-        // case 'SPECTRAL_CALCULATION':
-        return <FormControl sx={{ minWidth: 200 }}>
-          <Select
-            value={value}
-            label=""
-            sx={{
-              minWidth: { md: 200 },
-            }}
-            onChange={(e) => {
-              setValue(e.target.value.split("*")[1])}}
-          >
-            {questionTypes.map((type) => (
-              <MenuItem key={type.value} value={type.value}
-                sx={{
-                  display: "flex",
-                  justifyContent: "end"
-                }}
-              >
-                {type.label}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        return <CustomSelect
+        value={value || ''}
+        onChange={(e:any) => {setValue(e.target.value?.split("*")[1])}}
+        options={questionTypes}
+        sx={{ minWidth: 200 }}
+        />
 
       case 'SPECTRAL_CALCULATION_greater':
       case 'SPECTRAL_CALCULATION_less':
       case 'SPECTRAL_CALCULATION_greaterEqual':
       case 'SPECTRAL_CALCULATION_lessEqual':
       case 'SPECTRAL_CALCULATION_equal':
-        return <FormControl>
-          <Select
-            value={value}
-            label="calculation"
-            sx={{
-              minWidth: { md: 200 },
-            }}
-            onChange={(e) => setValue(e.target.value)}
-          >
-            {calculationTypes.map((type) => (
-              <MenuItem key={type.value} value={type.value}
-              >
-                {type.label}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        return <CustomSelect
+        value={value || ''}
+        onChange={(e:any) => {setValue(e.target.value?.split("*")[1])}}
+        options={calculationTypes}
+        sx={{ minWidth: 200 }}
+        />
 
 
       case 'SPECTRAL_DOMAIN_VALUE_greater':
@@ -786,26 +751,24 @@ export default function DependentSelectForm() {
             <Typography sx={{ color: "#393939", fontSize: "14px" }}>:برو به</Typography>
             <FormControl sx={{ minWidth: 200, ml: 5 }}>
               <CustomSelect
-                value={condition.goTo.type}
-                onChange={(e) => updateCondition(index, "goTo", e.target.value as string)}
+                value={condition.returnQuestionId}
+                onChange={(e) => updateCondition(index, "returnQuestionId", e.target.value as string)}
                 options={questionGoTo}
                 sx={{ minWidth: 200 }}
               />
-
             </FormControl>
 
             <Typography sx={{ color: "#393939", fontSize: "14px", mr: 9.5 }}>در غیر اینصورت برو به:</Typography>
             <FormControl sx={{ minWidth: 410 }}>
 
-              <FormControl sx={{ minWidth: 200 }}>
+              
                 <CustomSelect
-                  value={condition.goTo.type}
-                  onChange={(e) => updateCondition(index, "goTo", e.target.value as string)}
+                  value={condition.elseQuestionId}
+                  onChange={(e) => updateCondition(index, "elseQuestionId", e.target.value as string)}
                   options={questionGoTo}
                   sx={{ minWidth: 200 }}
                 />
 
-              </FormControl>
             </FormControl>
 
 
