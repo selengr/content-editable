@@ -298,29 +298,6 @@ export default function DependentSelectForm() {
              />
            }
          }) 
-        
-        
-        
-        
-        // <FormControl>
-        //   <Select
-        //     value={value}
-        //     label="calculation"
-        //     sx={{
-        //       minWidth: { md: 200 },
-        //     }}
-        //     onChange={(e) => setValue(e.target.value)}
-        //   >
-        //     {calculationTypes.map((type) => (
-        //       <MenuItem key={type.value} value={type.value}
-        //       >
-        //         {type.label}
-        //       </MenuItem>
-        //     ))}
-        //   </Select>
-        // </FormControl>
-
-
 
       case 'TEXT_FIELD_TEXT_startWith':
       case 'TEXT_FIELD_TEXT_endWith':
