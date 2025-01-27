@@ -644,7 +644,6 @@ export default function DependentSelectForm() {
           gridTemplateColumns={{
             // xs: "repeat(2, 1fr)",
             // sm: "repeat(4, 1fr)",
-            // md: "repeat(6, 1fr)",
           }}
         >
 
