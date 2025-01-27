@@ -158,11 +158,13 @@ export default function DependentSelectForm() {
   const questionTypes = data.map(item => {
     const isCalculation = item.elementStr === 'CALCULATION';
     const isTextFieldDate = item.extMap.TEXT_FIELD_PATTERN === 'DATE';
+    const isSpectralDouble = item.extMap.SPECTRAL_TYPE === 'DOMAIN';
     const isMultiSelect = Boolean(item.extMap.MULTI_SELECT);
     const questionType = isCalculation
       ? `${item.elementStr}*${item.extMap.UNIC_NAME}` : isTextFieldDate
         ? `${item.extMap.QUESTION_TYPE}_${item.extMap.TEXT_FIELD_PATTERN}*${item.extMap.UNIC_NAME}` : isMultiSelect
-        ? `${item.extMap.QUESTION_TYPE}_MULTI_SELECT*${item.extMap.UNIC_NAME}`
+        ? `${item.extMap.QUESTION_TYPE}_MULTI_SELECT*${item.extMap.UNIC_NAME}` : isSpectralDouble
+        ? `${item.extMap.QUESTION_TYPE}_${item.extMap.SPECTRAL_TYPE}*${item.extMap.UNIC_NAME}`
         : `${item.extMap.QUESTION_TYPE}*${item.extMap.UNIC_NAME || ''}`;
 
     return {
