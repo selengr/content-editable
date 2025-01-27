@@ -162,7 +162,7 @@ export default function DependentSelectForm() {
     const questionType = isCalculation
       ? `${item.elementStr}*${item.extMap.UNIC_NAME}` : isTextFieldDate
         ? `${item.extMap.QUESTION_TYPE}_${item.extMap.TEXT_FIELD_PATTERN}*${item.extMap.UNIC_NAME}` : isMultiSelect
-        ? `${item.extMap.QUESTION_TYPE}_MULTI_SELECT`
+        ? `${item.extMap.QUESTION_TYPE}_MULTI_SELECT*${item.extMap.UNIC_NAME}`
         : `${item.extMap.QUESTION_TYPE}*${item.extMap.UNIC_NAME || ''}`;
 
     return {
@@ -280,7 +280,21 @@ export default function DependentSelectForm() {
         return <CustomSelect
         value={value || ''}
         onChange={(e) => setValue(e.target.value as string)}
-        options={[{ value: "AND", label: "و" }, { value: "OR", label: "یا" }]}
+        options={
+          questionTypes.map((item) => {
+           if(item?.extMap?.UNIC_NAME === type.split('*')[1]){debugger
+              const options = item?.extMap?.OPTIONS;
+
+              const optionsList = Object.keys(options).map(key => {
+                  return {
+                      value: key, 
+                      label: options[key][1] 
+                  };
+              });    
+              return optionsList
+            }
+          })
+        }
         sx={{ minWidth: 78 }}
         />
         
