@@ -1,23 +1,11 @@
 "use client"
 
 
-interface Condition {
-  subConditions: SubCondition[]
-  elseQuestionId : string
-  returnQuestionId : string}
-
-interface SubCondition {
-  logicalOperator: "AND" | "OR" | string
-  questionType: string
-  operatorType: string
-  conditionType: string
-  value: string
-  id: string
-}
-
-
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
+//hook
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm, useFieldArray, Controller } from "react-hook-form"
 import TextField from '@mui/material/TextField';
 import { SelectOption } from './_types/conditions'
 import JSONData_First from '../../../public/assets/fake-data/first.json'
@@ -29,7 +17,7 @@ import { LoadingButton } from '@mui/lab'
 import CustomSelect from './_components/custom-select'
 import { CircleDivider } from './_components/circle-divider'
 
-import DatePicker, { DateObject } from "react-multi-date-picker";
+import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import "react-multi-date-picker/styles/layouts/mobile.css";
