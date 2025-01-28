@@ -6,6 +6,7 @@ import { IoIosArrowDown } from "react-icons/io";
 interface CustomSelectProps extends Omit<SelectProps, 'sx'> {
   options: { value: string; label: string }[];
   sx?: SxProps<Theme>;
+  helperText? : string
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = ({ options, sx, ...props }) => {

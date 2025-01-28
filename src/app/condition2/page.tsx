@@ -1,11 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { useForm, useFieldArray, Controller } from "react-hook-form"
+import { useForm, useFieldArray, Controller, FormProvider, useWatch } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import Image from "next/image"
-import { Box, FormControl, IconButton, Typography, Button, Select, MenuItem, TextField } from "@mui/material"
+import { Box, IconButton, Typography, Button, TextField } from "@mui/material"
 import { LoadingButton } from "@mui/lab"
 import DatePicker from "react-multi-date-picker"
 import persian from "react-date-object/calendars/persian"
@@ -13,23 +13,25 @@ import persian_fa from "react-date-object/locales/persian_fa"
 import "react-multi-date-picker/styles/layouts/mobile.css"
 import TrashIcon from "@/../public/images/home-page/trash.svg"
 import PlusIcon from "@/../public/images/home-page/Add-fill.svg"
-import CustomSelect from "./_components/custom-select"
+import CustomSelect from "./_components/form/custom-select"
 import { CircleDivider } from "./_components/circle-divider"
 import JSONData_First from "../../../public/assets/fake-data/first.json"
 import JSONData_goTo from "../../../public/assets/fake-data/goTo.json"
+import CustomTextField from "./_components/form/custom-text-field"
+import { SelectOption } from "./utils/formUtils"
 
 const SubConditionSchema = z.object({
   logicalOperator: z.string().optional(),
-  questionType: z.string(),
-  operatorType: z.string(),
-  conditionType: z.string(),
-  value: z.string(),
+  questionType: z.string().min(1, { message: "اين فيلد الزامي است" }),
+  operatorType: z.string().min(1, { message: "اين فيلد الزامي است" }),
+  conditionType: z.string().min(1, { message: "اين فيلد الزامي است" }),
+  value: z.string().min(1, { message: "اين فيلد الزامي است" }),
   id: z.string().optional(),
 })
 
 const ConditionSchema = z.object({
   subConditions: z.array(SubConditionSchema),
-  elseQuestionId: z.string(),
+  elseQuestionId: z.string().min(1, { message: "اين فيلد الزامي است" }),
   returnQuestionId: z.string(),
 })
 
@@ -39,10 +41,34 @@ const FormSchema = z.object({
 
 type FormData = z.infer<typeof FormSchema>
 
-const questionTypes = JSONData_First.dataList.map((item) => ({
-  value: `${item.extMap.QUESTION_TYPE || item.elementStr}*${item.extMap.UNIC_NAME || ""}`,
-  label: item.caption,
-}))
+
+
+// const questionTypes = JSONData_First.dataList.map((item) => ({
+//   value: `${item.extMap.QUESTION_TYPE || item.elementStr}*${item.extMap.UNIC_NAME || ""}`,
+//   label: item.caption,
+// }))
+
+export const questionTypes: SelectOption[] = JSONData_First.dataList.map((item) => {
+    const isCalculation = item.elementStr === "CALCULATION"
+    const isTextFieldDate = item.extMap.TEXT_FIELD_PATTERN === "DATE"
+    const isSpectralDouble = item.extMap.SPECTRAL_TYPE === "DOMAIN"
+    const isMultiSelect = parseInt(item.extMap.MULTI_SELECT)
+    const questionType = isCalculation
+      ? `${item.elementStr}*${item.extMap.UNIC_NAME}`
+      : isTextFieldDate
+        ? `${item.extMap.QUESTION_TYPE}_${item.extMap.TEXT_FIELD_PATTERN}*${item.extMap.UNIC_NAME}`
+        : isMultiSelect
+          ? `${item.extMap.QUESTION_TYPE}_MULTI_SELECT*${item.extMap.UNIC_NAME}`
+          : isSpectralDouble
+            ? `${item.extMap.QUESTION_TYPE}_${item.extMap.SPECTRAL_TYPE}*${item.extMap.UNIC_NAME}`
+            : `${item.extMap.QUESTION_TYPE}*${item.extMap.UNIC_NAME || ""}`
+  
+    return {
+      value: questionType,
+      label: item.caption,
+    }
+  })
+  
 
 const calculationTypes = JSONData_First.dataList
   .filter((item) => item.elementStr === "CALCULATION")
@@ -59,7 +85,8 @@ const questionGoTo = JSONData_goTo.dataList.map((item) => ({
 export default function DependentSelectForm() {
   const [calendarValue, setCalendarValue] = useState(new Date())
 
-  const { control, handleSubmit, watch } = useForm<FormData>({
+  
+  const methods = useForm<FormData>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       conditions: [
@@ -82,6 +109,12 @@ export default function DependentSelectForm() {
   })
 
   const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = methods
+
+  const {
     fields: conditions,
     append: appendCondition,
     remove: removeCondition,
@@ -90,7 +123,12 @@ export default function DependentSelectForm() {
     name: "conditions",
   })
 
-  const getQuestion = (type: string) => {
+  const watchedValues = useWatch({ control })
+
+  const getQuestion = (type: string, values : any) => {
+    console.log("value1", values)
+    console.log("value1 bool", Boolean(values.questionType.length > 0))
+    console.log(type.split("*")[0])
     switch (type.split("*")[0]) {
       case "MULTIPLE_CHOICE":
         return [
@@ -130,7 +168,8 @@ export default function DependentSelectForm() {
     }
   }
 
-  const getCondition = (type: string, operator: string) => {
+  const getCondition = (type: string, operator: string, values: any) => {
+    console.log("value2", values)
     const combinedKey = `${type.split("*")[0]}_${operator}`
     switch (combinedKey) {
       case "MULTIPLE_CHOICE_VALUE":
@@ -138,10 +177,10 @@ export default function DependentSelectForm() {
       case "MULTIPLE_CHOICE_OPTION":
       case "MULTIPLE_CHOICE_CALCULATION":
         return [
-          { value: "greater", label: "بزرگتر بود" },
-          { value: "less", label: "کوچکتر بود از" },
-          { value: "equal", label: "برابر بود با" },
-          { value: "not_equal", label: "نابرابر بود با" },
+          { value: "!#lessThanMultiChoiceSingle", label: "بزرگتر بود" },
+          { value: "#lessThanMultiChoiceSingle", label: "کوچکتر بود از" },
+          { value: "#equalMultiChoiceSingle", label: "برابر بود با" },
+          { value: "!#equalMultiChoiceSingle", label: "نابرابر بود با" },
         ]
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION":
         return [
@@ -207,110 +246,64 @@ export default function DependentSelectForm() {
     }
   }
 
-  const getInput = (
-    type: string,
-    operator: string,
-    condition: string,
-    value: string,
-    onChange: (value: string) => void,
-  ) => {
+
+  const getInput = (type: string, operator: string, condition: string, field: any) => {
     const combinedKey = `${type.split("*")[0]}_${operator}_${condition}`
     switch (combinedKey) {
-      case "MULTIPLE_CHOICE_VALUE_less":
-      case "MULTIPLE_CHOICE_VALUE_greater":
-      case "MULTIPLE_CHOICE_VALUE_equal":
-      case "MULTIPLE_CHOICE_VALUE_not_equal":
-        return (
-          <FormControl sx={{ minWidth: 200 }}>
-            <CustomSelect
-              value={value}
-              onChange={(e) => onChange(e.target.value as string)}
-              options={questionTypes}
-              sx={{ minWidth: 200 }}
-            />
-          </FormControl>
-        )
-      case "MULTIPLE_CHOICE_QUESTION_less":
-      case "MULTIPLE_CHOICE_QUESTION_greater":
-      case "MULTIPLE_CHOICE_QUESTION_equal":
-      case "MULTIPLE_CHOICE_QUESTION_not_equal":
-        return (
-          <FormControl sx={{ minWidth: 200 }}>
-            <Select
-              value={value}
-              label="نوع سوال"
-              sx={{
-                minWidth: { md: 200 },
-              }}
-              onChange={(e) => onChange(e.target.value)}
-            >
-              {questionTypes.map((type) => (
-                <MenuItem
-                  key={type.value}
-                  value={type.value}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "end",
-                  }}
-                >
-                  {type.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        )
-      case "MULTIPLE_CHOICE_OPTION_less":
-      case "MULTIPLE_CHOICE_OPTION_greater":
-      case "MULTIPLE_CHOICE_OPTION_equal":
-      case "MULTIPLE_CHOICE_OPTION_not_equal":
-        return (
-          <FormControl sx={{ minWidth: 200 }}>
-            <Select
-              value={value}
-              label="نوع سوال2"
-              sx={{
-                minWidth: { md: 200 },
-              }}
-              onChange={(e) => onChange(e.target.value)}
-            >
-              {questionTypes.map((type) => (
-                <MenuItem
-                  key={type.value}
-                  value={type.value}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "end",
-                  }}
-                >
-                  {type.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        )
+        case "MULTIPLE_CHOICE_VALUE_!#lessThanMultiChoiceSingle":
+            case "MULTIPLE_CHOICE_VALUE_#lessThanMultiChoiceSingle":
+            case "MULTIPLE_CHOICE_VALUE_#equalMultiChoiceSingle":
+            case "MULTIPLE_CHOICE_VALUE_!#equalMultiChoiceSingle":
 
-      case "MULTIPLE_CHOICE_CALCULATION_less":
-      case "MULTIPLE_CHOICE_CALCULATION_greater":
-      case "MULTIPLE_CHOICE_CALCULATION_equal":
-      case "MULTIPLE_CHOICE_CALCULATION_not_equal":
+        return <CustomSelect name={field.name} options={questionTypes} sx={{ minWidth: 200 }} />
+      case "TEXT_FIELD_TEXT_startWith":
+      case "TEXT_FIELD_TEXT_endWith":
+        return <CustomTextField name={field.name} label="" type="string" />
+      case "TEXT_FIELD_DATE_DATE_beforeDate":
+      case "TEXT_FIELD_DATE_QUESTION_afterDate":
         return (
-          <FormControl>
-            <Select
-              value={value}
-              label="calculation"
-              sx={{
-                minWidth: { md: 200 },
-              }}
-              onChange={(e) => onChange(e.target.value)}
-            >
-              {calculationTypes.map((type) => (
-                <MenuItem key={type.value} value={type.value}>
-                  {type.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        )
+            <Controller
+              name={field.name}
+              control={control}
+              render={({ field: { onChange, value }, fieldState: { error } }) => (
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  sx={{
+                    "& .rmdp-wrapper.rmdp-border": {
+                      borderRadius: "20px",
+                    },
+                  }}
+                >
+                  <DatePicker
+                    shadow={false}
+                    calendar={persian}
+                    locale={persian_fa}
+                    value={value}
+                    onChange={(e: any) => onChange(e)}
+                    className={"rmdp-mobile"}
+                    zIndex={9999}
+                    inputClass={`h-[50px] px-4 border-[1px] w-full border-neutral-300 rounded-xl text-left p-1 ${error ? "border-red-500" : ""}`}
+                    highlightToday
+                    portal
+                  />
+                </Box>
+              )}
+            />
+          )
+
+        case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle":
+            case "MULTIPLE_CHOICE_OPTION_#lessThanMultiChoiceSingle":
+            case "MULTIPLE_CHOICE_OPTION_#equalMultiChoiceSingle":
+            case "MULTIPLE_CHOICE_OPTION_!#equalMultiChoiceSingle":
+        return <CustomSelect name={field.name} options={questionTypes} sx={{ minWidth: 200 }} />
+
+      case "MULTIPLE_CHOICE_CALCULATION_!#lessThanMultiChoiceSingle":
+      case "MULTIPLE_CHOICE_CALCULATION_#lessThanMultiChoiceSingle":
+      case "MULTIPLE_CHOICE_CALCULATION_#equalMultiChoiceSingle":
+      case "MULTIPLE_CHOICE_CALCULATION_!#equalMultiChoiceSingle":
+        return <CustomSelect name={field.name} options={calculationTypes} sx={{ minWidth: 200 }} />
 
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_containAny":
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_not_containAny":
@@ -327,170 +320,70 @@ export default function DependentSelectForm() {
                 label: options[key][1],
               })
             })
-            return (
-              <CustomSelect
-                value={value || ""}
-                onChange={(e) => onChange(e.target.value as string)}
-                options={optionsList}
-                sx={{ minWidth: 200 }}
-              />
-            )
+            return <CustomSelect name={field.name} options={optionsList} sx={{ minWidth: 200 }} />
           }
         })
 
-      case "TEXT_FIELD_TEXT_startWith":
-      case "TEXT_FIELD_TEXT_endWith":
-        return <TextField label="" type="string" value={value} onChange={(e) => onChange(e.target.value)} />
-
       case "TEXT_FIELD_TEXT_containAny":
       case "TEXT_FIELD_TEXT_not_containAny":
-        return <>eek;eugf</>
+        return <CustomTextField name={field.name} label="" type="string" />
 
       case "TEXT_FIELD_VALUE_lenEqualText":
       case "TEXT_FIELD_VALUE_lenGraterThan":
       case "TEXT_FIELD_VALUE_lenLessThanText":
-        return <TextField label="" type="number" value={value} onChange={(e) => onChange(e.target.value)} />
-
-      case "TEXT_FIELD_DATE_DATE_beforeDate":
-      case "TEXT_FIELD_DATE_QUESTION_afterDate":
-        return (
-          <>
-            <Box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              sx={{
-                "& .rmdp-wrapper.rmdp-border": {
-                  borderRadius: "20px",
-                },
-              }}
-            >
-              <DatePicker
-                shadow={false}
-                calendar={persian}
-                locale={persian_fa}
-                value={calendarValue}
-                // onChange={(e: any) => setCalendarValue(e)}
-                onChange={(e: any) => onChange(e as string)}
-                className={"rmdp-mobile"}
-                zIndex={9999}
-                inputClass="h-[50px] px-4 border-[1px] w-full border-neutral-300 rounded-xl text-left p-1"
-                highlightToday
-                portal
-              />
-            </Box>
-          </>
-        )
+        return <CustomTextField name={field.name} label="" type="number" />
 
       case "SPECTRAL_VALUE_greater":
       case "SPECTRAL_VALUE_less":
       case "SPECTRAL_VALUE_greaterEqual":
       case "SPECTRAL_VALUE_lessEqual":
       case "SPECTRAL_VALUE_equal":
-        return <TextField label="" type="number" value={value} onChange={(e) => onChange(e.target.value)} />
+        return <CustomTextField name={field.name} label="" type="number" />
 
       case "SPECTRAL_QUESTION_greater":
       case "SPECTRAL_QUESTION_less":
       case "SPECTRAL_QUESTION_greaterEqual":
       case "SPECTRAL_QUESTION_lessEqual":
       case "SPECTRAL_QUESTION_equal":
-        return (
-          <CustomSelect
-            value={value || ""}
-            onChange={(e: any) => {
-              onChange(e.target.value?.split("*")[1])
-            }}
-            options={questionTypes}
-            sx={{ minWidth: 200 }}
-          />
-        )
+        return <CustomSelect name={field.name} options={questionTypes} sx={{ minWidth: 200 }} />
 
       case "SPECTRAL_CALCULATION_greater":
       case "SPECTRAL_CALCULATION_less":
       case "SPECTRAL_CALCULATION_greaterEqual":
       case "SPECTRAL_CALCULATION_lessEqual":
       case "SPECTRAL_CALCULATION_equal":
-        return (
-          <CustomSelect
-            value={value || ""}
-            onChange={(e: any) => {
-              onChange(e.target.value?.split("*")[1])
-            }}
-            options={calculationTypes}
-            sx={{ minWidth: 200 }}
-          />
-        )
+        return <CustomSelect name={field.name} options={calculationTypes} sx={{ minWidth: 200 }} />
 
       case "SPECTRAL_DOMAIN_VALUE_greater":
       case "SPECTRAL_DOMAIN_VALUE_less":
-        return <TextField label="" type="number" value={value} onChange={(e) => onChange(e.target.value)} />
+        return <CustomTextField name={field.name} label="" type="number" />
 
       case "CALCULATION_VALUE_greater":
       case "CALCULATION_VALUE_less":
       case "CALCULATION_VALUE_greaterEqual":
       case "CALCULATION_VALUE_lessEqual":
       case "CALCULATION_VALUE_equal":
-        return <TextField label="" type="number" value={value} onChange={(e) => onChange(e.target.value)} />
+        return <CustomTextField name={field.name} label="" type="number" />
 
       case "CALCULATION_QUESTION_greater":
       case "CALCULATION_QUESTION_less":
       case "CALCULATION_QUESTION_greaterEqual":
       case "CALCULATION_QUESTION_lessEqual":
       case "CALCULATION_QUESTION_equal":
-        return (
-          <FormControl sx={{ minWidth: 200 }}>
-            <Select
-              value={value}
-              label=""
-              sx={{
-                minWidth: { md: 200 },
-              }}
-              onChange={(e) => onChange(e.target.value)}
-            >
-              {questionTypes.map((type) => (
-                <MenuItem
-                  key={type.value}
-                  value={type.value}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "end",
-                  }}
-                >
-                  {type.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        )
+        return <CustomSelect name={field.name} options={questionTypes} sx={{ minWidth: 200 }} />
 
       case "CALCULATION_CALCULATION_greater":
       case "CALCULATION_CALCULATION_less":
       case "CALCULATION_CALCULATION_greaterEqual":
       case "CALCULATION_CALCULATION_lessEqual":
       case "CALCULATION_CALCULATION_equal":
-        return (
-          <FormControl>
-            <Select
-              value={value}
-              label="calculation"
-              sx={{
-                minWidth: { md: 200 },
-              }}
-              onChange={(e) => onChange(e.target.value)}
-            >
-              {calculationTypes.map((type) => (
-                <MenuItem key={type.value} value={type.value}>
-                  {type.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        )
+        return <CustomSelect name={field.name} options={calculationTypes} sx={{ minWidth: 200 }} />
 
       default:
-        return <TextField label="" value={value} disabled onChange={(e) => onChange(e.target.value)} />
+        return <CustomTextField name={field.name} label="" disabled />
     }
   }
+
 
   const onSubmit = (data: FormData) => {
     console.log("Submitted data:", data)
@@ -506,158 +399,120 @@ export default function DependentSelectForm() {
       >
         شرط
       </Typography>
-
+      <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
         {conditions.map((condition, index) => (
           <Box key={condition.id} sx={{ mb: 2, width: "100%" }}>
-            <Controller
-              name={`conditions.${index}.subConditions`}
-              control={control}
-              render={({ field }) => (
-                <>
-                  {field.value.map((subCondition, subIndex) => (
-                    <Box key={subCondition.id} sx={{ ml: 4, mt: 2 }}>
-                      <Box sx={{ mb: 2, display: "flex", flexDirection: "row" }}>
-                        <Box sx={{ display: "flex", alignItems: "center" }}>
-                          {subIndex === 0 && (
-                            <Typography sx={{ color: "#393939", fontSize: "14px", width: 90 }}>اگر</Typography>
-                          )}
-                          {subIndex > 0 && (
-                            <CustomSelect
-                              value={subCondition.logicalOperator || ""}
-                              onChange={(e) => {
-                                const newValue = [...field.value]
-                                newValue[subIndex].logicalOperator = e.target.value as string
-                                field.onChange(newValue)
-                              }}
-                              options={[
-                                { value: "AND", label: "و" },
-                                { value: "OR", label: "یا" },
-                              ]}
-                              sx={{ minWidth: 78 }}
-                            />
-                          )}
-                        </Box>
-                        <Box rowGap={3} columnGap={2} display="flex">
-                          <FormControl sx={{ minWidth: 200 }}>
-                            <CustomSelect
-                              value={subCondition.questionType}
-                              onChange={(e) => {
-                                const newValue = [...field.value]
-                                newValue[subIndex].questionType = e.target.value as string
-                                field.onChange(newValue)
-                              }}
-                              options={questionTypes}
-                              sx={{ minWidth: 200 }}
-                            />
-                          </FormControl>
-                          <FormControl sx={{ minWidth: 200 }}>
-                            <CustomSelect
-                              value={subCondition.operatorType}
-                              onChange={(e) => {
-                                const newValue = [...field.value]
-                                newValue[subIndex].operatorType = e.target.value as string
-                                field.onChange(newValue)
-                              }}
-                              disabled={!subCondition.questionType}
-                              options={getQuestion(subCondition.questionType)}
-                              sx={{ minWidth: 200 }}
-                            />
-                          </FormControl>
-                          <FormControl sx={{ minWidth: 200 }}>
-                            <CustomSelect
-                              value={subCondition.conditionType}
-                              onChange={(e) => {
-                                const newValue = [...field.value]
-                                newValue[subIndex].conditionType = e.target.value as string
-                                field.onChange(newValue)
-                              }}
-                              disabled={!subCondition.operatorType}
-                              options={getCondition(subCondition.questionType, subCondition.operatorType)}
-                              sx={{ minWidth: 200 }}
-                            />
-                          </FormControl>
-                          {getInput(
-                            subCondition.questionType,
-                            subCondition.operatorType,
-                            subCondition.conditionType,
-                            subCondition.value,
-                            (value) => {
-                              const newValue = [...field.value]
-                              newValue[subIndex].value = value
-                              field.onChange(newValue)
-                            },
-                          )}
-                          <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
+             {condition.subConditions.map((subCondition, subIndex) => {
+                const currentValues = watchedValues?.conditions?.[index]?.subConditions?.[subIndex] || {}
+                return (
+                  <Box key={subCondition.id} sx={{ ml: 4, mt: 2 }}>
+                    <Box sx={{ mb: 2, display: "flex", flexDirection: "row" }}>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        {subIndex === 0 && (
+                          <Typography sx={{ color: "#393939", fontSize: "14px", width: 90 }}>اگر</Typography>
+                        )}
+                        {subIndex > 0 && (
+                          <CustomSelect
+                            name={`conditions.${index}.subConditions.${subIndex}.logicalOperator`}
+                            options={[
+                              { value: "&&", label: "و" },
+                              { value: "||", label: "یا" },
+                            ]}
+                            sx={{ minWidth: 78 }}
+                          />
+                        )}
+                      </Box>
+                      <Box rowGap={3} columnGap={2} display="flex">
+                        <CustomSelect
+                          name={`conditions.${index}.subConditions.${subIndex}.questionType`}
+                          options={questionTypes}
+                          sx={{ minWidth: 200 }}
+                          
+                        />
+                        <CustomSelect
+                          name={`conditions.${index}.subConditions.${subIndex}.operatorType`}
+                          options={getQuestion(currentValues.questionType, currentValues)}
+                          sx={{ minWidth: 200 }}
+                          disabled={!Boolean(currentValues.questionType)}
+                        />
+                        <CustomSelect
+                          name={`conditions.${index}.subConditions.${subIndex}.conditionType`}
+                          options={getCondition(currentValues.questionType, currentValues.operatorType, currentValues)}
+                          sx={{ minWidth: 200 }}
+                          disabled={!Boolean(currentValues.operatorType)}
+                        />
+                        {getInput(currentValues.questionType, currentValues.operatorType, currentValues.conditionType, {
+                          name: `conditions.${index}.subConditions.${subIndex}.value`,
+                        })}
+                        <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
+                          <IconButton
+                            onClick={() => {
+                              const newSubCondition = {
+                                logicalOperator: "",
+                                questionType: "",
+                                operatorType: "",
+                                conditionType: "",
+                                value: "",
+                                id: "",
+                              }
+                              const newConditions = [...conditions]
+                              newConditions[index].subConditions.splice(subIndex + 1, 0, newSubCondition)
+                              appendCondition(newConditions)
+                            }}
+                            sx={{
+                              width: "52px",
+                              height: "52px",
+                              bgcolor: "#1758BA0D",
+                              borderRadius: "10px",
+                              border: "1px solid #1758BA",
+                            }}
+                          >
+                            <Image src={PlusIcon || "/placeholder.svg"} alt="" width={22} height={22} />
+                          </IconButton>
+                          {subIndex !== 0 && (
                             <IconButton
                               onClick={() => {
-                                const newValue = [...field.value]
-                                newValue.splice(subIndex + 1, 0, {
-                                  logicalOperator: "",
-                                  questionType: "",
-                                  operatorType: "",
-                                  conditionType: "",
-                                  value: "",
-                                  id: "",
-                                })
-                                field.onChange(newValue)
+                                const newConditions = [...conditions]
+                                newConditions[index].subConditions.splice(subIndex, 1)
+                                appendCondition(newConditions)
                               }}
                               sx={{
                                 width: "52px",
                                 height: "52px",
-                                bgcolor: "#1758BA0D",
+                                bgcolor: "#FA4D560D",
                                 borderRadius: "10px",
-                                border: "1px solid #1758BA",
+                                border: "1px solid #FA4D56",
+                                "&: hover": {
+                                  bgcolor: "#FA4D560D",
+                                },
                               }}
                             >
-                              <Image src={PlusIcon || "/placeholder.svg"} alt="" width={22} height={22} />
+                              <Image src={TrashIcon || "/placeholder.svg"} alt="" width={24} height={24} />
                             </IconButton>
-                            {subIndex !== 0 && (
-                              <IconButton
-                                onClick={() => {
-                                  const newValue = [...field.value]
-                                  newValue.splice(subIndex, 1)
-                                  field.onChange(newValue)
-                                }}
-                                sx={{
-                                  width: "52px",
-                                  height: "52px",
-                                  bgcolor: "#FA4D560D",
-                                  borderRadius: "10px",
-                                  border: "1px solid #FA4D56",
-                                  "&: hover": {
-                                    bgcolor: "#FA4D560D",
-                                  },
-                                }}
-                              >
-                                <Image src={TrashIcon || "/placeholder.svg"} alt="" width={24} height={24} />
-                              </IconButton>
-                            )}
-                          </Box>
+                          )}
                         </Box>
                       </Box>
                     </Box>
-                  ))}
-                </>
-              )}
-            />
+                  </Box>
+                )
+              })}
             <Box sx={{ mt: 2, ml: 4, display: "flex", alignItems: "center", gap: 2 }}>
               <Typography sx={{ color: "#393939", fontSize: "14px" }}>:برو به</Typography>
-              <FormControl sx={{ minWidth: 200, ml: 5 }}>
-                <Controller
+
+               <CustomSelect
                   name={`conditions.${index}.returnQuestionId`}
-                  control={control}
-                  render={({ field }) => <CustomSelect {...field} options={questionGoTo} sx={{ minWidth: 200 }} />}
+                  options={questionGoTo}
+                  sx={{ minWidth: 200, ml: 5 }}
                 />
-              </FormControl>
               <Typography sx={{ color: "#393939", fontSize: "14px", mr: 9.5 }}>در غیر اینصورت برو به:</Typography>
-              <FormControl sx={{ minWidth: 410 }}>
-                <Controller
+            
+              <CustomSelect
                   name={`conditions.${index}.elseQuestionId`}
-                  control={control}
-                  render={({ field }) => <CustomSelect {...field} options={questionGoTo} sx={{ minWidth: 200 }} />}
+                  options={questionGoTo}
+                  sx={{ minWidth: 410 }}
                 />
-              </FormControl>
+
               <IconButton
                 onClick={() => removeCondition(index)}
                 sx={{
@@ -750,6 +605,7 @@ export default function DependentSelectForm() {
           </Button>
         </Box>
       </form>
+      </FormProvider>
     </Box>
   )
 }
