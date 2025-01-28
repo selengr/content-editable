@@ -37,20 +37,20 @@ import "react-multi-date-picker/styles/layouts/mobile.css";
 
 export default function DependentSelectForm() {
   const [calendarValue, setCalendarValue] = useState(new Date());
-  const [conditions, setConditions] = useState<Condition[]>([
-    {
-      subConditions: [{
-        logicalOperator: null,
-        questionType: "",
-        operatorType: "",
-        conditionType: "",
-        value: "",
-        id: ""
-      }],
-      elseQuestionId : "",
-      returnQuestionId : ""
+  const { control, handleSubmit } = useForm<FormData>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      conditions: [
+        {
+          subConditions: [
+            { logicalOperator: undefined, questionType: "", operatorType: "", conditionType: "", value: "" },
+          ],
+          elseQuestionId: "",
+          returnQuestionId: "",
+        },
+      ],
     },
-  ])
+  })
 
   const addCondition = () => {
     setConditions((prevConditions) => [
