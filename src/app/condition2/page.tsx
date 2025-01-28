@@ -31,8 +31,8 @@ const SubConditionSchema = z.object({
 
 const ConditionSchema = z.object({
   subConditions: z.array(SubConditionSchema),
-  elseQuestionId: z.string().min(1, { message: "اين فيلد الزامي است" }),
-  returnQuestionId: z.string(),
+  returnQuestionId: z.string().min(1, { message: "اين فيلد الزامي است" }),
+  elseQuestionId: z.string(),
 })
 
 const FormSchema = z.object({
@@ -42,11 +42,6 @@ const FormSchema = z.object({
 type FormData = z.infer<typeof FormSchema>
 
 
-
-// const questionTypes = JSONData_First.dataList.map((item) => ({
-//   value: `${item.extMap.QUESTION_TYPE || item.elementStr}*${item.extMap.UNIC_NAME || ""}`,
-//   label: item.caption,
-// }))
 
 export const questionTypes: SelectOption[] = JSONData_First.dataList.map((item) => {
     const isCalculation = item.elementStr === "CALCULATION"
@@ -126,8 +121,6 @@ export default function DependentSelectForm() {
   const watchedValues = useWatch({ control })
 
   const getQuestion = (type: string, values : any) => {
-    console.log("value1", values)
-    console.log("value1 bool", Boolean(values.questionType.length > 0))
     console.log(type.split("*")[0])
     switch (type.split("*")[0]) {
       case "MULTIPLE_CHOICE":
@@ -169,7 +162,6 @@ export default function DependentSelectForm() {
   }
 
   const getCondition = (type: string, operator: string, values: any) => {
-    console.log("value2", values)
     const combinedKey = `${type.split("*")[0]}_${operator}`
     switch (combinedKey) {
       case "MULTIPLE_CHOICE_VALUE":
@@ -184,56 +176,58 @@ export default function DependentSelectForm() {
         ]
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION":
         return [
-          { value: "containAny", label: "شامل شدن" },
-          { value: "not_containAny", label: "شامل نشدن" },
-          { value: "equal", label: "برابر  با" },
-          { value: "not_equal", label: "نابرابر با" },
+          { value: "#containMultiChoiceMulti", label: "شامل شدن" },
+          { value: "!#containMultiChoiceMulti", label: "شامل نشدن" },
+          { value: "#equalThanMultiChoiceMulti", label: "برابر  با" },
+          { value: "!#equalThanMultiChoiceMulti", label: "نابرابر با" },
         ]
       case "TEXT_FIELD_VALUE":
       case "TEXT_FIELD_TEXT":
         return [
-          { value: "startWith", label: "شروع شدن با " },
-          { value: "endWith", label: "پایان یافتن با" },
-          { value: "containAny", label: "شامل شدن" },
-          { value: "not_containAny", label: "شامل نشدن" },
-          { value: "lenEqualText", label: "طول متن برابر با " },
-          { value: "lenGraterThan", label: "طول متن بیشتر از" },
-          { value: "lenLessThanText", label: " طول متن کمتر از" },
+          { value: "#startWithText", label: "شروع شدن با " },
+          { value: "#endWithText", label: "پایان یافتن با" },
+          { value: "#containAnyText", label: "شامل شدن" },
+          { value: "!#containAnyText", label: "شامل نشدن" },
+          { value: "#lenEqualText", label: "طول متن برابر با " },
+          { value: "#lenGraterThanText", label: "طول متن بیشتر از" },
+          { value: "!#lenGraterThanText", label: " طول متن کمتر از" },
         ]
 
-      case "TEXT_FIELD_DATE_DATE":
-      case "TEXT_FIELD_DATE_QUESTION":
-        return [
-          { value: "beforeDate", label: "قبل از" },
-          { value: "afterDate", label: "بعد از" },
-        ]
 
       case "SPECTRAL_VALUE":
       case "SPECTRAL_QUESTION":
       case "SPECTRAL_CALCULATION":
         return [
-          { value: "greater", label: "بزرگتر از" },
-          { value: "less", label: "کوچکتر  از" },
-          { value: "greaterEqual", label: "بزرگتر مساوی" },
-          { value: "lessEqual", label: " کوچکتر مساوی" },
-          { value: "equal", label: "برابر  با" },
+          { value: "#greaterThanSpectral", label: "بزرگتر از" },
+          { value: "#greaterThanSpectral", label: "کوچکتر  از" },
+          { value: "#greaterEqualThanSpectralSingle", label: "بزرگتر مساوی" },
+          { value: "!#greaterEqualThanSpectralSingle", label: " کوچکتر مساوی" },
+          { value: "#equalThanSpectralSingle", label: "برابر  با" },
         ]
       case "SPECTRAL_DOMAIN_VALUE":
         return [
-          { value: "greater", label: "بزرگتر از" },
-          { value: "less", label: "کوچکتر  از" },
+          { value: "#lessThanSpectralDouble", label: "کوچکتر  از" },
+          { value: "#greaterThanSpectralDouble", label: "بزرگتر از" },
         ]
+
+
+      case "TEXT_FIELD_DATE_DATE":
+        case "TEXT_FIELD_DATE_QUESTION":
+          return [
+            { value: "#afterDate", label: "بعد از" },
+            { value: "#beforeDate", label: "قبل از" },
+          ]
 
       case "CALCULATION_VALUE":
       case "CALCULATION_QUESTION":
       case "CALCULATION_CALCULATION":
         return [
-          { value: "greater", label: "بزرگتر از" },
-          { value: "less", label: "کوچکتر از" },
-          { value: "greaterEqual", label: "بزرگتر مساوی" },
-          { value: "lessEqual", label: " کوچکتر مساوی" },
-          { value: "equal", label: "برابر  با" },
-          { value: "not_equal", label: "نابرابر با" },
+          { value: "#greaterThanNumber", label: "بزرگتر از" },
+          { value: "!#greaterThanNumber", label: "کوچکتر از" },
+          { value: "#greaterEqualThanNumber", label: "بزرگتر مساوی" },
+          { value: "!#greaterEqualThanNumber", label: " کوچکتر مساوی" },
+          { value: "#equalThanNumber", label: "برابر  با" },
+          { value: "!#equalThanNumber", label: "نابرابر با" },
         ]
 
       case "MULTIPLE_CHOICE":
@@ -255,44 +249,6 @@ export default function DependentSelectForm() {
             case "MULTIPLE_CHOICE_VALUE_#equalMultiChoiceSingle":
             case "MULTIPLE_CHOICE_VALUE_!#equalMultiChoiceSingle":
 
-        return <CustomSelect name={field.name} options={questionTypes} sx={{ minWidth: 200 }} />
-      case "TEXT_FIELD_TEXT_startWith":
-      case "TEXT_FIELD_TEXT_endWith":
-        return <CustomTextField name={field.name} label="" type="string" />
-      case "TEXT_FIELD_DATE_DATE_beforeDate":
-      case "TEXT_FIELD_DATE_QUESTION_afterDate":
-        return (
-            <Controller
-              name={field.name}
-              control={control}
-              render={({ field: { onChange, value }, fieldState: { error } }) => (
-                <Box
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  sx={{
-                    "& .rmdp-wrapper.rmdp-border": {
-                      borderRadius: "20px",
-                    },
-                  }}
-                >
-                  <DatePicker
-                    shadow={false}
-                    calendar={persian}
-                    locale={persian_fa}
-                    value={value}
-                    onChange={(e: any) => onChange(e)}
-                    className={"rmdp-mobile"}
-                    zIndex={9999}
-                    inputClass={`h-[50px] px-4 border-[1px] w-full border-neutral-300 rounded-xl text-left p-1 ${error ? "border-red-500" : ""}`}
-                    highlightToday
-                    portal
-                  />
-                </Box>
-              )}
-            />
-          )
-
         case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle":
             case "MULTIPLE_CHOICE_OPTION_#lessThanMultiChoiceSingle":
             case "MULTIPLE_CHOICE_OPTION_#equalMultiChoiceSingle":
@@ -305,10 +261,11 @@ export default function DependentSelectForm() {
       case "MULTIPLE_CHOICE_CALCULATION_!#equalMultiChoiceSingle":
         return <CustomSelect name={field.name} options={calculationTypes} sx={{ minWidth: 200 }} />
 
-      case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_containAny":
-      case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_not_containAny":
-      case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_equal":
-      case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_not_equal":
+
+      case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_#containMultiChoiceMulti":
+      case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_!#containMultiChoiceMulti":
+      case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_!#equalThanMultiChoiceMulti":
+      case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_#equalThanMultiChoiceMulti":
         return JSONData_First.dataList.map((item) => {
           if (item?.extMap?.UNIC_NAME === type.split("*")[1]) {
             const options = item?.extMap?.OPTIONS
@@ -324,60 +281,108 @@ export default function DependentSelectForm() {
           }
         })
 
-      case "TEXT_FIELD_TEXT_containAny":
-      case "TEXT_FIELD_TEXT_not_containAny":
-        return <CustomTextField name={field.name} label="" type="string" />
+        return <CustomSelect name={field.name} options={questionTypes} sx={{ minWidth: 200 }} />
+        case "TEXT_FIELD_TEXT_#startWithText":
+        case "TEXT_FIELD_TEXT_#endWithText":
+          return <CustomTextField name={field.name} label="" type="string" />
+      
+      
+          case "TEXT_FIELD_TEXT_#containAnyText":
+            case "TEXT_FIELD_TEXT_!#containAnyText":
+              return <CustomTextField name={field.name} label="" type="string" />
+      
+            case "TEXT_FIELD_VALUE_#lenEqualText":
+            case "TEXT_FIELD_VALUE_#lenGraterThanText":
+            case "TEXT_FIELD_VALUE_!#lenGraterThanText":
+              return <CustomTextField name={field.name} label="" type="number" />
+            
 
-      case "TEXT_FIELD_VALUE_lenEqualText":
-      case "TEXT_FIELD_VALUE_lenGraterThan":
-      case "TEXT_FIELD_VALUE_lenLessThanText":
+      case "SPECTRAL_VALUE_#greaterThanSpectral":
+      case "SPECTRAL_VALUE_!#greaterThanSpectral":
+      case "SPECTRAL_VALUE_#equalThanSpectralSingle":
+      case "SPECTRAL_VALUE_#greaterEqualThanSpectralSingle":
+      case "SPECTRAL_VALUE_!#greaterEqualThanSpectralSingle":
         return <CustomTextField name={field.name} label="" type="number" />
 
-      case "SPECTRAL_VALUE_greater":
-      case "SPECTRAL_VALUE_less":
-      case "SPECTRAL_VALUE_greaterEqual":
-      case "SPECTRAL_VALUE_lessEqual":
-      case "SPECTRAL_VALUE_equal":
-        return <CustomTextField name={field.name} label="" type="number" />
 
-      case "SPECTRAL_QUESTION_greater":
-      case "SPECTRAL_QUESTION_less":
-      case "SPECTRAL_QUESTION_greaterEqual":
-      case "SPECTRAL_QUESTION_lessEqual":
-      case "SPECTRAL_QUESTION_equal":
+        case "SPECTRAL_QUESTION_#greaterThanSpectral":
+        case "SPECTRAL_QUESTION_!#greaterThanSpectral":
+        case "SPECTRAL_QUESTION_#equalThanSpectralSingle":
+        case "SPECTRAL_QUESTION_#greaterEqualThanSpectralSingle":
+        case "SPECTRAL_QUESTION_!#greaterEqualThanSpectralSingle":
         return <CustomSelect name={field.name} options={questionTypes} sx={{ minWidth: 200 }} />
 
-      case "SPECTRAL_CALCULATION_greater":
-      case "SPECTRAL_CALCULATION_less":
-      case "SPECTRAL_CALCULATION_greaterEqual":
-      case "SPECTRAL_CALCULATION_lessEqual":
-      case "SPECTRAL_CALCULATION_equal":
+        case "SPECTRAL_CALCULATION_#greaterThanSpectral":
+        case "SPECTRAL_CALCULATION_!#greaterThanSpectral":
+        case "SPECTRAL_CALCULATION_#equalThanSpectralSingle":
+        case "SPECTRAL_CALCULATION_#greaterEqualThanSpectralSingle":
+        case "SPECTRAL_CALCULATION_!#greaterEqualThanSpectralSingle":
+
         return <CustomSelect name={field.name} options={calculationTypes} sx={{ minWidth: 200 }} />
 
-      case "SPECTRAL_DOMAIN_VALUE_greater":
-      case "SPECTRAL_DOMAIN_VALUE_less":
+      case "SPECTRAL_DOMAIN_VALUE_#lessThanSpectralDouble":
+      case "SPECTRAL_DOMAIN_VALUE_#greaterThanSpectralDouble":
+        return <CustomTextField name={field.name} label="" type="number" />
+           
+        case "TEXT_FIELD_DATE_DATE_#beforeDate":
+          case "TEXT_FIELD_DATE_QUESTION_#afterDate":
+            return (
+                <Controller
+                  name={field.name}
+                  control={control}
+                  render={({ field: { onChange, value }, fieldState: { error } }) => (
+                    <Box
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                      sx={{
+                        "& .rmdp-wrapper.rmdp-border": {
+                          borderRadius: "20px",
+                        },
+                      }}
+                    >
+                      <DatePicker
+                        shadow={false}
+                        calendar={persian}
+                        locale={persian_fa}
+                        value={value}
+                        onChange={(e: any) => onChange(e)}
+                        className={"rmdp-mobile"}
+                        zIndex={9999}
+                        inputClass={`h-[50px] px-4 border-[1px] w-full border-neutral-300 rounded-xl text-left p-1 ${error ? "border-red-500" : ""}`}
+                        highlightToday
+                        portal
+                      />
+                    </Box>
+                  )}
+                />
+              )
+
+      case "CALCULATION_VALUE_#equalThanNumber":
+      case "CALCULATION_VALUE_!#equalThanNumber":
+      case "CALCULATION_VALUE_#greaterThanNumber":
+      case "CALCULATION_VALUE_!#greaterThanNumber":
+      case "CALCULATION_VALUE_#greaterEqualThanNumber":
+      case "CALCULATION_VALUE_!#greaterEqualThanNumber":
         return <CustomTextField name={field.name} label="" type="number" />
 
-      case "CALCULATION_VALUE_greater":
-      case "CALCULATION_VALUE_less":
-      case "CALCULATION_VALUE_greaterEqual":
-      case "CALCULATION_VALUE_lessEqual":
-      case "CALCULATION_VALUE_equal":
-        return <CustomTextField name={field.name} label="" type="number" />
 
-      case "CALCULATION_QUESTION_greater":
-      case "CALCULATION_QUESTION_less":
-      case "CALCULATION_QUESTION_greaterEqual":
-      case "CALCULATION_QUESTION_lessEqual":
-      case "CALCULATION_QUESTION_equal":
+      case "CALCULATION_QUESTION_#equalThanNumber":
+      case "CALCULATION_QUESTION_!#equalThanNumber":
+      case "CALCULATION_QUESTION_#greaterThanNumber":
+      case "CALCULATION_QUESTION_!#greaterThanNumber":
+      case "CALCULATION_QUESTION_#greaterEqualThanNumber":
+      case "CALCULATION_QUESTION_!#greaterEqualThanNumber":
         return <CustomSelect name={field.name} options={questionTypes} sx={{ minWidth: 200 }} />
 
-      case "CALCULATION_CALCULATION_greater":
-      case "CALCULATION_CALCULATION_less":
-      case "CALCULATION_CALCULATION_greaterEqual":
-      case "CALCULATION_CALCULATION_lessEqual":
-      case "CALCULATION_CALCULATION_equal":
-        return <CustomSelect name={field.name} options={calculationTypes} sx={{ minWidth: 200 }} />
+      
+      case "CALCULATION_CALCULATION_#equalThanNumber":
+      case "CALCULATION_CALCULATION_!#equalThanNumber":
+      case "CALCULATION_CALCULATION_#greaterThanNumber":
+      case "CALCULATION_CALCULATION_!#greaterThanNumber":
+      case "CALCULATION_CALCULATION_#greaterEqualThanNumber":
+      case "CALCULATION_CALCULATION_!#greaterEqualThanNumber":
+      return <CustomSelect name={field.name} options={calculationTypes} sx={{ minWidth: 200 }} />
 
       default:
         return <CustomTextField name={field.name} label="" disabled />
