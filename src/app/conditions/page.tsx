@@ -802,143 +802,219 @@ export default function DependentSelectForm() {
 
 
   return (
-    <Box sx={{ width: "100%", p: 3, display: "flex", flexDirection: "column", justifyContent: "center", direction: "ltr" }}>
-
-      <Typography variant="subtitle1" sx={{ display: "flex", justifyContent: "center", color: "#404040", fontWeight: 700 }}>شرط</Typography>
-
-      {conditions.map((condition, index) => (
-        <Box key={index} sx={{ mb: 2, width: "100%" }}>
-
-
-          {condition.subConditions.map((subCondition, subIndex) => (
-            <Box key={`${index}-${subIndex}`} sx={{ ml: 4, mt: 2 }}>
-              {renderConditionInputs(subCondition, index, subIndex)}
-            </Box>
-          ))}
-
-          {/* Go To Section */}
-          <Box sx={{ mt: 2, ml: 4, display: "flex", alignItems: "center", gap: 2 }}>
-            <Typography sx={{ color: "#393939", fontSize: "14px" }}>:برو به</Typography>
-            <FormControl sx={{ minWidth: 200, ml: 5 }}>
-              <CustomSelect
-                value={condition.returnQuestionId}
-                onChange={(e) => updateCondition(index, "returnQuestionId", e.target.value as string)}
-                options={questionGoTo}
-                sx={{ minWidth: 200 }}
-              />
-            </FormControl>
-
-            <Typography sx={{ color: "#393939", fontSize: "14px", mr: 9.5 }}>در غیر اینصورت برو به:</Typography>
-            <FormControl sx={{ minWidth: 410 }}>
-
-              
-                <CustomSelect
-                  value={condition.elseQuestionId}
-                  onChange={(e) => updateCondition(index, "elseQuestionId", e.target.value as string)}
-                  options={questionGoTo}
-                  sx={{ minWidth: 200 }}
+    <Box
+      sx={{ width: "100%", p: 3, display: "flex", flexDirection: "column", justifyContent: "center", direction: "ltr" }}
+    >
+      <Typography
+        variant="subtitle1"
+        sx={{ display: "flex", justifyContent: "center", color: "#404040", fontWeight: 700 }}
+      >
+        شرط
+      </Typography>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {conditionFields.map((condition, index) => (
+          <Box key={condition.id} sx={{ mb: 2, width: "100%" }}>
+            {condition.subConditions.map((subCondition, subIndex) => renderSubCondition(index, subIndex, subCondition))}
+            <Box sx={{ mt: 2, ml: 4, display: "flex", alignItems: "center", gap: 2 }}>
+              <Typography sx={{ color: "#393939", fontSize: "14px" }}>:برو به</Typography>
+              <FormControl sx={{ minWidth: 200, ml: 5 }}>
+                <Controller
+                  name={`conditions.${index}.returnQuestionId`}
+                  control={control}
+                  render={({ field }) => <CustomSelect {...field} options={questionGoTo} sx={{ minWidth: 200 }} />}
                 />
-
-            </FormControl>
-
-
-            <IconButton
-              onClick={() => removeCondition(index)}
-              sx={{
-                width: 113,
-                height: "52px",
-                bgcolor: "#FA4D560D",
-                borderRadius: "8px",
-                border: "1px solid #FA4D56",
-                '&: hover': {
+              </FormControl>
+              <Typography sx={{ color: "#393939", fontSize: "14px", mr: 9.5 }}>در غیر اینصورت برو به:</Typography>
+              <FormControl sx={{ minWidth: 410 }}>
+                <Controller
+                  name={`conditions.${index}.elseQuestionId`}
+                  control={control}
+                  render={({ field }) => <CustomSelect {...field} options={questionGoTo} sx={{ minWidth: 200 }} />}
+                />
+              </FormControl>
+              <IconButton
+                onClick={() => removeCondition(index)}
+                sx={{
+                  width: 113,
+                  height: "52px",
                   bgcolor: "#FA4D560D",
-                }
-              }}
-            >
-              <Typography sx={{ color: "#FA4D56", fontSize: "14px" }}>حذف این شرط</Typography>
-
-            </IconButton>
-
+                  borderRadius: "8px",
+                  border: "1px solid #FA4D56",
+                  "&:hover": {
+                    bgcolor: "#FA4D560D",
+                  },
+                }}
+              >
+                <Typography sx={{ color: "#FA4D56", fontSize: "14px" }}>حذف این شرط</Typography>
+              </IconButton>
+            </Box>
+            <CircleDivider />
           </Box>
-
-
-          <CircleDivider />
-        </Box>
-      ))}
-
-
-
-
-      <Button variant="outlined" onClick={addCondition}
-        sx={{
-          maxWidth: 155, ml: 10, bgcolor: "#1758BA", borderRadius: "8px",
-          height: 52, color: "white"
-        }}
-      >
-        افزودن شرط جدید
-      </Button>
-
-
-      <Box
-        display="flex"
-        gap={3}
-        width="100%"
-        marginBottom={2}
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <LoadingButton
-          type="button"
-          onClick={handleSubmit}
-          variant="contained"
-          sx={{
-            backgroundColor: "#1758BA",
-            borderRadius: "8px",
-            height: "52px",
-            "&.MuiButtonBase-root:hover": {
+        ))}
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+          <LoadingButton
+            type="submit"
+            variant="contained"
+            sx={{
               backgroundColor: "#1758BA",
-            },
-            minWidth: 113,
-          }}
-        >
-          <Typography
-            variant="body2"
-            component={"p"}
-            py={0.5}
-            sx={{ color: "#fff", fontWeight: 500 }}
+              borderRadius: "8px",
+              height: "52px",
+              "&.MuiButtonBase-root:hover": {
+                backgroundColor: "#1758BA",
+              },
+              minWidth: 113,
+            }}
           >
-            تایید
-          </Typography>
-        </LoadingButton>
-
-        <Button
-          type="button"
-          variant="outlined"
-          sx={{
-            height: "52px",
-            minWidth: 113,
-            borderRadius: "8px",
-            borderColor: "#1758BA",
-            background: "#FFF",
-          }}
-        >
-          <Typography
-            variant="body2"
-            component={"p"}
-            py={0.5}
-            color={"#1758BA"}
-            sx={{ fontWeight: 500 }}
-          >
-            انصراف
-          </Typography>
-        </Button>
-      </Box>
-
-
+            <Typography variant="body2" component="p" py={0.5} sx={{ color: "#fff", fontWeight: 500 }}>
+              تایید
+            </Typography>
+          </LoadingButton>
+        </Box>
+      </form>
     </Box>
   )
 }
+
+
+
+//   return (
+//     <Box sx={{ width: "100%", p: 3, display: "flex", flexDirection: "column", justifyContent: "center", direction: "ltr" }}>
+
+//       <Typography variant="subtitle1" sx={{ display: "flex", justifyContent: "center", color: "#404040", fontWeight: 700 }}>شرط</Typography>
+
+//       {conditions.map((condition, index) => (
+//         <Box key={index} sx={{ mb: 2, width: "100%" }}>
+
+
+//           {condition.subConditions.map((subCondition, subIndex) => (
+//             <Box key={`${index}-${subIndex}`} sx={{ ml: 4, mt: 2 }}>
+//               {renderConditionInputs(subCondition, index, subIndex)}
+//             </Box>
+//           ))}
+
+//           {/* Go To Section */}
+//           <Box sx={{ mt: 2, ml: 4, display: "flex", alignItems: "center", gap: 2 }}>
+//             <Typography sx={{ color: "#393939", fontSize: "14px" }}>:برو به</Typography>
+//             <FormControl sx={{ minWidth: 200, ml: 5 }}>
+//               <CustomSelect
+//                 value={condition.returnQuestionId}
+//                 onChange={(e) => updateCondition(index, "returnQuestionId", e.target.value as string)}
+//                 options={questionGoTo}
+//                 sx={{ minWidth: 200 }}
+//               />
+//             </FormControl>
+
+//             <Typography sx={{ color: "#393939", fontSize: "14px", mr: 9.5 }}>در غیر اینصورت برو به:</Typography>
+//             <FormControl sx={{ minWidth: 410 }}>
+
+              
+//                 <CustomSelect
+//                   value={condition.elseQuestionId}
+//                   onChange={(e) => updateCondition(index, "elseQuestionId", e.target.value as string)}
+//                   options={questionGoTo}
+//                   sx={{ minWidth: 200 }}
+//                 />
+
+//             </FormControl>
+
+
+//             <IconButton
+//               onClick={() => removeCondition(index)}
+//               sx={{
+//                 width: 113,
+//                 height: "52px",
+//                 bgcolor: "#FA4D560D",
+//                 borderRadius: "8px",
+//                 border: "1px solid #FA4D56",
+//                 '&: hover': {
+//                   bgcolor: "#FA4D560D",
+//                 }
+//               }}
+//             >
+//               <Typography sx={{ color: "#FA4D56", fontSize: "14px" }}>حذف این شرط</Typography>
+
+//             </IconButton>
+
+//           </Box>
+
+
+//           <CircleDivider />
+//         </Box>
+//       ))}
+
+
+
+
+//       <Button variant="outlined" onClick={addCondition}
+//         sx={{
+//           maxWidth: 155, ml: 10, bgcolor: "#1758BA", borderRadius: "8px",
+//           height: 52, color: "white"
+//         }}
+//       >
+//         افزودن شرط جدید
+//       </Button>
+
+
+//       <Box
+//         display="flex"
+//         gap={3}
+//         width="100%"
+//         marginBottom={2}
+//         sx={{
+//           display: "flex",
+//           justifyContent: "center",
+//         }}
+//       >
+//         <LoadingButton
+//           type="button"
+//           onClick={handleSubmit}
+//           variant="contained"
+//           sx={{
+//             backgroundColor: "#1758BA",
+//             borderRadius: "8px",
+//             height: "52px",
+//             "&.MuiButtonBase-root:hover": {
+//               backgroundColor: "#1758BA",
+//             },
+//             minWidth: 113,
+//           }}
+//         >
+//           <Typography
+//             variant="body2"
+//             component={"p"}
+//             py={0.5}
+//             sx={{ color: "#fff", fontWeight: 500 }}
+//           >
+//             تایید
+//           </Typography>
+//         </LoadingButton>
+
+//         <Button
+//           type="button"
+//           variant="outlined"
+//           sx={{
+//             height: "52px",
+//             minWidth: 113,
+//             borderRadius: "8px",
+//             borderColor: "#1758BA",
+//             background: "#FFF",
+//           }}
+//         >
+//           <Typography
+//             variant="body2"
+//             component={"p"}
+//             py={0.5}
+//             color={"#1758BA"}
+//             sx={{ fontWeight: 500 }}
+//           >
+//             انصراف
+//           </Typography>
+//         </Button>
+//       </Box>
+
+
+//     </Box>
+//   )
+// }
 
 
