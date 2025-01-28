@@ -83,98 +83,89 @@ export default function DependentSelectForm() {
 
 
 
-  const addCondition = () => {
-    setConditions((prevConditions) => [
-      ...prevConditions,
-      {
-        subConditions: [{
-          logicalOperator: "",
-          questionType: "",
-          operatorType: "",
-          conditionType: "",
-          value: "",
-          id: ""
-        }],
-        elseQuestionId : "",
-        returnQuestionId : ""
-      },
-    ])
-  }
+  // const addCondition = () => {
+  //   setConditions((prevConditions) => [
+  //     ...prevConditions,
+  //     {
+  //       subConditions: [{
+  //         logicalOperator: "",
+  //         questionType: "",
+  //         operatorType: "",
+  //         conditionType: "",
+  //         value: "",
+  //         id: ""
+  //       }],
+  //       elseQuestionId : "",
+  //       returnQuestionId : ""
+  //     },
+  //   ])
+  // }
 
-  const addSubCondition = (conditionIndex: number, subConditionIndex: number) => {
-    setConditions((prevConditions) => {
-      const newConditions = [...prevConditions];
+  // const addSubCondition = (conditionIndex: number, subConditionIndex: number) => {
+  //   setConditions((prevConditions) => {
+  //     const newConditions = [...prevConditions];
 
-      const newSubConditions = [
-        {
-          logicalOperator: "",
-          questionType: "",
-          operatorType: "",
-          conditionType: "",
-          value: "",
-          id: ""
-        },
-      ];
+  //     const newSubConditions = [
+  //       {
+  //         logicalOperator: "",
+  //         questionType: "",
+  //         operatorType: "",
+  //         conditionType: "",
+  //         value: "",
+  //         id: ""
+  //       },
+  //     ];
 
-      if (newConditions[conditionIndex]?.subConditions) {
-        newConditions[conditionIndex].subConditions.splice(subConditionIndex + 1, 0, ...newSubConditions);
-      }
+  //     if (newConditions[conditionIndex]?.subConditions) {
+  //       newConditions[conditionIndex].subConditions.splice(subConditionIndex + 1, 0, ...newSubConditions);
+  //     }
 
-      return newConditions;
-    });
-  };
+  //     return newConditions;
+  //   });
+  // };
 
-  const removeCondition = (index: number) => {
-    setConditions(conditions.filter((_, i) => i !== index))
-  }
+  // const removeCondition = (index: number) => {
+  //   setConditions(conditions.filter((_, i) => i !== index))
+  // }
 
-  const removeSubCondition = (conditionIndex: number, subIndex: number) => {
-    setConditions((prevConditions) => {
-      const newConditions = [...prevConditions]
-      newConditions[conditionIndex].subConditions.splice(subIndex, 1)
-      return newConditions
-    })
-  }
+  // const removeSubCondition = (conditionIndex: number, subIndex: number) => {
+  //   setConditions((prevConditions) => {
+  //     const newConditions = [...prevConditions]
+  //     newConditions[conditionIndex].subConditions.splice(subIndex, 1)
+  //     return newConditions
+  //   })
+  // }
 
-  const updateCondition = (index: number, field: keyof Condition, value: string) => {
-    setConditions(prevConditions => {
-      const newConditions = [...prevConditions];
-      newConditions[index] = { ...newConditions[index], [field]: value };
-
-      // if (field === 'questionType') {
-      //   newConditions[index].subConditions.operatorType = '';
-      //   newConditions[index].subConditions.conditionType = '';
-      //   newConditions[index].subConditions.value = '';
-      // } else if (field === 'operatorType') {
-      //   newConditions[index].subConditions.conditionType = '';
-      //   newConditions[index].subConditions.value = '';
-      // }
-      return newConditions;
-    });
-  }
+  // const updateCondition = (index: number, field: keyof Condition, value: string) => {
+  //   setConditions(prevConditions => {
+  //     const newConditions = [...prevConditions];
+  //     newConditions[index] = { ...newConditions[index], [field]: value };
+  //     return newConditions;
+  //   });
+  // }
 
 
-  const updateSubCondition = (conditionIndex: number, subIndex: number, field: keyof SubCondition, value: string) => {
-    console.log("value", value)
-    setConditions((prevConditions) => {
-      const newConditions = [...prevConditions]
-      const subCondition = { ...newConditions[conditionIndex].subConditions[subIndex] }
+  // const updateSubCondition = (conditionIndex: number, subIndex: number, field: keyof SubCondition, value: string) => {
+  //   console.log("value", value)
+  //   setConditions((prevConditions) => {
+  //     const newConditions = [...prevConditions]
+  //     const subCondition = { ...newConditions[conditionIndex].subConditions[subIndex] }
 
-      subCondition[field] = value
+  //     subCondition[field] = value
 
-      if (field === "questionType") {
-        subCondition.operatorType = ""
-        subCondition.conditionType = ""
-        subCondition.value = ""
-      } else if (field === "operatorType") {
-        subCondition.conditionType = ""
-        subCondition.value = ""
-      }
+  //     if (field === "questionType") {
+  //       subCondition.operatorType = ""
+  //       subCondition.conditionType = ""
+  //       subCondition.value = ""
+  //     } else if (field === "operatorType") {
+  //       subCondition.conditionType = ""
+  //       subCondition.value = ""
+  //     }
 
-      newConditions[conditionIndex].subConditions[subIndex] = subCondition
-      return newConditions
-    })
-  }
+  //     newConditions[conditionIndex].subConditions[subIndex] = subCondition
+  //     return newConditions
+  //   })
+  // }
 
 
   let data: any = JSONData_First.dataList
