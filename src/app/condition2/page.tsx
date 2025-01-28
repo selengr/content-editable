@@ -127,8 +127,8 @@ export default function DependentSelectForm() {
   const watchedValues = useWatch({ control })
 
   const getQuestion = (type: string, values : any) => {
-    console.log(type.split("*")[0])
-    switch (type.split("*")[0]) {
+    console.log(type)
+    switch (type?.split("*")[0]) {
       case "MULTIPLE_CHOICE":
         return [
           { value: "VALUE", label: "ارزش" },
@@ -168,7 +168,7 @@ export default function DependentSelectForm() {
   }
 
   const getCondition = (type: string, operator: string, values: any) => {
-    const combinedKey = `${type.split("*")[0]}_${operator}`
+    const combinedKey = `${type?.split("*")[0]}_${operator}`
     switch (combinedKey) {
       case "MULTIPLE_CHOICE_VALUE":
       case "MULTIPLE_CHOICE_QUESTION":
@@ -248,7 +248,7 @@ export default function DependentSelectForm() {
 
 
   const getInput = (type: string, operator: string, condition: string, field: any) => {
-    const combinedKey = `${type.split("*")[0]}_${operator}_${condition}`
+    const combinedKey = `${type?.split("*")[0]}_${operator}_${condition}`
     switch (combinedKey) {
         case "MULTIPLE_CHOICE_VALUE_!#lessThanMultiChoiceSingle":
             case "MULTIPLE_CHOICE_VALUE_#lessThanMultiChoiceSingle":
@@ -394,59 +394,6 @@ export default function DependentSelectForm() {
         return <CustomTextField name={field.name} label="" disabled />
     }
   }
-
-
-
-  const input = {
-    conditions: [
-        {
-            elseQuestionId: "",
-            returnQuestionId: "{#q_103}",
-            subConditions: [
-                {
-                    conditionType: "!#lessThanMultiChoiceSingle",
-                    id: "",
-                    logicalOperator: "",
-                    operatorType: "VALUE",
-                    questionType: "MULTIPLE_CHOICE*{#q_105}",
-                    value: "TEXT_FIELD*{#q_104}"
-                },
-                {
-                    conditionType: "!#lessThanMultiChoiceSingle",
-                    id: "",
-                    logicalOperator: "",
-                    operatorType: "VALUE",
-                    questionType: "MULTIPLE_CHOICE*{#q_105}",
-                    value: "TEXT_FIELD*{#q_104}"
-                }
-            ]
-        },
-        {
-            elseQuestionId: "",
-            returnQuestionId: "{#q_103}",
-            subConditions: [
-                {
-                    conditionType: "!#lessThanMultiChoiceSingle",
-                    id: "",
-                    logicalOperator: "",
-                    operatorType: "VALUE",
-                    questionType: "MULTIPLE_CHOICE*{#q_105}",
-                    value: "TEXT_FIELD*{#q_104}"
-                },
-                {
-                    conditionType: "!#lessThanMultiChoiceSingle",
-                    id: "",
-                    logicalOperator: "",
-                    operatorType: "VALUE",
-                    questionType: "MULTIPLE_CHOICE*{#q_105}",
-                    value: "TEXT_FIELD*{#q_104}"
-                }
-            ]
-        },
-
-    ]
-};
-
 
 
 
