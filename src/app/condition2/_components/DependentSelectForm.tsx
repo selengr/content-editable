@@ -7,7 +7,7 @@ import { LoadingButton } from "@mui/lab"
 import { useDependentSelectForm } from "../hooks/useDependentSelectForm"
 import { SubCondition } from "./SubCondition"
 import  CustomSelect  from "./custom-select"
-import { CircleDivider } from "./_components/circle-divider"
+import { CircleDivider } from "./circle-divider"
 import { questionGoTo } from "../utils/formUtils"
 
 export default function DependentSelectForm() {
@@ -33,9 +33,9 @@ export default function DependentSelectForm() {
         </Typography>
 
         {conditions.map((condition, index) => (
-          <Box key={condition.id} sx={{ mb: 2, width: "100%" }}>
+          <Box key={`${condition.id}-${index}-${Math.random()}`} sx={{ mb: 2, width: "100%" }}>
             {condition.subConditions.map((subCondition, subIndex) => (
-              <Box key={subCondition.id} sx={{ ml: 4, mt: 2 }}>
+              <Box key={`${subCondition.value}-${subIndex}-${Math.random()}`} sx={{ ml: 4, mt: 2 }}>
                 <SubCondition conditionIndex={index} subIndex={subIndex} />
               </Box>
             ))}

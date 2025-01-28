@@ -109,15 +109,6 @@ export default function DependentSelectForm() {
     setConditions(prevConditions => {
       const newConditions = [...prevConditions];
       newConditions[index] = { ...newConditions[index], [field]: value };
-
-      // if (field === 'questionType') {
-      //   newConditions[index].subConditions.operatorType = '';
-      //   newConditions[index].subConditions.conditionType = '';
-      //   newConditions[index].subConditions.value = '';
-      // } else if (field === 'operatorType') {
-      //   newConditions[index].subConditions.conditionType = '';
-      //   newConditions[index].subConditions.value = '';
-      // }
       return newConditions;
     });
   }

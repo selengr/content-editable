@@ -1,10 +1,15 @@
-import type { SelectOption } from "../_types/conditions"
-import JSONData_First from "../../../public/assets/fake-data/first.json"
-import JSONData_goTo from "../../../public/assets/fake-data/goTo.json"
+
+import JSONData_First from "../../../../public/assets/fake-data/first.json"
+import JSONData_goTo from "../../../../public/assets/fake-data/goTo.json"
 import { TextField, FormControl, Select, MenuItem } from "@mui/material"
 import DatePicker from "react-multi-date-picker"
 import persian from "react-date-object/calendars/persian"
 import persian_fa from "react-date-object/locales/persian_fa"
+
+export interface SelectOption {
+  value: string;
+  label: string;
+}
 
 export const data: any = JSONData_First.dataList
 
@@ -54,7 +59,16 @@ export const getInput = (
     case "MULTIPLE_CHOICE_VALUE_greater":
     case "MULTIPLE_CHOICE_VALUE_equal":
     case "MULTIPLE_CHOICE_VALUE_not_equal":
-      return <TextField label="Quantity" type="number" value={value} onChange={(e) => setValue(e.target.value)} />
+      return (
+        <TextField 
+          label="Quantity" 
+          type="number"
+          value={value} 
+          onChange={(e) => setValue(e.target.value)}
+       />
+      )
+
+
     case "MULTIPLE_CHOICE_QUESTION_less":
     case "MULTIPLE_CHOICE_QUESTION_greater":
     case "MULTIPLE_CHOICE_QUESTION_equal":
