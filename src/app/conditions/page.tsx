@@ -755,6 +755,52 @@ export default function DependentSelectForm() {
   //   console.log('Submitted conditions:', conditions);
   // }
 
+
+
+  const renderSubCondition = (conditionIndex: number, subConditionIndex: number, subCondition: SubCondition) => {
+    return (
+      <Box key={`${conditionIndex}-${subConditionIndex}`} sx={{ ml: 4, mt: 2 }}>
+        <Box sx={{ mb: 2, display: "flex", flexDirection: "row" }}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            {subConditionIndex === 0 && (
+              <Typography sx={{ color: "#393939", fontSize: "14px", width: 90 }}>اگر</Typography>
+            )}
+            {subConditionIndex > 0 && (
+              <Controller
+                name={`conditions.${conditionIndex}.subConditions.${subConditionIndex}.logicalOperator`}
+                control={control}
+                render={({ field }) => (
+                  <CustomSelect
+                    {...field}
+                    options={[
+                      { value: "AND", label: "و" },
+                      { value: "OR", label: "یا" },
+                    ]}
+                    sx={{ minWidth: 78 }}
+                  />
+                )}
+              />
+            )}
+          </Box>
+          <Box rowGap={3} columnGap={2} display="flex">
+            <FormControl sx={{ minWidth: 200 }}>
+              <Controller
+                name={`conditions.${conditionIndex}.subConditions.${subConditionIndex}.questionType`}
+                control={control}
+                render={({ field }) => (
+                  <CustomSelect {...field} label="نوع سوال" options={questionTypes} sx={{ minWidth: 200 }} />
+                )}
+              />
+            </FormControl>
+            {/* Add more form controls for operatorType, conditionType, and value */}
+          </Box>
+        </Box>
+      </Box>
+    )
+  }
+
+
+
   return (
     <Box sx={{ width: "100%", p: 3, display: "flex", flexDirection: "column", justifyContent: "center", direction: "ltr" }}>
 
