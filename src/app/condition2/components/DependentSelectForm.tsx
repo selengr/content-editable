@@ -6,7 +6,7 @@ import { Box, Button, Typography, IconButton } from "@mui/material"
 import { LoadingButton } from "@mui/lab"
 import { useDependentSelectForm } from "../hooks/useDependentSelectForm"
 import { SubCondition } from "./SubCondition"
-import { CustomSelect } from "./CustomSelect"
+import  CustomSelect  from "./custom-select"
 import { CircleDivider } from "./_components/circle-divider"
 import { questionGoTo } from "../utils/formUtils"
 
