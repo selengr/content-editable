@@ -43,6 +43,12 @@ type FormData = z.infer<typeof FormSchema>
 
 
 
+
+
+
+
+
+
 export const questionTypes: SelectOption[] = JSONData_First.dataList.map((item) => {
     const isCalculation = item.elementStr === "CALCULATION"
     const isTextFieldDate = item.extMap.TEXT_FIELD_PATTERN === "DATE"
@@ -390,8 +396,84 @@ export default function DependentSelectForm() {
   }
 
 
-  const onSubmit = (data: FormData) => {
-    console.log("Submitted data:", data)
+
+  const input = {
+    conditions: [
+        {
+            elseQuestionId: "",
+            returnQuestionId: "{#q_103}",
+            subConditions: [
+                {
+                    conditionType: "!#lessThanMultiChoiceSingle",
+                    id: "",
+                    logicalOperator: "",
+                    operatorType: "VALUE",
+                    questionType: "MULTIPLE_CHOICE*{#q_105}",
+                    value: "TEXT_FIELD*{#q_104}"
+                },
+                {
+                    conditionType: "!#lessThanMultiChoiceSingle",
+                    id: "",
+                    logicalOperator: "",
+                    operatorType: "VALUE",
+                    questionType: "MULTIPLE_CHOICE*{#q_105}",
+                    value: "TEXT_FIELD*{#q_104}"
+                }
+            ]
+        },
+        {
+            elseQuestionId: "",
+            returnQuestionId: "{#q_103}",
+            subConditions: [
+                {
+                    conditionType: "!#lessThanMultiChoiceSingle",
+                    id: "",
+                    logicalOperator: "",
+                    operatorType: "VALUE",
+                    questionType: "MULTIPLE_CHOICE*{#q_105}",
+                    value: "TEXT_FIELD*{#q_104}"
+                },
+                {
+                    conditionType: "!#lessThanMultiChoiceSingle",
+                    id: "",
+                    logicalOperator: "",
+                    operatorType: "VALUE",
+                    questionType: "MULTIPLE_CHOICE*{#q_105}",
+                    value: "TEXT_FIELD*{#q_104}"
+                }
+            ]
+        },
+
+    ]
+};
+
+
+
+
+  const onSubmit = (input: FormData) => {
+    console.log("Submitted data:", input)
+
+   
+    const transformInputToOutput = (input) => {
+      return input.conditions.map(condition => {
+          const conditionFormula = condition.subConditions.map(subCondition => {
+              return `${subCondition.conditionType}(${subCondition.value})` + " " + subCondition?.logicalOperator + " ";
+          }); 
+  
+          return {
+              conditionFormula: conditionFormula,
+              formBuilderId: 81,
+              returnQuestionId: condition.returnQuestionId,
+              elseQuestionId: condition.elseQuestionId
+          };
+      });
+  };
+  
+
+  const output = transformInputToOutput(input);
+  console.log(output);
+    
+
   }
 
   return (
