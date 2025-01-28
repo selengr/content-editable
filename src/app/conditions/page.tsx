@@ -6,6 +6,8 @@ import { useState, useEffect } from 'react'
 //hook
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, useFieldArray, Controller } from "react-hook-form"
+import { FormSchema, type FormData, type SubCondition } from "./types/schema"
+
 import TextField from '@mui/material/TextField';
 import { SelectOption } from './_types/conditions'
 import JSONData_First from '../../../public/assets/fake-data/first.json'
@@ -39,6 +41,20 @@ export default function DependentSelectForm() {
       ],
     },
   })
+
+
+  const {
+    fields: conditionFields,
+    append: appendCondition,
+    remove: removeCondition,
+  } = useFieldArray({
+    control,
+    name: "conditions",
+  })
+
+  const onSubmit = (data: FormData) => {
+    console.log("Submitted data:", data)
+  }
 
   const addCondition = () => {
     setConditions((prevConditions) => [
