@@ -168,38 +168,38 @@ export default function DependentSelectForm() {
   // }
 
 
-  let data: any = JSONData_First.dataList
+  // let data: any = JSONData_First.dataList
 
-  const questionTypes = data.map(item => {
-    const isCalculation = item.elementStr === 'CALCULATION';
-    const isTextFieldDate = item.extMap.TEXT_FIELD_PATTERN === 'DATE';
-    const isSpectralDouble = item.extMap.SPECTRAL_TYPE === 'DOMAIN';
-    const isMultiSelect = Boolean(item.extMap.MULTI_SELECT);
-    const questionType = isCalculation
-      ? `${item.elementStr}*${item.extMap.UNIC_NAME}` : isTextFieldDate
-        ? `${item.extMap.QUESTION_TYPE}_${item.extMap.TEXT_FIELD_PATTERN}*${item.extMap.UNIC_NAME}` : isMultiSelect
-        ? `${item.extMap.QUESTION_TYPE}_MULTI_SELECT*${item.extMap.UNIC_NAME}` : isSpectralDouble
-        ? `${item.extMap.QUESTION_TYPE}_${item.extMap.SPECTRAL_TYPE}*${item.extMap.UNIC_NAME}`
-        : `${item.extMap.QUESTION_TYPE}*${item.extMap.UNIC_NAME || ''}`;
+  // const questionTypes = data.map(item => {
+  //   const isCalculation = item.elementStr === 'CALCULATION';
+  //   const isTextFieldDate = item.extMap.TEXT_FIELD_PATTERN === 'DATE';
+  //   const isSpectralDouble = item.extMap.SPECTRAL_TYPE === 'DOMAIN';
+  //   const isMultiSelect = Boolean(item.extMap.MULTI_SELECT);
+  //   const questionType = isCalculation
+  //     ? `${item.elementStr}*${item.extMap.UNIC_NAME}` : isTextFieldDate
+  //       ? `${item.extMap.QUESTION_TYPE}_${item.extMap.TEXT_FIELD_PATTERN}*${item.extMap.UNIC_NAME}` : isMultiSelect
+  //       ? `${item.extMap.QUESTION_TYPE}_MULTI_SELECT*${item.extMap.UNIC_NAME}` : isSpectralDouble
+  //       ? `${item.extMap.QUESTION_TYPE}_${item.extMap.SPECTRAL_TYPE}*${item.extMap.UNIC_NAME}`
+  //       : `${item.extMap.QUESTION_TYPE}*${item.extMap.UNIC_NAME || ''}`;
 
-    return {
-      value: questionType,
-      label: item.caption
-    };
-  });
+  //   return {
+  //     value: questionType,
+  //     label: item.caption
+  //   };
+  // });
   
 
-  const calculationTypes = data
-    .filter(item => item.elementStr === 'CALCULATION')
-    .map(item => ({
-      value: item.extMap.QUESTION_TYPE || '',
-      label: item.caption
-    }))
-  const questionGoTo = JSONData_goTo.dataList
-    .map(item => ({
-      value: item.extMap.UNIC_NAME || '',
-      label: item.caption
-    }))
+  // const calculationTypes = data
+  //   .filter(item => item.elementStr === 'CALCULATION')
+  //   .map(item => ({
+  //     value: item.extMap.QUESTION_TYPE || '',
+  //     label: item.caption
+  //   }))
+  // const questionGoTo = JSONData_goTo.dataList
+  //   .map(item => ({
+  //     value: item.extMap.UNIC_NAME || '',
+  //     label: item.caption
+  //   }))
 
   const getInput = (type: string, operator: string, condition: string, value: string, setValue: (value: string) => void) => {
     const combinedKey = `${type.split('*')[0]}_${operator}_${condition}`
