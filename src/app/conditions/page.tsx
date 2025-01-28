@@ -67,7 +67,21 @@ export default function DependentSelectForm() {
     value: item.extMap.UNIC_NAME || "",
     label: item.caption,
   }))
-  
+
+
+  const getQuestionType = (item: any) => {
+    if (item.elementStr === "CALCULATION") return `${item.elementStr}*${item.extMap.UNIC_NAME}`
+    if (item.extMap.TEXT_FIELD_PATTERN === "DATE")
+      return `${item.extMap.QUESTION_TYPE}_${item.extMap.TEXT_FIELD_PATTERN}*${item.extMap.UNIC_NAME}`
+    if (item.extMap.MULTI_SELECT) return `${item.extMap.QUESTION_TYPE}_MULTI_SELECT*${item.extMap.UNIC_NAME}`
+    if (item.extMap.SPECTRAL_TYPE === "DOMAIN")
+      return `${item.extMap.QUESTION_TYPE}_${item.extMap.SPECTRAL_TYPE}*${item.extMap.UNIC_NAME}`
+    return `${item.extMap.QUESTION_TYPE}*${item.extMap.UNIC_NAME || ""}`
+  }
+
+
+
+
 
   const addCondition = () => {
     setConditions((prevConditions) => [
