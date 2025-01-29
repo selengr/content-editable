@@ -115,15 +115,18 @@ export default function DependentSelectForm() {
     formState: { errors },
   } = methods
 
+
   const {
     fields: conditions,
     append: appendCondition,
     remove: removeCondition,
+    update: updateCondition,
   } = useFieldArray({
     control,
     name: "conditions",
   })
 
+  
   const watchedValues = useWatch({ control })
 
   const getQuestion = (type: string, values : any) => {
@@ -416,12 +419,52 @@ export default function DependentSelectForm() {
       });
   };
   
-
   const output = transformInputToOutput(input);
-  console.log(output);
-    
+  console.log(output);  
 
   }
+
+
+  const handleAddCondition = () => {
+    appendCondition({
+      subConditions: [
+        {
+          logicalOperator: "",
+          questionType: "",
+          operatorType: "",
+          conditionType: "",
+          value: "",
+          id: "",
+        },
+      ],
+      elseQuestionId: "",
+      returnQuestionId: "",
+    })
+  }
+
+  const handleRemoveCondition = (index: number) => {
+    removeCondition(index)
+  }
+
+  const handleAddSubCondition = (conditionIndex: number, subConditionIndex: number) => {
+    const updatedCondition = { ...conditions[conditionIndex] }
+    updatedCondition.subConditions.splice(subConditionIndex + 1, 0, {
+      logicalOperator: "",
+      questionType: "",
+      operatorType: "",
+      conditionType: "",
+      value: "",
+      id: "",
+    })
+    updateCondition(conditionIndex, updatedCondition)
+  }
+
+  const handleRemoveSubCondition = (conditionIndex: number, subConditionIndex: number) => {
+    const updatedCondition = { ...conditions[conditionIndex] }
+    updatedCondition.subConditions.splice(subConditionIndex, 1)
+    updateCondition(conditionIndex, updatedCondition)
+  }
+
 
   return (
     <Box
@@ -481,19 +524,7 @@ export default function DependentSelectForm() {
                         })}
                         <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
                           <IconButton
-                            onClick={() => {
-                              const newSubCondition = {
-                                logicalOperator: "",
-                                questionType: "",
-                                operatorType: "",
-                                conditionType: "",
-                                value: "",
-                                id: "",
-                              }
-                              const newConditions = [...conditions]
-                              newConditions[index].subConditions.splice(subIndex + 1, 0, newSubCondition)
-                              appendCondition(newConditions)
-                            }}
+                            onClick={() => handleAddSubCondition(index, subIndex)}
                             sx={{
                               width: "52px",
                               height: "52px",
@@ -506,11 +537,7 @@ export default function DependentSelectForm() {
                           </IconButton>
                           {subIndex !== 0 && (
                             <IconButton
-                              onClick={() => {
-                                const newConditions = [...conditions]
-                                newConditions[index].subConditions.splice(subIndex, 1)
-                                appendCondition(newConditions)
-                              }}
+                              onClick={() => handleRemoveSubCondition(index, subIndex)}
                               sx={{
                                 width: "52px",
                                 height: "52px",
@@ -548,7 +575,7 @@ export default function DependentSelectForm() {
                 />
 
               <IconButton
-                onClick={() => removeCondition(index)}
+                onClick={() => handleRemoveCondition(index)}
                 sx={{
                   width: 113,
                   height: "52px",
@@ -568,22 +595,7 @@ export default function DependentSelectForm() {
         ))}
         <Button
           variant="outlined"
-          onClick={() =>
-            appendCondition({
-              subConditions: [
-                {
-                  logicalOperator: "",
-                  questionType: "",
-                  operatorType: "",
-                  conditionType: "",
-                  value: "",
-                  id: "",
-                },
-              ],
-              elseQuestionId: "",
-              returnQuestionId: "",
-            })
-          }
+          onClick={handleAddCondition}
           sx={{
             maxWidth: 155,
             ml: 10,
