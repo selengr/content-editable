@@ -416,7 +416,6 @@ export default function DependentSelectForm() {
           const conditionFormula = condition.subConditions.map(subCondition => {
             const baseCondition = `${subCondition.conditionType}(${subCondition.questionType.split("*")[1]},${subCondition.value})`;
             
-            // Check if logicalOperator exists and append it if necessary
             if (subCondition?.logicalOperator) {
                 return baseCondition + " " + subCondition.logicalOperator + " ";
             } else {
