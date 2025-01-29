@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { v4 as uuidv4 } from 'uuid';
 import { useForm, useFieldArray, Controller, FormProvider, useWatch } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -479,11 +479,11 @@ export default function DependentSelectForm() {
       <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
         {conditions.map((condition, index) => (
-          <Box key={condition.id} sx={{ mb: 2, width: "100%" }}>
+          <Box key={uuidv4()} sx={{ mb: 2, width: "100%" }}>
              {condition.subConditions.map((subCondition, subIndex) => {
                 const currentValues = watchedValues?.conditions?.[index]?.subConditions?.[subIndex] || {}
                 return (
-                  <Box key={subCondition.id} sx={{ ml: 4, mt: 2 }}>
+                  <Box key={uuidv4()} sx={{ ml: 4, mt: 2 }}>
                     <Box sx={{ mb: 2, display: "flex", flexDirection: "row" }}>
                       <Box sx={{ display: "flex", alignItems: "center" }}>
                         {subIndex === 0 && (
