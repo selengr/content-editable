@@ -406,13 +406,14 @@ export default function DependentSelectForm() {
    
     const transformInputToOutput = (input) => {
       return input.conditions.map(condition => {
-          const conditionFormula = condition.subConditions.map(subCondition => {
-            if(!!subCondition?.logicalOperator){
-                return `${subCondition.conditionType}(${subCondition.value})`;
-            } else {
-              return `${subCondition.conditionType}(${subCondition.value})` + " " + subCondition?.logicalOperator + " ";
-            }
-          }); 
+          // const conditionFormula = condition.subConditions.map(subCondition => {
+          //   if(!!subCondition?.logicalOperator){
+          //       return `${subCondition.conditionType}(${subCondition.questionType.split("*")[1]+","+subCondition.value})`;
+          //   } else {
+          //     return `${subCondition.conditionType}(${subCondition.questionType.split("*")[1]+","+subCondition.value})` + " " + subCondition?.logicalOperator + " ";
+          //   }
+          // }); 
+          
   
           return {
               conditionFormula: conditionFormula,
