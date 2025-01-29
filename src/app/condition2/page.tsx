@@ -45,10 +45,6 @@ type FormData = z.infer<typeof FormSchema>
 
 
 
-
-
-
-
 export const questionTypes: SelectOption[] = JSONData_First.dataList.map((item) => {
     const isCalculation = item.elementStr === "CALCULATION"
     const isTextFieldDate = item.extMap.TEXT_FIELD_PATTERN === "DATE"
