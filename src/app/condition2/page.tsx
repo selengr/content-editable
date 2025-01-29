@@ -450,18 +450,6 @@ export default function DependentSelectForm() {
     removeCondition(index)
   }
 
-  // const handleAddSubCondition = (conditionIndex: number, subConditionIndex: number) => {
-  //   const updatedCondition = { ...conditions[conditionIndex] }
-  //   updatedCondition.subConditions.splice(subConditionIndex + 1, 0, {
-  //     logicalOperator: "",
-  //     questionType: "",
-  //     operatorType: "",
-  //     conditionType: "",
-  //     value: "",
-  //     id: "",
-  //   })
-  //   updateCondition(conditionIndex, updatedCondition)
-  // }
 
   const handleAddSubCondition = (conditionIndex: number, subConditionIndex: number) => {
     const updatedConditions = [...conditions]
