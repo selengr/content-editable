@@ -1,5 +1,3 @@
-// export const dynamic = 'force-static'
-
 import { type NextRequest } from 'next/server'
 import JSONData_First from "../../../../../public/assets/fake-data/first.json";
 
