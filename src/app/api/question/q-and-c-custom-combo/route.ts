@@ -1,10 +1,10 @@
-export const dynamic = 'force-static'
+// export const dynamic = 'force-static'
 
 import { type NextRequest } from 'next/server'
 import JSONData_First from "../../../../../public/assets/fake-data/first.json";
 
 
-
+export const dynamic = 'force-dynamic'
 
   export async function GET(request:NextRequest) {
   const searchParams = request.nextUrl.searchParams
@@ -14,12 +14,9 @@ import JSONData_First from "../../../../../public/assets/fake-data/first.json";
   let responseJSONData_First = JSONData_First;
   let responseData = {}
 
-  console.log("test====================================================>33",customComboFilterModel)
-  
   if (customComboFilterModel) {
     try {
       const parsedModel = JSON.parse(decodeURIComponent(customComboFilterModel));
-      responseData = responseJSONData_First
       if (parsedModel.extMap && parsedModel.extMap.typeRequest) {
         const typeRequest = parsedModel.extMap.typeRequest;
 
