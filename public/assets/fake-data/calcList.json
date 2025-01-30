@@ -1,302 +1,301 @@
 {
   "dataList": [
-      {
-          "value": "141",
-          "caption": "sdf",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_141}",
-              "FORMULA": "MultiSelect({#q_106})MultiSelect({#q_106})"
-          }
+    {
+        "value": "141",
+        "caption": "sdf",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_141}",
+          "FORMULA": "MultiSelect({#q_106})MultiSelect({#q_106})"
+        }
       },
       {
-          "value": "56",
-          "caption": "",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_56}",
-              "FORMULA": "{#q_100}+{#q_109}"
-          }
+        "value": "56",
+        "caption": "one",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_56}",
+          "FORMULA": "{#q_100}+{#q_109}"
+        }
       },
       {
-          "value": "57",
-          "caption": "",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_57}",
-              "FORMULA": "{#q_100}+{#q_109}"
-          }
+        "value": "57",
+        "caption": "one",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_57}",
+          "FORMULA": "{#q_100}+{#q_109}"
+        }
       },
       {
-          "value": "59",
-          "caption": "",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_59}",
-              "FORMULA": "{#q_100}+{#q_109}"
-          }
+        "value": "59",
+        "caption": "one",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_59}",
+          "FORMULA": "{#q_100}+{#q_109}"
+        }
       },
       {
-          "value": "60",
-          "caption": "",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_60}",
-              "FORMULA": "{#q_100}+{#q_109}"
-          }
+        "value": "60",
+        "caption": "one",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_60}",
+          "FORMULA": "{#q_100}+{#q_109}"
+        }
       },
       {
-          "value": "61",
-          "caption": "جدید",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_61}",
-              "FORMULA": "{#v_3}*{#v_2}+{#v_4}"
-          }
+        "value": "61",
+        "caption": "جدید",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_61}",
+          "FORMULA": "{#v_3}*{#v_2}+{#v_4}"
+        }
       },
       {
-          "value": "55",
-          "caption": "",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_55}",
-              "FORMULA": "{#q_105}"
-          }
+        "value": "55",
+        "caption": "one",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_55}",
+          "FORMULA": "{#q_105}"
+        }
       },
       {
-          "value": "124",
-          "caption": "sdf",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_124}",
-              "FORMULA": "#avgNumber({{#q_106}*{#v_5}})"
-          }
+        "value": "124",
+        "caption": "sdf",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_124}",
+          "FORMULA": "#avgNumber({{#q_106}*{#v_5}})"
+        }
       },
       {
-          "value": "113",
-          "caption": "teat",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_113}",
-              "FORMULA": "{#q_105}"
-          }
+        "value": "113",
+        "caption": "teat",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_113}",
+          "FORMULA": "{#q_105}"
+        }
       },
       {
-          "value": "42",
-          "caption": "",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_42}",
-              "FORMULA": "{#q_105}"
-          }
+        "value": "42",
+        "caption": "one",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_42}",
+          "FORMULA": "{#q_105}"
+        }
       },
       {
-          "value": "44",
-          "caption": "",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_44}",
-              "FORMULA": "{#q_100}+{#q_109}"
-          }
+        "value": "44",
+        "caption": "one",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_44}",
+          "FORMULA": "{#q_100}+{#q_109}"
+        }
       },
       {
-          "value": "45",
-          "caption": "",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_45}",
-              "FORMULA": "{#q_100}+{#q_109}"
-          }
+        "value": "45",
+        "caption": "one",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_45}",
+          "FORMULA": "{#q_100}+{#q_109}"
+        }
       },
       {
-          "value": "46",
-          "caption": "",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_46}",
-              "FORMULA": "{#q_100}+{#q_109}"
-          }
+        "value": "46",
+        "caption": "one",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_46}",
+          "FORMULA": "{#q_100}+{#q_109}"
+        }
       },
       {
-          "value": "49",
-          "caption": "",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_49}",
-              "FORMULA": "{#q_100}+{#q_109}"
-          }
+        "value": "49",
+        "caption": "one",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_49}",
+          "FORMULA": "{#q_100}+{#q_109}"
+        }
       },
       {
-          "value": "51",
-          "caption": "",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_51}",
-              "FORMULA": "{#q_100}+{#q_109}"
-          }
+        "value": "51",
+        "caption": "one",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_51}",
+          "FORMULA": "{#q_100}+{#q_109}"
+        }
       },
       {
-          "value": "52",
-          "caption": "",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_52}",
-              "FORMULA": "{#q_100}+{#q_109}"
-          }
+        "value": "52",
+        "caption": "one",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_52}",
+          "FORMULA": "{#q_100}+{#q_109}"
+        }
       },
       {
-          "value": "53",
-          "caption": "",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_53}",
-              "FORMULA": "{#q_100}+{#q_109}"
-          }
+        "value": "53",
+        "caption": "one",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_53}",
+          "FORMULA": "{#q_100}+{#q_109}"
+        }
       },
       {
-          "value": "85",
-          "caption": "eeew",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_85}",
-              "FORMULA": "+{#v_35}*"
-          }
+        "value": "85",
+        "caption": "eeew",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_85}",
+          "FORMULA": "+{#v_35}*"
+        }
       },
       {
-          "value": "86",
-          "caption": "666",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_86}",
-              "FORMULA": "{#v_3}"
-          }
+        "value": "86",
+        "caption": "666",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_86}",
+          "FORMULA": "{#v_3}"
+        }
       },
       {
-          "value": "109",
-          "caption": "666",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_109}",
-              "FORMULA": "{#v_3}"
-          }
+        "value": "109",
+        "caption": "666",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_109}",
+          "FORMULA": "{#v_3}"
+        }
       },
       {
-          "value": "110",
-          "caption": "66699999999",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_110}",
-              "FORMULA": "+{#v_3}+"
-          }
+        "value": "110",
+        "caption": "66699999999",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_110}",
+          "FORMULA": "+{#v_3}+"
+        }
       },
       {
-          "value": "114",
-          "caption": "v-0",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_114}",
-              "FORMULA": "{#v_69}-{#v_9}"
-          }
+        "value": "114",
+        "caption": "v-0",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_114}",
+          "FORMULA": "{#v_69}-{#v_9}"
+        }
       },
       {
-          "value": "115",
-          "caption": "v-1",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_115}",
-              "FORMULA": "{#q_105}"
-          }
+        "value": "115",
+        "caption": "v-1",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_115}",
+          "FORMULA": "{#q_105}"
+        }
       },
       {
-          "value": "120",
-          "caption": "v-2",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_120}",
-              "FORMULA": "{#q_105}"
-          }
+        "value": "120",
+        "caption": "v-2",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_120}",
+          "FORMULA": "{#q_105}"
+        }
       },
       {
-          "value": "121",
-          "caption": "jghfg",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_121}",
-              "FORMULA": "#avgNumber({{#v_6}*{#v_9}})"
-          }
+        "value": "121",
+        "caption": "jghfg",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_121}",
+          "FORMULA": "#avgNumber({{#v_6}*{#v_9}})"
+        }
       },
       {
-          "value": "82",
-          "caption": "test",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_82}",
-              "FORMULA": "{#v_2}"
-          }
+        "value": "82",
+        "caption": "test",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_82}",
+          "FORMULA": "{#v_2}"
+        }
       },
       {
-          "value": "43",
-          "caption": "",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_43}",
-              "FORMULA":
-"{#q_105}#avgNumber({{#v_2}}){#v_6}undefinedundefined(+)"
-          }
+        "value": "43",
+        "caption": "one",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_43}",
+          "FORMULA": "{#q_105}#avgNumber({{#v_2}}){#v_6}undefinedundefined(+)"
+        }
       },
       {
-          "value": "47",
-          "caption": "",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_47}",
-              "FORMULA": "{#q_100}+{#q_109}"
-          }
+        "value": "47",
+        "caption": "one",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_47}",
+          "FORMULA": "{#q_100}+{#q_109}"
+        }
       },
       {
-          "value": "48",
-          "caption": "",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_48}",
-              "FORMULA": "{#q_100}+{#q_109}"
-          }
+        "value": "48",
+        "caption": "one",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_48}",
+          "FORMULA": "{#q_100}+{#q_109}"
+        }
       },
       {
-          "value": "50",
-          "caption": "",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_50}",
-              "FORMULA": "{#q_105}"
-          }
+        "value": "50",
+        "caption": "one",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_50}",
+          "FORMULA": "{#q_105}"
+        }
       },
       {
-          "value": "83",
-          "caption": "dgrfe",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_83}",
-              "FORMULA": "{#v_2}"
-          }
+        "value": "83",
+        "caption": "dgrfe",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_83}",
+          "FORMULA": "{#v_2}"
+        }
       },
       {
-          "value": "81",
-          "caption": "jgjhef",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_81}",
-              "FORMULA": "MultiSelect({#q_106})*{#v_6}"
-          }
+        "value": "81",
+        "caption": "jgjhef",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_81}",
+          "FORMULA": "MultiSelect({#q_106})*{#v_6}"
+        }
       },
       {
-          "value": "84",
-          "caption": "jfgh",
-          "elementStr": "CALCULATION",
-          "extMap": {
-              "UNIC_NAME": "{#calc_84}",
-              "FORMULA": "{#v_22}"
-          }
+        "value": "84",
+        "caption": "jfgh",
+        "elementStr": "CALCULATION",
+        "extMap": {
+          "UNIC_NAME": "{#calc_84}",
+          "FORMULA": "{#v_22}"
+        }
       }
   ],
   "totalCount": 33,

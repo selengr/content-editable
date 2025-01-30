@@ -1,6 +1,7 @@
 import { type NextRequest } from 'next/server'
 import JSONData_goTo from "../../../../../public/assets/fake-data/goTo.json";
 import JSONData_First from "../../../../../public/assets/fake-data/first.json";
+import JSONData_Calc from "../../../../../public/assets/fake-data/calcList.json";
 
 
 export const dynamic = 'force-dynamic'
@@ -22,6 +23,8 @@ export const dynamic = 'force-dynamic'
           responseData = JSONData_First
         } else if(typeRequest === "ONLY_ALL_QUESTIONS") {
           responseData = JSONData_goTo
+        } else if(typeRequest === "ONLY_ALL_CALC") {
+          responseData = JSONData_Calc
         }
       }
     } catch (error) {
