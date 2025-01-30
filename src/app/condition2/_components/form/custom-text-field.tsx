@@ -38,7 +38,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
                 border: "2px solid #DDE1E6",
               },
               "&.Mui-error fieldset": {
-                borderColor: "red",
+                borderColor: "#FA4D56",
               },
             },
           }}

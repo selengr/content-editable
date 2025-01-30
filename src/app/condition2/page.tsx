@@ -557,7 +557,6 @@ export default function DependentSelectForm() {
                   ] || {};
                 return (
                   <Box key={uuidv4()} sx={{ ml: 4, mt: 2 }}>
-                    <CustomTextField name={"field.name"} label="" type="number" />
                     <Box sx={{ mb: 2, display: "flex", flexDirection: "row" }}>
                       <Box sx={{ display: "flex", alignItems: "center" }}>
                         {subIndex === 0 && (

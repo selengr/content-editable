@@ -40,12 +40,12 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ options, sx, name, ...props
               "&.MuiInputBase-root": {
                 borderRadius: "8px",
                 paddingLeft: 2,
-                border: "1px solid #DDE1E6",
+                border: error ? "1px solid #FA4D56" : "1px solid #DDE1E6"
               },
               "& .MuiSelect-icon": {
                 left: "auto",
                 right: "16px",
-                color: "#1758BA",
+                color: error ? "#FA4D56" : "#1758BA",
                 fontSize: "1.5rem",
               },
               "& .MuiOutlinedInput-notchedOutline": {
@@ -71,7 +71,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ options, sx, name, ...props
               </MenuItem>
             ))}
           </Select>
-          {error && <FormHelperText>{error.message}</FormHelperText>}
+          {error && <FormHelperText sx={{color : "#FA4D56"}}>{error.message}</FormHelperText>}
         </FormControl>
       )}
     />
