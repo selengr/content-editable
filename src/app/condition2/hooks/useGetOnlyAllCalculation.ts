@@ -11,7 +11,7 @@ const customComboFilterModel = {
   rows: 10000,
   extMap: {
     formId: 81,
-    typeRequest: "ONLY_ALL_QUESTIONS" 
+    typeRequest: "ONLY_ALL_CALCULATION" 
   }
 };
 
@@ -29,10 +29,10 @@ const fetchData = async (url : string) => {
 
 
 
-export const useGetOnlyAllQuestions = () => {
+export const useGetOnlyAllCalculation = () => {
 
   const { data, isFetching } = useQuery({
-    queryKey: ['ONLY_ALL_QUESTIONS'],
+    queryKey: ['ONLY_ALL_CALCULATION'],
     queryFn: () => fetchData(url),
     staleTime: 0,
     gcTime: 600000,
@@ -41,29 +41,15 @@ export const useGetOnlyAllQuestions = () => {
     retry: 3
   });
 
-  const onlyAllQuestionsOptions = data?.dataList?.map((item) => ({
+  const onlyAllCalculationOptions = data?.dataList?.map((item) => ({
     value: item.extMap.UNIC_NAME,
     label: item.caption,
   }));
 
-  const onlySomeQuestionsOptions = data?.dataList?.map((item) => {
-    const { TEXT_FIELD_PATTERN, SPECTRAL_TYPE, MULTI_SELECT, UNIC_NAME } = item.extMap;
-    const isMultiSelect = !parseInt(MULTI_SELECT);
-    const isSpectralSingle = SPECTRAL_TYPE === "DISCRETE";
-    const isTextFieldNumber = TEXT_FIELD_PATTERN === "NUMBER";
-
-    const questionType = (isTextFieldNumber || isMultiSelect || isSpectralSingle) ? UNIC_NAME : ""
-
-    return {
-      value: questionType,
-      label: item.caption,
-    };
-  });
 
   return {
-    isFetchingOnlyAllQuestions: isFetching,
-    onlyAllQuestions: data?.dataList,
-    onlyAllQuestionsOptions,
-    onlySomeQuestionsOptions,
+    isFetchingOnlyAllCalculation: isFetching,
+    onlyAllCalculation: data?.dataList,
+    onlyAllCalculationOptions
   };
 };
