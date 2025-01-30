@@ -48,28 +48,6 @@ const FormSchema = z.object({
 
 type FormData = z.infer<typeof FormSchema>;
 
-export const questionTypes: SelectOption[] = JSONData_First.dataList.map(
-  (item) => {
-    const isCalculation = item.elementStr === "CALCULATION";
-    const isTextFieldDate = item.extMap.TEXT_FIELD_PATTERN === "DATE";
-    const isSpectralDouble = item.extMap.SPECTRAL_TYPE === "DOMAIN";
-    const isMultiSelect = parseInt(item.extMap.MULTI_SELECT);
-    const questionType = isCalculation
-      ? `${item.elementStr}*${item.extMap.UNIC_NAME}`
-      : isTextFieldDate
-      ? `${item.extMap.QUESTION_TYPE}_${item.extMap.TEXT_FIELD_PATTERN}*${item.extMap.UNIC_NAME}`
-      : isMultiSelect
-      ? `${item.extMap.QUESTION_TYPE}_MULTI_SELECT*${item.extMap.UNIC_NAME}`
-      : isSpectralDouble
-      ? `${item.extMap.QUESTION_TYPE}_${item.extMap.SPECTRAL_TYPE}*${item.extMap.UNIC_NAME}`
-      : `${item.extMap.QUESTION_TYPE}*${item.extMap.UNIC_NAME || ""}`;
-
-    return {
-      value: questionType,
-      label: item.caption,
-    };
-  }
-);
 
 const calculationTypes = JSONData_First.dataList
   .filter((item) => item.elementStr === "CALCULATION")
@@ -85,10 +63,11 @@ const questionGoTo = JSONData_goTo.dataList.map((item) => ({
 
 export default function DependentSelectForm() {
   // const [calendarValue, setCalendarValue] = useState(new Date())
-  const { qacWithOutFilter, isFetchingQacWithOutFilter } = useGetQacWithOutFilter();
+  const { qacWithOutFilter, isFetchingQacWithOutFilter, qacWithOutFilterOptions } = useGetQacWithOutFilter();
 
   console.log("qacWithOutFilter",qacWithOutFilter)
   console.log("isFetchingQacWithOutFilter",isFetchingQacWithOutFilter)
+  console.log("qacWithOutFilterOptions",qacWithOutFilterOptions)
 
   const methods = useForm<FormData>({
     resolver: zodResolver(FormSchema),
@@ -271,7 +250,7 @@ export default function DependentSelectForm() {
         return (
           <CustomSelect
             name={field.name}
-            options={questionTypes}
+            options={qacWithOutFilterOptions}
             sx={{ minWidth: 200 }}
           />
         );
@@ -316,7 +295,7 @@ export default function DependentSelectForm() {
         return (
           <CustomSelect
             name={field.name}
-            options={questionTypes}
+            options={qacWithOutFilterOptions}
             sx={{ minWidth: 200 }}
           />
         );
@@ -348,7 +327,7 @@ export default function DependentSelectForm() {
         return (
           <CustomSelect
             name={field.name}
-            options={questionTypes}
+            options={qacWithOutFilterOptions}
             sx={{ minWidth: 200 }}
           />
         );
@@ -423,7 +402,7 @@ export default function DependentSelectForm() {
         return (
           <CustomSelect
             name={field.name}
-            options={questionTypes}
+            options={qacWithOutFilterOptions}
             sx={{ minWidth: 200 }}
           />
         );
@@ -590,7 +569,7 @@ export default function DependentSelectForm() {
                       <Box rowGap={3} columnGap={2} display="flex">
                         <CustomSelect
                           name={`conditions.${index}.subConditions.${subIndex}.questionType`}
-                          options={questionTypes}
+                          options={qacWithOutFilterOptions}
                           sx={{ minWidth: 200 }}
                         />
                         <CustomSelect
