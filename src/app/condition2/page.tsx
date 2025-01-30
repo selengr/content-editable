@@ -131,9 +131,9 @@ export default function DependentSelectForm() {
       case "MULTIPLE_CHOICE":
         return [
           { value: "VALUE", label: "ارزش" },
-          { value: "QUESTION", label: "سوال " },
-          { value: "CALCULATION", label: "محاسبه‌گر" },
           { value: "OPTION", label: "گزینه" },
+          { value: "QUESTION", label: "سوال " },
+          { value: "CALCULATION", label: "محاسبه‌گر" }
         ];
       case "MULTIPLE_CHOICE_MULTI_SELECT":
         return [{ value: "OPTION", label: "گزینه" }];
@@ -255,6 +255,8 @@ export default function DependentSelectForm() {
       case "MULTIPLE_CHOICE_VALUE_#lessThanMultiChoiceSingle":
       case "MULTIPLE_CHOICE_VALUE_#equalMultiChoiceSingle":
       case "MULTIPLE_CHOICE_VALUE_!#equalMultiChoiceSingle":
+        return <CustomTextField name={field.name} label="" type="number" />;
+
 
       case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle":
       case "MULTIPLE_CHOICE_OPTION_#lessThanMultiChoiceSingle":
@@ -555,6 +557,7 @@ export default function DependentSelectForm() {
                   ] || {};
                 return (
                   <Box key={uuidv4()} sx={{ ml: 4, mt: 2 }}>
+                    <CustomTextField name={"field.name"} label="" type="number" />
                     <Box sx={{ mb: 2, display: "flex", flexDirection: "row" }}>
                       <Box sx={{ display: "flex", alignItems: "center" }}>
                         {subIndex === 0 && (
