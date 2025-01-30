@@ -2,12 +2,11 @@ import type React from "react";
 import {
   Select,
   MenuItem,
-  type SxProps,
+  FormControl,
   type Theme,
+  type SxProps,
   type SelectProps,
   FormHelperText,
-  FormControl,
-  CircularProgress,
   LinearProgress,
 } from "@mui/material";
 import { IoIosArrowDown } from "react-icons/io";
@@ -55,7 +54,8 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
                   />
                 );
               }
-              return selected;
+              const selectedOption = options.find(option => option.value === selected);
+              return selectedOption ? selectedOption.label : "";
             }}
             sx={{
               "& .MuiSelect-select.MuiSelect-outlined": {

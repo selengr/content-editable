@@ -1,7 +1,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 
-const baseUrl = 'http://localhost:3000/api/question/q-and-c-custom-combo?';
+const baseUrl = 'http://localhost:3000/api/question/q-and-c-custom-combo';
 const customComboFilterModel = {
   type: "COMBO",
   entity: "QUESTIONS",

@@ -22,7 +22,6 @@ import PlusIcon from "@/../public/images/home-page/Add-fill.svg";
 import CustomSelect from "./_components/form/custom-select";
 import { CircleDivider } from "./_components/circle-divider";
 import JSONData_First from "../../../public/assets/fake-data/first.json";
-import JSONData_goTo from "../../../public/assets/fake-data/goTo.json";
 import CustomTextField from "./_components/form/custom-text-field";
 import { SelectOption } from "./utils/formUtils";
 import { useGetQacWithOutFilter } from "./hooks/useGetQacWithOutFilter";

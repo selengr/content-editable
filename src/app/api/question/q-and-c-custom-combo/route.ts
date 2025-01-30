@@ -1,4 +1,5 @@
 import { type NextRequest } from 'next/server'
+import JSONData_goTo from "../../../../../public/assets/fake-data/goTo.json";
 import JSONData_First from "../../../../../public/assets/fake-data/first.json";
 
 
@@ -9,7 +10,6 @@ export const dynamic = 'force-dynamic'
   const customComboFilterModel = searchParams.get('customComboFilterModel')
 
    
-  let responseJSONData_First = JSONData_First;
   let responseData = {}
 
   if (customComboFilterModel) {
@@ -19,9 +19,9 @@ export const dynamic = 'force-dynamic'
         const typeRequest = parsedModel.extMap.typeRequest;
 
         if (typeRequest === "QAC_WIHT_OUT_FILTER") {
-          responseData = responseJSONData_First
-        } else {
-          // You can add more conditions based on different typeRequest values
+          responseData = JSONData_First
+        } else if(typeRequest === "ONLY_ALL_QUESTIONS") {
+          responseData = JSONData_goTo
         }
       }
     } catch (error) {
