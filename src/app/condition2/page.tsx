@@ -25,6 +25,7 @@ import JSONData_First from "../../../public/assets/fake-data/first.json";
 import JSONData_goTo from "../../../public/assets/fake-data/goTo.json";
 import CustomTextField from "./_components/form/custom-text-field";
 import { SelectOption } from "./utils/formUtils";
+import { useGetQacWithOutFilter } from "./hooks/useGetQacWithOutFilter";
 
 const SubConditionSchema = z.object({
   logicalOperator: z.string().optional(),
@@ -84,6 +85,10 @@ const questionGoTo = JSONData_goTo.dataList.map((item) => ({
 
 export default function DependentSelectForm() {
   // const [calendarValue, setCalendarValue] = useState(new Date())
+  const { qacWithOutFilter, isFetchingQacWithOutFilter } = useGetQacWithOutFilter();
+
+  console.log("qacWithOutFilter",qacWithOutFilter)
+  console.log("isFetchingQacWithOutFilter",isFetchingQacWithOutFilter)
 
   const methods = useForm<FormData>({
     resolver: zodResolver(FormSchema),
