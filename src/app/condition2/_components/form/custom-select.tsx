@@ -54,7 +54,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
                   />
                 );
               }
-              const selectedOption = options.find(option => option.value === selected);
+              const selectedOption = options?.find(option => option.value === selected);
               return selectedOption ? selectedOption.label : "";
             }}
             sx={{

@@ -31,6 +31,7 @@ import CustomTextField from "./_components/form/custom-text-field";
 // hooks
 import { useGetQacWithOutFilter } from "./hooks/useGetQacWithOutFilter";
 import { useGetOnlyAllQuestions } from "./hooks/useGetOnlyAllQuestions";
+import { useGetOnlyAllCalculation } from "./hooks/useGetOnlyAllCalculation";
 
 const SubConditionSchema = z.object({
   logicalOperator: z.string().optional(),
@@ -73,10 +74,13 @@ export default function DependentSelectForm() {
     onlySomeQuestionsOptions,
     isFetchingOnlyAllQuestions,
   } = useGetOnlyAllQuestions();
+  const {
+    onlyAllCalculationOptions,
+    isFetchingOnlyAllCalculation
+  } = useGetOnlyAllCalculation();
 
-  console.log("qacWithOutFilter", qacWithOutFilter);
-  console.log("isFetchingQacWithOutFilter", isFetchingQacWithOutFilter);
-  console.log("qacWithOutFilterOptions", qacWithOutFilterOptions);
+  
+  console.log("onlyAllCalculationOptions", onlyAllCalculationOptions);
 
   const methods = useForm<FormData>({
     resolver: zodResolver(FormSchema),
@@ -276,7 +280,8 @@ export default function DependentSelectForm() {
         return (
           <CustomSelect
             name={field.name}
-            options={calculationTypes}
+            options={onlyAllCalculationOptions}
+            isLoading={isFetchingOnlyAllCalculation}
             sx={{ minWidth: 200 }}
           />
         );

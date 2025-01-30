@@ -11,7 +11,7 @@ const customComboFilterModel = {
   rows: 10000,
   extMap: {
     formId: 81,
-    typeRequest: "ONLY_ALL_CALCULATION" 
+    typeRequest: "ONLY_ALL_CALCULATIONS" 
   }
 };
 
@@ -32,7 +32,7 @@ const fetchData = async (url : string) => {
 export const useGetOnlyAllCalculation = () => {
 
   const { data, isFetching } = useQuery({
-    queryKey: ['ONLY_ALL_CALCULATION'],
+    queryKey: ['ONLY_ALL_CALCULATIONS'],
     queryFn: () => fetchData(url),
     staleTime: 0,
     gcTime: 600000,
