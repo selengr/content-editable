@@ -26,6 +26,7 @@ import JSONData_goTo from "../../../public/assets/fake-data/goTo.json";
 import CustomTextField from "./_components/form/custom-text-field";
 import { SelectOption } from "./utils/formUtils";
 import { useGetQacWithOutFilter } from "./hooks/useGetQacWithOutFilter";
+import { useGetOnlyAllQuestions } from "./hooks/useGetOnlyAllQuestions";
 
 const SubConditionSchema = z.object({
   logicalOperator: z.string().optional(),
@@ -56,14 +57,11 @@ const calculationTypes = JSONData_First.dataList
     label: item.caption,
   }));
 
-const questionGoTo = JSONData_goTo.dataList.map((item) => ({
-  value: item.extMap.UNIC_NAME || "",
-  label: item.caption,
-}));
 
 export default function DependentSelectForm() {
   // const [calendarValue, setCalendarValue] = useState(new Date())
   const { qacWithOutFilter, isFetchingQacWithOutFilter, qacWithOutFilterOptions } = useGetQacWithOutFilter();
+  const { onlyAllQuestions, isFetchingOnlyAllQuestions, onlyAllQuestionsOptions } = useGetOnlyAllQuestions();
 
   console.log("qacWithOutFilter",qacWithOutFilter)
   console.log("isFetchingQacWithOutFilter",isFetchingQacWithOutFilter)
@@ -667,7 +665,8 @@ export default function DependentSelectForm() {
 
                 <CustomSelect
                   name={`conditions.${index}.returnQuestionId`}
-                  options={questionGoTo}
+                  options={onlyAllQuestionsOptions}
+                  isLoading={isFetchingOnlyAllQuestions}
                   sx={{ minWidth: 200, ml: 5 }}
                 />
                 <Typography
@@ -678,7 +677,8 @@ export default function DependentSelectForm() {
 
                 <CustomSelect
                   name={`conditions.${index}.elseQuestionId`}
-                  options={questionGoTo}
+                  options={onlyAllQuestionsOptions}
+                  isLoading={isFetchingOnlyAllQuestions}
                   sx={{ minWidth: 410 }}
                 />
 

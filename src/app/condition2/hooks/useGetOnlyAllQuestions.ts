@@ -1,8 +1,26 @@
 
 import { useQuery } from '@tanstack/react-query';
 
-const fetchData = async () => {
-  const response = await fetch('http://localhost:3000/api/question/q-and-c-custom-combo?customComboFilterModel=%7B%22type%22%3A%22COMBO%22%2C%22entity%22%3A%22QUESTIONS%22%2C%22mode%22%3A%22QUESTIONS_IN_FORM_BUILDER__ALL%22%2C%22input%22%3A%22%22%2C%22page%22%3A0%2C%22rows%22%3A10000%2C%22extMap%22%3A%7B%22formId%22%3A81%2C%22typeRequest%22%3A%22QAC_WIHT_OUT_FILTER%22%7D%7D');
+const baseUrl = 'http://localhost:3000/api/question/q-and-c-custom-combo?';
+const customComboFilterModel = {
+  type: "COMBO",
+  entity: "QUESTIONS",
+  mode: "QUESTIONS_IN_FORM_BUILDER__ALL",
+  input: "",
+  page: 0,
+  rows: 10000,
+  extMap: {
+    formId: 81,
+    typeRequest: "ONLY_ALL_QUESTIONS" 
+  }
+};
+
+const queryString = `?customComboFilterModel=${encodeURIComponent(JSON.stringify(customComboFilterModel))}`;
+const url = baseUrl + queryString;
+
+
+const fetchData = async (url : string) => {
+  const response = await fetch(url);
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }
@@ -15,7 +33,7 @@ export const useGetOnlyAllQuestions = () => {
 
   const { data, isFetching } = useQuery({
     queryKey: ['ONLY_ALL_QUESTIONS'],
-    queryFn: () => fetchData(),
+    queryFn: () => fetchData(url),
     staleTime: 0,
     gcTime: 600000,
     refetchOnWindowFocus: true,
@@ -23,27 +41,10 @@ export const useGetOnlyAllQuestions = () => {
     retry: 3
   });
 
-  const onlyAllQuestionsOptions = data?.dataList?.map((item) => {
-    const isCalculation = item.elementStr === "CALCULATION";
-    const isTextFieldDate = item.extMap.TEXT_FIELD_PATTERN === "DATE";
-    const isSpectralDouble = item.extMap.SPECTRAL_TYPE === "DOMAIN";
-    const isMultiSelect = parseInt(item.extMap.MULTI_SELECT);
-    
-    const questionType = isCalculation
-      ? `${item.elementStr}*${item.extMap.UNIC_NAME}`
-      : isTextFieldDate
-      ? `${item.extMap.QUESTION_TYPE}_${item.extMap.TEXT_FIELD_PATTERN}*${item.extMap.UNIC_NAME}`
-      : isMultiSelect
-      ? `${item.extMap.QUESTION_TYPE}_MULTI_SELECT*${item.extMap.UNIC_NAME}`
-      : isSpectralDouble
-      ? `${item.extMap.QUESTION_TYPE}_${item.extMap.SPECTRAL_TYPE}*${item.extMap.UNIC_NAME}`
-      : `${item.extMap.QUESTION_TYPE}*${item.extMap.UNIC_NAME || ""}`;
-
-    return {
-      value: questionType,
-      label: item.caption,
-    };
-  });
+  const onlyAllQuestionsOptions = data?.dataList?.map((item) => ({
+    value: item.extMap.UNIC_NAME,
+    label: item.caption,
+  }));
 
   return {
     isFetchingOnlyAllQuestions: isFetching,
