@@ -259,10 +259,10 @@ export default function DependentSelectForm() {
         return <CustomTextField name={field.name} type="number" />;
 
       //test
-      case "MULTIPLE_CHOICE_OPTION_#equalMultiChoiceSingle":
-      case "MULTIPLE_CHOICE_OPTION_!#equalMultiChoiceSingle":
-      case "MULTIPLE_CHOICE_OPTION_#lessThanMultiChoiceSingle":
-      case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle":
+      case "MULTIPLE_CHOICE_QUESTION_#equalMultiChoiceSingle":
+      case "MULTIPLE_CHOICE_QUESTION_!#equalMultiChoiceSingle":
+      case "MULTIPLE_CHOICE_QUESTION_#lessThanMultiChoiceSingle":
+      case "MULTIPLE_CHOICE_QUESTION_!#lessThanMultiChoiceSingle":
         return (
           <CustomSelect
             name={field.name}
@@ -285,6 +285,32 @@ export default function DependentSelectForm() {
             sx={{ minWidth: 200 }}
           />
         );
+
+      //test
+      case "MULTIPLE_CHOICE_OPTION_#equalMultiChoiceSingle":
+      case "MULTIPLE_CHOICE_OPTION_!#equalMultiChoiceSingle":
+      case "MULTIPLE_CHOICE_OPTION_#lessThanMultiChoiceSingle":
+      case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle":
+          return onlyAllQuestions?.map((item) => {
+            if (item?.extMap?.UNIC_NAME === type.split("*")[1]) {
+              const options = item?.extMap?.OPTIONS;
+  
+              const optionsList = [];
+              Object.keys(options).forEach((key) => {
+                optionsList.push({
+                  value: key,
+                  label: options[key][1],
+                });
+              });
+              return (
+                <CustomSelect
+                  name={field.name}
+                  options={optionsList}
+                  sx={{ minWidth: 200 }}
+                />
+              );
+            }
+          });
 
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_#containMultiChoiceMulti":
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_!#containMultiChoiceMulti":
