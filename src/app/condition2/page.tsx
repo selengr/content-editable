@@ -249,6 +249,7 @@ export default function DependentSelectForm() {
     condition: string,
     field: any
   ) => {
+    console.log("field",field)
     const combinedKey = `${type?.split("*")[0]}_${operator}_${condition}`;
     switch (combinedKey) {
       case "MULTIPLE_CHOICE_VALUE_!#lessThanMultiChoiceSingle":
