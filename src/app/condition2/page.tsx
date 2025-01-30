@@ -1,6 +1,9 @@
 "use client";
 
+import * as z from "zod";
+import Image from "next/image";
 import { v4 as uuidv4 } from "uuid";
+// hook-form
 import {
   useForm,
   useFieldArray,
@@ -9,21 +12,23 @@ import {
   useWatch,
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import Image from "next/image";
-import { Box, IconButton, Typography, Button, TextField } from "@mui/material";
+// mui
 import { LoadingButton } from "@mui/lab";
+import { Box, IconButton, Typography, Button, TextField } from "@mui/material";
+// others
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import "react-multi-date-picker/styles/layouts/mobile.css";
+// public
 import TrashIcon from "@/../public/images/home-page/trash.svg";
 import PlusIcon from "@/../public/images/home-page/Add-fill.svg";
+import JSONData_First from "../../../public/assets/fake-data/first.json";
+// _components
 import CustomSelect from "./_components/form/custom-select";
 import { CircleDivider } from "./_components/circle-divider";
-import JSONData_First from "../../../public/assets/fake-data/first.json";
 import CustomTextField from "./_components/form/custom-text-field";
-import { SelectOption } from "./utils/formUtils";
+// hooks
 import { useGetQacWithOutFilter } from "./hooks/useGetQacWithOutFilter";
 import { useGetOnlyAllQuestions } from "./hooks/useGetOnlyAllQuestions";
 
@@ -48,7 +53,6 @@ const FormSchema = z.object({
 
 type FormData = z.infer<typeof FormSchema>;
 
-
 const calculationTypes = JSONData_First.dataList
   .filter((item) => item.elementStr === "CALCULATION")
   .map((item) => ({
@@ -56,15 +60,23 @@ const calculationTypes = JSONData_First.dataList
     label: item.caption,
   }));
 
-
 export default function DependentSelectForm() {
   // const [calendarValue, setCalendarValue] = useState(new Date())
-  const { qacWithOutFilter, isFetchingQacWithOutFilter, qacWithOutFilterOptions } = useGetQacWithOutFilter();
-  const { onlyAllQuestions, isFetchingOnlyAllQuestions, onlyAllQuestionsOptions } = useGetOnlyAllQuestions();
+  const {
+    qacWithOutFilter,
+    qacWithOutFilterOptions,
+    isFetchingQacWithOutFilter,
+  } = useGetQacWithOutFilter();
+  const {
+    onlyAllQuestions,
+    onlyAllQuestionsOptions,
+    onlySomeQuestionsOptions,
+    isFetchingOnlyAllQuestions,
+  } = useGetOnlyAllQuestions();
 
-  console.log("qacWithOutFilter",qacWithOutFilter)
-  console.log("isFetchingQacWithOutFilter",isFetchingQacWithOutFilter)
-  console.log("qacWithOutFilterOptions",qacWithOutFilterOptions)
+  console.log("qacWithOutFilter", qacWithOutFilter);
+  console.log("isFetchingQacWithOutFilter", isFetchingQacWithOutFilter);
+  console.log("qacWithOutFilterOptions", qacWithOutFilterOptions);
 
   const methods = useForm<FormData>({
     resolver: zodResolver(FormSchema),
@@ -109,12 +121,13 @@ export default function DependentSelectForm() {
   const getQuestion = (type: string, values: any) => {
     console.log(type);
     switch (type?.split("*")[0]) {
+      //test
       case "MULTIPLE_CHOICE":
         return [
           { value: "VALUE", label: "ارزش" },
           { value: "OPTION", label: "گزینه" },
           { value: "QUESTION", label: "سوال " },
-          { value: "CALCULATION", label: "محاسبه‌گر" }
+          { value: "CALCULATION", label: "محاسبه‌گر" },
         ];
       case "MULTIPLE_CHOICE_MULTI_SELECT":
         return [{ value: "OPTION", label: "گزینه" }];
@@ -150,15 +163,16 @@ export default function DependentSelectForm() {
   const getCondition = (type: string, operator: string, values: any) => {
     const combinedKey = `${type?.split("*")[0]}_${operator}`;
     switch (combinedKey) {
+      //test
       case "MULTIPLE_CHOICE_VALUE":
-      case "MULTIPLE_CHOICE_QUESTION":
       case "MULTIPLE_CHOICE_OPTION":
+      case "MULTIPLE_CHOICE_QUESTION":
       case "MULTIPLE_CHOICE_CALCULATION":
         return [
-          { value: "!#lessThanMultiChoiceSingle", label: "بزرگتر بود" },
-          { value: "#lessThanMultiChoiceSingle", label: "کوچکتر بود از" },
-          { value: "#equalMultiChoiceSingle", label: "برابر بود با" },
-          { value: "!#equalMultiChoiceSingle", label: "نابرابر بود با" },
+          { value: "#equalMultiChoiceSingle", label: "برابر با" },
+          { value: "!#equalMultiChoiceSingle", label: "نابرابر با" },
+          { value: "!#lessThanMultiChoiceSingle", label: "بزرگتر از" },
+          { value: "#lessThanMultiChoiceSingle", label: "کوچکتر از" },
         ];
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION":
         return [
@@ -230,32 +244,35 @@ export default function DependentSelectForm() {
     condition: string,
     field: any
   ) => {
-    console.log("field",field)
+    console.log("field", field);
     const combinedKey = `${type?.split("*")[0]}_${operator}_${condition}`;
     switch (combinedKey) {
-      case "MULTIPLE_CHOICE_VALUE_!#lessThanMultiChoiceSingle":
-      case "MULTIPLE_CHOICE_VALUE_#lessThanMultiChoiceSingle":
+      //test
       case "MULTIPLE_CHOICE_VALUE_#equalMultiChoiceSingle":
       case "MULTIPLE_CHOICE_VALUE_!#equalMultiChoiceSingle":
-        return <CustomTextField name={field.name} label="" type="number" />;
+      case "MULTIPLE_CHOICE_VALUE_#lessThanMultiChoiceSingle":
+      case "MULTIPLE_CHOICE_VALUE_!#lessThanMultiChoiceSingle":
+        return <CustomTextField name={field.name} type="number" />;
 
-
-      case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle":
-      case "MULTIPLE_CHOICE_OPTION_#lessThanMultiChoiceSingle":
+      //test
       case "MULTIPLE_CHOICE_OPTION_#equalMultiChoiceSingle":
       case "MULTIPLE_CHOICE_OPTION_!#equalMultiChoiceSingle":
+      case "MULTIPLE_CHOICE_OPTION_#lessThanMultiChoiceSingle":
+      case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle":
         return (
           <CustomSelect
             name={field.name}
-            options={qacWithOutFilterOptions}
+            options={onlySomeQuestionsOptions}
+            isLoading={isFetchingOnlyAllQuestions}
             sx={{ minWidth: 200 }}
           />
         );
 
-      case "MULTIPLE_CHOICE_CALCULATION_!#lessThanMultiChoiceSingle":
-      case "MULTIPLE_CHOICE_CALCULATION_#lessThanMultiChoiceSingle":
+      //test
       case "MULTIPLE_CHOICE_CALCULATION_#equalMultiChoiceSingle":
       case "MULTIPLE_CHOICE_CALCULATION_!#equalMultiChoiceSingle":
+      case "MULTIPLE_CHOICE_CALCULATION_#lessThanMultiChoiceSingle":
+      case "MULTIPLE_CHOICE_CALCULATION_!#lessThanMultiChoiceSingle":
         return (
           <CustomSelect
             name={field.name}
