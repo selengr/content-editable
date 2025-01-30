@@ -26,7 +26,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   sx,
   name,
   disabled = false,
-  isLoading = true,
+  isLoading = false,
   ...props
 }) => {
   const { control } = useFormContext();
@@ -55,7 +55,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
                   />
                 );
               }
-              return selected || "Select an option";
+              return selected;
             }}
             sx={{
               "& .MuiSelect-select.MuiSelect-outlined": {

@@ -570,6 +570,7 @@ export default function DependentSelectForm() {
                         <CustomSelect
                           name={`conditions.${index}.subConditions.${subIndex}.questionType`}
                           options={qacWithOutFilterOptions}
+                          isLoading={isFetchingQacWithOutFilter}
                           sx={{ minWidth: 200 }}
                         />
                         <CustomSelect
