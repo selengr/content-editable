@@ -37,6 +37,8 @@ import { useGetOnlyAllQuestions } from "./hooks/useGetOnlyAllQuestions";
 import { useGetOnlyAllCalculation } from "./hooks/useGetOnlyAllCalculation";
 import { formatContainText } from "./utils/formatContainText";
 
+import { DatePicker as DatePickerCustome } from "./_components/DatePicker/DatePicker";
+
 const SubConditionSchema = z.object({
   logicalOperator: z.string().optional(),
   questionType: z.string().min(1, { message: "اين فيلد الزامي است" }),
@@ -113,6 +115,7 @@ export default function DependentSelectForm() {
     control,
     handleSubmit,
     formState: { errors },
+    setValue
   } = methods;
 
   const {
@@ -425,58 +428,60 @@ export default function DependentSelectForm() {
                 name={field.name}
                 control={control}
                 render={({ field }) => (
-                  <DatePicker
-                    min={new Date().setDate(new Date().getDate() - 1)}
+                  <DatePickerCustome
+                    // min={new Date().setDate(new Date().getDate() - 1)}
                     onChange={(value) => {
                       field.onChange(value);
-                      setValue(`${fieldName}.value`, value);
+                      setValue(field.name, value);
                     }}
+                    // className={"rmdp-mobile"}
+                    // zIndex={9999}
                   />
                 )}
               />
             );
 
-          <Controller
-            name={field.name}
-            control={control}
-            render={({ field: { onChange, value }, fieldState: { error } }) => (
-              <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                sx={{
-                  "& .rmdp-wrapper.rmdp-border": {
-                    borderRadius: "20px",
-                  },
-                }}
-              >
-                <DatePicker
-                  shadow={false}
-                  calendar={persian}
-                  locale={persian_fa}
-                  value={value ? value : new Date()} 
-                  onChange={(date) => {
-                    // Assuming date is the object returned by the DatePicker
-                    if (date && date.isValid) {
-                      // Convert to a JavaScript Date object or a formatted string
-                      const jsDate = new Date(date.year, date.monthIndex, date.day);
-                      onChange(jsDate); // Pass the JavaScript Date object to onChange
-                    } else {
-                      onChange(null); // Handle invalid date
-                    }
-                  }}
-                  className={"rmdp-mobile"}
-                  zIndex={9999}
-                  inputClass={`h-[50px] px-4 border-[1px] w-full border-neutral-300 rounded-xl text-left p-1 ${
-                    error ? "border-red-500" : ""
-                  }`}
-                  highlightToday
-                  portal
-                />
-              </Box>
-            )}
-          />
-        );
+        //   <Controller
+        //     name={field.name}
+        //     control={control}
+        //     render={({ field: { onChange, value }, fieldState: { error } }) => (
+        //       <Box
+        //         display="flex"
+        //         justifyContent="center"
+        //         alignItems="center"
+        //         sx={{
+        //           "& .rmdp-wrapper.rmdp-border": {
+        //             borderRadius: "20px",
+        //           },
+        //         }}
+        //       >
+        //         <DatePicker
+        //           shadow={false}
+        //           calendar={persian}
+        //           locale={persian_fa}
+        //           value={value ? value : new Date()} 
+        //           onChange={(date) => {
+        //             // Assuming date is the object returned by the DatePicker
+        //             if (date && date.isValid) {
+        //               // Convert to a JavaScript Date object or a formatted string
+        //               const jsDate = new Date(date.year, date.monthIndex, date.day);
+        //               onChange(jsDate); // Pass the JavaScript Date object to onChange
+        //             } else {
+        //               onChange(null); // Handle invalid date
+        //             }
+        //           }}
+        //           className={"rmdp-mobile"}
+        //           zIndex={9999}
+        //           inputClass={`h-[50px] px-4 border-[1px] w-full border-neutral-300 rounded-xl text-left p-1 ${
+        //             error ? "border-red-500" : ""
+        //           }`}
+        //           highlightToday
+        //           portal
+        //         />
+        //       </Box>
+        //     )}
+        //   />
+        // );
 
       case "CALCULATION_VALUE_#equalThanNumber":
       case "CALCULATION_VALUE_!#equalThanNumber":
