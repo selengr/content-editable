@@ -27,7 +27,7 @@ export const useGetQacWithOutFilter = () => {
     const isCalculation = item.elementStr === "CALCULATION";
     const isTextFieldDate = item.extMap.TEXT_FIELD_PATTERN === "DATE";
     const isSpectralDouble = item.extMap.SPECTRAL_TYPE === "DOMAIN";
-    const isMultiSelect = parseInt(item.extMap.MULTI_SELECT);
+    const isMultiSelect = item.extMap.MULTI_SELECT ? JSON.parse(item.extMap.MULTI_SELECT) : false;
     
     const questionType = isCalculation
       ? `${item.elementStr}*${item.extMap.UNIC_NAME}`

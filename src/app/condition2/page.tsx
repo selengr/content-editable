@@ -25,7 +25,7 @@ import TrashIcon from "@/../public/images/home-page/trash.svg";
 import PlusIcon from "@/../public/images/home-page/Add-fill.svg";
 import JSONData_First from "../../../public/assets/fake-data/first.json";
 // _components
-import CustomSelect from "./_components/form/custom-select";
+import { CustomSelectController, MultiSelectController } from "./_components/form/select-controller";
 import { CircleDivider } from "./_components/circle-divider";
 import CustomTextField from "./_components/form/custom-text-field";
 // hooks
@@ -133,6 +133,7 @@ export default function DependentSelectForm() {
           { value: "QUESTION", label: "سوال " },
           { value: "CALCULATION", label: "محاسبه‌گر" },
         ];
+     //test
       case "MULTIPLE_CHOICE_MULTI_SELECT":
         return [{ value: "OPTION", label: "گزینه" }];
       case "TEXT_FIELD":
@@ -178,11 +179,13 @@ export default function DependentSelectForm() {
           { value: "!#lessThanMultiChoiceSingle", label: "بزرگتر از" },
           { value: "#lessThanMultiChoiceSingle", label: "کوچکتر از" },
         ];
+
+     //test
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION":
         return [
           { value: "#containMultiChoiceMulti", label: "شامل شدن" },
           { value: "!#containMultiChoiceMulti", label: "شامل نشدن" },
-          { value: "#equalThanMultiChoiceMulti", label: "برابر  با" },
+          { value: "#equalThanMultiChoiceMulti", label: "برابر با" },
           { value: "!#equalThanMultiChoiceMulti", label: "نابرابر با" },
         ];
       case "TEXT_FIELD_VALUE":
@@ -248,23 +251,23 @@ export default function DependentSelectForm() {
     condition: string,
     field: any
   ) => {
-    // console.log("field", field);
+    
     const combinedKey = `${type?.split("*")[0]}_${operator}_${condition}`;
     switch (combinedKey) {
-      //test
+      // test
       case "MULTIPLE_CHOICE_VALUE_#equalMultiChoiceSingle":
       case "MULTIPLE_CHOICE_VALUE_!#equalMultiChoiceSingle":
       case "MULTIPLE_CHOICE_VALUE_#lessThanMultiChoiceSingle":
       case "MULTIPLE_CHOICE_VALUE_!#lessThanMultiChoiceSingle":
         return <CustomTextField name={field.name} type="number" />;
 
-      //test
+      // test
       case "MULTIPLE_CHOICE_QUESTION_#equalMultiChoiceSingle":
       case "MULTIPLE_CHOICE_QUESTION_!#equalMultiChoiceSingle":
       case "MULTIPLE_CHOICE_QUESTION_#lessThanMultiChoiceSingle":
       case "MULTIPLE_CHOICE_QUESTION_!#lessThanMultiChoiceSingle":
         return (
-          <CustomSelect
+          <CustomSelectController
             name={field.name}
             options={onlySomeQuestionsOptions}
             isLoading={isFetchingOnlyAllQuestions}
@@ -272,13 +275,13 @@ export default function DependentSelectForm() {
           />
         );
 
-      //test
+      // test
       case "MULTIPLE_CHOICE_CALCULATION_#equalMultiChoiceSingle":
       case "MULTIPLE_CHOICE_CALCULATION_!#equalMultiChoiceSingle":
       case "MULTIPLE_CHOICE_CALCULATION_#lessThanMultiChoiceSingle":
       case "MULTIPLE_CHOICE_CALCULATION_!#lessThanMultiChoiceSingle":
         return (
-          <CustomSelect
+          <CustomSelectController
             name={field.name}
             options={onlyAllCalculationOptions}
             isLoading={isFetchingOnlyAllCalculation}
@@ -286,7 +289,7 @@ export default function DependentSelectForm() {
           />
         );
 
-      //test
+      // test
       case "MULTIPLE_CHOICE_OPTION_#equalMultiChoiceSingle":
       case "MULTIPLE_CHOICE_OPTION_!#equalMultiChoiceSingle":
       case "MULTIPLE_CHOICE_OPTION_#lessThanMultiChoiceSingle":
@@ -303,7 +306,7 @@ export default function DependentSelectForm() {
                 });
               });
               return (
-                <CustomSelect
+                <CustomSelectController
                   name={field.name}
                   options={optionsList}
                   sx={{ minWidth: 200 }}
@@ -312,33 +315,23 @@ export default function DependentSelectForm() {
             }
           });
 
+      // test
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_#containMultiChoiceMulti":
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_!#containMultiChoiceMulti":
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_!#equalThanMultiChoiceMulti":
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_#equalThanMultiChoiceMulti":
-        return JSONData_First.dataList.map((item) => {
-          if (item?.extMap?.UNIC_NAME === type.split("*")[1]) {
-            const options = item?.extMap?.OPTIONS;
-
-            const optionsList = [];
-            Object.keys(options).forEach((key) => {
-              optionsList.push({
-                value: key,
-                label: options[key][1],
-              });
-            });
-            return (
-              <CustomSelect
-                name={field.name}
-                options={optionsList}
-                sx={{ minWidth: 200 }}
-              />
-            );
-          }
-        });
+        return (
+          <MultiSelectController
+          chip={true}
+          label={"eee"}
+            name={field.name}
+            options={qacWithOutFilterOptions}
+            sx={{ minWidth: 200 }}
+          />
+        );
 
         return (
-          <CustomSelect
+          <CustomSelectController
             name={field.name}
             options={qacWithOutFilterOptions}
             sx={{ minWidth: 200 }}
@@ -370,7 +363,7 @@ export default function DependentSelectForm() {
       case "SPECTRAL_QUESTION_#greaterEqualThanSpectralSingle":
       case "SPECTRAL_QUESTION_!#greaterEqualThanSpectralSingle":
         return (
-          <CustomSelect
+          <CustomSelectController
             name={field.name}
             options={qacWithOutFilterOptions}
             sx={{ minWidth: 200 }}
@@ -383,7 +376,7 @@ export default function DependentSelectForm() {
       case "SPECTRAL_CALCULATION_#greaterEqualThanSpectralSingle":
       case "SPECTRAL_CALCULATION_!#greaterEqualThanSpectralSingle":
         return (
-          <CustomSelect
+          <CustomSelectController
             name={field.name}
             options={calculationTypes}
             sx={{ minWidth: 200 }}
@@ -445,7 +438,7 @@ export default function DependentSelectForm() {
       case "CALCULATION_QUESTION_#greaterEqualThanNumber":
       case "CALCULATION_QUESTION_!#greaterEqualThanNumber":
         return (
-          <CustomSelect
+          <CustomSelectController
             name={field.name}
             options={qacWithOutFilterOptions}
             sx={{ minWidth: 200 }}
@@ -459,7 +452,7 @@ export default function DependentSelectForm() {
       case "CALCULATION_CALCULATION_#greaterEqualThanNumber":
       case "CALCULATION_CALCULATION_!#greaterEqualThanNumber":
         return (
-          <CustomSelect
+          <CustomSelectController
             name={field.name}
             options={calculationTypes}
             sx={{ minWidth: 200 }}
@@ -612,7 +605,7 @@ export default function DependentSelectForm() {
                           </Typography>
                         )}
                         {subIndex > 0 && (
-                          <CustomSelect
+                          <CustomSelectController
                             name={`conditions.${index}.subConditions.${subIndex}.logicalOperator`}
                             options={[
                               { value: "&&", label: "و" },
@@ -622,14 +615,24 @@ export default function DependentSelectForm() {
                           />
                         )}
                       </Box>
+                      <MultiSelectController
+          // chip={true}
+          label={"eee"}
+            name={"field.name"}
+            options={[ {
+              label: "string",
+              value: "string"
+            }]}
+            sx={{ minWidth: 200 }}
+          />
                       <Box rowGap={3} columnGap={2} display="flex">
-                        <CustomSelect
+                        <CustomSelectController
                           name={`conditions.${index}.subConditions.${subIndex}.questionType`}
                           options={qacWithOutFilterOptions}
                           isLoading={isFetchingQacWithOutFilter}
                           sx={{ minWidth: 200 }}
                         />
-                        <CustomSelect
+                        <CustomSelectController
                           name={`conditions.${index}.subConditions.${subIndex}.operatorType`}
                           options={getQuestion(
                             currentValues.questionType,
@@ -638,7 +641,7 @@ export default function DependentSelectForm() {
                           sx={{ minWidth: 200 }}
                           disabled={!Boolean(currentValues.questionType)}
                         />
-                        <CustomSelect
+                        <CustomSelectController
                           name={`conditions.${index}.subConditions.${subIndex}.conditionType`}
                           options={getCondition(
                             currentValues.questionType,
@@ -721,7 +724,7 @@ export default function DependentSelectForm() {
                   :برو به
                 </Typography>
 
-                <CustomSelect
+                <CustomSelectController
                   name={`conditions.${index}.returnQuestionId`}
                   options={onlyAllQuestionsOptions}
                   isLoading={isFetchingOnlyAllQuestions}
@@ -733,7 +736,7 @@ export default function DependentSelectForm() {
                   در غیر اینصورت برو به:
                 </Typography>
 
-                <CustomSelect
+                <CustomSelectController
                   name={`conditions.${index}.elseQuestionId`}
                   options={onlyAllQuestionsOptions}
                   isLoading={isFetchingOnlyAllQuestions}
