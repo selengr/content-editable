@@ -420,7 +420,22 @@ export default function DependentSelectForm() {
       case "TEXT_FIELD_DATE_DATE_#afterDate":
       // case "TEXT_FIELD_DATE_DATE_#beforeDate":
       // case "TEXT_FIELD_DATE_QUESTION_#afterDate":
-        return (
+            return (
+              <Controller
+                name={field.name}
+                control={control}
+                render={({ field }) => (
+                  <DatePicker
+                    min={new Date().setDate(new Date().getDate() - 1)}
+                    onChange={(value) => {
+                      field.onChange(value);
+                      setValue(`${fieldName}.value`, value);
+                    }}
+                  />
+                )}
+              />
+            );
+
           <Controller
             name={field.name}
             control={control}
@@ -440,9 +455,15 @@ export default function DependentSelectForm() {
                   calendar={persian}
                   locale={persian_fa}
                   value={value ? value : new Date()} 
-                  onChange={(e: any) => {
-                    console.log("Selected date:", e);
-                    onChange(e);
+                  onChange={(date) => {
+                    // Assuming date is the object returned by the DatePicker
+                    if (date && date.isValid) {
+                      // Convert to a JavaScript Date object or a formatted string
+                      const jsDate = new Date(date.year, date.monthIndex, date.day);
+                      onChange(jsDate); // Pass the JavaScript Date object to onChange
+                    } else {
+                      onChange(null); // Handle invalid date
+                    }
                   }}
                   className={"rmdp-mobile"}
                   zIndex={9999}
