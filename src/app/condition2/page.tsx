@@ -147,11 +147,8 @@ export default function DependentSelectForm() {
           { value: "VALUE", label: "ارزش" },
           { value: "TEXT", label: "متن" },
         ];
-      case "TEXT_FIELD_DATE":
-        return [
-          { value: "QUESTION", label: "سوال" },
-          { value: "DATE", label: "تاریخ" },
-        ];
+     
+        //test
       case "SPECTRAL":
         return [
           { value: "VALUE", label: "ارزش" },
@@ -166,6 +163,13 @@ export default function DependentSelectForm() {
           { value: "QUESTION", label: "سوال " },
           { value: "CALCULATION", label: "محاسبه‌گر" },
         ];
+
+        case "TEXT_FIELD_DATE":
+          return [
+            { value: "QUESTION", label: "سوال" },
+            { value: "DATE", label: "تاریخ" },
+          ];
+
       default:
         return [];
     }
@@ -206,16 +210,16 @@ export default function DependentSelectForm() {
           { value: "#lenGraterThanText", label: "طول متن بیشتر از" },
           { value: "!#lenGraterThanText", label: "طول متن کمتر از" },
         ];
-
+      //test
       case "SPECTRAL_VALUE":
       case "SPECTRAL_QUESTION":
       case "SPECTRAL_CALCULATION":
         return [
           { value: "#greaterThanSpectral", label: "بزرگتر از" },
           { value: "#greaterThanSpectral", label: "کوچکتر  از" },
+          { value: "#equalThanSpectralSingle", label: "برابر  با" },
           { value: "#greaterEqualThanSpectralSingle", label: "بزرگتر مساوی" },
           { value: "!#greaterEqualThanSpectralSingle", label: " کوچکتر مساوی" },
-          { value: "#equalThanSpectralSingle", label: "برابر  با" },
         ];
       case "SPECTRAL_DOMAIN_VALUE":
         return [
@@ -364,6 +368,7 @@ export default function DependentSelectForm() {
       case "TEXT_FIELD_VALUE_!#lenGraterThanText":
         return <CustomTextField name={field.name} type="number" />;
 
+         //test
       case "SPECTRAL_VALUE_#greaterThanSpectral":
       case "SPECTRAL_VALUE_!#greaterThanSpectral":
       case "SPECTRAL_VALUE_#equalThanSpectralSingle":
@@ -379,7 +384,8 @@ export default function DependentSelectForm() {
         return (
           <CustomSelectController
             name={field.name}
-            options={qacWithOutFilterOptions}
+            options={onlySomeQuestionsOptions}
+            isLoading={isFetchingOnlyAllQuestions}
             sx={{ minWidth: 200 }}
           />
         );
@@ -392,7 +398,8 @@ export default function DependentSelectForm() {
         return (
           <CustomSelectController
             name={field.name}
-            options={calculationTypes}
+            options={onlyAllCalculationOptions}
+            isLoading={isFetchingOnlyAllCalculation}
             sx={{ minWidth: 200 }}
           />
         );
