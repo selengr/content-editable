@@ -376,6 +376,7 @@ export default function DependentSelectForm() {
       case "SPECTRAL_VALUE_!#greaterEqualThanSpectralSingle":
         return <CustomTextField name={field.name} type="number" />;
 
+        //test
       case "SPECTRAL_QUESTION_#greaterThanSpectral":
       case "SPECTRAL_QUESTION_!#greaterThanSpectral":
       case "SPECTRAL_QUESTION_#equalThanSpectralSingle":
@@ -390,6 +391,7 @@ export default function DependentSelectForm() {
           />
         );
 
+        //test
       case "SPECTRAL_CALCULATION_#greaterThanSpectral":
       case "SPECTRAL_CALCULATION_!#greaterThanSpectral":
       case "SPECTRAL_CALCULATION_#equalThanSpectralSingle":
