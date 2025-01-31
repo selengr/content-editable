@@ -80,7 +80,7 @@ export default function DependentSelectForm() {
   } = useGetOnlyAllCalculation();
 
   
-  console.log("onlyAllCalculationOptions", onlyAllCalculationOptions);
+  // console.log("onlyAllCalculationOptions", onlyAllCalculationOptions);
 
   const methods = useForm<FormData>({
     resolver: zodResolver(FormSchema),
@@ -248,7 +248,7 @@ export default function DependentSelectForm() {
     condition: string,
     field: any
   ) => {
-    console.log("field", field);
+    // console.log("field", field);
     const combinedKey = `${type?.split("*")[0]}_${operator}_${condition}`;
     switch (combinedKey) {
       //test
@@ -476,19 +476,30 @@ export default function DependentSelectForm() {
 
     const transformInputToOutput = (input) => {
       return input.conditions.map((condition) => {
-        const conditionFormula = condition.subConditions
-          .map((subCondition) => {
-            const baseCondition = `${subCondition.conditionType}(${
-              subCondition.questionType.split("*")[1]
-            },${subCondition.value})`;
+        const { subConditions, returnQuestionId, elseQuestionId } = condition;
 
-            if (!!subCondition?.logicalOperator) {
-              return " " + subCondition.logicalOperator + " " + baseCondition;
-            } else {
-              return baseCondition;
-            }
-          })
-          .join("");
+
+        const conditionFormula = subConditions
+        .map((subCondition) => {
+          const {
+            conditionType,
+            questionType,
+            operatorType,
+            value,
+            logicalOperator,
+          } = subCondition;
+  
+          const formattedValue = operatorType === "OPTION" ? `{${value}}` : operatorType === "VALUE" ? `{#v_${value}}` : value;
+  
+          const baseCondition = `${conditionType}(${
+            questionType.split("*")[1]
+          },${formattedValue})`;
+  
+          return logicalOperator ? ` ${logicalOperator} ${baseCondition}` : baseCondition;
+        })
+        .join("");
+
+
 
         return {
           conditionFormula: conditionFormula,
