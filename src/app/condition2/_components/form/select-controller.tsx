@@ -193,7 +193,7 @@ export function MultiSelectController({
                 sx: { px: 1, maxHeight: 280 },
               },
             }}
-            sx={{
+            sx={{ 
               "& .MuiSelect-select.MuiSelect-outlined": {
                 fontFamily: "inherit",
                 paddingRight: "33px",
@@ -217,15 +217,6 @@ export function MultiSelectController({
             }}
             {...other}
             value={field.value || []} 
-            // onChange={(event) => {
-            //   const {
-            //     target: { value },
-            //   } = event;
-            //   const newValue = value.toString()
-            //   console.log(value.join(""));
-            //   // const newValue = typeof value !== 'string' ? value.toString('') : value;
-            //   // field.onChange(newValue);
-            // }}
           >
             {placeholder && (
               <MenuItem

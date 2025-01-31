@@ -32,6 +32,7 @@ import CustomTextField from "./_components/form/custom-text-field";
 import { useGetQacWithOutFilter } from "./hooks/useGetQacWithOutFilter";
 import { useGetOnlyAllQuestions } from "./hooks/useGetOnlyAllQuestions";
 import { useGetOnlyAllCalculation } from "./hooks/useGetOnlyAllCalculation";
+import { formatContainText } from "./utils/formatContainText";
 
 const SubConditionSchema = z.object({
   logicalOperator: z.string().optional(),
@@ -140,6 +141,7 @@ export default function DependentSelectForm() {
      //test
       case "MULTIPLE_CHOICE_MULTI_SELECT":
         return [{ value: "OPTION", label: "گزینه" }];
+        //test
       case "TEXT_FIELD":
         return [
           { value: "VALUE", label: "ارزش" },
@@ -184,7 +186,7 @@ export default function DependentSelectForm() {
           { value: "#lessThanMultiChoiceSingle", label: "کوچکتر از" },
         ];
 
-     //test
+      //test
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION":
         return [
           { value: "#containMultiChoiceMulti", label: "شامل شدن" },
@@ -192,16 +194,17 @@ export default function DependentSelectForm() {
           { value: "#equalThanMultiChoiceMulti", label: "برابر با" },
           { value: "!#equalThanMultiChoiceMulti", label: "نابرابر با" },
         ];
-      case "TEXT_FIELD_VALUE":
+      //test
       case "TEXT_FIELD_TEXT":
+      case "TEXT_FIELD_VALUE":
         return [
           { value: "#startWithText", label: "شروع شدن با " },
           { value: "#endWithText", label: "پایان یافتن با" },
           { value: "#containAnyText", label: "شامل شدن" },
           { value: "!#containAnyText", label: "شامل نشدن" },
-          { value: "#lenEqualText", label: "طول متن برابر با " },
+          { value: "#lenEqualText", label: "طول متن برابر با" },
           { value: "#lenGraterThanText", label: "طول متن بیشتر از" },
-          { value: "!#lenGraterThanText", label: " طول متن کمتر از" },
+          { value: "!#lenGraterThanText", label: "طول متن کمتر از" },
         ];
 
       case "SPECTRAL_VALUE":
@@ -347,32 +350,26 @@ export default function DependentSelectForm() {
           }
         });
 
-        return (
-          <CustomSelectController
-            name={field.name}
-            options={qacWithOutFilterOptions}
-            sx={{ minWidth: 200 }}
-          />
-        );
+        
       case "TEXT_FIELD_TEXT_#startWithText":
       case "TEXT_FIELD_TEXT_#endWithText":
-        return <CustomTextField name={field.name} label="" type="string" />;
+        return <CustomTextField name={field.name} type="string" />;
 
       case "TEXT_FIELD_TEXT_#containAnyText":
       case "TEXT_FIELD_TEXT_!#containAnyText":
-        return <CustomTextField name={field.name} label="" type="string" />;
+        return <CustomTextField name={field.name} type="string" />;
 
       case "TEXT_FIELD_VALUE_#lenEqualText":
       case "TEXT_FIELD_VALUE_#lenGraterThanText":
       case "TEXT_FIELD_VALUE_!#lenGraterThanText":
-        return <CustomTextField name={field.name} label="" type="number" />;
+        return <CustomTextField name={field.name} type="number" />;
 
       case "SPECTRAL_VALUE_#greaterThanSpectral":
       case "SPECTRAL_VALUE_!#greaterThanSpectral":
       case "SPECTRAL_VALUE_#equalThanSpectralSingle":
       case "SPECTRAL_VALUE_#greaterEqualThanSpectralSingle":
       case "SPECTRAL_VALUE_!#greaterEqualThanSpectralSingle":
-        return <CustomTextField name={field.name} label="" type="number" />;
+        return <CustomTextField name={field.name} type="number" />;
 
       case "SPECTRAL_QUESTION_#greaterThanSpectral":
       case "SPECTRAL_QUESTION_!#greaterThanSpectral":
@@ -498,8 +495,13 @@ export default function DependentSelectForm() {
             value,
             logicalOperator,
           } = subCondition;
+          console.log("val  data:", value);
   
-          const formattedValue = operatorType === "OPTION" ? `{${value}}` : operatorType === "VALUE" ? `{#v_${value}}` : value;
+          const formattedValue = operatorType === "OPTION" ? `{"${value}"}` :
+           operatorType === "VALUE" ? `{"#v_${value}"}` :
+            operatorType === "TEXT" && conditionType ===  "#startWithText" || "#endWithText" ? `{"${value}"}` :
+            operatorType === "TEXT" && conditionType ===  "!#containAnyText" || "#containAnyText" ? `{"${formatContainText(value)}"}` :
+            value;
   
           const baseCondition = `${conditionType}(${
             questionType.split("*")[1]
@@ -609,13 +611,16 @@ export default function DependentSelectForm() {
                 return (
                   <Box key={uuidv4()} sx={{ mb: 2,ml: { md : 4}, mt: 2, display: "flex", flexDirection: "row" }}>
                  
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <Box sx={{ display: "flex", alignItems: "start" }}>
                         {subIndex === 0 && (
                           <Typography
                             sx={{
                               color: "#393939",
                               fontSize: "14px",
                               width: 90,
+                              pt : 2
+                              // justifyContent: "start",
+                              // alignItems: "start"
                             }}
                           >
                             اگر
@@ -637,10 +642,10 @@ export default function DependentSelectForm() {
                       <Box rowGap={3} columnGap={2} 
                        sx={{
                         display: 'flex',
-                        flexDirection: { xs: 'column', md: 'row' },
+                        flexDirection: { xs: 'column', sm: 'row' },
                         flexWrap: 'wrap',
                         gap: 2,
-                        alignItems: 'center',
+                        // alignItems: 'center',
                         width: '100%'
                       }}
                       >
@@ -649,7 +654,7 @@ export default function DependentSelectForm() {
                           options={qacWithOutFilterOptions}
                           isLoading={isFetchingQacWithOutFilter}
                           sx={{ 
-                              width: { xs: '100%', md: '22%' },
+                              width: { sm: '100%', md: '100%' },
                               minWidth: 200,
                               flexShrink: 0
                            }}
@@ -661,7 +666,7 @@ export default function DependentSelectForm() {
                             currentValues
                           )}
                           sx={{ 
-                              width: { xs: '100%', md: '22%' },
+                              width: { sm: '100%', md: '22%' },
                               minWidth: 200,
                               flexShrink: 0
                            }}
@@ -675,7 +680,7 @@ export default function DependentSelectForm() {
                             currentValues
                           )}
                           sx={{ 
-                              width: { xs: '100%', md: '22%' },
+                              width: { sm: '100%', md: '22%' },
                               minWidth: 200,
                               flexShrink: 0
                            }}
@@ -695,7 +700,7 @@ export default function DependentSelectForm() {
                            flexDirection: "row",
                            gap: 1,
                            ml: { md: 1 },
-                           width: { xs: '100%', md: 'auto' },
+                           width: { sm: '100%', md: 'auto' },
                            justifyContent: { xs: 'flex-start', md: 'center' } }}
                         >
                           <IconButton
