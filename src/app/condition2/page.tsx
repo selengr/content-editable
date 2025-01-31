@@ -495,13 +495,25 @@ export default function DependentSelectForm() {
             value,
             logicalOperator,
           } = subCondition;
-          console.log("val  data:", value);
+          console.log("val  formatContainText(value)45645", formatContainText(value));
   
-          const formattedValue = operatorType === "OPTION" ? `{"${value}"}` :
-           operatorType === "VALUE" ? `{"#v_${value}"}` :
-            operatorType === "TEXT" && conditionType ===  "#startWithText" || "#endWithText" ? `{"${value}"}` :
-            operatorType === "TEXT" && conditionType ===  "!#containAnyText" || "#containAnyText" ? `{"${formatContainText(value)}"}` :
-            value;
+          let formattedValue : string;
+
+          if (operatorType === "OPTION") {
+              formattedValue = `{"${value}"}`;
+          } else if (operatorType === "VALUE") {
+              formattedValue = `{"#v_${value}"}`;
+          } else if (operatorType === "TEXT") {
+              if (conditionType === "#startWithText" || conditionType === "#endWithText") {
+                  formattedValue = `{"${value}"}`;
+              } else if (conditionType === "!#containAnyText" || conditionType === "#containAnyText") {
+                  formattedValue = `{${formatContainText(value)}}`;
+              } else {
+                  formattedValue = value; 
+              }
+          } else {
+              formattedValue = value; 
+          }
   
           const baseCondition = `${conditionType}(${
             questionType.split("*")[1]
@@ -523,7 +535,7 @@ export default function DependentSelectForm() {
     };
 
     const output = transformInputToOutput(input);
-    console.log(output);
+    console.log(output[0].conditionFormula);
   };
 
   const handleAddCondition = () => {
