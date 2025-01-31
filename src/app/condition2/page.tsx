@@ -25,7 +25,10 @@ import TrashIcon from "@/../public/images/home-page/trash.svg";
 import PlusIcon from "@/../public/images/home-page/Add-fill.svg";
 import JSONData_First from "../../../public/assets/fake-data/first.json";
 // _components
-import { CustomSelectController, MultiSelectController } from "./_components/form/select-controller";
+import {
+  CustomSelectController,
+  MultiSelectController,
+} from "./_components/form/select-controller";
 import { CircleDivider } from "./_components/circle-divider";
 import CustomTextField from "./_components/form/custom-text-field";
 // hooks
@@ -42,7 +45,7 @@ const SubConditionSchema = z.object({
   // value: z.string().min(1, { message: "اين فيلد الزامي است" }),
   value: z.union([
     z.string().min(1, { message: "اين فيلد الزامي است" }),
-    z.array(z.string().min(1, { message: "اين فيلد الزامي است" }))
+    z.array(z.string().min(1, { message: "اين فيلد الزامي است" })),
   ]),
   id: z.string().optional(),
 });
@@ -79,12 +82,9 @@ export default function DependentSelectForm() {
     onlySomeQuestionsOptions,
     isFetchingOnlyAllQuestions,
   } = useGetOnlyAllQuestions();
-  const {
-    onlyAllCalculationOptions,
-    isFetchingOnlyAllCalculation
-  } = useGetOnlyAllCalculation();
+  const { onlyAllCalculationOptions, isFetchingOnlyAllCalculation } =
+    useGetOnlyAllCalculation();
 
-  
   // console.log("onlyAllCalculationOptions", onlyAllCalculationOptions);
 
   const methods = useForm<FormData>({
@@ -138,25 +138,33 @@ export default function DependentSelectForm() {
           { value: "QUESTION", label: "سوال " },
           { value: "CALCULATION", label: "محاسبه‌گر" },
         ];
-     //test
+      //test
       case "MULTIPLE_CHOICE_MULTI_SELECT":
         return [{ value: "OPTION", label: "گزینه" }];
-        //test
+      //test
       case "TEXT_FIELD":
         return [
           { value: "VALUE", label: "ارزش" },
           { value: "TEXT", label: "متن" },
         ];
-     
-        //test
+
+      //test
       case "SPECTRAL":
         return [
           { value: "VALUE", label: "ارزش" },
           { value: "QUESTION", label: "سوال " },
           { value: "CALCULATION", label: "محاسبه‌گر" },
         ];
+      //test
       case "SPECTRAL_DOMAIN":
         return [{ value: "VALUE", label: "ارزش" }];
+      //test
+        case "TEXT_FIELD_DATE":
+          return [
+            { value: "QUESTION", label: "سوال" },
+            { value: "DATE", label: "تاریخ" },
+          ];
+
       case "CALCULATION":
         return [
           { value: "VALUE", label: "ارزش" },
@@ -164,11 +172,6 @@ export default function DependentSelectForm() {
           { value: "CALCULATION", label: "محاسبه‌گر" },
         ];
 
-        case "TEXT_FIELD_DATE":
-          return [
-            { value: "QUESTION", label: "سوال" },
-            { value: "DATE", label: "تاریخ" },
-          ];
 
       default:
         return [];
@@ -221,12 +224,15 @@ export default function DependentSelectForm() {
           { value: "#greaterEqualThanSpectralSingle", label: "بزرگتر مساوی" },
           { value: "!#greaterEqualThanSpectralSingle", label: " کوچکتر مساوی" },
         ];
+
+      //test
       case "SPECTRAL_DOMAIN_VALUE":
         return [
           { value: "#lessThanSpectralDouble", label: "کوچکتر  از" },
           { value: "#greaterThanSpectralDouble", label: "بزرگتر از" },
         ];
 
+            //test
       case "TEXT_FIELD_DATE_DATE":
       case "TEXT_FIELD_DATE_QUESTION":
         return [
@@ -262,7 +268,6 @@ export default function DependentSelectForm() {
     condition: string,
     field: any
   ) => {
-    
     const combinedKey = `${type?.split("*")[0]}_${operator}_${condition}`;
     switch (combinedKey) {
       // test
@@ -305,26 +310,26 @@ export default function DependentSelectForm() {
       case "MULTIPLE_CHOICE_OPTION_!#equalMultiChoiceSingle":
       case "MULTIPLE_CHOICE_OPTION_#lessThanMultiChoiceSingle":
       case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle":
-          return onlyAllQuestions?.map((item) => {
-            if (item?.extMap?.UNIC_NAME === type.split("*")[1]) {
-              const options = item?.extMap?.OPTIONS;
-  
-              const optionsList = [];
-              Object.keys(options).forEach((key) => {
-                optionsList.push({
-                  value: key,
-                  label: options[key][1],
-                });
+        return onlyAllQuestions?.map((item) => {
+          if (item?.extMap?.UNIC_NAME === type.split("*")[1]) {
+            const options = item?.extMap?.OPTIONS;
+
+            const optionsList = [];
+            Object.keys(options).forEach((key) => {
+              optionsList.push({
+                value: key,
+                label: options[key][1],
               });
-              return (
-                <CustomSelectController
-                  name={field.name}
-                  options={optionsList}
-                  sx={{ minWidth: 200 }}
-                />
-              );
-            }
-          });
+            });
+            return (
+              <CustomSelectController
+                name={field.name}
+                options={optionsList}
+                sx={{ minWidth: 200 }}
+              />
+            );
+          }
+        });
 
       // test
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_#containMultiChoiceMulti":
@@ -344,17 +349,17 @@ export default function DependentSelectForm() {
             });
             return (
               <MultiSelectController
-                 name={field.name}
-                 options={optionsList}
-                // chip 
-                // checkbox 
-                sx={{ maxWidth: 200,maxHeight: 50 }}
-            />
+                name={field.name}
+                options={optionsList}
+                // chip
+                // checkbox
+                sx={{ maxWidth: 200, maxHeight: 50 }}
+              />
             );
           }
         });
 
-      // test        
+      // test
       case "TEXT_FIELD_TEXT_#startWithText":
       case "TEXT_FIELD_TEXT_#endWithText":
         return <CustomTextField name={field.name} type="string" />;
@@ -368,7 +373,7 @@ export default function DependentSelectForm() {
       case "TEXT_FIELD_VALUE_!#lenGraterThanText":
         return <CustomTextField name={field.name} type="number" />;
 
-         //test
+      //test
       case "SPECTRAL_VALUE_#greaterThanSpectral":
       case "SPECTRAL_VALUE_!#greaterThanSpectral":
       case "SPECTRAL_VALUE_#equalThanSpectralSingle":
@@ -376,7 +381,7 @@ export default function DependentSelectForm() {
       case "SPECTRAL_VALUE_!#greaterEqualThanSpectralSingle":
         return <CustomTextField name={field.name} type="number" />;
 
-        //test
+      //test
       case "SPECTRAL_QUESTION_#greaterThanSpectral":
       case "SPECTRAL_QUESTION_!#greaterThanSpectral":
       case "SPECTRAL_QUESTION_#equalThanSpectralSingle":
@@ -391,7 +396,7 @@ export default function DependentSelectForm() {
           />
         );
 
-        //test
+      //test
       case "SPECTRAL_CALCULATION_#greaterThanSpectral":
       case "SPECTRAL_CALCULATION_!#greaterThanSpectral":
       case "SPECTRAL_CALCULATION_#equalThanSpectralSingle":
@@ -406,12 +411,15 @@ export default function DependentSelectForm() {
           />
         );
 
+      //test
       case "SPECTRAL_DOMAIN_VALUE_#lessThanSpectralDouble":
       case "SPECTRAL_DOMAIN_VALUE_#greaterThanSpectralDouble":
-        return <CustomTextField name={field.name} label="" type="number" />;
+        return <CustomTextField name={field.name} type="number" />;
 
       case "TEXT_FIELD_DATE_DATE_#beforeDate":
-      case "TEXT_FIELD_DATE_QUESTION_#afterDate":
+      case "TEXT_FIELD_DATE_DATE_#afterDate":
+      // case "TEXT_FIELD_DATE_DATE_#beforeDate":
+      // case "TEXT_FIELD_DATE_QUESTION_#afterDate":
         return (
           <Controller
             name={field.name}
@@ -431,8 +439,11 @@ export default function DependentSelectForm() {
                   shadow={false}
                   calendar={persian}
                   locale={persian_fa}
-                  value={value}
-                  onChange={(e: any) => onChange(e)}
+                  value={value ? value : new Date()} 
+                  onChange={(e: any) => {
+                    console.log("Selected date:", e);
+                    onChange(e);
+                  }}
                   className={"rmdp-mobile"}
                   zIndex={9999}
                   inputClass={`h-[50px] px-4 border-[1px] w-full border-neutral-300 rounded-xl text-left p-1 ${
@@ -494,48 +505,59 @@ export default function DependentSelectForm() {
       return input.conditions.map((condition) => {
         const { subConditions, returnQuestionId, elseQuestionId } = condition;
 
-
         const conditionFormula = subConditions
-        .map((subCondition) => {
-          const {
-            conditionType,
-            questionType,
-            operatorType,
-            value,
-            logicalOperator,
-          } = subCondition;
-          console.log("val  formatContainText(value)45645", formatContainText(value));
-  
-          let formattedValue : string;
+          .map((subCondition) => {
+            const {
+              conditionType,
+              questionType,
+              operatorType,
+              value,
+              logicalOperator,
+            } = subCondition;
+            console.log(
+              "val  formatContainText(value)45645",
+              formatContainText(value)
+            );
 
-          if (operatorType === "OPTION") {
-              formattedValue = `{"${value}"}`;
-          } else if (operatorType === "VALUE") {
-              formattedValue = `{"#v_${value}"}`;
-          } else if (operatorType === "TEXT") {
-              if (conditionType === "#startWithText" || conditionType === "#endWithText") {
-                  formattedValue = `{"${value}"}`;
-              } else if (conditionType === "!#containAnyText" || conditionType === "#containAnyText") {
-                  formattedValue = `{${formatContainText(value)}}`;
-              } else if (conditionType === "#lenEqualText" || conditionType === "#lenGraterThanText" || conditionType === "!#lenGraterThanText") {
-                formattedValue = `{"#v_${value}"}`;
+            let formattedValue: string;
+
+            if (operatorType === "OPTION") {
+              formattedValue = `{${value}}`;
+            } else if (operatorType === "VALUE") {
+              formattedValue = `{#v_${value}}`;
+            } else if (operatorType === "TEXT") {
+              if (
+                conditionType === "#startWithText" ||
+                conditionType === "#endWithText"
+              ) {
+                formattedValue = `{"${value}"}`;
+              } else if (
+                conditionType === "!#containAnyText" ||
+                conditionType === "#containAnyText"
+              ) {
+                formattedValue = `{${formatContainText(value)}}`;
+              } else if (
+                conditionType === "#lenEqualText" ||
+                conditionType === "#lenGraterThanText" ||
+                conditionType === "!#lenGraterThanText"
+              ) {
+                formattedValue = `{#v_${value}}`;
+              } else {
+                formattedValue = value;
               }
-               else {
-                  formattedValue = value; 
-              }
-          } else {
-              formattedValue = value; 
-          }
-  
-          const baseCondition = `${conditionType}(${
-            questionType.split("*")[1]
-          },${formattedValue})`;
-  
-          return logicalOperator ? ` ${logicalOperator} ${baseCondition}` : baseCondition;
-        })
-        .join("");
+            } else {
+              formattedValue = value;
+            }
 
+            const baseCondition = `${conditionType}(${
+              questionType.split("*")[1]
+            },${formattedValue})`;
 
+            return logicalOperator
+              ? ` ${logicalOperator} ${baseCondition}`
+              : baseCondition;
+          })
+          .join("");
 
         return {
           conditionFormula: conditionFormula,
@@ -633,145 +655,152 @@ export default function DependentSelectForm() {
                     subIndex
                   ] || {};
                 return (
-                  <Box key={uuidv4()} sx={{ mb: 2,ml: { md : 4}, mt: 2, display: "flex", flexDirection: "row" }}>
-                 
-                      <Box sx={{ display: "flex", alignItems: "start" }}>
-                        {subIndex === 0 && (
-                          <Typography
-                            sx={{
-                              color: "#393939",
-                              fontSize: "14px",
-                              width: 90,
-                              pt : 2
-                              // justifyContent: "start",
-                              // alignItems: "start"
-                            }}
-                          >
-                            اگر
-                          </Typography>
-                        )}
-                        {subIndex > 0 && (
-                          <CustomSelectController
-                            name={`conditions.${index}.subConditions.${subIndex}.logicalOperator`}
-                            options={[
-                              { value: "&&", label: "و" },
-                              { value: "||", label: "یا" },
-                            ]}
-                            sx={{ minWidth: 78 }}
-                          />
-                        )}
-                      </Box>
+                  <Box
+                    key={uuidv4()}
+                    sx={{
+                      mb: 2,
+                      ml: { md: 4 },
+                      mt: 2,
+                      display: "flex",
+                      flexDirection: "row",
+                    }}
+                  >
+                    <Box sx={{ display: "flex", alignItems: "start" }}>
+                      {subIndex === 0 && (
+                        <Typography
+                          sx={{
+                            color: "#393939",
+                            fontSize: "14px",
+                            width: 90,
+                            pt: 2,
+                            // justifyContent: "start",
+                            // alignItems: "start"
+                          }}
+                        >
+                          اگر
+                        </Typography>
+                      )}
+                      {subIndex > 0 && (
+                        <CustomSelectController
+                          name={`conditions.${index}.subConditions.${subIndex}.logicalOperator`}
+                          options={[
+                            { value: "&&", label: "و" },
+                            { value: "||", label: "یا" },
+                          ]}
+                          sx={{ minWidth: 78 }}
+                        />
+                      )}
+                    </Box>
 
-
-                      <Box rowGap={3} columnGap={2} 
-                       sx={{
-                        display: 'flex',
-                        flexDirection: { xs: 'column', sm: 'row' },
-                        flexWrap: 'wrap',
+                    <Box
+                      rowGap={3}
+                      columnGap={2}
+                      sx={{
+                        display: "flex",
+                        flexDirection: { xs: "column", sm: "row" },
+                        flexWrap: "wrap",
                         gap: 2,
                         // alignItems: 'center',
-                        width: '100%'
+                        width: "100%",
                       }}
-                      >
-                        <CustomSelectController
-                          name={`conditions.${index}.subConditions.${subIndex}.questionType`}
-                          options={qacWithOutFilterOptions}
-                          isLoading={isFetchingQacWithOutFilter}
-                          sx={{ 
-                              width: { sm: '100%', md: '100%' },
-                              minWidth: 200,
-                              flexShrink: 0
-                           }}
-                        />
-                        <CustomSelectController
-                          name={`conditions.${index}.subConditions.${subIndex}.operatorType`}
-                          options={getQuestion(
-                            currentValues.questionType,
-                            currentValues
-                          )}
-                          sx={{ 
-                              width: { sm: '100%', md: '22%' },
-                              minWidth: 200,
-                              flexShrink: 0
-                           }}
-                          disabled={!Boolean(currentValues.questionType)}
-                        />
-                        <CustomSelectController
-                          name={`conditions.${index}.subConditions.${subIndex}.conditionType`}
-                          options={getCondition(
-                            currentValues.questionType,
-                            currentValues.operatorType,
-                            currentValues
-                          )}
-                          sx={{ 
-                              width: { sm: '100%', md: '22%' },
-                              minWidth: 200,
-                              flexShrink: 0
-                           }}
-                          disabled={!Boolean(currentValues.operatorType)}
-                        />
-                        {getInput(
+                    >
+                      <CustomSelectController
+                        name={`conditions.${index}.subConditions.${subIndex}.questionType`}
+                        options={qacWithOutFilterOptions}
+                        isLoading={isFetchingQacWithOutFilter}
+                        sx={{
+                          width: { sm: "100%", md: "100%" },
+                          minWidth: 200,
+                          flexShrink: 0,
+                        }}
+                      />
+                      <CustomSelectController
+                        name={`conditions.${index}.subConditions.${subIndex}.operatorType`}
+                        options={getQuestion(
+                          currentValues.questionType,
+                          currentValues
+                        )}
+                        sx={{
+                          width: { sm: "100%", md: "22%" },
+                          minWidth: 200,
+                          flexShrink: 0,
+                        }}
+                        disabled={!Boolean(currentValues.questionType)}
+                      />
+                      <CustomSelectController
+                        name={`conditions.${index}.subConditions.${subIndex}.conditionType`}
+                        options={getCondition(
                           currentValues.questionType,
                           currentValues.operatorType,
-                          currentValues.conditionType,
-                          {
-                            name: `conditions.${index}.subConditions.${subIndex}.value`,
-                          }
+                          currentValues
                         )}
-                        <Box
+                        sx={{
+                          width: { sm: "100%", md: "22%" },
+                          minWidth: 200,
+                          flexShrink: 0,
+                        }}
+                        disabled={!Boolean(currentValues.operatorType)}
+                      />
+                      {getInput(
+                        currentValues.questionType,
+                        currentValues.operatorType,
+                        currentValues.conditionType,
+                        {
+                          name: `conditions.${index}.subConditions.${subIndex}.value`,
+                        }
+                      )}
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          gap: 1,
+                          ml: { md: 1 },
+                          width: { sm: "100%", md: "auto" },
+                          justifyContent: { xs: "flex-start", md: "center" },
+                        }}
+                      >
+                        <IconButton
+                          onClick={() => handleAddSubCondition(index, subIndex)}
                           sx={{
-                           display: "flex", 
-                           flexDirection: "row",
-                           gap: 1,
-                           ml: { md: 1 },
-                           width: { sm: '100%', md: 'auto' },
-                           justifyContent: { xs: 'flex-start', md: 'center' } }}
+                            width: "52px",
+                            height: "52px",
+                            bgcolor: "#1758BA0D",
+                            borderRadius: "10px",
+                            border: "1px solid #1758BA",
+                          }}
                         >
+                          <Image
+                            src={PlusIcon || "/placeholder.svg"}
+                            alt=""
+                            width={22}
+                            height={22}
+                          />
+                        </IconButton>
+                        {subIndex !== 0 && (
                           <IconButton
                             onClick={() =>
-                              handleAddSubCondition(index, subIndex)
+                              handleRemoveSubCondition(index, subIndex)
                             }
                             sx={{
                               width: "52px",
                               height: "52px",
-                              bgcolor: "#1758BA0D",
+                              bgcolor: "#FA4D560D",
                               borderRadius: "10px",
-                              border: "1px solid #1758BA",
+                              border: "1px solid #FA4D56",
+                              "&: hover": {
+                                bgcolor: "#FA4D560D",
+                              },
                             }}
                           >
                             <Image
-                              src={PlusIcon || "/placeholder.svg"}
+                              src={TrashIcon || "/placeholder.svg"}
                               alt=""
-                              width={22}
-                              height={22}
+                              width={24}
+                              height={24}
                             />
                           </IconButton>
-                          {subIndex !== 0 && (
-                            <IconButton
-                              onClick={() =>
-                                handleRemoveSubCondition(index, subIndex)
-                              }
-                              sx={{
-                                width: "52px",
-                                height: "52px",
-                                bgcolor: "#FA4D560D",
-                                borderRadius: "10px",
-                                border: "1px solid #FA4D56",
-                                "&: hover": {
-                                  bgcolor: "#FA4D560D",
-                                },
-                              }}
-                            >
-                              <Image
-                                src={TrashIcon || "/placeholder.svg"}
-                                alt=""
-                                width={24}
-                                height={24}
-                              />
-                            </IconButton>
-                          )}
-                        </Box>
-                 
+                        )}
+                      </Box>
                     </Box>
                   </Box>
                 );
