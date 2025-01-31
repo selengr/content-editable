@@ -350,15 +350,15 @@ export default function DependentSelectForm() {
           }
         });
 
-        
+      // test        
       case "TEXT_FIELD_TEXT_#startWithText":
       case "TEXT_FIELD_TEXT_#endWithText":
         return <CustomTextField name={field.name} type="string" />;
-
+      // test
       case "TEXT_FIELD_TEXT_#containAnyText":
       case "TEXT_FIELD_TEXT_!#containAnyText":
         return <CustomTextField name={field.name} type="string" />;
-
+      // test
       case "TEXT_FIELD_VALUE_#lenEqualText":
       case "TEXT_FIELD_VALUE_#lenGraterThanText":
       case "TEXT_FIELD_VALUE_!#lenGraterThanText":
@@ -508,7 +508,10 @@ export default function DependentSelectForm() {
                   formattedValue = `{"${value}"}`;
               } else if (conditionType === "!#containAnyText" || conditionType === "#containAnyText") {
                   formattedValue = `{${formatContainText(value)}}`;
-              } else {
+              } else if (conditionType === "#lenEqualText" || conditionType === "#lenGraterThanText" || conditionType === "!#lenGraterThanText") {
+                formattedValue = `{"#v_${value}"}`;
+              }
+               else {
                   formattedValue = value; 
               }
           } else {
