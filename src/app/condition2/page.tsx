@@ -38,7 +38,11 @@ const SubConditionSchema = z.object({
   questionType: z.string().min(1, { message: "اين فيلد الزامي است" }),
   operatorType: z.string().min(1, { message: "اين فيلد الزامي است" }),
   conditionType: z.string().min(1, { message: "اين فيلد الزامي است" }),
-  value: z.string().min(1, { message: "اين فيلد الزامي است" }),
+  // value: z.string().min(1, { message: "اين فيلد الزامي است" }),
+  value: z.union([
+    z.string().min(1, { message: "اين فيلد الزامي است" }),
+    z.array(z.string().min(1, { message: "اين فيلد الزامي است" }))
+  ]),
   id: z.string().optional(),
 });
 
@@ -320,15 +324,28 @@ export default function DependentSelectForm() {
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_!#containMultiChoiceMulti":
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_!#equalThanMultiChoiceMulti":
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_#equalThanMultiChoiceMulti":
-        return (
-          <MultiSelectController
-          chip={true}
-          label={"eee"}
-            name={field.name}
-            options={qacWithOutFilterOptions}
-            sx={{ minWidth: 200 }}
-          />
-        );
+        return onlyAllQuestions?.map((item) => {
+          if (item?.extMap?.UNIC_NAME === type.split("*")[1]) {
+            const options = item?.extMap?.OPTIONS;
+
+            const optionsList = [];
+            Object.keys(options).forEach((key) => {
+              optionsList.push({
+                value: key,
+                label: options[key][1],
+              });
+            });
+            return (
+              <MultiSelectController
+                 name={field.name}
+                 options={optionsList}
+                // chip 
+                // checkbox 
+                sx={{ maxWidth: 200,maxHeight: 50 }}
+            />
+            );
+          }
+        });
 
         return (
           <CustomSelectController
@@ -590,8 +607,8 @@ export default function DependentSelectForm() {
                     subIndex
                   ] || {};
                 return (
-                  <Box key={uuidv4()} sx={{ ml: 4, mt: 2 }}>
-                    <Box sx={{ mb: 2, display: "flex", flexDirection: "row" }}>
+                  <Box key={uuidv4()} sx={{ mb: 2,ml: { md : 4}, mt: 2, display: "flex", flexDirection: "row" }}>
+                 
                       <Box sx={{ display: "flex", alignItems: "center" }}>
                         {subIndex === 0 && (
                           <Typography
@@ -615,22 +632,27 @@ export default function DependentSelectForm() {
                           />
                         )}
                       </Box>
-                      <MultiSelectController
-          // chip={true}
-          label={"eee"}
-            name={"field.name"}
-            options={[ {
-              label: "string",
-              value: "string"
-            }]}
-            sx={{ minWidth: 200 }}
-          />
-                      <Box rowGap={3} columnGap={2} display="flex">
+
+
+                      <Box rowGap={3} columnGap={2} 
+                       sx={{
+                        display: 'flex',
+                        flexDirection: { xs: 'column', md: 'row' },
+                        flexWrap: 'wrap',
+                        gap: 2,
+                        alignItems: 'center',
+                        width: '100%'
+                      }}
+                      >
                         <CustomSelectController
                           name={`conditions.${index}.subConditions.${subIndex}.questionType`}
                           options={qacWithOutFilterOptions}
                           isLoading={isFetchingQacWithOutFilter}
-                          sx={{ minWidth: 200 }}
+                          sx={{ 
+                              width: { xs: '100%', md: '22%' },
+                              minWidth: 200,
+                              flexShrink: 0
+                           }}
                         />
                         <CustomSelectController
                           name={`conditions.${index}.subConditions.${subIndex}.operatorType`}
@@ -638,7 +660,11 @@ export default function DependentSelectForm() {
                             currentValues.questionType,
                             currentValues
                           )}
-                          sx={{ minWidth: 200 }}
+                          sx={{ 
+                              width: { xs: '100%', md: '22%' },
+                              minWidth: 200,
+                              flexShrink: 0
+                           }}
                           disabled={!Boolean(currentValues.questionType)}
                         />
                         <CustomSelectController
@@ -648,7 +674,11 @@ export default function DependentSelectForm() {
                             currentValues.operatorType,
                             currentValues
                           )}
-                          sx={{ minWidth: 200 }}
+                          sx={{ 
+                              width: { xs: '100%', md: '22%' },
+                              minWidth: 200,
+                              flexShrink: 0
+                           }}
                           disabled={!Boolean(currentValues.operatorType)}
                         />
                         {getInput(
@@ -660,7 +690,13 @@ export default function DependentSelectForm() {
                           }
                         )}
                         <Box
-                          sx={{ display: "flex", flexDirection: "row", gap: 1 }}
+                          sx={{
+                           display: "flex", 
+                           flexDirection: "row",
+                           gap: 1,
+                           ml: { md: 1 },
+                           width: { xs: '100%', md: 'auto' },
+                           justifyContent: { xs: 'flex-start', md: 'center' } }}
                         >
                           <IconButton
                             onClick={() =>
@@ -706,7 +742,7 @@ export default function DependentSelectForm() {
                             </IconButton>
                           )}
                         </Box>
-                      </Box>
+                 
                     </Box>
                   </Box>
                 );

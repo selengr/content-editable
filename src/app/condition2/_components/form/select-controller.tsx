@@ -95,9 +95,11 @@ export const CustomSelectController: React.FC<CustomSelectProps> = ({
                 sx={{
                   display: "flex",
                   justifyContent: "end",
-                  backgroundColor: "#1758BA0D",
-                  padding: "10px",
-                  paddingX: "15px",
+                  py: 1,
+                  px: 2,
+                  mx: 1,
+                  borderRadius: 0.75,
+                  typography: 'body2',
                 }}
               >
                 {option.label}
@@ -183,6 +185,7 @@ export function MultiSelectController({
             multiple
             displayEmpty={!!placeholder}
             labelId={name}
+            IconComponent={IoIosArrowDown}
             input={<OutlinedInput fullWidth label={label} error={!!error} />}
             renderValue={renderValues}
             MenuProps={{
@@ -190,7 +193,39 @@ export function MultiSelectController({
                 sx: { px: 1, maxHeight: 280 },
               },
             }}
+            sx={{
+              "& .MuiSelect-select.MuiSelect-outlined": {
+                fontFamily: "inherit",
+                paddingRight: "33px",
+                paddingLeft: "0 !important",
+                minWidth: 150
+              },
+              "&.MuiInputBase-root": {
+                borderRadius: "8px",
+                paddingLeft: 2,
+                border: error ? "1px solid #FA4D56" : "1px solid #DDE1E6",
+              },
+              "& .MuiSelect-icon": {
+                left: "auto",
+                right: "16px",
+                color: error ? "#FA4D56" : "#1758BA",
+                fontSize: "1.5rem",
+              },
+              "& .MuiOutlinedInput-notchedOutline": {
+                border: "none",
+              }
+            }}
             {...other}
+            value={field.value || []} 
+            // onChange={(event) => {
+            //   const {
+            //     target: { value },
+            //   } = event;
+            //   const newValue = value.toString()
+            //   console.log(value.join(""));
+            //   // const newValue = typeof value !== 'string' ? value.toString('') : value;
+            //   // field.onChange(newValue);
+            // }}
           >
             {placeholder && (
               <MenuItem
@@ -208,7 +243,7 @@ export function MultiSelectController({
             )}
 
             {options?.map((option) => {
-              const selected = field?.value?.includes(option.value);
+              const selected = field.value?.includes(option.value);
 
               return (
                 <MenuItem
@@ -225,6 +260,8 @@ export function MultiSelectController({
                     ...(checkbox && {
                       p: 0.25,
                     }),
+                    display: "flex",
+                    justifyContent: "end"
                   }}
                 >
                   {checkbox && <Checkbox disableRipple size="small" checked={selected} />}
