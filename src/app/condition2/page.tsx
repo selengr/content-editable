@@ -422,25 +422,7 @@ export default function DependentSelectForm() {
       case "TEXT_FIELD_DATE_DATE_#beforeDate":
       case "TEXT_FIELD_DATE_DATE_#afterDate":
       // case "TEXT_FIELD_DATE_DATE_#beforeDate":
-      // case "TEXT_FIELD_DATE_QUESTION_#afterDate":
-            // return (
-            //   <Controller
-            //     name={field.name}
-            //     control={control}
-            //     render={({ field }) => (
-            //       <DatePickerCustome
-            //         // min={new Date().setDate(new Date().getDate() - 1)}
-            //         onChange={(value) => {
-            //           field.onChange(value);
-            //           setValue(field.name, value);
-            //         }}
-            //         // className={"rmdp-mobile"}
-            //         // zIndex={9999}
-            //       />
-            //     )}
-            //   />
-            // );
-
+      // case "TEXT_FIELD_DATE_QUESTION_#afterDate":f
             return (   <Controller
             name={field.name}
             control={control}
