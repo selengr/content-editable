@@ -565,6 +565,8 @@ export default function DependentSelectForm() {
               } else {
                 formattedValue = value;
               }
+            }  else if (operatorType === "DATEddate") {
+              formattedValue = `{#v_${value}}`;
             } else {
               formattedValue = value;
             }
