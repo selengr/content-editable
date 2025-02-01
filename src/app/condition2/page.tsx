@@ -250,8 +250,10 @@ export default function DependentSelectForm() {
           { value: "#beforeDate", label: "قبل از" },
         ];
 
-            // test done
-      case "TEXT_FIELD_NUMBER":
+    // test
+      case "TEXT_FIELD_NUMBER_VALUE":
+      case "TEXT_FIELD_NUMBER_QUESTION":
+      case "TEXT_FIELD_NUMBER_CALCULATION":
         return [
           { value: "#greaterThanSpectral", label: "بزرگتر از" },
           { value: "#greaterThanSpectral", label: "کوچکتر  از" },
