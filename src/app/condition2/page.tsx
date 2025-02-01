@@ -418,11 +418,9 @@ export default function DependentSelectForm() {
       case "SPECTRAL_DOMAIN_VALUE_#lessThanSpectralDouble":
       case "SPECTRAL_DOMAIN_VALUE_#greaterThanSpectralDouble":
         return <CustomTextField name={field.name} type="number" />;
-
+   //test
       case "TEXT_FIELD_DATE_DATE_#beforeDate":
       case "TEXT_FIELD_DATE_DATE_#afterDate":
-      // case "TEXT_FIELD_DATE_DATE_#beforeDate":
-      // case "TEXT_FIELD_DATE_QUESTION_#afterDate":f
             return (   <Controller
             name={field.name}
             control={control}
@@ -446,6 +444,17 @@ export default function DependentSelectForm() {
                 />
               </Box>
             )}
+          />
+        );
+    // test but need to change the list
+      case "TEXT_FIELD_DATE_QUESTION_#beforeDate":
+      case "TEXT_FIELD_DATE_QUESTION_#afterDate":
+        return (
+          <CustomSelectController
+            name={field.name}
+            options={onlySomeQuestionsOptions}
+            isLoading={isFetchingOnlyAllQuestions}
+            sx={{ minWidth: 200 }}
           />
         );
 
