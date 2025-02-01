@@ -464,13 +464,13 @@ export default function DependentSelectForm() {
                       field?.onChange(value);
                       setValue(field.name, value);
                   }}
-                  // className={"rmdp-mobile"}
-                  // zIndex={9999}
-                  // inputClass={`h-[50px] px-4 border-[1px] w-full border-neutral-300 rounded-xl text-left p-1 ${
-                  //   error ? "border-red-500" : ""
-                  // }`}
-                  // highlightToday
-                  // portal
+                  className={"rmdp-mobile"}
+                  zIndex={9999}
+                  inputClass={`h-[50px] px-4 border-[1px] w-full border-neutral-300 rounded-xl text-left p-1 ${
+                    error ? "border-red-500" : ""
+                  }`}
+                  highlightToday
+                  portal
                 />
               </Box>
             )}
