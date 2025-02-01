@@ -250,6 +250,13 @@ export default function DependentSelectForm() {
           { value: "#beforeDate", label: "قبل از" },
         ];
 
+            //test
+      case "TEXT_FIELD_NUMBER":
+        return [
+          { value: "#afterDate", label: "بعد از" },
+          { value: "#beforeDate", label: "قبل از" },
+        ];
+
       case "CALCULATION_VALUE":
       case "CALCULATION_QUESTION":
       case "CALCULATION_CALCULATION":
