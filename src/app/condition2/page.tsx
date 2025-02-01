@@ -461,16 +461,16 @@ export default function DependentSelectForm() {
                   // locale={persian_fa}
                   value={value ? value : new Date()} 
                   onChange={(date) => {
-                      field?.onChange(value);
-                      setValue(field.name, value);
+                      // field?.onChange(value);
+                      setValue(field.name, date);
                   }}
-                  className={"rmdp-mobile"}
-                  zIndex={9999}
-                  inputClass={`h-[50px] px-4 border-[1px] w-full border-neutral-300 rounded-xl text-left p-1 ${
-                    error ? "border-red-500" : ""
-                  }`}
-                  highlightToday
-                  portal
+                  // className={"rmdp-mobile"}
+                  // zIndex={9999}
+                  // inputClass={`h-[50px] px-4 border-[1px] w-full border-neutral-300 rounded-xl text-left p-1 ${
+                  //   error ? "border-red-500" : ""
+                  // }`}
+                  // highlightToday
+                  // portal
                 />
               </Box>
             )}
