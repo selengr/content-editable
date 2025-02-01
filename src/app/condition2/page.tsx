@@ -477,17 +477,6 @@ export default function DependentSelectForm() {
           />
         );
 
-        // case "TEXT_FIELD_NUMBER_VALUE":
-        //   case "TEXT_FIELD_NUMBER_QUESTION":
-        //   case "TEXT_FIELD_NUMBER_CALCULATION":
-        //     return [
-        //       { value: "#greaterThanNumber", label: "بزرگتر از" },
-        //       { value: "!#greaterThanNumber", label: "کوچکتر  از" },
-        //       // { value: "#equalThanNumber", label: "برابر  با" },
-        //       { value: "#greaterEqualThanNumber", label: "بزرگتر مساوی" },
-        //       { value: "!#greaterEqualThanNumber", label: " کوچکتر مساوی" },
-        //     ];
-
           // test
       case "TEXT_FIELD_NUMBER_VALUE_#greaterThanNumber":
       case "TEXT_FIELD_NUMBER_VALUE_!#greaterThanNumber":
@@ -496,15 +485,28 @@ export default function DependentSelectForm() {
           return <CustomTextField name={field.name} type="number" />;
 
           // test
-      case "TEXT_FIELD_NUMBER_VALUE_#greaterThanNumber":
-      case "TEXT_FIELD_NUMBER_VALUE_!#greaterThanNumber":
-      case "TEXT_FIELD_NUMBER_VALUE_#greaterEqualThanNumber":
-      case "TEXT_FIELD_NUMBER_VALUE_!#greaterEqualThanNumber":
+      case "TEXT_FIELD_NUMBER_QUESTION_#greaterThanNumber":
+      case "TEXT_FIELD_NUMBER_QUESTION_!#greaterThanNumber":
+      case "TEXT_FIELD_NUMBER_QUESTION_#greaterEqualThanNumber":
+      case "TEXT_FIELD_NUMBER_QUESTION_!#greaterEqualThanNumber":
               return (
           <CustomSelectController
             name={field.name}
             options={onlySomeQuestionsOptions}
             isLoading={isFetchingOnlyAllQuestions}
+            sx={{ minWidth: 200 }}
+          />
+        );
+          // test
+      case "TEXT_FIELD_NUMBER_CALCULATION_#greaterThanNumber":
+      case "TEXT_FIELD_NUMBER_CALCULATION_!#greaterThanNumber":
+      case "TEXT_FIELD_NUMBER_CALCULATION_#greaterEqualThanNumber":
+      case "TEXT_FIELD_NUMBER_CALCULATION_!#greaterEqualThanNumber":
+        return (
+          <CustomSelectController
+            name={field.name}
+            options={onlyAllCalculationOptions}
+            isLoading={isFetchingOnlyAllCalculation}
             sx={{ minWidth: 200 }}
           />
         );
