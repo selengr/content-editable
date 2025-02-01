@@ -27,6 +27,7 @@ export const useGetQacWithOutFilter = () => {
     const isCalculation = item.elementStr === "CALCULATION";
     const isTextFieldDate = item.extMap.TEXT_FIELD_PATTERN === "DATE";
     const isSpectralDouble = item.extMap.SPECTRAL_TYPE === "DOMAIN";
+    const isTextFieldNumber = item.extMap.TEXT_FIELD_PATTERN === "NUMBER";
     const isMultiSelect = item.extMap.MULTI_SELECT ? JSON.parse(item.extMap.MULTI_SELECT) : false;
     
     const questionType = isCalculation
@@ -37,6 +38,8 @@ export const useGetQacWithOutFilter = () => {
       ? `${item.extMap.QUESTION_TYPE}_MULTI_SELECT*${item.extMap.UNIC_NAME}`
       : isSpectralDouble
       ? `${item.extMap.QUESTION_TYPE}_${item.extMap.SPECTRAL_TYPE}*${item.extMap.UNIC_NAME}`
+      : isTextFieldNumber 
+      ? `${item.extMap.QUESTION_TYPE}_${item.extMap.TEXT_FIELD_PATTERN}*${item.extMap.UNIC_NAME}`
       : `${item.extMap.QUESTION_TYPE}*${item.extMap.UNIC_NAME || ""}`;
 
     return {
