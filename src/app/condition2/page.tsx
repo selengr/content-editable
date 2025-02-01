@@ -255,11 +255,11 @@ export default function DependentSelectForm() {
       case "TEXT_FIELD_NUMBER_QUESTION":
       case "TEXT_FIELD_NUMBER_CALCULATION":
         return [
-          { value: "#greaterThanSpectral", label: "بزرگتر از" },
-          { value: "#greaterThanSpectral", label: "کوچکتر  از" },
-          // { value: "#equalThanSpectralSingle", label: "برابر  با" },
-          // { value: "#greaterEqualThanSpectralSingle", label: "بزرگتر مساوی" },
-          // { value: "!#greaterEqualThanSpectralSingle", label: " کوچکتر مساوی" },
+          { value: "#greaterThanNumber", label: "بزرگتر از" },
+          { value: "!#greaterThanNumber", label: "کوچکتر  از" },
+          // { value: "#equalThanNumber", label: "برابر  با" },
+          { value: "#greaterEqualThanNumber", label: "بزرگتر مساوی" },
+          { value: "!#greaterEqualThanNumber", label: " کوچکتر مساوی" },
         ];
 
       case "CALCULATION_VALUE":
@@ -469,6 +469,38 @@ export default function DependentSelectForm() {
       case "TEXT_FIELD_DATE_QUESTION_#beforeDate":
       case "TEXT_FIELD_DATE_QUESTION_#afterDate":
         return (
+          <CustomSelectController
+            name={field.name}
+            options={onlySomeQuestionsOptions}
+            isLoading={isFetchingOnlyAllQuestions}
+            sx={{ minWidth: 200 }}
+          />
+        );
+
+        // case "TEXT_FIELD_NUMBER_VALUE":
+        //   case "TEXT_FIELD_NUMBER_QUESTION":
+        //   case "TEXT_FIELD_NUMBER_CALCULATION":
+        //     return [
+        //       { value: "#greaterThanNumber", label: "بزرگتر از" },
+        //       { value: "!#greaterThanNumber", label: "کوچکتر  از" },
+        //       // { value: "#equalThanNumber", label: "برابر  با" },
+        //       { value: "#greaterEqualThanNumber", label: "بزرگتر مساوی" },
+        //       { value: "!#greaterEqualThanNumber", label: " کوچکتر مساوی" },
+        //     ];
+
+          // test
+      case "TEXT_FIELD_NUMBER_VALUE_#greaterThanNumber":
+      case "TEXT_FIELD_NUMBER_VALUE_!#greaterThanNumber":
+      case "TEXT_FIELD_NUMBER_VALUE_#greaterEqualThanNumber":
+      case "TEXT_FIELD_NUMBER_VALUE_!#greaterEqualThanNumber":
+          return <CustomTextField name={field.name} type="number" />;
+
+          // test
+      case "TEXT_FIELD_NUMBER_VALUE_#greaterThanNumber":
+      case "TEXT_FIELD_NUMBER_VALUE_!#greaterThanNumber":
+      case "TEXT_FIELD_NUMBER_VALUE_#greaterEqualThanNumber":
+      case "TEXT_FIELD_NUMBER_VALUE_!#greaterEqualThanNumber":
+              return (
           <CustomSelectController
             name={field.name}
             options={onlySomeQuestionsOptions}
