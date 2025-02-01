@@ -115,7 +115,7 @@ export default function DependentSelectForm() {
     control,
     handleSubmit,
     formState: { errors },
-    setValue
+    setValue,
   } = methods;
 
   const {
@@ -162,26 +162,26 @@ export default function DependentSelectForm() {
       case "SPECTRAL_DOMAIN":
         return [{ value: "VALUE", label: "ارزش" }];
       //test
-        case "TEXT_FIELD_DATE":
-          return [
-            { value: "QUESTION", label: "سوال" },
-            { value: "DATE", label: "تاریخ" },
-          ];
-        //test
-        case "TEXT_FIELD_NUMBER":
-          return [
-            { value: "VALUE", label: "ارزش" },
-            { value: "QUESTION", label: "سوال " },
-            { value: "CALCULATION", label: "محاسبه‌گر" },
-          ];
-
-      case "CALCULATION":
+      case "TEXT_FIELD_DATE":
+        return [
+          { value: "QUESTION", label: "سوال" },
+          { value: "DATE", label: "تاریخ" },
+        ];
+      //test
+      case "TEXT_FIELD_NUMBER":
         return [
           { value: "VALUE", label: "ارزش" },
           { value: "QUESTION", label: "سوال " },
           { value: "CALCULATION", label: "محاسبه‌گر" },
         ];
 
+        // test
+      case "CALCULATION":
+        return [
+          { value: "VALUE", label: "ارزش" },
+          { value: "QUESTION", label: "سوال " },
+          { value: "CALCULATION", label: "محاسبه‌گر" },
+        ];
 
       default:
         return [];
@@ -242,7 +242,7 @@ export default function DependentSelectForm() {
           { value: "#greaterThanSpectralDouble", label: "بزرگتر از" },
         ];
 
-            //test
+      //test
       case "TEXT_FIELD_DATE_DATE":
       case "TEXT_FIELD_DATE_QUESTION":
         return [
@@ -250,7 +250,7 @@ export default function DependentSelectForm() {
           { value: "#beforeDate", label: "قبل از" },
         ];
 
-    // test
+      // test
       case "TEXT_FIELD_NUMBER_VALUE":
       case "TEXT_FIELD_NUMBER_QUESTION":
       case "TEXT_FIELD_NUMBER_CALCULATION":
@@ -262,6 +262,7 @@ export default function DependentSelectForm() {
           { value: "!#greaterEqualThanNumber", label: " کوچکتر مساوی" },
         ];
 
+        // test
       case "CALCULATION_VALUE":
       case "CALCULATION_QUESTION":
       case "CALCULATION_CALCULATION":
@@ -274,11 +275,6 @@ export default function DependentSelectForm() {
           { value: "!#equalThanNumber", label: "نابرابر با" },
         ];
 
-      case "MULTIPLE_CHOICE":
-        return [
-          { value: "selected", label: "انتخاب شده" },
-          { value: "not_selected", label: "انتخاب نشده" },
-        ];
       default:
         return [];
     }
@@ -437,10 +433,11 @@ export default function DependentSelectForm() {
       case "SPECTRAL_DOMAIN_VALUE_#lessThanSpectralDouble":
       case "SPECTRAL_DOMAIN_VALUE_#greaterThanSpectralDouble":
         return <CustomTextField name={field.name} type="number" />;
-   //test
+      //test
       case "TEXT_FIELD_DATE_DATE_#beforeDate":
       case "TEXT_FIELD_DATE_DATE_#afterDate":
-            return (   <Controller
+        return (
+          <Controller
             name={field.name}
             control={control}
             render={({ field: { onChange, value }, fieldState: { error } }) => (
@@ -456,16 +453,16 @@ export default function DependentSelectForm() {
               >
                 <DatePickerCustome
                   min={new Date().setDate(new Date().getDate() - 1)}
-                  value={value ? value : new Date()} 
+                  value={value ? value : new Date()}
                   onChange={(date) => {
-                      setValue(field.name, date);
+                    setValue(field.name, date);
                   }}
                 />
               </Box>
             )}
           />
         );
-    // test but need to change the list
+      // test but need to change the list
       case "TEXT_FIELD_DATE_QUESTION_#beforeDate":
       case "TEXT_FIELD_DATE_QUESTION_#afterDate":
         return (
@@ -477,19 +474,19 @@ export default function DependentSelectForm() {
           />
         );
 
-          // test
+      // test
       case "TEXT_FIELD_NUMBER_VALUE_#greaterThanNumber":
       case "TEXT_FIELD_NUMBER_VALUE_!#greaterThanNumber":
       case "TEXT_FIELD_NUMBER_VALUE_#greaterEqualThanNumber":
       case "TEXT_FIELD_NUMBER_VALUE_!#greaterEqualThanNumber":
-          return <CustomTextField name={field.name} type="number" />;
+        return <CustomTextField name={field.name} type="number" />;
 
-          // test
+      // test
       case "TEXT_FIELD_NUMBER_QUESTION_#greaterThanNumber":
       case "TEXT_FIELD_NUMBER_QUESTION_!#greaterThanNumber":
       case "TEXT_FIELD_NUMBER_QUESTION_#greaterEqualThanNumber":
       case "TEXT_FIELD_NUMBER_QUESTION_!#greaterEqualThanNumber":
-              return (
+        return (
           <CustomSelectController
             name={field.name}
             options={onlySomeQuestionsOptions}
@@ -497,7 +494,7 @@ export default function DependentSelectForm() {
             sx={{ minWidth: 200 }}
           />
         );
-          // test
+      // test
       case "TEXT_FIELD_NUMBER_CALCULATION_#greaterThanNumber":
       case "TEXT_FIELD_NUMBER_CALCULATION_!#greaterThanNumber":
       case "TEXT_FIELD_NUMBER_CALCULATION_#greaterEqualThanNumber":
@@ -517,7 +514,7 @@ export default function DependentSelectForm() {
       case "CALCULATION_VALUE_!#greaterThanNumber":
       case "CALCULATION_VALUE_#greaterEqualThanNumber":
       case "CALCULATION_VALUE_!#greaterEqualThanNumber":
-        return <CustomTextField name={field.name} label="" type="number" />;
+        return <CustomTextField name={field.name} type="number" />;
 
       case "CALCULATION_QUESTION_#equalThanNumber":
       case "CALCULATION_QUESTION_!#equalThanNumber":
@@ -528,7 +525,8 @@ export default function DependentSelectForm() {
         return (
           <CustomSelectController
             name={field.name}
-            options={qacWithOutFilterOptions}
+            options={onlySomeQuestionsOptions}
+            isLoading={isFetchingOnlyAllQuestions}
             sx={{ minWidth: 200 }}
           />
         );
@@ -542,13 +540,14 @@ export default function DependentSelectForm() {
         return (
           <CustomSelectController
             name={field.name}
-            options={calculationTypes}
+            options={onlyAllCalculationOptions}
+            isLoading={isFetchingOnlyAllCalculation}
             sx={{ minWidth: 200 }}
           />
         );
 
       default:
-        return <CustomTextField name={field.name} label="" disabled />;
+        return <CustomTextField name={""} disabled/>;
     }
   };
 
@@ -599,7 +598,7 @@ export default function DependentSelectForm() {
               } else {
                 formattedValue = value;
               }
-            }  else if (operatorType === "DATE") {
+            } else if (operatorType === "DATE") {
               formattedValue = `{#v_"${value}"}`;
             } else {
               formattedValue = value;
