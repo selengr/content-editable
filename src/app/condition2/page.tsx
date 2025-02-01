@@ -466,9 +466,9 @@ export default function DependentSelectForm() {
                   }}
                   // className={"rmdp-mobile"}
                   // zIndex={9999}
-                  // inputClass={`h-[50px] px-4 border-[1px] w-full border-neutral-300 rounded-xl text-left p-1 ${
-                  //   error ? "border-red-500" : ""
-                  // }`}
+                  inputClass={`h-[50px] px-4 border-[1px] w-full border-neutral-300 rounded-xl text-left p-1 ${
+                    error ? "border-red-500" : ""
+                  }`}
                   // highlightToday
                   // portal
                 />
@@ -565,8 +565,8 @@ export default function DependentSelectForm() {
               } else {
                 formattedValue = value;
               }
-            }  else if (operatorType === "DATEddate") {
-              formattedValue = `{#v_${value}}`;
+            }  else if (operatorType === "DATE") {
+              formattedValue = `{#v_"${value}"}`;
             } else {
               formattedValue = value;
             }
