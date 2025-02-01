@@ -253,8 +253,11 @@ export default function DependentSelectForm() {
             //test
       case "TEXT_FIELD_NUMBER":
         return [
-          { value: "#afterDate", label: "بعد از" },
-          { value: "#beforeDate", label: "قبل از" },
+          { value: "#greaterThanSpectral", label: "بزرگتر از" },
+          { value: "#greaterThanSpectral", label: "کوچکتر  از" },
+          { value: "#equalThanSpectralSingle", label: "برابر  با" },
+          { value: "#greaterEqualThanSpectralSingle", label: "بزرگتر مساوی" },
+          { value: "!#greaterEqualThanSpectralSingle", label: " کوچکتر مساوی" },
         ];
 
       case "CALCULATION_VALUE":
