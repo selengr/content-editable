@@ -171,8 +171,10 @@ export default function DependentSelectForm() {
         case "TEXT_FIELD_NUMBER":
           return [
             { value: "VALUE", label: "ارزش" },
-            { value: "TEXT", label: "متن" },
+            { value: "QUESTION", label: "سوال " },
+            { value: "CALCULATION", label: "محاسبه‌گر" },
           ];
+
       case "CALCULATION":
         return [
           { value: "VALUE", label: "ارزش" },
