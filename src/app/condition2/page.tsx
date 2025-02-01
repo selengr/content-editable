@@ -255,9 +255,9 @@ export default function DependentSelectForm() {
         return [
           { value: "#greaterThanSpectral", label: "بزرگتر از" },
           { value: "#greaterThanSpectral", label: "کوچکتر  از" },
-          { value: "#equalThanSpectralSingle", label: "برابر  با" },
-          { value: "#greaterEqualThanSpectralSingle", label: "بزرگتر مساوی" },
-          { value: "!#greaterEqualThanSpectralSingle", label: " کوچکتر مساوی" },
+          // { value: "#equalThanSpectralSingle", label: "برابر  با" },
+          // { value: "#greaterEqualThanSpectralSingle", label: "بزرگتر مساوی" },
+          // { value: "!#greaterEqualThanSpectralSingle", label: " کوچکتر مساوی" },
         ];
 
       case "CALCULATION_VALUE":
