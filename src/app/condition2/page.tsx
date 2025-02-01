@@ -456,21 +456,11 @@ export default function DependentSelectForm() {
                 }}
               >
                 <DatePickerCustome
-                  // shadow={false}
-                  // calendar={persian}
-                  // locale={persian_fa}
+                  min={new Date().setDate(new Date().getDate() - 1)}
                   value={value ? value : new Date()} 
                   onChange={(date) => {
-                      // field?.onChange(value);
                       setValue(field.name, date);
                   }}
-                  // className={"rmdp-mobile"}
-                  // zIndex={9999}
-                  inputClass={`h-[50px] px-4 border-[1px] w-full border-neutral-300 rounded-xl text-left p-1 ${
-                    error ? "border-red-500" : ""
-                  }`}
-                  // highlightToday
-                  // portal
                 />
               </Box>
             )}
