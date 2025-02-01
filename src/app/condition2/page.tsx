@@ -167,7 +167,12 @@ export default function DependentSelectForm() {
             { value: "QUESTION", label: "سوال" },
             { value: "DATE", label: "تاریخ" },
           ];
-
+        //test
+        case "TEXT_FIELD_NUMBER":
+          return [
+            { value: "VALUE", label: "ارزش" },
+            { value: "TEXT", label: "متن" },
+          ];
       case "CALCULATION":
         return [
           { value: "VALUE", label: "ارزش" },
