@@ -34,11 +34,6 @@
     label: string;
   }
 
-  interface DependentSelectFormProps {
-    data: IQuestionType[]
-  }
-
-
 
 
 

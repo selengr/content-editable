@@ -49,6 +49,12 @@ export const CustomSelectController: React.FC<CustomSelectProps> = ({
             value={value}
             onChange={onChange}
             disabled={disabled || isLoading}
+            // onChange={(e) => {
+            //   onChange(e)
+            //   if (onChange) {
+            //     onChange(e.target.value as string)
+            //   }
+            // }}
             displayEmpty
             renderValue={(selected) => {
               if (isLoading) {
