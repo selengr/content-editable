@@ -88,6 +88,7 @@ export default function DependentSelectForm() {
     useGetOnlyAllCalculation();
 
   // console.log("onlyAllCalculationOptions", onlyAllCalculationOptions);
+  // console.log("onlyAllCalculationOptions", onlyAllCalculationOptions);
 
   const methods = useForm<FormData>({
     resolver: zodResolver(FormSchema),
