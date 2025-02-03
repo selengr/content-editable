@@ -717,9 +717,9 @@ export default function DependentSelectForm() {
                   <Box
                     key={subCondition.id}
                     sx={{
-                      mb: 2,
-                      ml: { md: 4 },
-                      mt: 2,
+                      mb: "5px",
+                      ml: { md: 2 },
+                      mt: "5px",
                       display: "flex",
                       flexDirection: "row",
                     }}
@@ -730,10 +730,8 @@ export default function DependentSelectForm() {
                           sx={{
                             color: "#393939",
                             fontSize: "14px",
-                            width: {xs: 22,md : 90},
+                            width: {xs: 22,md : 85},
                             pt: 2,
-                            // justifyContent: "start",
-                            // alignItems: "start"
                           }}
                         >
                           اگر
@@ -746,7 +744,7 @@ export default function DependentSelectForm() {
                             { value: "&&", label: "و" },
                             { value: "||", label: "یا" },
                           ]}
-                          sx={{ minWidth: 78 }}
+                          sx={{ minWidth: 78,mr: "5px" }}
                         />
                       )}
                     </Box>
@@ -758,7 +756,7 @@ export default function DependentSelectForm() {
                         display: "flex",
                         flexDirection: { xs: "column", sm: "row" },
                         flexWrap: "wrap",
-                        gap: 2,
+                        gap: "5px",
                         // alignItems: 'center',
                         width: "100%",
                       }}
@@ -844,7 +842,6 @@ export default function DependentSelectForm() {
                           display: "flex",
                           flexDirection: "row",
                           gap: 1,
-                          ml: { md: 1 },
                           width: { sm: "100%", md: "auto" },
                           justifyContent: { xs: "flex-start", md: "center" },
                         }}
