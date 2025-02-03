@@ -80,8 +80,7 @@ export default function DependentSelectForm() {
   const { onlyAllCalculationOptions, isFetchingOnlyAllCalculation } =
     useGetOnlyAllCalculation();
 
-  // console.log("onlyAllCalculationOptions", onlyAllCalculationOptions);
-
+    
   const methods = useForm<FormData>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -94,7 +93,7 @@ export default function DependentSelectForm() {
               operatorType: "",
               conditionType: "",
               value: "",
-              id: "",
+              id: uuidv4(),
             },
           ],
           elseQuestionId: "",
@@ -285,11 +284,12 @@ export default function DependentSelectForm() {
   ) => {
     const combinedKey = `${type?.split("*")[0]}_${operator}_${condition}`;
 
+
     const createInput = (component: JSX.Element) => 
-    cloneElement(component, { 
-      key: field.key || field.name, 
-      name: field.name 
-    });
+  cloneElement(component, { 
+    key: field.key, 
+    name: field.name 
+  });
 
 
 
@@ -630,7 +630,7 @@ export default function DependentSelectForm() {
     };
 
     const output = transformInputToOutput(input);
-    console.log(output[0].conditionFormula);
+    console.log(output);
   };
 
   const handleAddCondition = () => {
@@ -642,7 +642,7 @@ export default function DependentSelectForm() {
           operatorType: "",
           conditionType: "",
           value: "",
-          id: "",
+          id: uuidv4(),
         },
       ],
       elseQuestionId: "",
@@ -658,22 +658,29 @@ export default function DependentSelectForm() {
     conditionIndex: number,
     subConditionIndex: number
   ) => {
-    const updatedConditions = [...conditions];
-    const newSubCondition = {
-      logicalOperator: subConditionIndex === 0 ? "" : "&&",
-      questionType: "",
-      operatorType: "",
-      conditionType: "",
-      value: "",
-      id: "",
-    };
-    updatedConditions[conditionIndex].subConditions.splice(
-      subConditionIndex + 1,
-      0,
-      newSubCondition
-    );
-    updateCondition(conditionIndex, updatedConditions[conditionIndex]);
+    const newId = uuidv4();
+    
+    update(conditionIndex, {
+      ...conditions[conditionIndex],
+      subConditions: [
+        ...conditions[conditionIndex].subConditions.slice(0, subConditionIndex + 1),
+        {
+          logicalOperator: conditions[conditionIndex].subConditions.length > 0 ? "&&" : "",
+          questionType: "",
+          operatorType: "",
+          conditionType: "",
+          value: "",
+          id: newId,
+        },
+        ...conditions[conditionIndex].subConditions.slice(subConditionIndex + 1)
+      ]
+    });
   };
+
+
+
+
+
 
   const handleRemoveSubCondition = (
     conditionIndex: number,
@@ -710,7 +717,7 @@ export default function DependentSelectForm() {
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
           {conditions.map((condition, index) => (
-            <Box key={uuidv4()} sx={{ mb: 2, width: "100%" }}>
+            <Box key={condition.id} sx={{ mb: 2, width: "100%" }}>
               {condition.subConditions.map((subCondition, subIndex) => {
                 const currentValues =
                   watchedValues?.conditions?.[index]?.subConditions?.[
@@ -721,7 +728,7 @@ export default function DependentSelectForm() {
                   
                 return (
                   <Box
-                    key={uuidv4()}
+                    key={subCondition.id}
                     sx={{
                       mb: 2,
                       ml: { md: 4 },
@@ -824,7 +831,7 @@ export default function DependentSelectForm() {
                         currentValues.conditionType,
                         {
                           name: `conditions.${index}.subConditions.${subIndex}.value`,
-                          key : uuidv4(),
+                          key : subCondition.id,
                         }
                       )}
                       <Box
