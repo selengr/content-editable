@@ -123,7 +123,6 @@ export default function DependentSelectForm() {
   const getQuestion = (type: string, values: any) => {
     console.log(type);
     switch (type?.split("*")[0]) {
-      //test
       case "MULTIPLE_CHOICE":
         return [
           { value: "VALUE", label: "ارزش" },
@@ -131,33 +130,32 @@ export default function DependentSelectForm() {
           { value: "QUESTION", label: "سوال " },
           { value: "CALCULATION", label: "محاسبه‌گر" },
         ];
-      //test
+
       case "MULTIPLE_CHOICE_MULTI_SELECT":
         return [{ value: "OPTION", label: "گزینه" }];
-      //test
+
       case "TEXT_FIELD":
         return [
           { value: "VALUE", label: "ارزش" },
           { value: "TEXT", label: "متن" },
         ];
 
-      //test
       case "SPECTRAL":
         return [
           { value: "VALUE", label: "ارزش" },
           { value: "QUESTION", label: "سوال " },
           { value: "CALCULATION", label: "محاسبه‌گر" },
         ];
-      //test
+
       case "SPECTRAL_DOMAIN":
         return [{ value: "VALUE", label: "ارزش" }];
-      //test
+
       case "TEXT_FIELD_DATE":
         return [
           { value: "QUESTION", label: "سوال" },
           { value: "DATE", label: "تاریخ" },
         ];
-      //test
+
       case "TEXT_FIELD_NUMBER":
         return [
           { value: "VALUE", label: "ارزش" },
@@ -165,7 +163,7 @@ export default function DependentSelectForm() {
           { value: "CALCULATION", label: "محاسبه‌گر" },
         ];
 
-      // test
+      
       case "CALCULATION":
         return [
           { value: "VALUE", label: "ارزش" },
@@ -181,7 +179,6 @@ export default function DependentSelectForm() {
   const getCondition = (type: string, operator: string, values: any) => {
     const combinedKey = `${type?.split("*")[0]}_${operator}`;
     switch (combinedKey) {
-      //test
       case "MULTIPLE_CHOICE_VALUE":
       case "MULTIPLE_CHOICE_OPTION":
       case "MULTIPLE_CHOICE_QUESTION":
@@ -193,7 +190,6 @@ export default function DependentSelectForm() {
           { value: "#lessThanMultiChoiceSingle", label: "کوچکتر از" },
         ];
 
-      //test
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION":
         return [
           { value: "#containMultiChoiceMulti", label: "شامل شدن" },
@@ -201,7 +197,7 @@ export default function DependentSelectForm() {
           { value: "#equalThanMultiChoiceMulti", label: "برابر با" },
           { value: "!#equalThanMultiChoiceMulti", label: "نابرابر با" },
         ];
-      //test
+
       case "TEXT_FIELD_TEXT":
         return [
           { value: "#startWithText", label: "شروع شدن با " },
@@ -209,14 +205,14 @@ export default function DependentSelectForm() {
           { value: "#containAnyText", label: "شامل شدن" },
           { value: "!#containAnyText", label: "شامل نشدن" },
         ];
-      //test
+
       case "TEXT_FIELD_VALUE":
         return [
           { value: "#lenEqualText", label: "طول متن برابر با" },
           { value: "#lenGraterThanText", label: "طول متن بیشتر از" },
           { value: "!#lenGraterThanText", label: "طول متن کمتر از" },
         ];
-      //test
+
       case "SPECTRAL_VALUE":
       case "SPECTRAL_QUESTION":
       case "SPECTRAL_CALCULATION":
@@ -228,14 +224,12 @@ export default function DependentSelectForm() {
           { value: "!#greaterEqualThanSpectralSingle", label: " کوچکتر مساوی" },
         ];
 
-      //test
       case "SPECTRAL_DOMAIN_VALUE":
         return [
           { value: "#lessThanSpectralDouble", label: "کوچکتر  از" },
           { value: "#greaterThanSpectralDouble", label: "بزرگتر از" },
         ];
 
-      //test
       case "TEXT_FIELD_DATE_DATE":
       case "TEXT_FIELD_DATE_QUESTION":
         return [
@@ -243,7 +237,7 @@ export default function DependentSelectForm() {
           { value: "#beforeDate", label: "قبل از" },
         ];
 
-      // test
+      
       case "TEXT_FIELD_NUMBER_VALUE":
       case "TEXT_FIELD_NUMBER_QUESTION":
       case "TEXT_FIELD_NUMBER_CALCULATION":
@@ -255,7 +249,7 @@ export default function DependentSelectForm() {
           { value: "!#greaterEqualThanNumber", label: " کوچکتر مساوی" },
         ];
 
-      // test
+      
       case "CALCULATION_VALUE":
       case "CALCULATION_QUESTION":
       case "CALCULATION_CALCULATION":
@@ -288,14 +282,14 @@ export default function DependentSelectForm() {
       });
 
     switch (combinedKey) {
-      // test
+      
       case "MULTIPLE_CHOICE_VALUE_#equalMultiChoiceSingle":
       case "MULTIPLE_CHOICE_VALUE_!#equalMultiChoiceSingle":
       case "MULTIPLE_CHOICE_VALUE_#lessThanMultiChoiceSingle":
       case "MULTIPLE_CHOICE_VALUE_!#lessThanMultiChoiceSingle":
         return <CustomTextField name={field.name} type="number" />;
 
-      // test
+      
       case "MULTIPLE_CHOICE_QUESTION_#equalMultiChoiceSingle":
       case "MULTIPLE_CHOICE_QUESTION_!#equalMultiChoiceSingle":
       case "MULTIPLE_CHOICE_QUESTION_#lessThanMultiChoiceSingle":
@@ -309,7 +303,7 @@ export default function DependentSelectForm() {
           />
         );
 
-      // test
+      
       case "MULTIPLE_CHOICE_CALCULATION_#equalMultiChoiceSingle":
       case "MULTIPLE_CHOICE_CALCULATION_!#equalMultiChoiceSingle":
       case "MULTIPLE_CHOICE_CALCULATION_#lessThanMultiChoiceSingle":
@@ -323,7 +317,7 @@ export default function DependentSelectForm() {
           />
         );
 
-      // test
+      
       case "MULTIPLE_CHOICE_OPTION_#equalMultiChoiceSingle":
       case "MULTIPLE_CHOICE_OPTION_!#equalMultiChoiceSingle":
       case "MULTIPLE_CHOICE_OPTION_#lessThanMultiChoiceSingle":
@@ -353,7 +347,7 @@ export default function DependentSelectForm() {
           />
         );
       }
-      // test
+      
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_#containMultiChoiceMulti":
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_!#containMultiChoiceMulti":
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_!#equalThanMultiChoiceMulti":
@@ -382,28 +376,27 @@ export default function DependentSelectForm() {
               maxWidth: 200,
               maxHeight: 50,
             }}
-            // aria-label={`Multi-select options for ${targetUnicName}`}
+            aria-label={`Multi-select ${targetUnicName}`}
             // chip
             // checkbox
           />
         );
       }
 
-      // test
+      
       case "TEXT_FIELD_TEXT_#startWithText":
       case "TEXT_FIELD_TEXT_#endWithText":
         return createInput(<CustomTextField name={field.name} type="string" />);
-      // test
+      
       case "TEXT_FIELD_TEXT_#containAnyText":
       case "TEXT_FIELD_TEXT_!#containAnyText":
         return createInput(<CustomTextField name={field.name} type="string" />);
-      // test
+      
       case "TEXT_FIELD_VALUE_#lenEqualText":
       case "TEXT_FIELD_VALUE_#lenGraterThanText":
       case "TEXT_FIELD_VALUE_!#lenGraterThanText":
         return createInput(<CustomTextField name={field.name} type="number" />);
 
-      //test
       case "SPECTRAL_VALUE_#greaterThanSpectral":
       case "SPECTRAL_VALUE_!#greaterThanSpectral":
       case "SPECTRAL_VALUE_#equalThanSpectralSingle":
@@ -411,7 +404,6 @@ export default function DependentSelectForm() {
       case "SPECTRAL_VALUE_!#greaterEqualThanSpectralSingle":
         return createInput(<CustomTextField name={field.name} type="number" />);
 
-      //test
       case "SPECTRAL_QUESTION_#greaterThanSpectral":
       case "SPECTRAL_QUESTION_!#greaterThanSpectral":
       case "SPECTRAL_QUESTION_#equalThanSpectralSingle":
@@ -426,7 +418,6 @@ export default function DependentSelectForm() {
           />
         );
 
-      //test
       case "SPECTRAL_CALCULATION_#greaterThanSpectral":
       case "SPECTRAL_CALCULATION_!#greaterThanSpectral":
       case "SPECTRAL_CALCULATION_#equalThanSpectralSingle":
@@ -441,11 +432,10 @@ export default function DependentSelectForm() {
           />
         );
 
-      //test
       case "SPECTRAL_DOMAIN_VALUE_#lessThanSpectralDouble":
       case "SPECTRAL_DOMAIN_VALUE_#greaterThanSpectralDouble":
         return <CustomTextField name={field.name} type="number" />;
-      //test
+
       case "TEXT_FIELD_DATE_DATE_#beforeDate":
       case "TEXT_FIELD_DATE_DATE_#afterDate":
         return (
@@ -474,7 +464,7 @@ export default function DependentSelectForm() {
             )}
           />
         );
-      // test but need to change the list
+       but need to change the list
       case "TEXT_FIELD_DATE_QUESTION_#beforeDate":
       case "TEXT_FIELD_DATE_QUESTION_#afterDate":
         return (
@@ -486,14 +476,14 @@ export default function DependentSelectForm() {
           />
         );
 
-      // test
+      
       case "TEXT_FIELD_NUMBER_VALUE_#greaterThanNumber":
       case "TEXT_FIELD_NUMBER_VALUE_!#greaterThanNumber":
       case "TEXT_FIELD_NUMBER_VALUE_#greaterEqualThanNumber":
       case "TEXT_FIELD_NUMBER_VALUE_!#greaterEqualThanNumber":
         return <CustomTextField name={field.name} type="number" />;
 
-      // test
+      
       case "TEXT_FIELD_NUMBER_QUESTION_#greaterThanNumber":
       case "TEXT_FIELD_NUMBER_QUESTION_!#greaterThanNumber":
       case "TEXT_FIELD_NUMBER_QUESTION_#greaterEqualThanNumber":
@@ -506,7 +496,7 @@ export default function DependentSelectForm() {
             sx={{ minWidth: 200 }}
           />
         );
-      // test
+      
       case "TEXT_FIELD_NUMBER_CALCULATION_#greaterThanNumber":
       case "TEXT_FIELD_NUMBER_CALCULATION_!#greaterThanNumber":
       case "TEXT_FIELD_NUMBER_CALCULATION_#greaterEqualThanNumber":
