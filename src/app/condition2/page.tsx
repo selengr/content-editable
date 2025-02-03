@@ -298,7 +298,7 @@ export default function DependentSelectForm() {
             name={field.name}
             options={onlySomeQuestionsOptions}
             isLoading={isFetchingOnlyAllQuestions}
-            sx={{ minWidth: 200 }}
+            sx={{ minWidth: 210 }}
           />
         );
 
@@ -312,7 +312,7 @@ export default function DependentSelectForm() {
             name={field.name}
             options={onlyAllCalculationOptions}
             isLoading={isFetchingOnlyAllCalculation}
-            sx={{ minWidth: 200 }}
+            sx={{ minWidth: 210 }}
           />
         );
 
@@ -342,7 +342,7 @@ export default function DependentSelectForm() {
             key={targetUnicName}
             name={field.name}
             options={mappedOptions}
-            sx={{ minWidth: 200 }}
+            sx={{ minWidth: 210 }}
           />
         );
       }
@@ -372,7 +372,7 @@ export default function DependentSelectForm() {
             name={field.name}
             options={options}
             sx={{
-              maxWidth: 200,
+              maxWidth: 210,
               maxHeight: 50,
             }}
             aria-label={`Multi-select ${targetUnicName}`}
@@ -413,7 +413,7 @@ export default function DependentSelectForm() {
             name={field.name}
             options={onlySomeQuestionsOptions}
             isLoading={isFetchingOnlyAllQuestions}
-            sx={{ minWidth: 200 }}
+            sx={{ minWidth: 210 }}
           />
         );
 
@@ -427,7 +427,7 @@ export default function DependentSelectForm() {
             name={field.name}
             options={onlyAllCalculationOptions}
             isLoading={isFetchingOnlyAllCalculation}
-            sx={{ minWidth: 200 }}
+            sx={{ minWidth: 210 }}
           />
         );
 
@@ -471,7 +471,7 @@ export default function DependentSelectForm() {
             name={field.name}
             options={onlySomeQuestionsOptions}
             isLoading={isFetchingOnlyAllQuestions}
-            sx={{ minWidth: 200 }}
+            sx={{ minWidth: 210 }}
           />
         );
 
@@ -492,7 +492,7 @@ export default function DependentSelectForm() {
             name={field.name}
             options={onlySomeQuestionsOptions}
             isLoading={isFetchingOnlyAllQuestions}
-            sx={{ minWidth: 200 }}
+            sx={{ minWidth: 210 }}
           />
         );
       
@@ -505,7 +505,7 @@ export default function DependentSelectForm() {
             name={field.name}
             options={onlyAllCalculationOptions}
             isLoading={isFetchingOnlyAllCalculation}
-            sx={{ minWidth: 200 }}
+            sx={{ minWidth: 210 }}
           />
         );
 
@@ -528,7 +528,7 @@ export default function DependentSelectForm() {
             name={field.name}
             options={onlySomeQuestionsOptions}
             isLoading={isFetchingOnlyAllQuestions}
-            sx={{ minWidth: 200 }}
+            sx={{ minWidth: 210 }}
           />
         );
 
@@ -543,7 +543,7 @@ export default function DependentSelectForm() {
             name={field.name}
             options={onlyAllCalculationOptions}
             isLoading={isFetchingOnlyAllCalculation}
-            sx={{ minWidth: 200 }}
+            sx={{ minWidth: 210 }}
           />
         );
 
@@ -706,7 +706,7 @@ export default function DependentSelectForm() {
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
           {conditions.map((condition, index) => (
-            <Box key={condition.id} sx={{ mb: 2, width: "100%" }}>
+            <Box key={condition.id} sx={{ width: "100%" }}>
               {condition.subConditions.map((subCondition, subIndex) => {
                 const currentValues =
                   watchedValues?.conditions?.[index]?.subConditions?.[
@@ -717,9 +717,9 @@ export default function DependentSelectForm() {
                   <Box
                     key={subCondition.id}
                     sx={{
-                      mb: "5px",
+                      mb: 1,
                       ml: { md: 2 },
-                      mt: "5px",
+                      mt: 1,
                       display: "flex",
                       flexDirection: "row",
                     }}
@@ -730,7 +730,7 @@ export default function DependentSelectForm() {
                           sx={{
                             color: "#393939",
                             fontSize: "14px",
-                            width: {xs: 22,md : 85},
+                            width: {xs: 22,md : 83},
                             pt: 2,
                           }}
                         >
@@ -744,7 +744,7 @@ export default function DependentSelectForm() {
                             { value: "&&", label: "و" },
                             { value: "||", label: "یا" },
                           ]}
-                          sx={{ minWidth: 78,mr: "5px" }}
+                          sx={{ minWidth: 78,mr: 1 }}
                         />
                       )}
                     </Box>
@@ -756,7 +756,7 @@ export default function DependentSelectForm() {
                         display: "flex",
                         flexDirection: { xs: "column", sm: "row" },
                         flexWrap: "wrap",
-                        gap: "5px",
+                        gap: 1,
                         // alignItems: 'center',
                         width: "100%",
                       }}
@@ -767,7 +767,7 @@ export default function DependentSelectForm() {
                         isLoading={isFetchingQacWithOutFilter}
                         sx={{
                           width: { sm: "100%", md: "100%" },
-                          minWidth: 200,
+                          minWidth: 240,
                           flexShrink: 0,
                         }}
                         onChange={() => {
@@ -793,7 +793,7 @@ export default function DependentSelectForm() {
                         )}
                         sx={{
                           width: { sm: "100%", md: "22%" },
-                          minWidth: 200,
+                          minWidth: 156,
                           flexShrink: 0,
                         }}
                         onChange={() => {
@@ -817,7 +817,7 @@ export default function DependentSelectForm() {
                         )}
                         sx={{
                           width: { sm: "100%", md: "22%" },
-                          minWidth: 200,
+                          minWidth: 156,
                           flexShrink: 0,
                         }}
                         onChange={() => {
@@ -896,11 +896,10 @@ export default function DependentSelectForm() {
 
               <Box
                   sx={{
-                    mt: 2,
-                    ml: { xs: 0, md: 4 },
+                    ml: { xs: 0, md: 2 },
                     display: "flex",
                     alignItems: "center",
-                    gap: 2,
+                    gap: 1,
                     flexWrap: "wrap",
                     flexDirection: { xs: "column", md: "row" }
                   }}
@@ -913,10 +912,10 @@ export default function DependentSelectForm() {
                   name={`conditions.${index}.returnQuestionId`}
                   options={onlyAllQuestionsOptions}
                   isLoading={isFetchingOnlyAllQuestions}
-                  sx={{ minWidth: 200, ml: 5 }}
+                  sx={{ minWidth: 240, ml: 5 }}
                 />
                 <Typography
-                  sx={{ color: "#393939", fontSize: "14px", mr: 9.5 }}
+                  sx={{ color: "#393939", fontSize: "14px", mr: 4 }}
                 >
                   در غیر اینصورت برو به:
                 </Typography>
@@ -925,7 +924,7 @@ export default function DependentSelectForm() {
                   name={`conditions.${index}.elseQuestionId`}
                   options={onlyAllQuestionsOptions}
                   isLoading={isFetchingOnlyAllQuestions}
-                  sx={{ minWidth : 300, width: {xs : "100%", md : 410} }}
+                  sx={{ minWidth : 300, width: 360 }}
                 />
 
                 <IconButton
@@ -953,21 +952,22 @@ export default function DependentSelectForm() {
             variant="outlined"
             onClick={handleAddCondition}
             sx={{
+              ml: 2,
+              height: 52,
               maxWidth: 155,
-              ml: 10,
+              color: "white",
               bgcolor: "#1758BA",
               borderRadius: "8px",
-              height: 52,
-              color: "white",
             }}
           >
             افزودن شرط جدید
           </Button>
           <Box
             display="flex"
-            gap={3}
+            gap={2}
             width="100%"
             marginBottom={2}
+            marginTop={5}
             sx={{
               display: "flex",
               justifyContent: "center",
