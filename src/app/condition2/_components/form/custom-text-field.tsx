@@ -1,16 +1,25 @@
-import type React from "react";
+import React, { useRef, useEffect } from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import { TextField, type TextFieldProps } from "@mui/material";
 
 interface CustomTextFieldProps extends Omit<TextFieldProps, "name"> {
   name: string;
+  type?: string;
 }
 
 const CustomTextField: React.FC<CustomTextFieldProps> = ({
   name,
+  type,
   ...props
 }) => {
   const { control } = useFormContext();
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [name]);
 
   return (
     <Controller
@@ -18,8 +27,8 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
       control={control}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <TextField
-          key={name} 
-          {...props}
+          inputRef={inputRef}
+          type={type}
           value={value || ""}
           onChange={onChange}
           error={!!error}
@@ -43,6 +52,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
               },
             },
           }}
+          {...props}
         />
       )}
     />

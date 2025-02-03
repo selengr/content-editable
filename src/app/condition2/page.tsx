@@ -35,6 +35,7 @@ import { useGetOnlyAllCalculation } from "./hooks/useGetOnlyAllCalculation";
 import { formatContainText } from "./utils/formatContainText";
 
 import { DatePicker as DatePickerCustome } from "./_components/DatePicker/DatePicker";
+import { cloneElement } from "react";
 
 
 const SubConditionSchema = z.object({
@@ -277,9 +278,18 @@ export default function DependentSelectForm() {
     type: string,
     operator: string,
     condition: string,
-    field: any
+    field: { name: any; key?: string } 
   ) => {
     const combinedKey = `${type?.split("*")[0]}_${operator}_${condition}`;
+
+    const createInput = (component: JSX.Element) => 
+    cloneElement(component, { 
+      key: field.key || field.name, 
+      name: field.name 
+    });
+
+
+
     switch (combinedKey) {
       // test
       case "MULTIPLE_CHOICE_VALUE_#equalMultiChoiceSingle":
@@ -373,16 +383,16 @@ export default function DependentSelectForm() {
       // test
       case "TEXT_FIELD_TEXT_#startWithText":
       case "TEXT_FIELD_TEXT_#endWithText":
-        return <CustomTextField name={field.name} type="string" />;
+        return createInput(<CustomTextField name={field.name} type="string" />);
       // test
       case "TEXT_FIELD_TEXT_#containAnyText":
       case "TEXT_FIELD_TEXT_!#containAnyText":
-        return <CustomTextField name={field.name} type="string" />;
+        return createInput(<CustomTextField name={field.name} type="string" />);
       // test
       case "TEXT_FIELD_VALUE_#lenEqualText":
       case "TEXT_FIELD_VALUE_#lenGraterThanText":
       case "TEXT_FIELD_VALUE_!#lenGraterThanText":
-        return <CustomTextField name={field.name} type="number" />;
+        return createInput(<CustomTextField name={field.name} type="number" />);
 
       //test
       case "SPECTRAL_VALUE_#greaterThanSpectral":
@@ -390,7 +400,7 @@ export default function DependentSelectForm() {
       case "SPECTRAL_VALUE_#equalThanSpectralSingle":
       case "SPECTRAL_VALUE_#greaterEqualThanSpectralSingle":
       case "SPECTRAL_VALUE_!#greaterEqualThanSpectralSingle":
-        return <CustomTextField name={field.name} type="number" />;
+        return createInput(<CustomTextField name={field.name} type="number" />);
 
       //test
       case "SPECTRAL_QUESTION_#greaterThanSpectral":
@@ -448,7 +458,7 @@ export default function DependentSelectForm() {
                   min={new Date().setDate(new Date().getDate() - 1)}
                   value={value ? value : new Date()}
                   onChange={(date) => {
-                    setValue(field.name, date);
+                    setValue(field?.name, date);
                   }}
                 />
               </Box>
@@ -766,7 +776,6 @@ export default function DependentSelectForm() {
                           flexShrink: 0,
                         }}
                         onChange={() => {
-                          // Reset dependent fields when questionType changes
                           setValue(`conditions.${index}.subConditions.${subIndex}.operatorType`, "");
                           setValue(`conditions.${index}.subConditions.${subIndex}.conditionType`, "");
                           setValue(`conditions.${index}.subConditions.${subIndex}.value`, "");
@@ -783,6 +792,10 @@ export default function DependentSelectForm() {
                           minWidth: 200,
                           flexShrink: 0,
                         }}
+                        onChange={() => {
+                          setValue(`conditions.${index}.subConditions.${subIndex}.conditionType`, "");
+                          setValue(`conditions.${index}.subConditions.${subIndex}.value`, "");
+                        }}
                         disabled={!Boolean(currentValues.questionType)}
                       />
                       <CustomSelectController
@@ -797,6 +810,9 @@ export default function DependentSelectForm() {
                           minWidth: 200,
                           flexShrink: 0,
                         }}
+                        onChange={() => {
+                          setValue(`conditions.${index}.subConditions.${subIndex}.value`, "");
+                        }}
                         disabled={!Boolean(currentValues.operatorType)}
                       />
                       {getInput(
@@ -805,6 +821,7 @@ export default function DependentSelectForm() {
                         currentValues.conditionType,
                         {
                           name: `conditions.${index}.subConditions.${subIndex}.value`,
+                          key : uuidv4(),
                         }
                       )}
                       <Box
