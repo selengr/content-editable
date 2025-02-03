@@ -108,6 +108,7 @@ export default function DependentSelectForm() {
     handleSubmit,
     formState: { errors },
     setValue,
+    getValues
   } = methods;
 
   const {
@@ -654,29 +655,33 @@ export default function DependentSelectForm() {
     removeCondition(index);
   };
 
+  
+  
   const handleAddSubCondition = (
-    conditionIndex: number,
-    subConditionIndex: number
+    index: number,
+    subIndex: number
   ) => {
-    const newId = uuidv4();
+    const currentCondition = getValues().conditions[index];
+    const clonedCondition = structuredClone(currentCondition);
     
-    update(conditionIndex, {
-      ...conditions[conditionIndex],
-      subConditions: [
-        ...conditions[conditionIndex].subConditions.slice(0, subConditionIndex + 1),
-        {
-          logicalOperator: conditions[conditionIndex].subConditions.length > 0 ? "&&" : "",
-          questionType: "",
-          operatorType: "",
-          conditionType: "",
-          value: "",
-          id: newId,
-        },
-        ...conditions[conditionIndex].subConditions.slice(subConditionIndex + 1)
-      ]
+    const newSubConditions = [
+      ...clonedCondition.subConditions.slice(0, subIndex + 1),
+      {
+        logicalOperator: clonedCondition.subConditions.length > 0 ? "&&" : "",
+        questionType: "",
+        operatorType: "",
+        conditionType: "",
+        value: "",
+        id: uuidv4(),
+      },
+      ...clonedCondition.subConditions.slice(subIndex + 1)
+    ];
+  
+    updateCondition(index, {
+      ...clonedCondition,
+      subConditions: newSubConditions
     });
   };
-
 
 
 
