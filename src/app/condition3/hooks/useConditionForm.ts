@@ -1,7 +1,7 @@
     import { useForm, useFieldArray } from "react-hook-form"
     import { zodResolver } from "@hookform/resolvers/zod"
     import { v4 as uuidv4 } from "uuid"
-    import { FormSchema, type FormData } from "../schemas/formSchema"
+    import { FormSchema, type FormData } from "../schemas/conditionFormSchemas"
     
     export function useConditionForm() {
       const methods = useForm<FormData>({
