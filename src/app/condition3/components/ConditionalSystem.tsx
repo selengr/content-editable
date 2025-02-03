@@ -7,11 +7,8 @@ import { LoadingButton } from "@mui/lab"
 import { Box, Typography, Button } from "@mui/material"
 // others
 import "react-multi-date-picker/styles/layouts/mobile.css"
-// _components
-import { CustomSelectController } from "./_components/form/select-controller"
 // hooks
-import { useFormLogic } from "./hooks/useFormLogic"
-import { useWatch } from "react-hook-form"
+import { useConditionForm } from "../hooks/useConditionForm"
 
 export default function ConditionalSystem() {
   const {
@@ -21,7 +18,7 @@ export default function ConditionalSystem() {
     handleRemoveCondition,
     handleAddSubCondition,
     handleRemoveSubCondition,
-  } = useFormLogic()
+  } = useConditionForm()
 
   const { control, handleSubmit, setValue } = methods
 
