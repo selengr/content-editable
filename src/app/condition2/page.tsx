@@ -1,8 +1,8 @@
 "use client";
-
 import * as z from "zod";
 import Image from "next/image";
 import { v4 as uuidv4 } from "uuid";
+import { cloneElement } from "react";
 // hook-form
 import {
   useForm,
@@ -20,7 +20,6 @@ import "react-multi-date-picker/styles/layouts/mobile.css";
 // public
 import TrashIcon from "@/../public/images/home-page/trash.svg";
 import PlusIcon from "@/../public/images/home-page/Add-fill.svg";
-import JSONData_First from "../../../public/assets/fake-data/first.json";
 // _components
 import {
   CustomSelectController,
@@ -35,7 +34,7 @@ import { useGetOnlyAllCalculation } from "./hooks/useGetOnlyAllCalculation";
 import { formatContainText } from "./utils/formatContainText";
 
 import { DatePicker as DatePickerCustome } from "./_components/DatePicker/DatePicker";
-import { cloneElement } from "react";
+
 
 const SubConditionSchema = z.object({
   logicalOperator: z.string().optional(),
@@ -386,23 +385,23 @@ export default function DependentSelectForm() {
       
       case "TEXT_FIELD_TEXT_#startWithText":
       case "TEXT_FIELD_TEXT_#endWithText":
-        return createInput(<CustomTextField name={field.name} type="string" />);
+        return <CustomTextField name={field.name} type="string" />
       
       case "TEXT_FIELD_TEXT_#containAnyText":
       case "TEXT_FIELD_TEXT_!#containAnyText":
-        return createInput(<CustomTextField name={field.name} type="string" />);
+        return <CustomTextField name={field.name} type="string" />
       
       case "TEXT_FIELD_VALUE_#lenEqualText":
       case "TEXT_FIELD_VALUE_#lenGraterThanText":
       case "TEXT_FIELD_VALUE_!#lenGraterThanText":
-        return createInput(<CustomTextField name={field.name} type="number" />);
+        return <CustomTextField name={field.name} type="number" />
 
       case "SPECTRAL_VALUE_#greaterThanSpectral":
       case "SPECTRAL_VALUE_!#greaterThanSpectral":
       case "SPECTRAL_VALUE_#equalThanSpectralSingle":
       case "SPECTRAL_VALUE_#greaterEqualThanSpectralSingle":
       case "SPECTRAL_VALUE_!#greaterEqualThanSpectralSingle":
-        return createInput(<CustomTextField name={field.name} type="number" />);
+        return <CustomTextField name={field.name} type="number" />
 
       case "SPECTRAL_QUESTION_#greaterThanSpectral":
       case "SPECTRAL_QUESTION_!#greaterThanSpectral":
@@ -464,7 +463,7 @@ export default function DependentSelectForm() {
             )}
           />
         );
-       but need to change the list
+      // need to change the list
       case "TEXT_FIELD_DATE_QUESTION_#beforeDate":
       case "TEXT_FIELD_DATE_QUESTION_#afterDate":
         return (
