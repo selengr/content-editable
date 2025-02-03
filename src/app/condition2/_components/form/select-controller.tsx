@@ -23,6 +23,7 @@ interface CustomSelectProps extends Omit<SelectProps, "sx" | "name"> {
   options: { value: string; label: string }[];
   sx?: SxProps<Theme>;
   name: string;
+  onChange? : any;
   disabled?: boolean;
   isLoading?: boolean;
 }
@@ -31,6 +32,7 @@ export const CustomSelectController: React.FC<CustomSelectProps> = ({
   options,
   sx,
   name,
+  onChange, 
   disabled = false,
   isLoading = false,
   ...props
@@ -41,20 +43,18 @@ export const CustomSelectController: React.FC<CustomSelectProps> = ({
     <Controller
       name={name}
       control={control}
-      render={({ field: { onChange, value }, fieldState: { error } }) => (
+      render={({ field , fieldState: { error } }) => (
         <FormControl error={!!error}>
           <Select
             IconComponent={IoIosArrowDown}
             variant="outlined"
-            value={value}
-            onChange={onChange}
+            {...field}
+        onChange={(value) => {
+          field.onChange(value);
+          onChange?.(value);
+        }}
             disabled={disabled || isLoading}
-            // onChange={(e) => {
-            //   onChange(e)
-            //   if (onChange) {
-            //     onChange(e.target.value as string)
-            //   }
-            // }}
+            
             displayEmpty
             renderValue={(selected) => {
               if (isLoading) {

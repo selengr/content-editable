@@ -16,9 +16,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
 import { Box, IconButton, Typography, Button, TextField } from "@mui/material";
 // others
-import DatePicker from "react-multi-date-picker";
-import persian from "react-date-object/calendars/persian";
-import persian_fa from "react-date-object/locales/persian_fa";
 import "react-multi-date-picker/styles/layouts/mobile.css";
 // public
 import TrashIcon from "@/../public/images/home-page/trash.svg";
@@ -38,6 +35,7 @@ import { useGetOnlyAllCalculation } from "./hooks/useGetOnlyAllCalculation";
 import { formatContainText } from "./utils/formatContainText";
 
 import { DatePicker as DatePickerCustome } from "./_components/DatePicker/DatePicker";
+
 
 const SubConditionSchema = z.object({
   logicalOperator: z.string().optional(),
@@ -64,12 +62,6 @@ const FormSchema = z.object({
 
 type FormData = z.infer<typeof FormSchema>;
 
-const calculationTypes = JSONData_First.dataList
-  .filter((item) => item.elementStr === "CALCULATION")
-  .map((item) => ({
-    value: item.extMap.QUESTION_TYPE || "",
-    label: item.caption,
-  }));
 
 export default function DependentSelectForm() {
   // const [calendarValue, setCalendarValue] = useState(new Date())
@@ -87,7 +79,6 @@ export default function DependentSelectForm() {
   const { onlyAllCalculationOptions, isFetchingOnlyAllCalculation } =
     useGetOnlyAllCalculation();
 
-  // console.log("onlyAllCalculationOptions", onlyAllCalculationOptions);
   // console.log("onlyAllCalculationOptions", onlyAllCalculationOptions);
 
   const methods = useForm<FormData>({
@@ -130,6 +121,7 @@ export default function DependentSelectForm() {
   });
 
   const watchedValues = useWatch({ control });
+  
 
   const getQuestion = (type: string, values: any) => {
     console.log(type);
@@ -679,6 +671,7 @@ export default function DependentSelectForm() {
     updateCondition(conditionIndex, updatedCondition);
   };
 
+
   return (
     <Box
       sx={{
@@ -710,6 +703,9 @@ export default function DependentSelectForm() {
                   watchedValues?.conditions?.[index]?.subConditions?.[
                     subIndex
                   ] || {};
+
+                  // console.log("eeee",watchedValues)
+                  
                 return (
                   <Box
                     key={uuidv4()}
@@ -768,6 +764,12 @@ export default function DependentSelectForm() {
                           width: { sm: "100%", md: "100%" },
                           minWidth: 200,
                           flexShrink: 0,
+                        }}
+                        onChange={() => {
+                          // Reset dependent fields when questionType changes
+                          setValue(`conditions.${index}.subConditions.${subIndex}.operatorType`, "");
+                          setValue(`conditions.${index}.subConditions.${subIndex}.conditionType`, "");
+                          setValue(`conditions.${index}.subConditions.${subIndex}.value`, "");
                         }}
                       />
                       <CustomSelectController
