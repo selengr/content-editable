@@ -14,7 +14,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 // mui
 import { LoadingButton } from "@mui/lab";
-import { Box, IconButton, Typography, Button, TextField } from "@mui/material";
+import { Box, IconButton, Typography, Button } from "@mui/material";
 // others
 import "react-multi-date-picker/styles/layouts/mobile.css";
 // public
@@ -28,10 +28,10 @@ import {
 import { CircleDivider } from "./_components/circle-divider";
 import CustomTextField from "./_components/form/custom-text-field";
 // hooks
+import { formatContainText } from "./utils/formatContainText";
 import { useGetQacWithOutFilter } from "./hooks/useGetQacWithOutFilter";
 import { useGetOnlyAllQuestions } from "./hooks/useGetOnlyAllQuestions";
 import { useGetOnlyAllCalculation } from "./hooks/useGetOnlyAllCalculation";
-import { formatContainText } from "./utils/formatContainText";
 
 import { DatePicker as DatePickerCustome } from "./_components/DatePicker/DatePicker";
 
@@ -441,7 +441,7 @@ export default function DependentSelectForm() {
           <Controller
             name={field.name}
             control={control}
-            render={({ field: { onChange, value }, fieldState: { error } }) => (
+            render={({ field: { value }, fieldState: { error } }) => (
               <Box
                 display="flex"
                 justifyContent="center"
@@ -713,8 +713,6 @@ export default function DependentSelectForm() {
                     subIndex
                   ] || {};
 
-                // console.log("eeee",watchedValues)
-
                 return (
                   <Box
                     key={subCondition.id}
@@ -897,15 +895,19 @@ export default function DependentSelectForm() {
                   </Box>
                 );
               })}
+
+
               <Box
-                sx={{
-                  mt: 2,
-                  ml: 4,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 2,
-                }}
-              >
+                  sx={{
+                    mt: 2,
+                    ml: { xs: 0, md: 4 },
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                    flexWrap: "wrap",
+                    flexDirection: { xs: "column", md: "row" }
+                  }}
+                >
                 <Typography sx={{ color: "#393939", fontSize: "14px" }}>
                   :برو به
                 </Typography>
