@@ -730,7 +730,7 @@ export default function DependentSelectForm() {
                           sx={{
                             color: "#393939",
                             fontSize: "14px",
-                            width: 90,
+                            width: {xs: 22,md : 90},
                             pt: 2,
                             // justifyContent: "start",
                             // alignItems: "start"
@@ -909,7 +909,7 @@ export default function DependentSelectForm() {
                   }}
                 >
                 <Typography sx={{ color: "#393939", fontSize: "14px" }}>
-                  :برو به
+                برو به:
                 </Typography>
 
                 <CustomSelectController
@@ -928,7 +928,7 @@ export default function DependentSelectForm() {
                   name={`conditions.${index}.elseQuestionId`}
                   options={onlyAllQuestionsOptions}
                   isLoading={isFetchingOnlyAllQuestions}
-                  sx={{ minWidth: 410 }}
+                  sx={{ minWidth : 300, width: {xs : "100%", md : 410} }}
                 />
 
                 <IconButton

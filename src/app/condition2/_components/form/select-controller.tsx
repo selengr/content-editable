@@ -80,6 +80,11 @@ export const CustomSelectController: React.FC<CustomSelectProps> = ({
                 borderRadius: "8px",
                 paddingLeft: 2,
                 border: error ? "1px solid #FA4D56" : "1px solid #DDE1E6",
+                height: {
+                  xs: 45,    
+                  sm: 50,    
+                  md: 52 
+                },
               },
               "& .MuiSelect-icon": {
                 left: "auto",
@@ -209,6 +214,11 @@ export function MultiSelectController({
                 borderRadius: "8px",
                 paddingLeft: 2,
                 border: error ? "1px solid #FA4D56" : "1px solid #DDE1E6",
+                height: {
+                  xs: 45,    
+                  sm: 50,    
+                  md: 52 
+                }
               },
               "& .MuiSelect-icon": {
                 left: "auto",
