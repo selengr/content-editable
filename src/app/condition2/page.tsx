@@ -207,12 +207,15 @@ export default function DependentSelectForm() {
         ];
       //test
       case "TEXT_FIELD_TEXT":
-      case "TEXT_FIELD_VALUE":
         return [
           { value: "#startWithText", label: "شروع شدن با " },
           { value: "#endWithText", label: "پایان یافتن با" },
           { value: "#containAnyText", label: "شامل شدن" },
-          { value: "!#containAnyText", label: "شامل نشدن" },
+          { value: "!#containAnyText", label: "شامل نشدن" }
+        ];
+      //test
+      case "TEXT_FIELD_VALUE":
+        return [
           { value: "#lenEqualText", label: "طول متن برابر با" },
           { value: "#lenGraterThanText", label: "طول متن بیشتر از" },
           { value: "!#lenGraterThanText", label: "طول متن کمتر از" },
