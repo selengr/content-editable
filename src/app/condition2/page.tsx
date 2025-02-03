@@ -37,7 +37,6 @@ import { formatContainText } from "./utils/formatContainText";
 import { DatePicker as DatePickerCustome } from "./_components/DatePicker/DatePicker";
 import { cloneElement } from "react";
 
-
 const SubConditionSchema = z.object({
   logicalOperator: z.string().optional(),
   questionType: z.string().min(1, { message: "اين فيلد الزامي است" }),
@@ -63,7 +62,6 @@ const FormSchema = z.object({
 
 type FormData = z.infer<typeof FormSchema>;
 
-
 export default function DependentSelectForm() {
   // const [calendarValue, setCalendarValue] = useState(new Date())
   const {
@@ -80,7 +78,6 @@ export default function DependentSelectForm() {
   const { onlyAllCalculationOptions, isFetchingOnlyAllCalculation } =
     useGetOnlyAllCalculation();
 
-    
   const methods = useForm<FormData>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -108,7 +105,7 @@ export default function DependentSelectForm() {
     handleSubmit,
     formState: { errors },
     setValue,
-    getValues
+    getValues,
   } = methods;
 
   const {
@@ -122,7 +119,6 @@ export default function DependentSelectForm() {
   });
 
   const watchedValues = useWatch({ control });
-  
 
   const getQuestion = (type: string, values: any) => {
     console.log(type);
@@ -169,7 +165,7 @@ export default function DependentSelectForm() {
           { value: "CALCULATION", label: "محاسبه‌گر" },
         ];
 
-        // test
+      // test
       case "CALCULATION":
         return [
           { value: "VALUE", label: "ارزش" },
@@ -211,7 +207,7 @@ export default function DependentSelectForm() {
           { value: "#startWithText", label: "شروع شدن با " },
           { value: "#endWithText", label: "پایان یافتن با" },
           { value: "#containAnyText", label: "شامل شدن" },
-          { value: "!#containAnyText", label: "شامل نشدن" }
+          { value: "!#containAnyText", label: "شامل نشدن" },
         ];
       //test
       case "TEXT_FIELD_VALUE":
@@ -259,7 +255,7 @@ export default function DependentSelectForm() {
           { value: "!#greaterEqualThanNumber", label: " کوچکتر مساوی" },
         ];
 
-        // test
+      // test
       case "CALCULATION_VALUE":
       case "CALCULATION_QUESTION":
       case "CALCULATION_CALCULATION":
@@ -281,18 +277,15 @@ export default function DependentSelectForm() {
     type: string,
     operator: string,
     condition: string,
-    field: { name: any; key?: string } 
+    field: { name: any; key?: string }
   ) => {
     const combinedKey = `${type?.split("*")[0]}_${operator}_${condition}`;
 
-
-    const createInput = (component: JSX.Element) => 
-  cloneElement(component, { 
-    key: field.key, 
-    name: field.name 
-  });
-
-
+    const createInput = (component: JSX.Element) =>
+      cloneElement(component, {
+        key: field.key,
+        name: field.name,
+      });
 
     switch (combinedKey) {
       // test
@@ -332,64 +325,69 @@ export default function DependentSelectForm() {
 
       // test
       case "MULTIPLE_CHOICE_OPTION_#equalMultiChoiceSingle":
-case "MULTIPLE_CHOICE_OPTION_!#equalMultiChoiceSingle":
-case "MULTIPLE_CHOICE_OPTION_#lessThanMultiChoiceSingle":
-case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle": {
-  // Extract the target UNIC_NAME safely
-  const typeParts = type.split("*");
-  if (typeParts.length < 2) return null;
-  const targetUnicName = typeParts[1];
+      case "MULTIPLE_CHOICE_OPTION_!#equalMultiChoiceSingle":
+      case "MULTIPLE_CHOICE_OPTION_#lessThanMultiChoiceSingle":
+      case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle": {
+        const typeParts = type.split("*");
+        if (typeParts.length < 2) return null;
+        const targetUnicName = typeParts[1];
 
-  // Find instead of map for single match
-  const targetQuestion = onlyAllQuestions?.find(
-    item => item?.extMap?.UNIC_NAME === targetUnicName
-  );
+        const targetQuestion = onlyAllQuestions?.find(
+          (item) => item?.extMap?.UNIC_NAME === targetUnicName
+        );
 
-  if (!targetQuestion) return null;
+        if (!targetQuestion) return null;
 
-  // Destructure and map options more cleanly
-  const { OPTIONS: options = {} } = targetQuestion.extMap;
-  const mappedOptions = Object.entries(options).map(([key, value]) => ({
-    value: key,
-    label: value[1], // Assuming the label is at index 1
-  }));
+        const { OPTIONS: options = {} } = targetQuestion.extMap;
+        const mappedOptions = Object.entries(options).map(([key, value]) => ({
+          value: key,
+          label: value[1],
+        }));
 
-  return (
-    <CustomSelectController
-      key={targetUnicName} // Add proper key
-      name={field.name}
-      options={mappedOptions}
-      sx={{ minWidth: 200 }}
-    />
-  );
-}
+        return (
+          <CustomSelectController
+            key={targetUnicName}
+            name={field.name}
+            options={mappedOptions}
+            sx={{ minWidth: 200 }}
+          />
+        );
+      }
       // test
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_#containMultiChoiceMulti":
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_!#containMultiChoiceMulti":
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_!#equalThanMultiChoiceMulti":
-      case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_#equalThanMultiChoiceMulti":
-        return onlyAllQuestions?.map((item) => {
-          if (item?.extMap?.UNIC_NAME === type.split("*")[1]) {
-            const options = item?.extMap?.OPTIONS;
+      case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_#equalThanMultiChoiceMulti": {
+        const typeParts = type.split("*");
+        if (typeParts.length < 2) return null;
+        const targetUnicName = typeParts[1];
 
-            const optionsList = [];
-            Object.keys(options).forEach((key) => {
-              optionsList.push({
-                value: key,
-                label: options[key][1],
-              });
-            });
-            return (
-              <MultiSelectController
-                name={field.name}
-                options={optionsList}
-                // chip
-                // checkbox
-                sx={{ maxWidth: 200, maxHeight: 50 }}
-              />
-            );
-          }
-        });
+        const targetQuestion = onlyAllQuestions?.find(
+          (item) => item?.extMap?.UNIC_NAME === targetUnicName
+        );
+
+        if (!targetQuestion?.extMap?.OPTIONS) return null;
+        const { OPTIONS } = targetQuestion.extMap;
+        const options = Object.entries(OPTIONS).map(([value, data]) => ({
+          value,
+          label: data[1],
+        }));
+
+        return (
+          <MultiSelectController
+            key={targetUnicName}
+            name={field.name}
+            options={options}
+            sx={{
+              maxWidth: 200,
+              maxHeight: 50,
+            }}
+            // aria-label={`Multi-select options for ${targetUnicName}`}
+            // chip
+            // checkbox
+          />
+        );
+      }
 
       // test
       case "TEXT_FIELD_TEXT_#startWithText":
@@ -561,7 +559,7 @@ case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle": {
         );
 
       default:
-        return <CustomTextField name={field.name} disabled/>;
+        return <CustomTextField name={field.name} disabled />;
     }
   };
 
@@ -662,15 +660,10 @@ case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle": {
     removeCondition(index);
   };
 
-  
-  
-  const handleAddSubCondition = (
-    index: number,
-    subIndex: number
-  ) => {
+  const handleAddSubCondition = (index: number, subIndex: number) => {
     const currentCondition = getValues().conditions[index];
     const clonedCondition = structuredClone(currentCondition);
-    
+
     const newSubConditions = [
       ...clonedCondition.subConditions.slice(0, subIndex + 1),
       {
@@ -681,18 +674,14 @@ case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle": {
         value: "",
         id: uuidv4(),
       },
-      ...clonedCondition.subConditions.slice(subIndex + 1)
+      ...clonedCondition.subConditions.slice(subIndex + 1),
     ];
-  
+
     updateCondition(index, {
       ...clonedCondition,
-      subConditions: newSubConditions
+      subConditions: newSubConditions,
     });
   };
-
-
-
-
 
   const handleRemoveSubCondition = (
     conditionIndex: number,
@@ -702,7 +691,6 @@ case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle": {
     updatedCondition.subConditions.splice(subConditionIndex, 1);
     updateCondition(conditionIndex, updatedCondition);
   };
-
 
   return (
     <Box
@@ -736,8 +724,8 @@ case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle": {
                     subIndex
                   ] || {};
 
-                  // console.log("eeee",watchedValues)
-                  
+                // console.log("eeee",watchedValues)
+
                 return (
                   <Box
                     key={subCondition.id}
@@ -798,9 +786,18 @@ case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle": {
                           flexShrink: 0,
                         }}
                         onChange={() => {
-                          setValue(`conditions.${index}.subConditions.${subIndex}.operatorType`, "");
-                          setValue(`conditions.${index}.subConditions.${subIndex}.conditionType`, "");
-                          setValue(`conditions.${index}.subConditions.${subIndex}.value`, "");
+                          setValue(
+                            `conditions.${index}.subConditions.${subIndex}.operatorType`,
+                            ""
+                          );
+                          setValue(
+                            `conditions.${index}.subConditions.${subIndex}.conditionType`,
+                            ""
+                          );
+                          setValue(
+                            `conditions.${index}.subConditions.${subIndex}.value`,
+                            ""
+                          );
                         }}
                       />
                       <CustomSelectController
@@ -815,8 +812,14 @@ case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle": {
                           flexShrink: 0,
                         }}
                         onChange={() => {
-                          setValue(`conditions.${index}.subConditions.${subIndex}.conditionType`, "");
-                          setValue(`conditions.${index}.subConditions.${subIndex}.value`, "");
+                          setValue(
+                            `conditions.${index}.subConditions.${subIndex}.conditionType`,
+                            ""
+                          );
+                          setValue(
+                            `conditions.${index}.subConditions.${subIndex}.value`,
+                            ""
+                          );
                         }}
                         disabled={!Boolean(currentValues.questionType)}
                       />
@@ -833,7 +836,10 @@ case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle": {
                           flexShrink: 0,
                         }}
                         onChange={() => {
-                          setValue(`conditions.${index}.subConditions.${subIndex}.value`, "");
+                          setValue(
+                            `conditions.${index}.subConditions.${subIndex}.value`,
+                            ""
+                          );
                         }}
                         disabled={!Boolean(currentValues.operatorType)}
                       />
@@ -843,7 +849,7 @@ case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle": {
                         currentValues.conditionType,
                         {
                           name: `conditions.${index}.subConditions.${subIndex}.value`,
-                          key : subCondition.id,
+                          key: subCondition.id,
                         }
                       )}
                       <Box
