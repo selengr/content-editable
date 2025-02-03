@@ -18,8 +18,9 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
       control={control}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <TextField
+          key={name} 
           {...props}
-          value={value}
+          value={value || ""}
           onChange={onChange}
           error={!!error}
           helperText={error?.message}

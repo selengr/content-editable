@@ -15,7 +15,6 @@ import {
   LinearProgress,
 } from "@mui/material";
 
-
 import { IoIosArrowDown } from "react-icons/io";
 import { useFormContext, Controller } from "react-hook-form";
 
@@ -23,7 +22,7 @@ interface CustomSelectProps extends Omit<SelectProps, "sx" | "name"> {
   options: { value: string; label: string }[];
   sx?: SxProps<Theme>;
   name: string;
-  onChange? : any;
+  onChange?: any;
   disabled?: boolean;
   isLoading?: boolean;
 }
@@ -32,7 +31,7 @@ export const CustomSelectController: React.FC<CustomSelectProps> = ({
   options,
   sx,
   name,
-  onChange, 
+  onChange,
   disabled = false,
   isLoading = false,
   ...props
@@ -43,18 +42,17 @@ export const CustomSelectController: React.FC<CustomSelectProps> = ({
     <Controller
       name={name}
       control={control}
-      render={({ field , fieldState: { error } }) => (
+      render={({ field, fieldState: { error } }) => (
         <FormControl error={!!error}>
           <Select
             IconComponent={IoIosArrowDown}
             variant="outlined"
             {...field}
-        onChange={(value) => {
-          field.onChange(value);
-          onChange?.(value);
-        }}
+            onChange={(value) => {
+              field.onChange(value);
+              onChange?.(value);
+            }}
             disabled={disabled || isLoading}
-            
             displayEmpty
             renderValue={(selected) => {
               if (isLoading) {
@@ -67,7 +65,9 @@ export const CustomSelectController: React.FC<CustomSelectProps> = ({
                   />
                 );
               }
-              const selectedOption = options?.find(option => option.value === selected);
+              const selectedOption = options?.find(
+                (option) => option.value === selected
+              );
               return selectedOption ? selectedOption.label : "";
             }}
             sx={{
@@ -105,7 +105,7 @@ export const CustomSelectController: React.FC<CustomSelectProps> = ({
                   px: 2,
                   mx: 1,
                   borderRadius: 0.75,
-                  typography: 'body2',
+                  typography: "body2",
                 }}
               >
                 {option.label}
@@ -122,9 +122,6 @@ export const CustomSelectController: React.FC<CustomSelectProps> = ({
     />
   );
 };
-
-
-
 
 // ----------------------------------------------------------------------
 
@@ -155,11 +152,13 @@ export function MultiSelectController({
   const { control } = useFormContext();
 
   const renderValues = (selectedIds: string[]) => {
-    const selectedItems = options.filter((item) => selectedIds.includes(item.value));
+    const selectedItems = options.filter((item) =>
+      selectedIds.includes(item.value)
+    );
 
     if (!selectedItems.length && placeholder) {
       return (
-        <Box component="em" sx={{ color: 'text.disabled' }}>
+        <Box component="em" sx={{ color: "text.disabled" }}>
           {placeholder}
         </Box>
       );
@@ -167,7 +166,7 @@ export function MultiSelectController({
 
     if (chip) {
       return (
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
           {selectedItems.map((item) => (
             <Chip key={item.value} size="small" label={item.label} />
           ))}
@@ -175,7 +174,7 @@ export function MultiSelectController({
       );
     }
 
-    return selectedItems.map((item) => item.label).join(', ');
+    return selectedItems.map((item) => item.label).join(", ");
   };
 
   return (
@@ -199,12 +198,12 @@ export function MultiSelectController({
                 sx: { px: 1, maxHeight: 280 },
               },
             }}
-            sx={{ 
+            sx={{
               "& .MuiSelect-select.MuiSelect-outlined": {
                 fontFamily: "inherit",
                 paddingRight: "33px",
                 paddingLeft: "0 !important",
-                minWidth: 150
+                minWidth: 150,
               },
               "&.MuiInputBase-root": {
                 borderRadius: "8px",
@@ -219,10 +218,10 @@ export function MultiSelectController({
               },
               "& .MuiOutlinedInput-notchedOutline": {
                 border: "none",
-              }
+              },
             }}
             {...other}
-            value={field.value || []} 
+            value={field.value || []}
           >
             {placeholder && (
               <MenuItem
@@ -232,7 +231,7 @@ export function MultiSelectController({
                   py: 1,
                   px: 2,
                   borderRadius: 0.75,
-                  typography: 'body2',
+                  typography: "body2",
                 }}
               >
                 <em> {placeholder} </em>
@@ -250,18 +249,20 @@ export function MultiSelectController({
                     py: 1,
                     px: 2,
                     borderRadius: 0.75,
-                    typography: 'body2',
+                    typography: "body2",
                     ...(selected && {
-                      fontWeight: 'fontWeightMedium',
+                      fontWeight: "fontWeightMedium",
                     }),
                     ...(checkbox && {
                       p: 0.25,
                     }),
                     display: "flex",
-                    justifyContent: "end"
+                    justifyContent: "end",
                   }}
                 >
-                  {checkbox && <Checkbox disableRipple size="small" checked={selected} />}
+                  {checkbox && (
+                    <Checkbox disableRipple size="small" checked={selected} />
+                  )}
 
                   {option.label}
                 </MenuItem>
@@ -270,7 +271,9 @@ export function MultiSelectController({
           </Select>
 
           {(!!error || helperText) && (
-            <FormHelperText error={!!error}>{error ? error?.message : helperText}</FormHelperText>
+            <FormHelperText error={!!error}>
+              {error ? error?.message : helperText}
+            </FormHelperText>
           )}
         </FormControl>
       )}
