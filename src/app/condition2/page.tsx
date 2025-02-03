@@ -332,30 +332,37 @@ export default function DependentSelectForm() {
 
       // test
       case "MULTIPLE_CHOICE_OPTION_#equalMultiChoiceSingle":
-      case "MULTIPLE_CHOICE_OPTION_!#equalMultiChoiceSingle":
-      case "MULTIPLE_CHOICE_OPTION_#lessThanMultiChoiceSingle":
-      case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle":
-        return onlyAllQuestions?.map((item) => {
-          if (item?.extMap?.UNIC_NAME === type.split("*")[1]) {
-            const options = item?.extMap?.OPTIONS;
+case "MULTIPLE_CHOICE_OPTION_!#equalMultiChoiceSingle":
+case "MULTIPLE_CHOICE_OPTION_#lessThanMultiChoiceSingle":
+case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle": {
+  // Extract the target UNIC_NAME safely
+  const typeParts = type.split("*");
+  if (typeParts.length < 2) return null;
+  const targetUnicName = typeParts[1];
 
-            const optionsList = [];
-            Object.keys(options).forEach((key) => {
-              optionsList.push({
-                value: key,
-                label: options[key][1],
-              });
-            });
-            return (
-              <CustomSelectController
-                name={field.name}
-                options={optionsList}
-                sx={{ minWidth: 200 }}
-              />
-            );
-          }
-        });
+  // Find instead of map for single match
+  const targetQuestion = onlyAllQuestions?.find(
+    item => item?.extMap?.UNIC_NAME === targetUnicName
+  );
 
+  if (!targetQuestion) return null;
+
+  // Destructure and map options more cleanly
+  const { OPTIONS: options = {} } = targetQuestion.extMap;
+  const mappedOptions = Object.entries(options).map(([key, value]) => ({
+    value: key,
+    label: value[1], // Assuming the label is at index 1
+  }));
+
+  return (
+    <CustomSelectController
+      key={targetUnicName} // Add proper key
+      name={field.name}
+      options={mappedOptions}
+      sx={{ minWidth: 200 }}
+    />
+  );
+}
       // test
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_#containMultiChoiceMulti":
       case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_!#containMultiChoiceMulti":
@@ -554,7 +561,7 @@ export default function DependentSelectForm() {
         );
 
       default:
-        return <CustomTextField name={""} disabled/>;
+        return <CustomTextField name={field.name} disabled/>;
     }
   };
 
