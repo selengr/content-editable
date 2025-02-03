@@ -1,5 +1,5 @@
-import { CustomTextField } from "../_components/form/custom-text-field"
-import { CustomSelectController } from "../_components/form/select-controller"
+import { CustomTextField } from "../components/custom-text-field"
+import { CustomSelectController } from "../components/select-controller"
 
 export function getQuestion(type: string, values: any) {
   switch (type?.split("*")[0]) {
