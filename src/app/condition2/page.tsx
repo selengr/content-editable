@@ -699,6 +699,7 @@ export default function DependentSelectForm() {
           justifyContent: "center",
           color: "#404040",
           fontWeight: 700,
+          mb: 1
         }}
       >
         شرط
@@ -753,12 +754,10 @@ export default function DependentSelectForm() {
                       rowGap={3}
                       columnGap={2}
                       sx={{
-                        display: "flex",
-                        flexDirection: { xs: "column", sm: "row" },
-                        flexWrap: "wrap",
                         gap: 1,
-                        // alignItems: 'center',
                         width: "100%",
+                        display: "flex",
+                        flexWrap: "wrap",
                       }}
                     >
                       <CustomSelectController
@@ -839,11 +838,8 @@ export default function DependentSelectForm() {
                       )}
                       <Box
                         sx={{
-                          display: "flex",
-                          flexDirection: "row",
+                          display : "flex",
                           gap: 1,
-                          width: { sm: "100%", md: "auto" },
-                          justifyContent: { xs: "flex-start", md: "center" },
                         }}
                       >
                         <IconButton
@@ -857,7 +853,7 @@ export default function DependentSelectForm() {
                           }}
                         >
                           <Image
-                            src={PlusIcon || "/placeholder.svg"}
+                            src={PlusIcon}
                             alt=""
                             width={22}
                             height={22}
@@ -880,7 +876,7 @@ export default function DependentSelectForm() {
                             }}
                           >
                             <Image
-                              src={TrashIcon || "/placeholder.svg"}
+                              src={TrashIcon}
                               alt=""
                               width={24}
                               height={24}
@@ -1003,7 +999,7 @@ export default function DependentSelectForm() {
                 minWidth: 113,
                 borderRadius: "8px",
                 borderColor: "#1758BA",
-                background: "#FFF",
+                background: "#F7F7FF",
               }}
             >
               <Typography

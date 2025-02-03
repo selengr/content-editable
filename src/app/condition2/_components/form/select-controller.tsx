@@ -81,9 +81,9 @@ export const CustomSelectController: React.FC<CustomSelectProps> = ({
                 paddingLeft: 2,
                 border: error ? "1px solid #FA4D56" : "1px solid #DDE1E6",
                 height: {
-                  xs: 45,    
-                  sm: 50,    
-                  md: 52 
+                  xs: 52,    
+                  // sm: 50,    
+                  // md: 52 
                 },
               },
               "& .MuiSelect-icon": {
@@ -215,9 +215,9 @@ export function MultiSelectController({
                 paddingLeft: 2,
                 border: error ? "1px solid #FA4D56" : "1px solid #DDE1E6",
                 height: {
-                  xs: 45,    
-                  sm: 50,    
-                  md: 52 
+                  xs: 52,    
+                  // sm: 50,    
+                  // md: 52 
                 }
               },
               "& .MuiSelect-icon": {

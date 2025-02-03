@@ -51,9 +51,9 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
                 borderColor: "#FA4D56",
               },
               height: {
-                xs: 45,    
-                sm: 50,    
-                md: 52 
+                xs: 52,    
+                // sm: 50,    
+                // md: 52 
               },
             },
           }}

@@ -14,6 +14,7 @@ const Circle = styled(Box)(({ theme }) => ({
     borderColor:  "#DDE1E6",
     paddingRight : "10px",
     flexGrow: 1,
+    borderWidth: '1px 10px 0 10px'
   }));
   
   export const CircleDivider = () => {
