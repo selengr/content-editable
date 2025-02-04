@@ -568,10 +568,10 @@ export default function page() {
               value,
               logicalOperator,
             } = subCondition;
-            console.log(
-              "val  formatContainText(value)45645",
-              formatContainText(value)
-            );
+            // console.log(
+            //   "val  formatContainText(value)45645",
+            //   formatContainText(value)
+            // );
 
             let formattedValue: string;
 
@@ -579,7 +579,7 @@ export default function page() {
               formattedValue = `{${value}}`;
             } else if (operatorType === "VALUE") {
               formattedValue = `{#v_${value}}`;
-            } else if (operatorType === "TEXT") {
+            } else if (operatorType === "TEXT") {debugger
               if (
                 conditionType === "#startWithText" ||
                 conditionType === "#endWithText"

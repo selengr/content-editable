@@ -46,19 +46,21 @@ export const useGetOnlyAllQuestions = () => {
     label: item.caption,
   }));
 
-  const onlySomeQuestionsOptions = data?.dataList?.map((item) => {
-    const { TEXT_FIELD_PATTERN, SPECTRAL_TYPE, MULTI_SELECT, UNIC_NAME } = item.extMap;
-    const isMultiSelect = !parseInt(MULTI_SELECT);
-    const isSpectralSingle = SPECTRAL_TYPE === "DISCRETE";
+
+
+  const onlySomeQuestionsOptions = data?.dataList
+  ?.filter((item) => {
+    const { TEXT_FIELD_PATTERN, SPECTRAL_TYPE, MULTI_SELECT } = item.extMap;
+    const isMultiSelect = MULTI_SELECT === "false";
+    const isSpectralSingle = SPECTRAL_TYPE === "SPECTRAL";
     const isTextFieldNumber = TEXT_FIELD_PATTERN === "NUMBER";
-
-    const questionType = (isTextFieldNumber || isMultiSelect || isSpectralSingle) ? UNIC_NAME : ""
-
-    return {
-      value: questionType,
-      label: item.caption,
-    };
-  });
+    
+    return isTextFieldNumber || isMultiSelect || isSpectralSingle;
+  })
+  ?.map((item) => ({
+    value: item.extMap.UNIC_NAME,
+    label: item.caption,
+  }));
 
   return {
     isFetchingOnlyAllQuestions: isFetching,

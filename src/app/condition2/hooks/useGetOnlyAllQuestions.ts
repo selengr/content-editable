@@ -28,9 +28,7 @@ const fetchData = async (url : string) => {
 };
 
 
-
 export const useGetOnlyAllQuestions = () => {
-
   const { data, isFetching } = useQuery({
     queryKey: ['ONLY_ALL_QUESTIONS'],
     queryFn: () => fetchData(url),
@@ -40,30 +38,50 @@ export const useGetOnlyAllQuestions = () => {
     refetchOnReconnect: true,
     retry: 3
   });
-
-  const onlyAllQuestionsOptions = data?.dataList?.map((item) => ({
-    value: item.extMap.UNIC_NAME,
-    label: item.caption,
-  }));
-
+debugger
   const onlySomeQuestionsOptions = data?.dataList?.map((item) => {
-    const { TEXT_FIELD_PATTERN, SPECTRAL_TYPE, MULTI_SELECT, UNIC_NAME } = item.extMap;
-    const isMultiSelect = !parseInt(MULTI_SELECT);
-    const isSpectralSingle = SPECTRAL_TYPE === "DISCRETE";
-    const isTextFieldNumber = TEXT_FIELD_PATTERN === "NUMBER";
+    const extMap = item.extMap || {};
+    const {
+      TEXT_FIELD_PATTERN = '',
+      SPECTRAL_TYPE = '',
+      MULTI_SELECT = '0', // Default to '0' if missing
+      UNIC_NAME = ''
+    } = extMap;
 
-    const questionType = (isTextFieldNumber || isMultiSelect || isSpectralSingle) ? UNIC_NAME : ""
+    // Debugging: Log values for inspection
+    console.log('Item extMap:', {
+      TEXT_FIELD_PATTERN,
+      SPECTRAL_TYPE,
+      MULTI_SELECT,
+      UNIC_NAME
+    });
+
+    // Convert MULTI_SELECT to number safely
+    const multiSelectValue = parseInt(MULTI_SELECT, 10) || 0;
+    const isMultiSelect = !multiSelectValue;
+    const isSpectralSingle = SPECTRAL_TYPE.trim().toUpperCase() === "DISCRETE";
+    const isTextFieldNumber = TEXT_FIELD_PATTERN.trim().toUpperCase() === "NUMBER";
+
+    const questionType = (isTextFieldNumber || isMultiSelect || isSpectralSingle)
+      ? UNIC_NAME
+      : '';
 
     return {
       value: questionType,
       label: item.caption,
     };
+  })?.filter((item) => {
+    console.log('Filtering item:', item); // Debug filter input
+    return item.value !== '';
   });
 
   return {
     isFetchingOnlyAllQuestions: isFetching,
     onlyAllQuestions: data?.dataList,
-    onlyAllQuestionsOptions,
-    onlySomeQuestionsOptions,
+    onlyAllQuestionsOptions: data?.dataList?.map((item) => ({
+      value: item.extMap?.UNIC_NAME,
+      label: item.caption,
+    })),
+    onlySomeQuestionsOptions
   };
 };

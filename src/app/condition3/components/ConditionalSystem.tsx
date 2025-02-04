@@ -10,6 +10,7 @@ import { useGetQacWithOutFilter } from "../hooks/useGetQacWithOutFilter"
 import { useGetOnlyAllQuestions } from "../hooks/useGetOnlyAllQuestions"
 import { useGetOnlyAllCalculation } from "../hooks/useGetOnlyAllCalculation"
 import { SubmitButtons } from "./SubmitButtons"
+import { formatContainText } from "@/app/condition2/utils/formatContainText"
 
 export default function ConditionalSystem() {
   const {
@@ -26,10 +27,81 @@ export default function ConditionalSystem() {
     useGetOnlyAllQuestions()
   const { onlyAllCalculationOptions, isFetchingOnlyAllCalculation } = useGetOnlyAllCalculation()
 
-  const onSubmit = (data: FormData) => {
-    console.log("Submitted data:", data)
-    // Implement the submission logic here
-  }
+  const onSubmit = (input: FormData) => {
+    console.log("Submitted data:", input);
+
+    const transformInputToOutput = (input) => {
+      return input.conditions.map((condition) => {
+        const { subConditions, returnQuestionId, elseQuestionId } = condition;
+
+        const conditionFormula = subConditions
+          .map((subCondition) => {
+            const {
+              conditionType,
+              questionType,
+              operatorType,
+              value,
+              logicalOperator,
+            } = subCondition;
+            // console.log(
+            //   "val  formatContainText(value)45645",
+            //   formatContainText(value)
+            // );
+
+            let formattedValue: string;
+
+            if (operatorType === "OPTION") {
+              formattedValue = `{${value}}`;
+            } else if (operatorType === "VALUE") {
+              formattedValue = `{#v_${value}}`;
+            } else if (operatorType === "TEXT") {
+              if (
+                conditionType === "#startWithText" ||
+                conditionType === "#endWithText"
+              ) {
+                formattedValue = `{"${value}"}`;
+              } else if (
+                conditionType === "!#containAnyText" ||
+                conditionType === "#containAnyText"
+              ) {
+                formattedValue = `{${formatContainText(value)}}`;
+              } else if (
+                conditionType === "#lenEqualText" ||
+                conditionType === "#lenGraterThanText" ||
+                conditionType === "!#lenGraterThanText"
+              ) {
+                formattedValue = `{#v_${value}}`;
+              } else {
+                formattedValue = value;
+              }
+            } else if (operatorType === "DATE") {
+              formattedValue = `{#v_"${value}"}`;
+            } else {
+              formattedValue = value;
+            }
+
+            const baseCondition = `${conditionType}(${
+              questionType.split("*")[1]
+            },${formattedValue})`;
+
+            return logicalOperator
+              ? ` ${logicalOperator} ${baseCondition}`
+              : baseCondition;
+          })
+          .join("");
+
+        return {
+          conditionFormula: conditionFormula,
+          formBuilderId: 81,
+          returnQuestionId: condition.returnQuestionId,
+          elseQuestionId: condition.elseQuestionId,
+        };
+      });
+    };
+
+    const output = transformInputToOutput(input);
+    console.log(output);
+  };
 
   return (
     <Box
