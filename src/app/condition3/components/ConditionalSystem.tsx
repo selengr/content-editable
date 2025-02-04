@@ -1,15 +1,14 @@
 "use client"
 import { Box, Typography, Button } from "@mui/material"
-import { LoadingButton } from "@mui/lab"
 import { FormProvider } from "react-hook-form"
 import { useConditionalForm } from "../hooks/useConditionForm"
-import { SubCondition } from "../components/SubCondition"
+import { SubCondition } from "../../../templates/calculation/SubCondition"
 import { SelectController } from "../components/SelectController"
-import { CircleDivider } from "../components/circle-divider"
+import { CircleDivider } from "./CircleDivider"
 import { useGetQacWithOutFilter } from "../hooks/useGetQacWithOutFilter"
 import { useGetOnlyAllQuestions } from "../hooks/useGetOnlyAllQuestions"
 import { useGetOnlyAllCalculation } from "../hooks/useGetOnlyAllCalculation"
-import { SubmitButtons } from "./SubmitButtons"
+import { SubmitButtons } from "../../../templates/calculation/SubmitButtons"
 import { formatContainText } from "@/app/condition2/utils/formatContainText"
 
 export default function ConditionalSystem() {

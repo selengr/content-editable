@@ -23,4 +23,6 @@ export const FormSchema = z.object({
 })
 
 export type FormData = z.infer<typeof FormSchema>
+export type ConditionData = z.infer<typeof ConditionSchema>;
+export type SubConditionData = z.infer<typeof SubConditionSchema>;
 
