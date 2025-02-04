@@ -2,13 +2,14 @@
 import { Box, Typography, Button } from "@mui/material"
 import { LoadingButton } from "@mui/lab"
 import { FormProvider } from "react-hook-form"
-import { useConditionalForm } from "../hooks/useConditionaForm"
+import { useConditionalForm } from "../hooks/useConditionForm"
 import { SubCondition } from "../components/SubCondition"
 import { SelectController } from "../components/SelectController"
 import { CircleDivider } from "../components/circle-divider"
 import { useGetQacWithOutFilter } from "../hooks/useGetQacWithOutFilter"
 import { useGetOnlyAllQuestions } from "../hooks/useGetOnlyAllQuestions"
 import { useGetOnlyAllCalculation } from "../hooks/useGetOnlyAllCalculation"
+import { SubmitButtons } from "./SubmitButtons"
 
 export default function ConditionalSystem() {
   const {
@@ -84,6 +85,7 @@ export default function ConditionalSystem() {
                   isLoading={isFetchingOnlyAllQuestions}
                   sx={{ minWidth: 300, width: 360 }}
                 />
+                {index !== 0 && (
                 <Button
                   onClick={() => handleRemoveCondition(index)}
                   sx={{
@@ -97,6 +99,7 @@ export default function ConditionalSystem() {
                 >
                   <Typography sx={{ color: "#FA4D56", fontSize: "14px" }}>حذف این شرط</Typography>
                 </Button>
+            )}
               </Box>
               <CircleDivider />
             </Box>

@@ -1,12 +1,12 @@
-import { Box, IconButton } from "@mui/material"
+import { Box, IconButton, Typography } from "@mui/material"
 import Image from "next/image"
-import { CustomSelectController } from "./form/select-controller"
-import { getQuestion, getCondition } from "../utils/formUtils"
-import { getInput } from "../components/GetConditionInput"
+import { SelectController } from "./SelectController"
+import { getInput , getQuestion, getCondition } from "../components/GetConditionInput"
 import { useFormContext, useWatch } from "react-hook-form"
 import type React from "react"
 
 type SubConditionProps = {
+//   key: number
   index: number
   subIndex: number
   onAddSubCondition: () => void
@@ -21,6 +21,7 @@ type SubConditionProps = {
 }
 
 export const SubCondition: React.FC<SubConditionProps> = ({
+//   key,
   index,
   subIndex,
   onAddSubCondition,
@@ -40,48 +41,119 @@ export const SubCondition: React.FC<SubConditionProps> = ({
   })
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "row", gap: 2, alignItems: "flex-start" }}>
-      {subIndex > 0 && (
-        <CustomSelectController
-          name={`conditions.${index}.subConditions.${subIndex}.logicalOperator`}
-          options={[
-            { value: "&&", label: "و" },
-            { value: "||", label: "یا" },
-          ]}
-          sx={{ minWidth: 78 }}
+    <Box
+    //   key={key}
+      sx={{
+        mb: 1,
+        ml: { md: 2 },
+        mt: 1,
+        display: "flex",
+        flexDirection: "row",
+      }}
+    >
+      <Box sx={{ display: "flex", alignItems: "start" }}>
+        {subIndex === 0 && (
+          <Typography
+            sx={{
+              color: "#393939",
+              fontSize: "14px",
+              width: {xs: 22,md : 83},
+              pt: 2,
+            }}
+          >
+            اگر
+          </Typography>
+        )}
+        {subIndex > 0 && (
+          <SelectController
+            name={`conditions.${index}.subConditions.${subIndex}.logicalOperator`}
+            options={[
+              { value: "&&", label: "و" },
+              { value: "||", label: "یا" },
+            ]}
+            sx={{ minWidth: 78,mr: 1 }}
+          />
+        )}
+      </Box>
+
+      <Box
+        rowGap={3}
+        columnGap={2}
+        sx={{
+          gap: 1,
+          width: "100%",
+          display: "flex",
+          flexWrap: "wrap",
+        }}
+      >
+        <SelectController
+          name={`conditions.${index}.subConditions.${subIndex}.questionType`}
+          options={qacWithOutFilterOptions}
+          isLoading={isFetchingQacWithOutFilter}
+          sx={{
+            width: { sm: "100%", md: "100%" },
+            minWidth: 240,
+            flexShrink: 0,
+          }}
+          onChange={() => {
+            setValue(
+              `conditions.${index}.subConditions.${subIndex}.operatorType`,
+              ""
+            );
+            setValue(
+              `conditions.${index}.subConditions.${subIndex}.conditionType`,
+              ""
+            );
+            setValue(
+              `conditions.${index}.subConditions.${subIndex}.value`,
+              ""
+            );
+          }}
         />
-      )}
-      <CustomSelectController
-        name={`conditions.${index}.subConditions.${subIndex}.questionType`}
-        options={qacWithOutFilterOptions}
-        isLoading={isFetchingQacWithOutFilter}
-        sx={{ minWidth: 240 }}
-        onChange={() => {
-          setValue(`conditions.${index}.subConditions.${subIndex}.operatorType`, "")
-          setValue(`conditions.${index}.subConditions.${subIndex}.conditionType`, "")
-          setValue(`conditions.${index}.subConditions.${subIndex}.value`, "")
-        }}
-      />
-      <CustomSelectController
-        name={`conditions.${index}.subConditions.${subIndex}.operatorType`}
-        options={getQuestion(currentValues.questionType, currentValues)}
-        sx={{ minWidth: 156 }}
-        onChange={() => {
-          setValue(`conditions.${index}.subConditions.${subIndex}.conditionType`, "")
-          setValue(`conditions.${index}.subConditions.${subIndex}.value`, "")
-        }}
-        disabled={!Boolean(currentValues.questionType)}
-      />
-      <CustomSelectController
-        name={`conditions.${index}.subConditions.${subIndex}.conditionType`}
-        options={getCondition(currentValues.questionType, currentValues.operatorType, currentValues)}
-        sx={{ minWidth: 156 }}
-        onChange={() => {
-          setValue(`conditions.${index}.subConditions.${subIndex}.value`, "")
-        }}
-        disabled={!Boolean(currentValues.operatorType)}
-      />
-      {getInput(
+        <SelectController
+          name={`conditions.${index}.subConditions.${subIndex}.operatorType`}
+          options={getQuestion(
+            currentValues.questionType,
+            currentValues
+          )}
+          sx={{
+            width: { sm: "100%", md: "22%" },
+            minWidth: 156,
+            flexShrink: 0,
+          }}
+          onChange={() => {
+            setValue(
+              `conditions.${index}.subConditions.${subIndex}.conditionType`,
+              ""
+            );
+            setValue(
+              `conditions.${index}.subConditions.${subIndex}.value`,
+              ""
+            );
+          }}
+          disabled={!Boolean(currentValues.questionType)}
+        />
+        <SelectController
+          name={`conditions.${index}.subConditions.${subIndex}.conditionType`}
+          options={getCondition(
+            currentValues.questionType,
+            currentValues.operatorType,
+            currentValues
+          )}
+          sx={{
+            width: { sm: "100%", md: "22%" },
+            minWidth: 156,
+            flexShrink: 0,
+          }}
+          onChange={() => {
+            setValue(
+              `conditions.${index}.subConditions.${subIndex}.value`,
+              ""
+            );
+          }}
+          disabled={!Boolean(currentValues.operatorType)}
+        />
+        {getInput(
         currentValues.questionType,
         currentValues.operatorType,
         currentValues.conditionType,
@@ -98,26 +170,54 @@ export const SubCondition: React.FC<SubConditionProps> = ({
           setValue,
         },
       )}
-      <IconButton
-        onClick={onAddSubCondition}
-        sx={{ bgcolor: "#1758BA0D", borderRadius: "10px", border: "1px solid #1758BA" }}
-      >
-        <Image src="/images/home-page/Add-fill.svg" alt="" width={22} height={22} />
-      </IconButton>
-      {subIndex !== 0 && (
-        <IconButton
-          onClick={onRemoveSubCondition}
+        <Box
           sx={{
-            bgcolor: "#FA4D560D",
-            borderRadius: "10px",
-            border: "1px solid #FA4D56",
-            "&:hover": { bgcolor: "#FA4D560D" },
+            display : "flex",
+            gap: 1,
           }}
         >
-          <Image src="/images/home-page/trash.svg" alt="" width={24} height={24} />
-        </IconButton>
-      )}
+          <IconButton
+            onClick={onAddSubCondition}
+            sx={{
+              width: "52px",
+              height: "52px",
+              bgcolor: "#1758BA0D",
+              borderRadius: "10px",
+              border: "1px solid #1758BA",
+            }}
+          >
+            <Image
+               src="/images/home-page/Add-fill.svg" 
+              alt=""
+              width={22}
+              height={22}
+            />
+          </IconButton>
+          {subIndex !== 0 && (
+            <IconButton
+            onClick={onRemoveSubCondition}
+              sx={{
+                width: "52px",
+                height: "52px",
+                bgcolor: "#FA4D560D",
+                borderRadius: "10px",
+                border: "1px solid #FA4D56",
+                "&: hover": {
+                  bgcolor: "#FA4D560D",
+                },
+              }}
+            >
+              <Image
+               src="/images/home-page/trash.svg"
+                alt=""
+                width={24}
+                height={24}
+              />
+            </IconButton>
+          )}
+        </Box>
+      </Box>
     </Box>
-  )
+  );
 }
 
