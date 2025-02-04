@@ -3,12 +3,12 @@ import { Box, Typography, Button } from "@mui/material"
 import { LoadingButton } from "@mui/lab"
 import { FormProvider } from "react-hook-form"
 import { useConditionalForm } from "./hooks/useConditionalForm"
-import { SubCondition } from "./components/SubCondition"
-import { CustomSelectController } from "./_components/form/select-controller"
-import { CircleDivider } from "./_components/circle-divider"
-import { useGetQacWithOutFilter } from "./hooks/useGetQacWithOutFilter"
-import { useGetOnlyAllQuestions } from "./hooks/useGetOnlyAllQuestions"
-import { useGetOnlyAllCalculation } from "./hooks/useGetOnlyAllCalculation"
+import { SubCondition } from "../components/SubCondition"
+import { CustomSelectController } from "../components/SelectController"
+import { CircleDivider } from "../components/circle-divider"
+import { useGetQacWithOutFilter } from "../hooks/useGetQacWithOutFilter"
+import { useGetOnlyAllQuestions } from "../hooks/useGetOnlyAllQuestions"
+import { useGetOnlyAllCalculation } from "../hooks/useGetOnlyAllCalculation"
 
 export default function ConditionalSystem() {
   const {
