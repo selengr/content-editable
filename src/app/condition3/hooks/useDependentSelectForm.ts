@@ -1,6 +1,6 @@
 import { useForm, useFieldArray } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { FormSchema, type FormData } from "../schemas/schemas"
+import { FormSchema, type FormData } from "../schemas/conditionFormSchemas"
 
 export const useDependentSelectForm = () => {
   const methods = useForm<FormData>({
