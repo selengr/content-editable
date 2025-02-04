@@ -2,9 +2,9 @@
 import { Box, Typography, Button } from "@mui/material"
 import { LoadingButton } from "@mui/lab"
 import { FormProvider } from "react-hook-form"
-import { useConditionalForm } from "./hooks/useConditionalForm"
+import { useConditionalForm } from "../hooks/useConditionaForm"
 import { SubCondition } from "../components/SubCondition"
-import { CustomSelectController } from "../components/SelectController"
+import { SelectController } from "../components/SelectController"
 import { CircleDivider } from "../components/circle-divider"
 import { useGetQacWithOutFilter } from "../hooks/useGetQacWithOutFilter"
 import { useGetOnlyAllQuestions } from "../hooks/useGetOnlyAllQuestions"
@@ -71,14 +71,14 @@ export default function ConditionalSystem() {
                 }}
               >
                 <Typography sx={{ color: "#393939", fontSize: "14px" }}>برو به:</Typography>
-                <CustomSelectController
+                <SelectController
                   name={`conditions.${index}.returnQuestionId`}
                   options={onlyAllQuestionsOptions}
                   isLoading={isFetchingOnlyAllQuestions}
                   sx={{ minWidth: 240, ml: 5 }}
                 />
                 <Typography sx={{ color: "#393939", fontSize: "14px", mr: 4 }}>در غیر اینصورت برو به:</Typography>
-                <CustomSelectController
+                <SelectController
                   name={`conditions.${index}.elseQuestionId`}
                   options={onlyAllQuestionsOptions}
                   isLoading={isFetchingOnlyAllQuestions}

@@ -2,7 +2,7 @@ import { Box, IconButton } from "@mui/material"
 import Image from "next/image"
 import { CustomSelectController } from "./form/select-controller"
 import { getQuestion, getCondition } from "../utils/formUtils"
-import { getInput } from "../utils/inputUtils"
+import { getInput } from "../components/GetConditionInput"
 import { useFormContext, useWatch } from "react-hook-form"
 import type React from "react"
 
