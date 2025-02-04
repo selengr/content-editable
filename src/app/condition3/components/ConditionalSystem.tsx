@@ -1,14 +1,14 @@
 "use client"
-import * as z from "zod"
-// hook-form
-import { FormProvider } from "react-hook-form"
-// mui
-import { LoadingButton } from "@mui/lab"
 import { Box, Typography, Button } from "@mui/material"
-// others
-import "react-multi-date-picker/styles/layouts/mobile.css"
-// hooks
-import { useConditionForm } from "../hooks/useConditionForm"
+import { LoadingButton } from "@mui/lab"
+import { FormProvider } from "react-hook-form"
+import { useConditionalForm } from "./hooks/useConditionalForm"
+import { SubCondition } from "./components/SubCondition"
+import { CustomSelectController } from "./_components/form/select-controller"
+import { CircleDivider } from "./_components/circle-divider"
+import { useGetQacWithOutFilter } from "./hooks/useGetQacWithOutFilter"
+import { useGetOnlyAllQuestions } from "./hooks/useGetOnlyAllQuestions"
+import { useGetOnlyAllCalculation } from "./hooks/useGetOnlyAllCalculation"
 
 export default function ConditionalSystem() {
   const {
@@ -18,50 +18,88 @@ export default function ConditionalSystem() {
     handleRemoveCondition,
     handleAddSubCondition,
     handleRemoveSubCondition,
-  } = useConditionForm()
+  } = useConditionalForm()
 
-  const { control, handleSubmit, setValue } = methods
+  const { qacWithOutFilter, qacWithOutFilterOptions, isFetchingQacWithOutFilter } = useGetQacWithOutFilter()
+  const { onlyAllQuestions, onlyAllQuestionsOptions, onlySomeQuestionsOptions, isFetchingOnlyAllQuestions } =
+    useGetOnlyAllQuestions()
+  const { onlyAllCalculationOptions, isFetchingOnlyAllCalculation } = useGetOnlyAllCalculation()
 
-  const onSubmit = (input: FormData) => {
-    console.log("Submitted data:", input)
-
-    // ... (onSubmit function remains unchanged)
+  const onSubmit = (data: FormData) => {
+    console.log("Submitted data:", data)
+    // Implement the submission logic here
   }
 
   return (
     <Box
-      sx={{
-        width: "100%",
-        p: 3,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        direction: "ltr",
-      }}
+      sx={{ width: "100%", p: 3, display: "flex", flexDirection: "column", justifyContent: "center", direction: "ltr" }}
     >
       <Typography
         variant="subtitle1"
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          color: "#404040",
-          fontWeight: 700,
-          mb: 1,
-        }}
+        sx={{ display: "flex", justifyContent: "center", color: "#404040", fontWeight: 700, mb: 1 }}
       >
         شرط
       </Typography>
       <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
           {conditions.map((condition, index) => (
-            <ConditionGroup
-              key={condition.id}
-              condition={condition}
-              index={index}
-              onRemoveCondition={handleRemoveCondition}
-              onAddSubCondition={handleAddSubCondition}
-              onRemoveSubCondition={handleRemoveSubCondition}
-            />
+            <Box key={condition.id} sx={{ width: "100%" }}>
+              {condition.subConditions.map((subCondition, subIndex) => (
+                <SubCondition
+                  key={subCondition.id}
+                  index={index}
+                  subIndex={subIndex}
+                  onAddSubCondition={() => handleAddSubCondition(index, subIndex)}
+                  onRemoveSubCondition={() => handleRemoveSubCondition(index, subIndex)}
+                  qacWithOutFilterOptions={qacWithOutFilterOptions}
+                  isFetchingQacWithOutFilter={isFetchingQacWithOutFilter}
+                  onlySomeQuestionsOptions={onlySomeQuestionsOptions}
+                  isFetchingOnlyAllQuestions={isFetchingOnlyAllQuestions}
+                  onlyAllCalculationOptions={onlyAllCalculationOptions}
+                  isFetchingOnlyAllCalculation={isFetchingOnlyAllCalculation}
+                  onlyAllQuestions={onlyAllQuestions}
+                />
+              ))}
+              <Box
+                sx={{
+                  ml: { xs: 0, md: 2 },
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  flexWrap: "wrap",
+                  flexDirection: { xs: "column", md: "row" },
+                }}
+              >
+                <Typography sx={{ color: "#393939", fontSize: "14px" }}>برو به:</Typography>
+                <CustomSelectController
+                  name={`conditions.${index}.returnQuestionId`}
+                  options={onlyAllQuestionsOptions}
+                  isLoading={isFetchingOnlyAllQuestions}
+                  sx={{ minWidth: 240, ml: 5 }}
+                />
+                <Typography sx={{ color: "#393939", fontSize: "14px", mr: 4 }}>در غیر اینصورت برو به:</Typography>
+                <CustomSelectController
+                  name={`conditions.${index}.elseQuestionId`}
+                  options={onlyAllQuestionsOptions}
+                  isLoading={isFetchingOnlyAllQuestions}
+                  sx={{ minWidth: 300, width: 360 }}
+                />
+                <Button
+                  onClick={() => handleRemoveCondition(index)}
+                  sx={{
+                    width: 113,
+                    height: "52px",
+                    bgcolor: "#FA4D560D",
+                    borderRadius: "8px",
+                    border: "1px solid #FA4D56",
+                    "&:hover": { bgcolor: "#FA4D560D" },
+                  }}
+                >
+                  <Typography sx={{ color: "#FA4D56", fontSize: "14px" }}>حذف این شرط</Typography>
+                </Button>
+              </Box>
+              <CircleDivider />
+            </Box>
           ))}
           <Button
             variant="outlined"
@@ -83,3 +121,4 @@ export default function ConditionalSystem() {
     </Box>
   )
 }
+

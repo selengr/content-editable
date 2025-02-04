@@ -2,12 +2,12 @@ import React, { useRef, useEffect } from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import { TextField, type TextFieldProps } from "@mui/material";
 
-interface CustomTextFieldProps extends Omit<TextFieldProps, "name"> {
+interface TextFieldControllerProps extends Omit<TextFieldProps, "name"> {
   name: string;
   type?: string;
 }
 
-const CustomTextField: React.FC<CustomTextFieldProps> = ({
+export const TextFieldController: React.FC<TextFieldControllerProps> = ({
   name,
   type,
   ...props
@@ -64,4 +64,4 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
   );
 };
 
-export default CustomTextField;
+

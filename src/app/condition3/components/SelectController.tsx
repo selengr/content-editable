@@ -27,7 +27,7 @@ interface CustomSelectProps extends Omit<SelectProps, "sx" | "name"> {
   isLoading?: boolean;
 }
 
-export const CustomSelectController: React.FC<CustomSelectProps> = ({
+export const SelectController: React.FC<CustomSelectProps> = ({
   options,
   sx,
   name,
