@@ -18,11 +18,11 @@ const ConditionSchema = z.object({
   elseQuestionId: z.string(),
 })
 
-export const FormSchema = z.object({
+export const ConditionFormSchema = z.object({
   conditions: z.array(ConditionSchema),
 })
 
-export type FormData = z.infer<typeof FormSchema>
-export type ConditionData = z.infer<typeof ConditionSchema>;
-export type SubConditionData = z.infer<typeof SubConditionSchema>;
+export type TConditionFormData = z.infer<typeof ConditionFormSchema>
+export type TConditionData = z.infer<typeof ConditionSchema>;
+export type TSubConditionData = z.infer<typeof SubConditionSchema>;
 

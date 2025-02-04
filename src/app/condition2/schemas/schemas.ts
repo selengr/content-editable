@@ -15,9 +15,9 @@ export const ConditionSchema = z.object({
   returnQuestionId: z.string().min(1, "Return question is required"),
 })
 
-export const FormSchema = z.object({
+export const ConditionFormSchema = z.object({
   conditions: z.array(ConditionSchema).min(1, "At least one condition is required"),
 })
 
-export type FormData = z.infer<typeof FormSchema>
+export type TConditionFormData = z.infer<typeof ConditionFormSchema>
 

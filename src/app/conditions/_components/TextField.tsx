@@ -445,7 +445,7 @@
 //   );
 // }
 
-// type propertiesFormSchemaType = z.infer<typeof propertiesSchema>;
+// type propertiesConditionFormSchemaType = z.infer<typeof propertiesSchema>;
 // function PropertiesComponent({
 //   elementInstance,
 // }: {
@@ -518,7 +518,7 @@
 //     return values;
 //   }, []);
 
-//   const methods = useForm<propertiesFormSchemaType>({
+//   const methods = useForm<propertiesConditionFormSchemaType>({
 //     resolver: zodResolver(propertiesSchema),
 //     mode: "onChange",
 //     defaultValues,
@@ -532,7 +532,7 @@
 //     formState: { isSubmitting },
 //   } = methods;
 
-//   async function onSubmit(values: propertiesFormSchemaType) {
+//   async function onSubmit(values: propertiesConditionFormSchemaType) {
 //     const {
 //       title,
 //       DESCRIPTION,

@@ -55,11 +55,11 @@ const ConditionSchema = z.object({
   elseQuestionId: z.string(),
 });
 
-const FormSchema = z.object({
+const ConditionFormSchema = z.object({
   conditions: z.array(ConditionSchema),
 });
 
-type FormData = z.infer<typeof FormSchema>;
+type TConditionFormData = z.infer<typeof ConditionFormSchema>;
 
 export default function page() {
   // const [calendarValue, setCalendarValue] = useState(new Date())
@@ -77,8 +77,8 @@ export default function page() {
   const { onlyAllCalculationOptions, isFetchingOnlyAllCalculation } =
     useGetOnlyAllCalculation();
 
-  const methods = useForm<FormData>({
-    resolver: zodResolver(FormSchema),
+  const methods = useForm<TConditionFormData>({
+    resolver: zodResolver(ConditionFormSchema),
     defaultValues: {
       conditions: [
         {
@@ -552,7 +552,7 @@ export default function page() {
     }
   };
 
-  const onSubmit = (input: FormData) => {
+  const onSubmit = (input: TConditionFormData) => {
     console.log("Submitted data:", input);
 
     const transformInputToOutput = (input) => {

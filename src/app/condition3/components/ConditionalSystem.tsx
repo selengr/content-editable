@@ -26,7 +26,7 @@ export default function ConditionalSystem() {
     useGetOnlyAllQuestions()
   const { onlyAllCalculationOptions, isFetchingOnlyAllCalculation } = useGetOnlyAllCalculation()
 
-  const onSubmit = (input: FormData) => {
+  const onSubmit = (input: TConditionFormData) => {
     console.log("Submitted data:", input);
 
     const transformInputToOutput = (input) => {

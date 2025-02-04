@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 //hook
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, useFieldArray, Controller } from "react-hook-form"
-import { FormSchema, type FormData, type SubCondition } from "./types/schema"
+import { ConditionFormSchema, type TConditionFormData, type SubCondition } from "./types/schema"
 
 import TextField from '@mui/material/TextField';
 import { SelectOption } from './_types/conditions'
@@ -28,8 +28,8 @@ import "react-multi-date-picker/styles/layouts/mobile.css";
 
 export default function DependentSelectForm() {
   const [calendarValue, setCalendarValue] = useState(new Date());
-  const { control, handleSubmit } = useForm<FormData>({
-    resolver: zodResolver(FormSchema),
+  const { control, handleSubmit } = useForm<TConditionFormData>({
+    resolver: zodResolver(ConditionFormSchema),
     defaultValues: {
       conditions: [
         {
@@ -53,7 +53,7 @@ export default function DependentSelectForm() {
     name: "conditions",
   })
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = (data: TConditionFormData) => {
     console.log("Submitted data:", data)
   }
 

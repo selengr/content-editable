@@ -15,11 +15,11 @@ export const ConditionSchema = z.object({
   returnQuestionId: z.string(),
 })
 
-export const FormSchema = z.object({
+export const ConditionFormSchema = z.object({
   conditions: z.array(ConditionSchema),
 })
 
 export type SubCondition = z.infer<typeof SubConditionSchema>
 export type Condition = z.infer<typeof ConditionSchema>
-export type FormData = z.infer<typeof FormSchema>
+export type TConditionFormData = z.infer<typeof ConditionFormSchema>
 

@@ -1,7 +1,7 @@
 import { useForm, useFieldArray } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { v4 as uuidv4 } from "uuid"
-import { FormSchema, type FormData } from "../schemas/conditionFormSchemas"
+import { ConditionFormSchema, type TConditionFormData } from "../schemas/conditionConditionFormSchemas"
 
 
 
@@ -23,8 +23,8 @@ export const createNewSubCondition = () => ({
 
 
 export const useConditionalForm = () => {
-  const methods = useForm<FormData>({
-    resolver: zodResolver(FormSchema),
+  const methods = useForm<TConditionFormData>({
+    resolver: zodResolver(ConditionFormSchema),
     defaultValues: {
       conditions: [createNewCondition()],
     },
