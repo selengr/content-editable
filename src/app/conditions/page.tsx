@@ -632,10 +632,6 @@ export default function DependentSelectForm() {
           rowGap={3}
           columnGap={2}
           display="flex"
-          gridTemplateColumns={{
-            // xs: "repeat(2, 1fr)",
-            // sm: "repeat(4, 1fr)",
-          }}
         >
 
           <FormControl sx={{ minWidth: 200 }}>
