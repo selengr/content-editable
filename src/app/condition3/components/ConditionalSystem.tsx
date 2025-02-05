@@ -10,6 +10,7 @@ import { useGetOnlyAllQuestions } from "../hooks/useGetOnlyAllQuestions"
 import { useGetOnlyAllCalculation } from "../hooks/useGetOnlyAllCalculation"
 import { SubmitButtons } from "../../../templates/calculation/SubmitButtons"
 import { formatContainText } from "@/app/condition2/utils/formatContainText"
+import { TConditionFormData } from "../schemas/conditionFormSchema"
 
 export default function ConditionalSystem() {
   const {

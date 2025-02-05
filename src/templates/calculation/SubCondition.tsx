@@ -1,12 +1,11 @@
-import { Box, IconButton, Typography } from "@mui/material"
 import Image from "next/image"
+import { useFormContext, useWatch } from "react-hook-form"
+import { Box, IconButton, Typography } from "@mui/material"
 import { SelectController } from "../../app/condition3/components/SelectController"
 import { getInput , getQuestion, getCondition } from "../../app/condition3/components/GetConditionInput"
-import { useFormContext, useWatch } from "react-hook-form"
-import type React from "react"
+
 
 type SubConditionProps = {
-//   key: number
   index: number
   subIndex: number
   onAddSubCondition: () => void
@@ -21,7 +20,6 @@ type SubConditionProps = {
 }
 
 export const SubCondition: React.FC<SubConditionProps> = ({
-//   key,
   index,
   subIndex,
   onAddSubCondition,

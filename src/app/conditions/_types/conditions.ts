@@ -1,10 +1,4 @@
-// enum QuestionType {
-//     TEXT_FIELD = "TEXT_FIELD",
-//     MULTIPLE_CHOICE = "MULTIPLE_CHOICE",
-//     MULTIPLE_CHOICE_IMAGE = "MULTIPLE_CHOICE_IMAGE",
-//     SPECTRAL = "SPECTRAL"
-//   }
-  
+
   
   export interface ExtMap {
     QUESTION_TYPE?: string;
@@ -33,12 +27,6 @@
     value: string;
     label: string;
   }
-
-
-
-
-
-
 
 
 

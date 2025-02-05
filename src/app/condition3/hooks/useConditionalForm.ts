@@ -1,6 +1,6 @@
 import { useForm, useFieldArray } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { ConditionFormSchema, type TConditionFormData } from "../schemas/conditionConditionFormSchemas"
+import { ConditionFormSchema, type TConditionFormData } from "../schemas/conditionFormSchema"
 
 export const useDependentSelectForm = () => {
   const methods = useForm<TConditionFormData>({

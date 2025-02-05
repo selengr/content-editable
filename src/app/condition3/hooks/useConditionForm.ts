@@ -1,7 +1,7 @@
 import { useForm, useFieldArray } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { v4 as uuidv4 } from "uuid"
-import { ConditionFormSchema, type TConditionFormData } from "../schemas/conditionConditionFormSchemas"
+import { ConditionFormSchema, type TConditionFormData } from "../schemas/conditionFormSchema"
 
 
 
