@@ -11,7 +11,6 @@ import { DatePicker as DatePickerCustome } from "../components/DatePicker";
 
 
 export const getQuestion = (type: string, values: any) => {
-    console.log(type);
     switch (type?.split("*")[0]) {
       case "MULTIPLE_CHOICE":
         return [
@@ -68,8 +67,8 @@ export const getQuestion = (type: string, values: any) => {
 
   export const getCondition = (type: string, operator: string, values: any) => {
     const combinedKey = `${type?.split("*")[0]}_${operator.split("@")[0]}`;
-    console.log("3",combinedKey)
-    // 
+   
+    
     switch (combinedKey) {
       case "MULTIPLE_CHOICE_VALUE":
       case "MULTIPLE_CHOICE_OPTION":
