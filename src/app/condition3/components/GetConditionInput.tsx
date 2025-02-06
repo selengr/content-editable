@@ -179,7 +179,7 @@ export const getInput = (
   const combinedKey = `${type?.split("*")[0]}_${operator?.split("@")[0]}_${condition?.split("@")[0]}`
 
   
-  console.log("operator.split)[0]", operator.split("@")[0])
+  console.log("combinedKey", combinedKey)
   console.log("condition?.split([0]", condition?.split("@")[0])
 
 

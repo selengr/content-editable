@@ -50,7 +50,7 @@ export const SelectController: React.FC<CustomSelectProps> = ({
             IconComponent={IoIosArrowDown}
             variant="outlined"
             {...field}
-            onChange={(value) => {
+            onChange={(value) => {debugger
               field.onChange(value);
               onChange?.(value);
             }}
