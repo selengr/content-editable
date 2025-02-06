@@ -65,7 +65,6 @@ export const useGetOnlyAllQuestions = () => {
       label: item.caption,
     };
   })?.filter((item) => {
-    console.log('Filtering item:', item); // Debug filter input
     return item.value !== '';
   });
 
