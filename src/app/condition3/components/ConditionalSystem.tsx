@@ -36,13 +36,12 @@ export default function ConditionalSystem() {
 
         const conditionFormula = subConditions
           .map((subCondition) => {
-            const {
-              conditionType,
-              questionType,
-              operatorType,
-              value,
-              logicalOperator,
-            } = subCondition;
+            const conditionType = subCondition.conditionType?.split("@")[0];
+            const questionType = subCondition.questionType?.split("@")[0];
+            const operatorType = subCondition.operatorType?.split("@")[0];
+            const value = subCondition.value?.split("@")[0];
+            const logicalOperator = subCondition.logicalOperator?.split("@")[0];
+
             // console.log(
             //   "val  formatContainText(value)45645",
             //   formatContainText(value)
@@ -51,7 +50,7 @@ export default function ConditionalSystem() {
             let formattedValue: string;
 
             if (operatorType === "OPTION") {
-              formattedValue = `{${value?.split("@")[0]}}`;
+              formattedValue = `{${value}}`;
             } else if (operatorType === "VALUE") {
               formattedValue = `{#v_${value}}`;
             } else if (operatorType === "TEXT") {
@@ -77,15 +76,15 @@ export default function ConditionalSystem() {
             } else if (operatorType === "DATE") {
               formattedValue = `{#v_"${value}"}`;
             } else {
-              formattedValue = `{${value?.split("@")[0]}}`;
+              formattedValue = `{${value}}`;
             }
 
-            const baseCondition = `${conditionType.split("@")[0]}(${
-              questionType.split("*")[1].split("@")[0]
+            const baseCondition = `${conditionType}(${
+              questionType.split("*")[1]
             },${formattedValue})`;
 
             return logicalOperator
-              ? ` ${logicalOperator?.split("@")[0]}} ${baseCondition}`
+              ? ` ${logicalOperator}} ${baseCondition}`
               : baseCondition;
           })
           .join("");
@@ -93,8 +92,8 @@ export default function ConditionalSystem() {
         return {
           conditionFormula: conditionFormula,
           formBuilderId: 81,
-          returnQuestionId: returnQuestionId.split("@")[0],
-          elseQuestionId: elseQuestionId.split("@")[0],
+          returnQuestionId: returnQuestionId,
+          elseQuestionId: elseQuestionId,
         };
       });
     };
