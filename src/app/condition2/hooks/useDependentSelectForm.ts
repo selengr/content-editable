@@ -36,7 +36,7 @@ export const useDependentSelectForm = () => {
   }
 
   const handleSubmit = methods.handleSubmit((data: TConditionFormData) => {
-    console.log("Submitted data:", data)
+    console.log("Submitted data: wff", data)
   })
 
   return {

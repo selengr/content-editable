@@ -40,7 +40,6 @@ export const SubCondition: React.FC<SubConditionProps> = ({
 
   return (
     <Box
-    //   key={key}
       sx={{
         mb: 1,
         ml: { md: 2 },
