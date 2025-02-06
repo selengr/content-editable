@@ -42,11 +42,6 @@ export default function ConditionalSystem() {
             const value = subCondition.value?.split("@")[0];
             const logicalOperator = subCondition.logicalOperator?.split("@")[0];
 
-            // console.log(
-            //   "val  formatContainText(value)45645",
-            //   formatContainText(value)
-            // );
-
             let formattedValue: string;
 
             if (operatorType === "OPTION") {
