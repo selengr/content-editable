@@ -42,7 +42,7 @@ export default function ConditionalSystem() {
             const value = subCondition.value?.split("@")[0];
             const logicalOperator = subCondition.logicalOperator?.split("@")[0];
 
-            
+
             let formattedValue: string;
 
             if (operatorType === "OPTION") {
@@ -54,7 +54,7 @@ export default function ConditionalSystem() {
                 conditionType === "#startWithText" ||
                 conditionType === "#endWithText"
               ) {
-                formattedValue = `{"${value}"}`;
+                formattedValue = `{'${value}'}`;
               } else if (
                 conditionType === "!#containAnyText" ||
                 conditionType === "#containAnyText"
@@ -70,7 +70,7 @@ export default function ConditionalSystem() {
                 formattedValue = value;
               }
             } else if (operatorType === "DATE") {
-              formattedValue = `{#v_"${value}"}`;
+              formattedValue = `{#v_'${value}'}`;
             } else {
               formattedValue = `{${value}}`;
             }
@@ -88,8 +88,8 @@ export default function ConditionalSystem() {
         return {
           conditionFormula: conditionFormula,
           formBuilderId: 81,
-          returnQuestionId: returnQuestionId,
-          elseQuestionId: elseQuestionId,
+          returnQuestionId: returnQuestionId?.split("@")[0],
+          elseQuestionId: elseQuestionId?.split("@")[0],
         };
       });
     };
