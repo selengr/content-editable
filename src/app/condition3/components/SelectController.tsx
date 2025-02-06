@@ -24,6 +24,7 @@ interface CustomSelectProps extends Omit<SelectProps, "sx" | "name"> {
   name: string;
   onChange?: any;
   disabled?: boolean;
+  isOprator?: boolean;
   isLoading?: boolean;
 }
 
@@ -33,6 +34,7 @@ export const SelectController: React.FC<CustomSelectProps> = ({
   name,
   onChange,
   disabled = false,
+  isOprator = false,
   isLoading = false,
   ...props
 }) => {
@@ -65,9 +67,9 @@ export const SelectController: React.FC<CustomSelectProps> = ({
                   />
                 );
               }
-              const selectedOption = options?.find(
-                (option) => option.value === selected
-              );
+              const selectedValue = isOprator ? selected?.split("@")[0] : selected;
+              const selectedOption = options?.find(option => option.value === selectedValue);
+   
               return selectedOption ? selectedOption.label : "";
             }}
             sx={{
@@ -102,7 +104,7 @@ export const SelectController: React.FC<CustomSelectProps> = ({
             {options?.map((option) => (
               <MenuItem
                 key={option.value}
-                value={option.value}
+                value={!isOprator ?option.value:option.value+"@"+option.label}
                 sx={{
                   display: "flex",
                   justifyContent: "end",
@@ -157,8 +159,8 @@ export function MultiSelectController({
   const { control } = useFormContext();
 
   const renderValues = (selectedIds: string[]) => {
-    const selectedItems = options.filter((item) =>
-      selectedIds.includes(item.value)
+    const selectedItems = options.filter((item,index) =>
+      selectedIds[index]?.split("@")[0].includes(item.value)
     );
 
     if (!selectedItems.length && placeholder) {
@@ -248,13 +250,13 @@ export function MultiSelectController({
               </MenuItem>
             )}
 
-            {options?.map((option) => {
-              const selected = field.value?.includes(option.value);
+            {options?.map((option,index) => {
+              const selected = field.value[index]?.split("@")[0].includes(option.value);
 
               return (
                 <MenuItem
                   key={option.value}
-                  value={option.value}
+                  value={option.value.includes("@")?option.value:option.value+"@"+option.label}
                   sx={{
                     py: 1,
                     px: 2,

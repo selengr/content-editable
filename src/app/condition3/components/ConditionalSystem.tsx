@@ -28,7 +28,7 @@ export default function ConditionalSystem() {
   const { onlyAllCalculationOptions, isFetchingOnlyAllCalculation } = useGetOnlyAllCalculation()
 
   const onSubmit = (input: TConditionFormData) => {
-    console.log("Submitted data:", input);
+    console.log("Submitted data:", input.conditions[0].subConditions[0]);
 
     const transformInputToOutput = (input) => {
       return input.conditions.map((condition) => {

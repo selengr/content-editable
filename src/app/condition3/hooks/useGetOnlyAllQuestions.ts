@@ -42,7 +42,7 @@ export const useGetOnlyAllQuestions = () => {
   });
 
   const onlyAllQuestionsOptions = data?.dataList?.map((item) => ({
-    value: item.extMap.UNIC_NAME,
+    value: `${item?.extMap.UNIC_NAME}@${item.caption}`,
     label: item.caption,
   }));
 
@@ -58,7 +58,7 @@ export const useGetOnlyAllQuestions = () => {
     return isTextFieldNumber || isMultiSelect || isSpectralSingle;
   })
   ?.map((item) => ({
-    value: item.extMap.UNIC_NAME,
+    value: `${item?.extMap.UNIC_NAME}@${item.caption}`,
     label: item.caption,
   }));
 

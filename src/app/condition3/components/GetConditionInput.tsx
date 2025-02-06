@@ -67,7 +67,9 @@ export const getQuestion = (type: string, values: any) => {
   };
 
   export const getCondition = (type: string, operator: string, values: any) => {
-    const combinedKey = `${type?.split("*")[0]}_${operator}`;
+    const combinedKey = `${type?.split("*")[0]}_${operator.split("@")[0]}`;
+    console.log("3",combinedKey)
+    // 
     switch (combinedKey) {
       case "MULTIPLE_CHOICE_VALUE":
       case "MULTIPLE_CHOICE_OPTION":
@@ -175,10 +177,9 @@ export const getInput = (
     setValue,
   },
 ) => {
-  const combinedKey = `${type?.split("*")[0]}_${operator}_${condition}`
-
+  const combinedKey = `${type?.split("*")[0]}_${operator?.split("@")[0]}_${condition?.split("@")[0]}`
   switch (combinedKey) {
-      
+
     case "MULTIPLE_CHOICE_VALUE_#equalMultiChoiceSingle":
     case "MULTIPLE_CHOICE_VALUE_!#equalMultiChoiceSingle":
     case "MULTIPLE_CHOICE_VALUE_#lessThanMultiChoiceSingle":
@@ -196,6 +197,7 @@ export const getInput = (
           options={onlySomeQuestionsOptions}
           isLoading={isFetchingOnlyAllQuestions}
           sx={{ minWidth: 194 }}
+          
         />
       );
 
@@ -210,6 +212,7 @@ export const getInput = (
           options={onlyAllCalculationOptions}
           isLoading={isFetchingOnlyAllCalculation}
           sx={{ minWidth: 194 }}
+          
         />
       );
 
@@ -219,9 +222,9 @@ export const getInput = (
     case "MULTIPLE_CHOICE_OPTION_#lessThanMultiChoiceSingle":
     case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle": {
       const typeParts = type.split("*");
-      if (typeParts.length < 2) return null;
-      const targetUnicName = typeParts[1];
-
+      // if (typeParts.length < 3) return null;
+      const targetUnicName = typeParts[1]?.split("@")[0];
+console.log(targetUnicName)
       const targetQuestion = onlyAllQuestions?.find(
         (item) => item?.extMap?.UNIC_NAME === targetUnicName
       );
@@ -240,6 +243,7 @@ export const getInput = (
           name={field.name}
           options={mappedOptions}
           sx={{ minWidth: 194 }}
+          
         />
       );
     }
@@ -249,8 +253,8 @@ export const getInput = (
     case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_!#equalThanMultiChoiceMulti":
     case "MULTIPLE_CHOICE_MULTI_SELECT_OPTION_#equalThanMultiChoiceMulti": {
       const typeParts = type.split("*");
-      if (typeParts.length < 2) return null;
-      const targetUnicName = typeParts[1];
+      // if (typeParts.length < 3) return null;
+      const targetUnicName = typeParts[1]?.split("@")[0];
 
       const targetQuestion = onlyAllQuestions?.find(
         (item) => item?.extMap?.UNIC_NAME === targetUnicName
@@ -311,6 +315,7 @@ export const getInput = (
           options={onlySomeQuestionsOptions}
           isLoading={isFetchingOnlyAllQuestions}
           sx={{ minWidth: 194 }}
+          
         />
       );
 
@@ -325,6 +330,7 @@ export const getInput = (
           options={onlyAllCalculationOptions}
           isLoading={isFetchingOnlyAllCalculation}
           sx={{ minWidth: 194 }}
+          
         />
       );
 
@@ -369,6 +375,7 @@ export const getInput = (
           options={onlySomeQuestionsOptions}
           isLoading={isFetchingOnlyAllQuestions}
           sx={{ minWidth: 194 }}
+          
         />
       );
 
@@ -390,6 +397,7 @@ export const getInput = (
           options={onlySomeQuestionsOptions}
           isLoading={isFetchingOnlyAllQuestions}
           sx={{ minWidth: 194 }}
+          
         />
       );
     
@@ -403,6 +411,7 @@ export const getInput = (
           options={onlyAllCalculationOptions}
           isLoading={isFetchingOnlyAllCalculation}
           sx={{ minWidth: 194 }}
+          
         />
       );
 
@@ -426,6 +435,7 @@ export const getInput = (
           options={onlySomeQuestionsOptions}
           isLoading={isFetchingOnlyAllQuestions}
           sx={{ minWidth: 194 }}
+          
         />
       );
 
@@ -441,6 +451,7 @@ export const getInput = (
           options={onlyAllCalculationOptions}
           isLoading={isFetchingOnlyAllCalculation}
           sx={{ minWidth: 194 }}
+          
         />
       );
 
