@@ -42,6 +42,7 @@ export default function ConditionalSystem() {
             const value = subCondition.value?.split("@")[0];
             const logicalOperator = subCondition.logicalOperator?.split("@")[0];
 
+            
             let formattedValue: string;
 
             if (operatorType === "OPTION") {
