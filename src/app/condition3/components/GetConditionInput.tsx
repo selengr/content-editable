@@ -222,9 +222,8 @@ export const getInput = (
     case "MULTIPLE_CHOICE_OPTION_#lessThanMultiChoiceSingle":
     case "MULTIPLE_CHOICE_OPTION_!#lessThanMultiChoiceSingle": {
       const typeParts = type.split("*");
-      // if (typeParts.length < 3) return null;
+      
       const targetUnicName = typeParts[1]?.split("@")[0];
-console.log(targetUnicName)
       const targetQuestion = onlyAllQuestions?.find(
         (item) => item?.extMap?.UNIC_NAME === targetUnicName
       );
@@ -233,7 +232,7 @@ console.log(targetUnicName)
 
       const { OPTIONS: options = {} } = targetQuestion.extMap;
       const mappedOptions = Object.entries(options).map(([key, value]) => ({
-        value: key,
+        value: key+"@"+value[1],
         label: value[1],
       }));
 

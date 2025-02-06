@@ -28,7 +28,7 @@ export default function ConditionalSystem() {
   const { onlyAllCalculationOptions, isFetchingOnlyAllCalculation } = useGetOnlyAllCalculation()
 
   const onSubmit = (input: TConditionFormData) => {
-    console.log("Submitted data:", input.conditions[0].subConditions[0]);
+    console.log("Submitted data:", input.conditions[0].subConditions);
 
     const transformInputToOutput = (input) => {
       return input.conditions.map((condition) => {
@@ -51,7 +51,7 @@ export default function ConditionalSystem() {
             let formattedValue: string;
 
             if (operatorType === "OPTION") {
-              formattedValue = `{${value}}`;
+              formattedValue = `{${value?.split("@")[0]}}`;
             } else if (operatorType === "VALUE") {
               formattedValue = `{#v_${value}}`;
             } else if (operatorType === "TEXT") {
@@ -77,15 +77,15 @@ export default function ConditionalSystem() {
             } else if (operatorType === "DATE") {
               formattedValue = `{#v_"${value}"}`;
             } else {
-              formattedValue = value;
+              formattedValue = `{${value?.split("@")[0]}}`;
             }
 
-            const baseCondition = `${conditionType}(${
-              questionType.split("*")[1]
+            const baseCondition = `${conditionType.split("@")[0]}(${
+              questionType.split("*")[1].split("@")[0]
             },${formattedValue})`;
 
             return logicalOperator
-              ? ` ${logicalOperator} ${baseCondition}`
+              ? ` ${logicalOperator?.split("@")[0]}} ${baseCondition}`
               : baseCondition;
           })
           .join("");
@@ -93,14 +93,14 @@ export default function ConditionalSystem() {
         return {
           conditionFormula: conditionFormula,
           formBuilderId: 81,
-          returnQuestionId: condition.returnQuestionId,
-          elseQuestionId: condition.elseQuestionId,
+          returnQuestionId: returnQuestionId.split("@")[0],
+          elseQuestionId: elseQuestionId.split("@")[0],
         };
       });
     };
 
     const output = transformInputToOutput(input);
-    console.log(output);
+    console.log(output[0]);
   };
 
   return (
