@@ -36,17 +36,20 @@ export default function ConditionalSystem() {
 
         const conditionFormula = subConditions
           .map((subCondition) => {
+            console.log(typeof subCondition.value)
             const conditionType = subCondition.conditionType?.split("@")[0];
             const questionType = subCondition.questionType?.split("@")[0];
             const operatorType = subCondition.operatorType?.split("@")[0];
-            const value = subCondition.value?.split("@")[0];
+            const value = typeof subCondition.value !== 'object' ? subCondition.value?.split("@")[0] : subCondition.value;
             const logicalOperator = subCondition.logicalOperator?.split("@")[0];
 
 
             let formattedValue: string;
 
             if (operatorType === "OPTION") {
-              formattedValue = `{${value}}`;
+              if(typeof subCondition.value === 'object'){
+                formattedValue = `{${value.map(item=>item?.split("@")[0])}}`
+              } else formattedValue = `{${value}}`;
             } else if (operatorType === "VALUE") {
               formattedValue = `{#v_${value}}`;
             } else if (operatorType === "TEXT") {
