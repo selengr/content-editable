@@ -68,7 +68,7 @@ export const SelectController: React.FC<CustomSelectProps> = ({
                 );
               }
               const selectedValue = isOprator ? selected?.split("@")[0] : selected;
-              const selectedOption = options?.find(option => option.value === selectedValue);
+              const selectedOption = options?.find(option => option?.value === selectedValue);
    
               return selectedOption ? selectedOption.label : "";
             }}

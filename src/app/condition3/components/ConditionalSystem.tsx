@@ -75,7 +75,7 @@ export default function ConditionalSystem() {
             } else if (operatorType === "DATE") {
               formattedValue = `{#v_'${value}'}`;
             } else {
-              formattedValue = `{${value}}`;
+              formattedValue = `${value}`;
             }
 
             const baseCondition = `${conditionType}(${
