@@ -38,7 +38,7 @@ export const useGetOnlyAllQuestions = () => {
     refetchOnReconnect: true,
     retry: 3
   });
-debugger
+
   const onlySomeQuestionsOptions = data?.dataList?.map((item) => {
     const extMap = item.extMap || {};
     const {
@@ -48,13 +48,7 @@ debugger
       UNIC_NAME = ''
     } = extMap;
 
-    // Debugging: Log values for inspection
-    console.log('Item extMap:', {
-      TEXT_FIELD_PATTERN,
-      SPECTRAL_TYPE,
-      MULTI_SELECT,
-      UNIC_NAME
-    });
+    
 
     // Convert MULTI_SELECT to number safely
     const multiSelectValue = parseInt(MULTI_SELECT, 10) || 0;

@@ -579,7 +579,7 @@ export default function page() {
               formattedValue = `{${value}}`;
             } else if (operatorType === "VALUE") {
               formattedValue = `{#v_${value}}`;
-            } else if (operatorType === "TEXT") {debugger
+            } else if (operatorType === "TEXT") {
               if (
                 conditionType === "#startWithText" ||
                 conditionType === "#endWithText"
