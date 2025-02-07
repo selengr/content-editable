@@ -11,15 +11,15 @@ export function ConditionCard({ condition } : { condition : TConditionData} ) {
         <div className="bg-[#F7F7FF] h-8 w-8 rounded-[10px] flex justify-center items-center">{condition.elseQuestionId}</div>
         <div className="flex flex-col">
           {condition?.subConditions?.map((item)=>(
-            <>
+             <div className="flex flex-row ">
              <span className="text-[#161616] text-sm">{item.logicalOperator.split("@")[1] ?? "اگر"}</span>
              <span className="text-[#1758BA] text-sm">{item.questionType.split("@")[1]}</span>
              <span className="text-[#161616] text-sm">{item.conditionType.split("@")[1]}</span>
              <span className="text-[#1758BA] text-sm">{item.value}</span>
-            </>
+            </div>
           ))}
-           <span className="text-[#161616] text-sm">{condition.returnQuestionId.split("@")[1]}</span>
-           <span className="text-[#161616] text-sm">{condition.elseQuestionId.split("@")[1]}</span>
+           <span className="text-[#0dff15] text-sm"><span>در اینصورت برو به: </span> {condition.returnQuestionId.split("@")[1]}</span>
+           <span className="text-[#161616] text-sm"><span>در غیر اینصورت برو به:</span> {condition.elseQuestionId.split("@")[1]}</span>
         </div>
       </div>
       <div className="flex justify-center items-center gap-[10px]">
