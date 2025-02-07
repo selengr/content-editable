@@ -2,7 +2,7 @@
 import { Box, Typography, Button } from "@mui/material"
 import { FormProvider } from "react-hook-form"
 import { useConditionalForm } from "../hooks/useConditionForm"
-import { SubCondition } from "../../../templates/calculation/SubCondition"
+import { SubCondition } from "./SubCondition"
 import { SelectController } from "../components/SelectController"
 import { CircleDivider } from "./CircleDivider"
 import { useGetQacWithOutFilter } from "../hooks/useGetQacWithOutFilter"
