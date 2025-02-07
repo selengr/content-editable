@@ -3,8 +3,8 @@ import { TConditionData } from "@/app/condition3/schemas/conditionFormSchema";
 
 
 export function ConditionCard({ condition } : { condition : TConditionData} ) {
-    console.log("conditions reza ============== :>> ", condition);
-    console.log("conditions item.questionType ============== :>> ", condition.subConditions[0].questionType.split("@"[1]))
+    // console.log("conditions reza ============== :>> ", condition);
+    // console.log("conditions item.questionType ============== :>> ", condition.subConditions[0].questionType.split("@"[1]))
   return (
     <div key={condition.elseQuestionId} className="bg-white rounded-lg p-[10px] h-14 flex justify-between w-full cursor-pointer border-[1px] border-[#1758BA]">
       <div className="flex justify-center items-center gap-[10px]">
