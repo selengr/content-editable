@@ -69,7 +69,7 @@ export const SubCondition: React.FC<SubConditionProps> = ({
               { value: "||", label: "یا" },
             ]}
             sx={{ minWidth: 78,mr: 1 }}
-            isOprator={true}
+            isOperator={true}
           />
         )}
       </Box>
@@ -130,7 +130,7 @@ export const SubCondition: React.FC<SubConditionProps> = ({
             );
           }}
           disabled={!Boolean(currentValues.questionType)}
-          isOprator={true}
+          isOperator={true}
         />
         <SelectController
           name={`conditions.${index}.subConditions.${subIndex}.conditionType`}
@@ -151,7 +151,7 @@ export const SubCondition: React.FC<SubConditionProps> = ({
             );
           }}
           disabled={!Boolean(currentValues.operatorType)}
-          isOprator={true}
+          isOperator={true}
         />
         {getInput(
         currentValues.questionType,

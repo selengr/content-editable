@@ -24,7 +24,7 @@ interface CustomSelectProps extends Omit<SelectProps, "sx" | "name"> {
   name: string;
   onChange?: any;
   disabled?: boolean;
-  isOprator?: boolean;
+  isOperator?: boolean;
   isLoading?: boolean;
 }
 
@@ -34,7 +34,7 @@ export const SelectController: React.FC<CustomSelectProps> = ({
   name,
   onChange,
   disabled = false,
-  isOprator = false,
+  isOperator = false,
   isLoading = false,
   ...props
 }) => {
@@ -50,7 +50,7 @@ export const SelectController: React.FC<CustomSelectProps> = ({
             IconComponent={IoIosArrowDown}
             variant="outlined"
             {...field}
-            onChange={(value) => {debugger
+            onChange={(value) => {
               field.onChange(value);
               onChange?.(value);
             }}
@@ -67,7 +67,7 @@ export const SelectController: React.FC<CustomSelectProps> = ({
                   />
                 );
               }
-              const selectedValue = isOprator ? selected?.split("@")[0] : selected;
+              const selectedValue = isOperator ? selected?.split("@")[0] : selected;
               const selectedOption = options?.find(option => option?.value === selectedValue);
    
               return selectedOption ? selectedOption.label : "";
@@ -104,7 +104,7 @@ export const SelectController: React.FC<CustomSelectProps> = ({
             {options?.map((option) => (
               <MenuItem
                 key={option.value}
-                value={!isOprator ?option.value:option.value+"@"+option.label}
+                value={!isOperator ?option.value:option.value+"@"+option.label}
                 sx={{
                   display: "flex",
                   justifyContent: "end",
