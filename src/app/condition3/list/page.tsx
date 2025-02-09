@@ -14,7 +14,7 @@ let dataList =  {
                     logicalOperator : "",
                     operatorType : "VALUE@ارزش",
                     questionType : "TEXT_FIELD*{#q_101}@متی",
-                    value : "33"
+                    value : "44"
                 }
             
             ]
