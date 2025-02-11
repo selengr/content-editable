@@ -144,7 +144,6 @@ export const getQuestion = (type: string): SelectOption[] => {
         { value: "CALCULATION", label: "محاسبه‌گر" },
         { value: "OPTION", label: "گزینه" },
       ]
-    // Add more cases for other question types
     default:
       return []
   }
