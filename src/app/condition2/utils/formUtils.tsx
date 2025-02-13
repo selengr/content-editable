@@ -129,7 +129,6 @@ export const getCondition = (type: string, operator: string): SelectOption[] => 
         { value: "equal", label: "برابر بود با" },
         { value: "not_equal", label: "نابرابر بود با" },
       ]
-    // Add more cases for other condition types
     default:
       return []
   }
