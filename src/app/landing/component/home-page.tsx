@@ -33,9 +33,16 @@ export default function HomePage() {
           <div className="absolute bottom-0 right-0 w-16 h-16 bg-purple-600 rounded-full opacity-20 blur-lg"></div>
           <div className="absolute top-1/2 right-1/4 w-12 h-12 bg-pink-500 rounded-full opacity-20 blur-lg"></div>
         <div className="flex flex-row gap-8 justify-center items-center h-full">
-          {/* Decorative Elements */}
-
-          {/* Public Forms Card */}
+          
+          
+        <div className="bg-blue-600 text-white rounded-[45px] shadow-lg p-2 w-[131px] h-[159px]">
+            <h3 className="text-md font-bold mb-4">فرم ساز</h3>
+            <p className="mb-6 text-xs">ساخت حرفه‌ای فرم با قابلیت درگ اند دراپ</p>
+            <Button className="w-full justify-center">
+              ورود به فرم ساز
+            </Button>
+          </div>
+          
           <div className="bg-white rounded-[45px] shadow-lg p-2 w-[131px] h-[159px]">
             <h3 className="text-md font-bold text-blue-600 mb-4">فرم‌های عمومی</h3>
             <p className="text-gray-600 mb-6 text-xs">مجموعه‌ای از فرم‌های منتشر شده عمومی در سامانه امرسالت</p>
