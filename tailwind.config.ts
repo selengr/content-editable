@@ -15,6 +15,9 @@ export default {
       fontFamily: {
         sans: ['var(--font-iransans)'],
       },
+      backgroundImage: {
+        'banner-d-bg1': "url('/images/home-page/banner-d-bg1.svg')",
+      },
     },
   },
   plugins: [],
