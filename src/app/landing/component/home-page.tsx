@@ -57,11 +57,9 @@ export default function HomePage() {
       </div>
 
       {/* Video Section */}
-      <div className="container mx-auto px-4 py-12 text-center bg-banner-bg2 bg-cover bg-center bg-no-repeat ">
-        <h3 className="text-2xl font-bold mb-8">به آموزش بیشتری نیاز دارید؟</h3>
-        <button className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto hover:bg-blue-700 transition-colors">
-          {/* <Play className="w-10 h-10 text-white" /> */}
-        </button>
+      <div className="container mx-auto px-4 py-12 text-center bg-banner-bg2 bg-cover bg-center bg-no-repeat h-[310px] max-h-[310px] max-w-96 relative">
+        <span className="text-2xl font-bold mb-8">به آموزش بیشتری نیاز دارید؟</span>
+        
       </div>
     </div>
     )

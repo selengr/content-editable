@@ -17,7 +17,7 @@ export default {
       },
       backgroundImage: {
         'banner-bg1': "url('/images/home-page/banner-bg1.svg')",
-        'banner-bg2': "url('/images/home-page/banner-bg2.svg')",
+        'banner-bg2': "url('/images/home-page/banner-bg2.png')",
       },
     },
   },
