@@ -28,7 +28,6 @@ export default function HomePage() {
         </p>
       </div>
 
-      {/* Features Section */}
       <div className="container mx-auto px-4 bg-banner-bg1 bg-cover bg-center bg-no-repeat -top-7 h-[310px] max-h-[310px] max-w-96 relative">
           <div className="absolute top-0 left-0 w-24 h-24 bg-blue-600 rounded-full opacity-20 blur-lg"></div>
           <div className="absolute bottom-0 right-0 w-16 h-16 bg-purple-600 rounded-full opacity-20 blur-lg"></div>
@@ -56,10 +55,11 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Video Section */}
-      <div className="container mx-auto px-4 py-12 text-center bg-banner-bg2 bg-cover bg-center bg-no-repeat h-[310px] max-h-[310px] max-w-96 relative">
-        <span className="text-2xl font-bold mb-8">به آموزش بیشتری نیاز دارید؟</span>
-        
+
+
+      <div className="container flex justify-center mx-auto px-4 py-12 text-center bg-banner-bg2 bg-cover bg-center bg-no-repeat -top-32 h-[380px] max-h-[380px] max-w-96 relative">
+        <span className="text-[14px] text-[#4A4A4A] absolute top-48">به آموزش بیشتری نیاز دارید؟</span>
+
       </div>
     </div>
     )
