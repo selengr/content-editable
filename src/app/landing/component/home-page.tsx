@@ -25,7 +25,7 @@ export default function HomePage() {
         <div className="h-[2px] w-10 md:w-9 rounded-full bg-[#2CDFC9] mx-auto my-3 md:mb-5 md:mx-2"></div>
         <h2 className="text-[22px] font-semibold text-[#FA4D56] mb-2">چه کاری انجام می‌دهیم!</h2>
        </div>
-        <p className="text-[14px] text-[#4A4A4A] mx-auto md:mx-0 leading-relaxed mb-4 px-[60px] md:px-0 max-w-72">
+        <p className="text-[14px] text-[#4A4A4A] mx-auto md:mx-0 leading-relaxed mb-4 px-[2dt0px] md:px-0 max-w-72">
           سایا سکویی برای ساخت، اجرا و تحلیل آزمون‌های روان‌شناختی است. این سکو با رابط کاربری ساده و یکپارچه، امکان ایجاد
           فرم‌های برخط و گزارش‌های شخصی‌سازی شده را فراهم می‌کند.
         </p>
