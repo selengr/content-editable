@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { Button } from "@mui/material";
+import Link from "next/link";
 
 export default function HomePage() {
 
@@ -28,27 +29,27 @@ export default function HomePage() {
       </div>
 
       {/* Features Section */}
-      <div className="container mx-auto px-4 bg-banner-d-bg1 bg-cover bg-center bg-no-repeat -top-7 h-[310px] max-h-[310px] max-w-96 z-50 relative">
+      <div className="container mx-auto px-4 bg-banner-bg1 bg-cover bg-center bg-no-repeat -top-7 h-[310px] max-h-[310px] max-w-96 relative">
           <div className="absolute top-0 left-0 w-24 h-24 bg-blue-600 rounded-full opacity-20 blur-lg"></div>
           <div className="absolute bottom-0 right-0 w-16 h-16 bg-purple-600 rounded-full opacity-20 blur-lg"></div>
           <div className="absolute top-1/2 right-1/4 w-12 h-12 bg-pink-500 rounded-full opacity-20 blur-lg"></div>
         <div className="flex flex-row gap-8 justify-center items-center h-full">
           
           
-        <div className="bg-blue-600 text-white rounded-[45px] shadow-lg p-2 w-[131px] h-[159px]">
+        <div className="bg-[linear-gradient(233.47deg,_#2CDFC9_-51.3%,_#1758BA_86.56%)] text-white rounded-[45px] shadow-lg pt-8 pr-4 w-[131px] h-[159px] relative">
             <h3 className="text-md font-bold mb-4">فرم ساز</h3>
             <p className="mb-6 text-xs">ساخت حرفه‌ای فرم با قابلیت درگ اند دراپ</p>
-            <Button className="w-full justify-center">
+            <Link href={"#"} className="w-full justify-center absolute bottom-5 right-9 text-[9px]">
               ورود به فرم ساز
-            </Button>
+            </Link>
           </div>
-          
-          <div className="bg-white rounded-[45px] shadow-lg p-2 w-[131px] h-[159px]">
-            <h3 className="text-md font-bold text-blue-600 mb-4">فرم‌های عمومی</h3>
-            <p className="text-gray-600 mb-6 text-xs">مجموعه‌ای از فرم‌های منتشر شده عمومی در سامانه امرسالت</p>
-            <Button className="w-full justify-center">
+
+          <div className="bg-white rounded-[45px] shadow-lg pt-8 w-[131px] h-[159px] relative">
+            <h3 className="text-md font-bold text-[#1758BA] pr-4 mb-2">فرم‌های عمومی</h3>
+            <p className="text-[#2A2A2A] mb-6 text-xs pr-3 pl-4">مجموعه‌ای از فرم‌های منتشر شده عمومی در سامانه امرسالت</p>
+            <Link href={"#"} className="w-full justify-center absolute bottom-5 right-14 text-[9px]">
               مشاهده
-            </Button>
+            </Link>
           </div>
 
           
@@ -56,7 +57,7 @@ export default function HomePage() {
       </div>
 
       {/* Video Section */}
-      <div className="container mx-auto px-4 py-12 text-center">
+      <div className="container mx-auto px-4 py-12 text-center bg-banner-bg2 bg-cover bg-center bg-no-repeat ">
         <h3 className="text-2xl font-bold mb-8">به آموزش بیشتری نیاز دارید؟</h3>
         <button className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto hover:bg-blue-700 transition-colors">
           {/* <Play className="w-10 h-10 text-white" /> */}
