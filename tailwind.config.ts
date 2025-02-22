@@ -16,7 +16,8 @@ export default {
         sans: ['var(--font-iransans)'],
       },
       backgroundImage: {
-        'banner-bg1': "url('/images/home-page/banner-bg1.svg')",
+        'banner-m-bg1': "url('/images/home-page/banner-m-bg1.svg')",
+        'banner-d-bg1': "url('/images/home-page/banner-d-bg1.svg')",
         'banner-bg2': "url('/images/home-page/banner-bg2.png')",
       },
     },
