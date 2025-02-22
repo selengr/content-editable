@@ -25,7 +25,25 @@ export default function HomePage() {
           </p>
         </section>
 
-        <section className="px-4 bg-banner-m-bg1 md:bg-banner-d-bg1 bg-cover bg-center bg-no-repeat -top-7 md:right-[10%] md:-top-20 h-[310px] max-h-[310px] md:h-[510px] md:max-h-[550px] max-w-96 md:max-w-[40%] md:w-[50%] relative">
+        {/* <section className="px-4 bg-banner-m-bg1 md:bg-banner-d-bg1 bg-cover bg-center bg-no-repeat -top-7 md:right-[10%] md:-top-20 h-[310px] max-h-[310px] md:h-[510px] md:max-h-[550px] max-w-96 md:max-w-[40%] md:w-[50%] relative">
+          <div
+            className="absolute top-0 left-0 w-24 h-24 bg-blue-600 rounded-full opacity-20 blur-lg"
+            aria-hidden="true"
+          ></div>
+          <div
+            className="absolute bottom-0 right-0 w-16 h-16 bg-purple-600 rounded-full opacity-20 blur-lg"
+            aria-hidden="true"
+          ></div>
+          <div
+            className="absolute top-1/2 right-1/4 w-12 h-12 bg-pink-500 rounded-full opacity-20 blur-lg"
+            aria-hidden="true"
+          ></div>
+          <div className="flex flex-row gap-8 justify-center items-center h-full">
+            <FormBuilderCard />
+            <PublicFormsCard />
+          </div>
+        </section> */}
+        <section className="px-4 bg-[#FAFAFA] rounded-[60px] relative">
           <div
             className="absolute top-0 left-0 w-24 h-24 bg-blue-600 rounded-full opacity-20 blur-lg"
             aria-hidden="true"
