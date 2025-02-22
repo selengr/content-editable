@@ -19,6 +19,7 @@ export default {
         'banner-m-bg1': "url('/images/home-page/banner-m-bg1.svg')",
         'banner-d-bg1': "url('/images/home-page/banner-d-bg1.svg')",
         'banner-bg2': "url('/images/home-page/banner-bg2.png')",
+        'circle-bg': "url('/images/home-page/circle-bg.svg')",
       },
     },
   },

@@ -43,7 +43,7 @@ export default function HomePage() {
             <PublicFormsCard />
           </div>
         </section> */}
-        <section className="px-4 bg-[#FAFAFA] rounded-[60px] relative ">
+        <section className="px-4  relative w-[50%] h-full min-h-[300px]">
           <div
             className="absolute top-0 left-0 w-24 h-24 bg-blue-600 rounded-full opacity-20 blur-lg"
             aria-hidden="true"
@@ -56,7 +56,10 @@ export default function HomePage() {
             className="absolute top-1/2 right-1/4 w-12 h-12 bg-pink-500 rounded-full opacity-20 blur-lg"
             aria-hidden="true"
           ></div>
-          <div className="flex flex-row gap-8 justify-center items-center h-full p-6">
+
+          <div className="px-4 bg-circle-bg md:bg-circle-bg bg-cover bg-center bg-no-repeat h-full absolute -top-10 -left-8 w-[45%] z-50"></div>
+
+          <div className="flex flex-row gap-12 justify-center items-center h-full p-6 bg-[#FAFAFA] rounded-[60px]">
             <FormBuilderCard />
             <PublicFormsCard />
           </div>
@@ -73,7 +76,7 @@ export default function HomePage() {
 
 function FormBuilderCard() {
   return (
-    <div className="bg-[linear-gradient(233.47deg,_#2CDFC9_-51.3%,_#1758BA_86.56%)] text-white rounded-[45px] shadow-lg pt-8 pr-4 w-[100%] max-w-[180px] min-h-[170px] relative">
+    <div className="bg-[linear-gradient(233.47deg,_#2CDFC9_-51.3%,_#1758BA_86.56%)] text-white rounded-[45px] shadow-lg pt-8 pr-4 w-[100%] max-w-[160px] min-h-[190px] relative">
       <h3 className="text-md font-bold mb-4">فرم ساز</h3>
       <p className="mb-6 text-xs">ساخت حرفه‌ای فرم با قابلیت درگ اند دراپ</p>
       <Button className="w-full justify-center absolute bottom-5 right-9 text-[9px] text-white">
@@ -85,7 +88,7 @@ function FormBuilderCard() {
 
 function PublicFormsCard() {
   return (
-    <div className="bg-white rounded-[45px] shadow-lg pt-8 w-[100%] max-w-[200px] min-h-[170px] w-[100%] max-w-[180px] relative">
+    <div className="bg-white rounded-[45px] shadow-lg pt-8  min-h-[190px] w-[100%] max-w-[160px] relative">
       <h3 className="text-md font-bold text-[#1758BA] pr-4 mb-2">فرم‌های عمومی</h3>
       <p className="text-[#2A2A2A] mb-6 text-xs pr-3 pl-4">مجموعه‌ای از فرم‌های منتشر شده عمومی در سامانه امرسالت</p>
       <Button
