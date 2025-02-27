@@ -8,6 +8,7 @@ export default function HomePage() {
       className="min-h-screen bg-white text-right md:pt-20 md:pr-6 md:pl-12"
       dir="rtl"
     >
+      
       <header className="mx-auto px-4 pt-6 flex justify-center md:hidden">
         <Image
           src="/logo/logo.svg"

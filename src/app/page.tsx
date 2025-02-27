@@ -4,10 +4,6 @@ import dynamic from 'next/dynamic'
 
 const Page = () => {
 
-  // const AdvancedFormulaEditor = dynamic(() => import('@/components/AdvancedFormulaEditor'), {
-  //   ssr: false
-  // })
-
   return (
     <div>
       <AdvancedFormulaEditor />
