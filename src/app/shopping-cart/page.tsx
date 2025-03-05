@@ -1,13 +1,246 @@
+"use client"
+
+import { useState } from "react"
+// import Image from "next/image"
+// import { Button } from "@/components/ui/button"
+// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+// import { Separator } from "@/components/ui/separator"
+// import { ScrollArea } from "@/components/ui/scroll-area"
+// import { CartItem, InvoiceItem } from "./components/cart-item"
+// import { InvoiceItem } from "./components/invoice-item"
+// import { cn } from "@/lib/utils"
+
+// // Sample data structure
+// interface CartItemType {
+//   id: string
+//   title: string
+//   quantity: number
+//   price: number
+//   type: string
+// }
+
+// export default function PaymentPage() {
+//   const [cartItems, setCartItems] = useState<CartItemType[]>([
+//     // For testing, uncomment this sample data
+//     /*
+//     {
+//       id: "1",
+//       title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
+//       quantity: 300,
+//       price: 700000,
+//       type: "ظرفیت"
+//     }
+//     */
+//   ])
+
+//   const handleRemoveItem = (id: string) => {
+//     setCartItems(cartItems.filter((item) => item.id !== id))
+//   }
+
+//   // Calculate totals
+//   const subtotal = cartItems.reduce((sum, item) => sum + item.price, 0)
+//   const tax = Math.round(subtotal * 0.1) // 10% tax
+//   const total = subtotal + tax
+
+//   // Format currency
+//   const formatCurrency = (amount: number) => {
+//     return new Intl.NumberFormat("fa-IR").format(amount / 1000) + " هزار تومان"
+//   }
+
+//   return (
+//     <div dir="rtl" className="container mx-auto py-4 md:py-8 px-4 min-h-screen">
+//       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 h-full">
+//         {/* Shopping Cart Section */}
+//         <Card className="lg:col-span-8 h-full">
+//           <CardHeader className="bg-[#F7F7FF] rounded-t-lg p-3">
+//             <CardTitle className="text-center text-base font-bold text-[#161616]">سبد خرید</CardTitle>
+//           </CardHeader>
+//           <CardContent className="p-4 h-[calc(100%-60px)]">
+//             {cartItems.length > 0 ? (
+//               <ScrollArea className="h-[calc(100vh-200px)]">
+//                 <div className="space-y-3 px-2 md:px-8">
+//                   {cartItems.map((item) => (
+//                     <CartItem key={item.id} item={item} onRemove={() => handleRemoveItem(item.id)} />
+//                   ))}
+//                 </div>
+//               </ScrollArea>
+//             ) : (
+//               <div className="w-full h-[calc(100vh-200px)] flex flex-col items-center justify-center">
+//                 <div className="relative w-full h-64 mb-4">
+//                   <Image
+//                     src="/images/home-page/empty-shopping-cart.svg"
+//                     alt="سبد خرید خالی"
+//                     fill
+//                     className="object-contain"
+//                   />
+//                 </div>
+//                 <p className="text-[#404040] font-bold text-base mt-4">در حال حاضر سبد خرید شما خالی است</p>
+//               </div>
+//             )}
+//           </CardContent>
+//         </Card>
+
+//         {/* Invoice Section */}
+//         <Card className="lg:col-span-4 h-full flex flex-col">
+//           <CardHeader className="bg-[#F7F7FF] rounded-t-lg p-3">
+//             <CardTitle className="text-center text-base font-bold text-[#161616]">صورتحساب</CardTitle>
+//           </CardHeader>
+//           <CardContent className="p-4 flex flex-col flex-grow">
+//             <ScrollArea className="flex-grow mb-4">
+//               <div className="space-y-2">
+//                 {cartItems.map((item, index) => (
+//                   <InvoiceItem key={item.id} index={index + 1} item={item} />
+//                 ))}
+//               </div>
+//             </ScrollArea>
+
+//             <Card className="bg-[#F7F7FF] p-4 mt-auto">
+//               <div className="space-y-2">
+//                 <div className="flex justify-between">
+//                   <span className="text-sm text-[#393939]">مجموع:</span>
+//                   <span className="font-bold text-[#393939]">{formatCurrency(subtotal)}</span>
+//                 </div>
+//                 <div className="flex justify-between">
+//                   <span className="text-sm text-[#393939]">مالیات:</span>
+//                   <span className="font-bold text-[#393939]">{formatCurrency(tax)}</span>
+//                 </div>
+//                 <Separator className="my-2" />
+//                 <div className="flex justify-between">
+//                   <span className="text-sm text-[#393939]">قابل پرداخت:</span>
+//                   <span className="font-bold text-[#393939]">{formatCurrency(total)}</span>
+//                 </div>
+//               </div>
+//             </Card>
+
+//             <Button
+//               className={cn(
+//                 "mt-4 h-13 bg-[#1758BA] hover:bg-[#1246A1] text-white rounded-lg",
+//                 "transition-colors duration-200",
+//               )}
+//               disabled={cartItems.length === 0}
+//             >
+//               پرداخت صورت حساب
+//             </Button>
+//           </CardContent>
+//         </Card>
+//       </div>
+//     </div>
+//   )
+// }
+
+
+
+interface CartItemType {
+  id: string
+  title: string
+  quantity: number
+  price: number
+  type: string
+}
+
+
+
 import Image from "next/image";
 // mui
 import { LoadingButton } from "@mui/lab";
 import { IconButton } from "@mui/material";
 // public
 import TrashIcon from "@/../public/images/home-page/trash.svg";
+import { InvoiceItem } from "./components/cart-item"
+import { CartItem } from "./components/invoice-item"
 
 export default function PaymentPage() {
+  const [cartItems, setCartItems] = useState<CartItemType[]>([
+
+    {
+      id: "1",
+      title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
+      quantity: 370,
+      price: 751000,
+      type: "ظرفیت"
+    },
+    {
+      id: "2",
+      title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
+      quantity: 3,
+      price: 456000,
+      type: "ظرفیت"
+    },
+    {
+      id: "2",
+      title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
+      quantity: 31,
+      price: 654000,
+      type: "ظرفیت"
+    },
+    {
+      id: "3",
+      title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
+      quantity: 40,
+      price: 655000,
+      type: "ظرفیت"
+    },
+    {
+      id: "4",
+      title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
+      quantity: 10,
+      price: 732000,
+      type: "ظرفیت"
+    },
+    {
+      id: "5",
+      title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
+      quantity: 35,
+      price: 755000,
+      type: "ظرفیت"
+    },
+    {
+      id: "6",
+      title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
+      quantity: 38,
+      price: 800000,
+      type: "ظرفیت"
+    },
+    {
+      id: "7",
+      title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
+      quantity: 39,
+      price: 700000,
+      type: "ظرفیت"
+    },
+    {
+      id: "8",
+      title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
+      quantity: 11,
+      price: 790000,
+      type: "ظرفیت"
+    },
+    {
+      id: "9",
+      title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
+      quantity: 30,
+      price: 700000,
+      type: "ظرفیت"
+    },
+  ])
   // let test = [1, 2, 3, 4, 5,6,7,8,9,8,6,4,3]
   let test = [];
+
+  const handleRemoveItem = (id: string) => {
+    setCartItems(cartItems.filter((item) => item.id !== id))
+  }
+
+  const subtotal = cartItems.reduce((sum, item) => sum + item.price, 0)
+  const tax = Math.round(subtotal * 0.1) // 10% tax
+  const total = subtotal + tax
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat("fa-IR").format(amount / 1000) + " هزار تومان"
+  }
+
+
+
+
   return (
     <div
       dir="rtl"
@@ -20,40 +253,14 @@ export default function PaymentPage() {
         </div>
         <div className="w-full h-[90%] justify-center items-center overflow-y-auto">
           <div className="px-16 h-full">
-            {test.length > 0 &&
-              test.map(() => (
-                <div className="rounded-[20px] border-[1px] border-[#DDE1E6] h-[84px] flex justify-between p-4 m-3">
-                  <div className="flex flex-col">
-                    <span className="text-[13px] text-[#393939]">بابت: </span>
-                    <div className="flex">
-                      <h6 className="text-[#393939] font-bold">
-                        انتشار عمومی - فرم نظرسنجی دانشگاه{" "}
-                      </h6>
-                    </div>
-                    <span className="text-[13px] text-[#393939]">
-                      تعداد: <span className="font-bold">۳۰۰ عدد</span>
-                    </span>
-                  </div>
-
-                  <IconButton
-                    // onClick={() =>
-                    //    handleRemoveShop(index)
-                    // }
-                    sx={{
-                      width: "52px",
-                      height: "52px",
-                    }}
-                  >
-                    <Image
-                      src={TrashIcon}
-                      alt="delete"
-                      width={24}
-                      height={24}
-                    />
-                  </IconButton>
-                </div>
-              ))}
-            {test.length === 0 && (
+            {cartItems.length > 0 &&
+                <div className="space-y-3 px-2 md:px-8">
+                {cartItems.map((item) => (
+                  <CartItem key={item.id} item={item} onRemove={() => handleRemoveItem(item.id)} />
+                ))}
+              </div>
+              }
+            {cartItems.length === 0 && (
               <div className="w-full h-[80%] justify-center items-center flex flex-col">
                 <Image
                   src="/images/home-page/empty-shopping-cart.svg"
@@ -75,20 +282,12 @@ export default function PaymentPage() {
         <div className="bg-[#F7F7FF] rounded-lg w-full min-h-[52px] text-center mb-3 flex justify-center items-center ">
           <h3 className="text-[#161616] font-bold text-base">صورتحساب</h3>
         </div>
-        <div className="mb-10 overflow-y-auto">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5].map(() => (
-            <div className="bg-[#F7F7FF] rounded-[20px] w-ful text-center] my-[7px] mx-1 flex justify-center items-center flex-col p-4">
-              <span className="text-[13px] text-[#393939] w-full">
-                ردیف ۱:{" "}
-                <span className="font-bold">
-                  ۳۰۰ عدد ظرفیت بابت انتشار عمومی - فرم نظرسنجی دانشگاه
-                </span>
-              </span>
-              <span className="font-bold text-[#393939] w-full text-end">
-                ۷۰۰ هزار تومان
-              </span>
-            </div>
-          ))}
+        <div className="mb-10 overflow-y-auto flex-grow">
+        <div className="space-y-2">
+                {cartItems.map((item, index) => (
+                  <InvoiceItem key={item.id} index={index + 1} item={item} />
+                ))}
+              </div>
         </div>
         <div>
           <div className="bg-[#F7F7FF] rounded-[20px] w-ful text-center] my-[6px] mx-1 flex justify-center items-center flex-col p-4">
@@ -96,19 +295,19 @@ export default function PaymentPage() {
               <span className="text-[13px] text-[#393939] font-[500px]">
                 مجموع:
               </span>
-              <span className="font-bold text-[#393939]">۷۰۰ هزار تومان</span>
+              <span className="font-bold text-[#393939]">{formatCurrency(subtotal)}</span>
             </div>
             <div className="flex justify-between w-full">
               <span className="text-[13px] text-[#393939] font-[500px]">
                 مالیات:
               </span>
-              <span className="font-bold text-[#393939]">۷۰ هزار تومان</span>
+              <span className="font-bold text-[#393939]">{formatCurrency(tax)}</span>
             </div>
             <div className="flex justify-between w-full">
               <span className="text-[13px] text-[#393939] font-[500px]">
                 قابل پرداخت:
               </span>
-              <span className="font-bold text-[#393939]">٧۷ هزار تومان</span>
+              <span className="font-bold text-[#393939]">{formatCurrency(total)}</span>
             </div>
           </div>
           <LoadingButton
