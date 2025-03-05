@@ -153,85 +153,83 @@ export default function PaymentPage() {
   const [cartItems, setCartItems] = useState<CartItemType[]>([
 
     {
-      id: "1",
+      id: "345",
       title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
       quantity: 370,
       price: 751000,
       type: "ظرفیت"
     },
     {
-      id: "2",
+      id: "11",
       title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
       quantity: 3,
       price: 456000,
       type: "ظرفیت"
     },
     {
-      id: "2",
+      id: "22",
       title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
       quantity: 31,
       price: 654000,
       type: "ظرفیت"
     },
     {
-      id: "3",
+      id: "33",
       title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
       quantity: 40,
       price: 655000,
       type: "ظرفیت"
     },
     {
-      id: "4",
+      id: "44",
       title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
       quantity: 10,
       price: 732000,
       type: "ظرفیت"
     },
     {
-      id: "5",
+      id: "55",
       title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
       quantity: 35,
       price: 755000,
       type: "ظرفیت"
     },
     {
-      id: "6",
+      id: "66",
       title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
       quantity: 38,
       price: 800000,
       type: "ظرفیت"
     },
     {
-      id: "7",
+      id: "77",
       title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
       quantity: 39,
       price: 700000,
       type: "ظرفیت"
     },
     {
-      id: "8",
+      id: "88",
       title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
       quantity: 11,
       price: 790000,
       type: "ظرفیت"
     },
     {
-      id: "9",
+      id: "99",
       title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
       quantity: 30,
       price: 700000,
       type: "ظرفیت"
     },
   ])
-  // let test = [1, 2, 3, 4, 5,6,7,8,9,8,6,4,3]
-  let test = [];
 
   const handleRemoveItem = (id: string) => {
     setCartItems(cartItems.filter((item) => item.id !== id))
   }
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price, 0)
-  const tax = Math.round(subtotal * 0.1) // 10% tax
+  const tax = Math.round(subtotal * 0.1) 
   const total = subtotal + tax
 
   const formatCurrency = (amount: number) => {
