@@ -8,6 +8,8 @@ interface InvoiceItemProps {
   };
 }
 
+//invoice item
+
 export function InvoiceItem({ index, item }: InvoiceItemProps) {
   return (
     <div className="bg-[#F7F7FF] rounded-2xl p-3">
