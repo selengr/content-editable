@@ -174,7 +174,7 @@ const AdvancedFormulaEditor: React.FC = () => {
     };
 
     const newElements = [...elements];
-    newElements.splice(cursorIndex, 0, newElement);
+    newElements.splice(cursorIndex, 1, newElement);
 
     setElements(newElements);
 
@@ -380,7 +380,7 @@ const AdvancedFormulaEditor: React.FC = () => {
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     // if (!/^[0-9+\-*/().()]$/.test(event.key) &&
-    //   !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(event.key)) {
+      // !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(event.key)) {
     //   event.preventDefault();
     // }
     if (event.key === "Enter") {
