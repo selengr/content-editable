@@ -8,7 +8,6 @@ import JSONData from '../../public/assets/fake-data/response_v1.json'
 import { Element, FnFxItem } from '../types/formulaEditor';
 import { htmlToFormula } from '../utils/htmlToFormula';
 import Keypad from './Keypad';
-import { parseFormula } from "@/utils/formulaParser";
 
 const AdvancedFormulaEditor: React.FC = () => {
   const [cursorIndex, setCursorIndex] = useState(0);
