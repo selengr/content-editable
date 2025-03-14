@@ -10,6 +10,27 @@ interface CartItemType {
   type: string
 }
 
+interface IPurchaseOrder {
+  purchaseOrderId: number;
+  totalAmount: number;
+  tax: number;
+  payAble: number | null; 
+  purchaseOrderDetailModels: IPurchaseOrderDetail[];
+}
+
+interface IPurchaseOrderProduct {
+  title: string;
+}
+
+interface IPurchaseOrderDetail {
+  description: string | null; 
+  purchaseOrderProductModels: IPurchaseOrderProduct[];
+}
+
+
+
+
+
 
 import Image from "next/image";
 import { LoadingButton } from "@mui/lab";
@@ -20,75 +41,30 @@ export default function PaymentPage() {
   const [cartItems, setCartItems] = useState<CartItemType[]>([
 
     {
-      id: "345",
-      title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
-      quantity: 370,
-      price: 751000,
-      type: "ظرفیت"
-    },
-    {
-      id: "11",
-      title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
-      quantity: 3,
-      price: 456000,
-      type: "ظرفیت"
-    },
-    {
-      id: "22",
-      title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
-      quantity: 31,
-      price: 654000,
-      type: "ظرفیت"
-    },
-    {
-      id: "33",
-      title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
-      quantity: 40,
-      price: 655000,
-      type: "ظرفیت"
-    },
-    {
-      id: "44",
-      title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
-      quantity: 10,
-      price: 732000,
-      type: "ظرفیت"
-    },
-    {
-      id: "55",
-      title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
-      quantity: 35,
-      price: 755000,
-      type: "ظرفیت"
-    },
-    {
-      id: "66",
-      title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
-      quantity: 38,
-      price: 800000,
-      type: "ظرفیت"
-    },
-    {
-      id: "77",
-      title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
-      quantity: 39,
-      price: 700000,
-      type: "ظرفیت"
-    },
-    {
-      id: "88",
-      title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
-      quantity: 11,
-      price: 790000,
-      type: "ظرفیت"
-    },
-    {
-      id: "99",
-      title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
-      quantity: 30,
-      price: 700000,
-      type: "ظرفیت"
-    },
+      purchaseOrderId: 1,
+      totalAmount: 200000000,
+      tax: 200000000,
+      payAble: null,
+      purchaseOrderDetailModels: [
+          {
+              description: null,
+              purchaseOrderProductModels: [
+                  {
+                      title: "kk"
+                  }
+              ]
+          }
+      ]
+  },
+
+
+    // {
+    //   id: "99",
+    //   title: "انتشار عمومی - فرم نظرسنجی دانشگاه",
+    //   quantity: 30,
+    //   price: 700000,
+    //   type: "ظرفیت"
+    // },
   ])
 
   const handleRemoveItem = (id: string) => {
