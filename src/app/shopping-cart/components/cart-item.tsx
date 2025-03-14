@@ -1,16 +1,31 @@
+// interface InvoiceItemProps {
+//   index: number;
+//   item: {
+//     title: string;
+//     quantity: number;
+//     price: number;
+//     type?: string;
+//   };
+// }
+
+interface IPurchaseOrderProduct {
+  title: string
+}
+
+interface IPurchaseOrderDetail {
+  description: string | null
+  purchaseOrderProductModels: IPurchaseOrderProduct[]
+}
+
 interface InvoiceItemProps {
-  index: number;
-  item: {
-    title: string;
-    quantity: number;
-    price: number;
-    type?: string;
-  };
+  detail: IPurchaseOrderDetail
+  index: number
 }
 
 //invoice item
 
 export function InvoiceItem({ index, item }: InvoiceItemProps) {
+  
   return (
     <div className="bg-[#F7F7FF] rounded-2xl p-3">
       <span className="text-xs text-[#393939] block">
