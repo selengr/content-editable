@@ -3,23 +3,15 @@
 import type React from "react";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
-import { Plus, Send, X } from "lucide-react";
+
 import { createPortal } from "react-dom";
+import JSONData from '../../../public/assets/fake-data/response_v1.json'
+import styles from '@/sections/calculator/advancedFormulaEditor.module.css'
 
 interface DropdownItem {
   id: string;
   value: string;
-  options: string[];
+//   options: string[];
   placeholder: string;
 }
 
@@ -28,6 +20,7 @@ export default function AdvancedTextareaEditor() {
   const [dropdownCounter, setDropdownCounter] = useState(0);
   const editorRef = useRef<HTMLDivElement>(null);
   const [editorContent, setEditorContent] = useState("");
+  const [textContent, setTextContent] = useState("")
 
   // Add dropdown at current cursor position
   const addDropdown = useCallback(() => {
@@ -37,19 +30,11 @@ export default function AdvancedTextareaEditor() {
     const newDropdown: DropdownItem = {
       id: `dropdown-${dropdownCounter}`,
       value: "",
-      options: [
-        "Option 1",
-        "Option 2",
-        "Option 3",
-        "Custom Option A",
-        "Custom Option B",
-      ],
-      placeholder: "Select option",
+      placeholder: "انتخاب كنيد",
     };
 
     setDropdowns((prev) => [...prev, newDropdown]);
 
-    // Create dropdown container
     const dropdownContainer = document.createElement("span");
     dropdownContainer.className = "dropdown-container";
     dropdownContainer.setAttribute("data-dropdown-id", newDropdown.id);
@@ -83,9 +68,20 @@ export default function AdvancedTextareaEditor() {
           dropdown.id === dropdownId ? { ...dropdown, value } : dropdown
         )
       );
+      
+      const optionsContainer = document.querySelector(`[data-id="${dropdownId}"] .${styles.optionsContainer}`) as HTMLElement;
+    if (optionsContainer) {
+      optionsContainer.style.display = 'none';
+    }
+
+    const dropdownButton = document.querySelector(`[data-id="${dropdownId}"] .${styles.customDropdown}`) as HTMLElement;
+    if (dropdownButton) {
+      dropdownButton.setAttribute('data-type', 'down');
+    }
     },
     []
   );
+
 
   // Remove dropdown
   const removeDropdown = useCallback((dropdownId: string) => {
@@ -166,11 +162,21 @@ export default function AdvancedTextareaEditor() {
   // Handle input changes
   const handleInput = useCallback(() => {
     if (editorRef.current) {
-      setEditorContent(editorRef.current.textContent || "");
+      setEditorContent(editorRef.current.textContent || "")
     }
-  }, []);
+  }, [])
 
-  // Render dropdowns inside the editor
+  const handleDropdownClick = (e: React.MouseEvent, id: string) => {
+    e.stopPropagation();
+    const optionsContainer = (e.target as HTMLElement).nextElementSibling as HTMLElement;
+    const isHidden = optionsContainer.style.display === 'none';
+    optionsContainer.style.display = isHidden ? 'block' : 'none';
+    (e.target as HTMLElement).setAttribute('data-type', isHidden ? 'up' : 'down');
+  };
+
+  
+
+  //new
   const renderDropdowns = useCallback(() => {
     if (!editorRef.current) return null;
 
@@ -180,82 +186,87 @@ export default function AdvancedTextareaEditor() {
       );
       if (!container) return null;
 
+
       return createPortal(
-        <div className="inline-flex items-center gap-1 bg-white border border-gray-300 rounded-md p-1 shadow-sm">
-          <Select
-            value={dropdown.value}
-            onValueChange={(value) => updateDropdownValue(dropdown.id, value)}
-          >
-            <SelectTrigger className="w-auto min-w-[120px] h-7 border-none bg-transparent shadow-none p-1 text-sm">
-              <SelectValue placeholder={dropdown.placeholder} />
-            </SelectTrigger>
-            <SelectContent>
-              {dropdown.options.map((option) => (
-                <SelectItem key={option} value={option}>
-                  {option}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            className="h-5 w-5 p-0 hover:bg-red-100"
-            onClick={() => removeDropdown(dropdown.id)}
-          >
-            <X className="h-3 w-3 text-red-500" />
-          </Button>
-        </div>,
+        <div className="flex justify-center items-center gap-1 bg-white rounded-md p-1 shadow-sm">
+        <div
+        key={dropdown.id}
+        data-id={dropdown.id}
+        contentEditable={false}
+        className={`${styles.dynamicbtn} ${styles.NEW_FIELD}`}
+        data-type="NEW_FIELD"
+      >
+        <div
+          className={styles.customDropdown}
+          data-type="down"
+          onClick={(e) => handleDropdownClick(e, dropdown.id!)}
+        >
+          {dropdown.value.length > 0 ?dropdown.value: dropdown.placeholder}
+        </div>
+        <div className={styles.optionsContainer} style={{ display: 'none' }}>
+          {JSONData.dataList.map((item: any) => (
+            <div
+              key={item.extMap.UNIC_NAME}
+              className={styles.option}
+            //   onClick={() => handleOptionClick(item, dropdown.id!)}
+              onClick={(e) => updateDropdownValue(dropdown.id, item.caption)}
+            >
+              {item.caption}
+            </div>
+          ))}
+        </div>
+      </div>
+      </div>,
         container
       );
+
+      
     });
   }, [dropdowns, updateDropdownValue, removeDropdown]);
 
   // Generate final form data
   const generateFormData = useCallback(() => {
-    if (!editorRef.current) return { content: "", dropdowns: [] };
+    if (!editorRef.current) return { content: "", dropdowns: [] }
 
-    let finalText = "";
-    const dropdownData: Array<{ id: string; value: string; position: number }> =
-      [];
+    let finalText = ""
+    const dropdownData: Array<{ id: string; value: string; position: number }> = []
 
-    const walker = document.createTreeWalker(
-      editorRef.current,
-      NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT,
-      {
-        acceptNode: (node) => {
-          if (node.nodeType === Node.TEXT_NODE) {
-            return NodeFilter.FILTER_ACCEPT;
+    const walker = document.createTreeWalker(editorRef.current, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT, {
+      acceptNode: (node) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          // Skip text inside dropdown containers
+          let parent = node.parentNode
+          while (parent && parent !== editorRef.current) {
+            if ((parent as Element).classList?.contains("dropdown-container")) {
+              return NodeFilter.FILTER_REJECT
+            }
+            parent = parent.parentNode
           }
-          if (
-            node.nodeType === Node.ELEMENT_NODE &&
-            (node as Element).classList.contains("dropdown-container")
-          ) {
-            return NodeFilter.FILTER_ACCEPT;
-          }
-          return NodeFilter.FILTER_SKIP;
-        },
-      }
-    );
+          return NodeFilter.FILTER_ACCEPT
+        }
+        if (node.nodeType === Node.ELEMENT_NODE && (node as Element).classList.contains("dropdown-container")) {
+          return NodeFilter.FILTER_ACCEPT
+        }
+        return NodeFilter.FILTER_SKIP
+      },
+    })
 
-    let node;
+    let node
     while ((node = walker.nextNode())) {
       if (node.nodeType === Node.TEXT_NODE && node.textContent) {
-        finalText += node.textContent;
+        finalText += node.textContent
       } else if (node.nodeType === Node.ELEMENT_NODE) {
-        const element = node as Element;
-        const dropdownId = element.getAttribute("data-dropdown-id");
+        const element = node as Element
+        const dropdownId = element.getAttribute("data-dropdown-id")
         if (dropdownId) {
-          const dropdown = dropdowns.find((d) => d.id === dropdownId);
-          const value =
-            dropdown?.value || `[${dropdown?.placeholder || "Unselected"}]`;
+          const dropdown = dropdowns.find((d) => d.id === dropdownId)
+          const selectedValue = dropdown?.value || `[${dropdown?.placeholder || "Unselected"}]`
           dropdownData.push({
             id: dropdownId,
             value: dropdown?.value || "",
             position: finalText.length,
-          });
-          finalText += value;
+          })
+          finalText += selectedValue
         }
       }
     }
@@ -263,54 +274,32 @@ export default function AdvancedTextareaEditor() {
     return {
       content: finalText,
       dropdowns: dropdownData,
-    };
-  }, [dropdowns]);
+    }
+  }, [dropdowns])
 
   // Handle form submission
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
-      e.preventDefault();
-      const formData = generateFormData();
-      console.log("Form Data:", formData);
-      alert(
-        `Form submitted!\n\nFinal Content: ${
-          formData.content
-        }\n\nDropdowns: ${JSON.stringify(formData.dropdowns, null, 2)}`
-      );
+      e.preventDefault()
+      const formData = generateFormData()
+      console.log("Form Data:", formData)
+    //   alert(
+    //     `Form submitted!\n\nFinal Content: ${formData.content}\n\nDropdowns: ${JSON.stringify(formData.dropdowns, null, 2)}`,
+    //   )
     },
-    [generateFormData]
-  );
+    [generateFormData],
+  )
 
-  // Add placeholder styling
-  useEffect(() => {
-    if (editorRef.current) {
-      const editor = editorRef.current;
-      const updatePlaceholder = () => {
-        const hasText = editor.textContent?.trim() !== "";
-        const hasDropdowns =
-          editor.querySelectorAll(".dropdown-container").length > 0;
 
-        if (!hasText && !hasDropdowns) {
-          editor.setAttribute("data-empty", "true");
-        } else {
-          editor.removeAttribute("data-empty");
-        }
-      };
-
-      updatePlaceholder();
-      editor.addEventListener("input", updatePlaceholder);
-
-      return () => editor.removeEventListener("input", updatePlaceholder);
-    }
-  }, [dropdowns]);
 
   return (
     <div className="w-full max-w-4xl mx-auto p-6">
-      <>
-        <div className="flex flex-row-reverse">
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="flex flex-row-reverse pt-32">
           <div className="flex flex-col justify-center items-center">
             <span className="text-[#393939] text-sm">:نمایش بده</span>
-            <button className="w-20 h-8 text-[#1758BA] bg-[#E8EEF8] rounded-md font-medium text-xs m-2">
+            <button type="button" onClick={addDropdown} className="w-20 h-8 text-[#1758BA] bg-[#E8EEF8] rounded-md font-medium text-xs m-2">
               افزودن متغییر
             </button>
           </div>
@@ -328,121 +317,15 @@ export default function AdvancedTextareaEditor() {
               fontSize: "14px",
             }}
           />
+          {renderDropdowns()}
         </div>
-      </>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Advanced Inline Content Editor</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Inline Editor */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label>Content Editor</Label>
-                <Button
-                  type="button"
-                  onClick={addDropdown}
-                  size="sm"
-                  variant="outline"
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Dropdown
-                </Button>
-              </div>
-
-              <Card className="p-4 min-h-[300px] bg-white border-2 border-dashed border-gray-200 hover:border-gray-300 transition-colors">
-                <div
-                  ref={editorRef}
-                  contentEditable
-                  suppressContentEditableWarning
-                  onInput={handleInput}
-                  onKeyDown={handleKeyDown}
-                  className="min-h-[250px] focus:outline-none leading-relaxed text-gray-900 relative"
-                  style={{
-                    lineHeight: "2.5",
-                    fontSize: "14px",
-                  }}
-                />
-                {renderDropdowns()}
-
-                <style jsx>{`
-                  [contenteditable][data-empty="true"]:before {
-                    content: "Start typing your content here...";
-                    color: #9ca3af;
-                    pointer-events: none;
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                  }
-                `}</style>
-              </Card>
-
-              <p className="text-sm text-muted-foreground">
-                Use{" "}
-                <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs">
-                  Backspace
-                </kbd>{" "}
-                or{" "}
-                <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs">
-                  Delete
-                </kbd>{" "}
-                to remove text or dropdowns. Dropdowns are now fully interactive
-                within the text!
-              </p>
-            </div>
-
-            {/* Live Preview */}
-            <div className="space-y-2">
-              <Label>Live Preview</Label>
-              <Card className="p-4 bg-gray-50">
-                <div className="text-sm leading-relaxed">
+        <div className="text-sm leading-relaxed">
                   {generateFormData().content}
                 </div>
-              </Card>
-            </div>
+        </form>
 
-            {/* Statistics */}
-            <div className="grid grid-cols-3 gap-4 text-center">
-              <Card className="p-3">
-                <div className="text-2xl font-bold text-blue-600">
-                  {dropdowns.length}
-                </div>
-                <div className="text-sm text-muted-foreground">Dropdowns</div>
-              </Card>
-              <Card className="p-3">
-                <div className="text-2xl font-bold text-green-600">
-                  {generateFormData().content.length}
-                </div>
-                <div className="text-sm text-muted-foreground">Characters</div>
-              </Card>
-              <Card className="p-3">
-                <div className="text-2xl font-bold text-purple-600">
-                  {dropdowns.filter((d) => d.value).length}
-                </div>
-                <div className="text-sm text-muted-foreground">Selected</div>
-              </Card>
-            </div>
 
-            {/* Submit Button */}
-            <Button type="submit" className="w-full" size="lg">
-              <Send className="h-4 w-4 mr-2" />
-              Submit Form
-            </Button>
-          </form>
 
-          {/* Final Output Data */}
-          <details className="text-sm">
-            <summary className="cursor-pointer font-medium mb-2">
-              Final Output Data
-            </summary>
-            <pre className="bg-gray-100 p-3 rounded text-xs overflow-auto max-h-60">
-              {JSON.stringify(generateFormData(), null, 2)}
-            </pre>
-          </details>
-        </CardContent>
-      </Card>
     </div>
   );
 }
