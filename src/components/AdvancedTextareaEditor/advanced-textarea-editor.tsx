@@ -11,7 +11,6 @@ import styles from '@/sections/calculator/advancedFormulaEditor.module.css'
 interface DropdownItem {
   id: string;
   value: string;
-//   options: string[];
   placeholder: string;
 }
 
@@ -20,7 +19,6 @@ export default function AdvancedTextareaEditor() {
   const [dropdownCounter, setDropdownCounter] = useState(0);
   const editorRef = useRef<HTMLDivElement>(null);
   const [editorContent, setEditorContent] = useState("");
-  const [textContent, setTextContent] = useState("")
 
   // Add dropdown at current cursor position
   const addDropdown = useCallback(() => {
@@ -186,7 +184,6 @@ export default function AdvancedTextareaEditor() {
       );
       if (!container) return null;
 
-
       return createPortal(
         <div className="flex justify-center items-center gap-1 bg-white rounded-md p-1 shadow-sm">
         <div
@@ -226,9 +223,10 @@ export default function AdvancedTextareaEditor() {
 
   // Generate final form data
   const generateFormData = useCallback(() => {
-    if (!editorRef.current) return { content: "", dropdowns: [] }
+    if (!editorRef.current) return { content: "", contentWithIds: "", dropdowns: [] }
 
     let finalText = ""
+    let finalTextWithIds = ""
     const dropdownData: Array<{ id: string; value: string; position: number }> = []
 
     const walker = document.createTreeWalker(editorRef.current, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT, {
@@ -255,24 +253,31 @@ export default function AdvancedTextareaEditor() {
     while ((node = walker.nextNode())) {
       if (node.nodeType === Node.TEXT_NODE && node.textContent) {
         finalText += node.textContent
+        finalTextWithIds += node.textContent
       } else if (node.nodeType === Node.ELEMENT_NODE) {
         const element = node as Element
         const dropdownId = element.getAttribute("data-dropdown-id")
         if (dropdownId) {
           const dropdown = dropdowns.find((d) => d.id === dropdownId)
           const selectedValue = dropdown?.value || `[${dropdown?.placeholder || "Unselected"}]`
+
           dropdownData.push({
             id: dropdownId,
             value: dropdown?.value || "",
             position: finalText.length,
           })
+
+          // Add selected value to content
           finalText += selectedValue
+          // Add dropdown ID to contentWithIds
+          finalTextWithIds += dropdownId
         }
       }
     }
 
     return {
       content: finalText,
+      contentWithIds: finalTextWithIds,
       dropdowns: dropdownData,
     }
   }, [dropdowns])
@@ -283,13 +288,9 @@ export default function AdvancedTextareaEditor() {
       e.preventDefault()
       const formData = generateFormData()
       console.log("Form Data:", formData)
-    //   alert(
-    //     `Form submitted!\n\nFinal Content: ${formData.content}\n\nDropdowns: ${JSON.stringify(formData.dropdowns, null, 2)}`,
-    //   )
     },
     [generateFormData],
   )
-
 
 
   return (
@@ -323,9 +324,9 @@ export default function AdvancedTextareaEditor() {
                   {generateFormData().content}
                 </div>
         </form>
-
-
-
     </div>
   );
 }
+
+
+// i changed some part of the code and update and customized it accordding to what i realyl needed. i send it for you to see as last version cause from now we will work on this. ""
