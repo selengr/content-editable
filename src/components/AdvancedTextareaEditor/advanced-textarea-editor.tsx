@@ -11,14 +11,99 @@ import styles from '@/sections/calculator/advancedFormulaEditor.module.css'
 interface DropdownItem {
   id: string;
   value: string;
+  unique_name : string;
   placeholder: string;
 }
 
-export default function AdvancedTextareaEditor() {
+
+interface InitialData {
+    content: string
+    contentWithIds: string
+    dropdowns: Array<{
+      id: string
+      value: string
+      unique_name: string
+      position: number
+    }>
+  }
+  
+  interface AdvancedTextareaEditorProps {
+    initialData?: InitialData
+  }
+  
+  export default function AdvancedTextareaEditor({ initialData }: AdvancedTextareaEditorProps = {}) {
   const [dropdowns, setDropdowns] = useState<DropdownItem[]>([]);
   const [dropdownCounter, setDropdownCounter] = useState(0);
-  const editorRef = useRef<HTMLDivElement>(null);
-  const [editorContent, setEditorContent] = useState("");
+  const editorRef = useRef<HTMLDivElement>(null);;
+
+  useEffect(() => {
+    if (initialData && editorRef.current) {
+      initializeEditorWithData(initialData)
+    }
+  }, [initialData])
+
+  const initializeEditorWithData = useCallback((data: InitialData) => {
+    if (!editorRef.current) return
+
+    // Clear existing content
+    editorRef.current.innerHTML = ""
+    setDropdowns([])
+    setDropdownCounter(0)
+
+    // Sort dropdowns by position to insert them in correct order
+    const sortedDropdowns = [...data.dropdowns].sort((a, b) => a.position - b.position)
+
+    let currentPosition = 0
+    const newDropdowns: DropdownItem[] = []
+    let counter = 0
+
+    sortedDropdowns.forEach((dropdownData, index) => {
+      // Add text before this dropdown
+      const textBefore = data.content.substring(currentPosition, dropdownData.position)
+      if (textBefore) {
+        const textNode = document.createTextNode(textBefore)
+        editorRef.current!.appendChild(textNode)
+      }
+
+      // Create new dropdown with existing data
+      const newDropdown: DropdownItem = {
+        id: `dropdown-${counter}`,
+        value: dropdownData.value,
+        unique_name: dropdownData.unique_name,
+        placeholder: "انتخاب كنيد",
+      }
+
+      newDropdowns.push(newDropdown)
+
+      // Create dropdown container
+      const dropdownContainer = document.createElement("span")
+      dropdownContainer.className = "dropdown-container"
+      dropdownContainer.setAttribute("data-dropdown-id", newDropdown.id)
+      dropdownContainer.contentEditable = "false"
+      dropdownContainer.style.cssText = `
+      display: inline-block;
+      margin: 0 2px;
+      vertical-align: middle;
+    `
+
+      editorRef.current!.appendChild(dropdownContainer)
+
+      // Update position for next iteration
+      currentPosition = dropdownData.position + dropdownData.value.length
+      counter++
+    })
+
+    // Add remaining text after last dropdown
+    const remainingText = data.content.substring(currentPosition)
+    if (remainingText) {
+      const textNode = document.createTextNode(remainingText)
+      editorRef.current!.appendChild(textNode)
+    }
+
+    // Update state
+    setDropdowns(newDropdowns)
+    setDropdownCounter(counter)
+  }, [])
 
   // Add dropdown at current cursor position
   const addDropdown = useCallback(() => {
@@ -28,6 +113,7 @@ export default function AdvancedTextareaEditor() {
     const newDropdown: DropdownItem = {
       id: `dropdown-${dropdownCounter}`,
       value: "",
+      unique_name: "",
       placeholder: "انتخاب كنيد",
     };
 
@@ -60,10 +146,10 @@ export default function AdvancedTextareaEditor() {
 
   // Update dropdown value
   const updateDropdownValue = useCallback(
-    (dropdownId: string, value: string) => {
+    (dropdownId: string, value: string, unique_name : string) => {
       setDropdowns((prev) =>
         prev.map((dropdown) =>
-          dropdown.id === dropdownId ? { ...dropdown, value } : dropdown
+          dropdown.id === dropdownId ? { ...dropdown, value, unique_name } : dropdown
         )
       );
       
@@ -158,12 +244,8 @@ export default function AdvancedTextareaEditor() {
   );
 
   // Handle input changes
-  const handleInput = useCallback(() => {
-    if (editorRef.current) {
-      setEditorContent(editorRef.current.textContent || "")
-    }
-  }, [])
-
+  const handleInput = () => {}
+  
   const handleDropdownClick = (e: React.MouseEvent, id: string) => {
     e.stopPropagation();
     const optionsContainer = (e.target as HTMLElement).nextElementSibling as HTMLElement;
@@ -185,7 +267,7 @@ export default function AdvancedTextareaEditor() {
       if (!container) return null;
 
       return createPortal(
-        <div className="flex justify-center items-center gap-1 bg-white rounded-md p-1 shadow-sm">
+        <div className="flex justify-center items-center gap-1 bg-white rounded-md p-1">
         <div
         key={dropdown.id}
         data-id={dropdown.id}
@@ -206,7 +288,7 @@ export default function AdvancedTextareaEditor() {
               key={item.extMap.UNIC_NAME}
               className={styles.option}
             //   onClick={() => handleOptionClick(item, dropdown.id!)}
-              onClick={(e) => updateDropdownValue(dropdown.id, item.caption)}
+              onClick={(e) => updateDropdownValue(dropdown.id, item.caption, item.extMap.UNIC_NAME)}
             >
               {item.caption}
             </div>
@@ -227,7 +309,7 @@ export default function AdvancedTextareaEditor() {
 
     let finalText = ""
     let finalTextWithIds = ""
-    const dropdownData: Array<{ id: string; value: string; position: number }> = []
+    const dropdownData: Array<{ id: string; value: string; unique_name: string; position: number }> = []
 
     const walker = document.createTreeWalker(editorRef.current, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT, {
       acceptNode: (node) => {
@@ -264,22 +346,26 @@ export default function AdvancedTextareaEditor() {
           dropdownData.push({
             id: dropdownId,
             value: dropdown?.value || "",
+            unique_name: dropdown?.unique_name || "",
             position: finalText.length,
           })
 
-          // Add selected value to content
+
           finalText += selectedValue
-          // Add dropdown ID to contentWithIds
-          finalTextWithIds += dropdownId
+
+          finalTextWithIds += `${dropdown.unique_name}`
         }
       }
     }
 
-    return {
-      content: finalText,
-      contentWithIds: finalTextWithIds,
-      dropdowns: dropdownData,
-    }
+    const result = {
+        content: finalText,
+        contentWithIds: finalTextWithIds,
+        dropdowns: dropdownData,
+      }
+
+
+    return result
   }, [dropdowns])
 
   // Handle form submission
@@ -291,8 +377,7 @@ export default function AdvancedTextareaEditor() {
     },
     [generateFormData],
   )
-
-
+  
   return (
     <div className="w-full max-w-4xl mx-auto p-6">
 
@@ -323,6 +408,11 @@ export default function AdvancedTextareaEditor() {
         <div className="text-sm leading-relaxed">
                   {generateFormData().content}
                 </div>
+
+                <button type="submit" className="w-full">
+              {/* <Send className="h-4 w-4 mr-2" /> */}
+              Submit Form
+            </button>
         </form>
     </div>
   );
