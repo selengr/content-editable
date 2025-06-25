@@ -1,7 +1,8 @@
 'use client';
 import { useState } from 'react';
 import type { Task, Column as ColumnType } from './_components/types';
-import { KanbanBoard } from './_components/KanbanBoard';
+import {KanbanBoard} from './_components/KanbanBoard';
+import { DndContext, DragEndEvent } from '@dnd-kit/core';
 
 
 const COLUMNS: ColumnType[] = [
@@ -40,9 +41,33 @@ const COLUMNS: ColumnType[] = [
 const page = () => {
     const [tasks, setTasks] = useState<Task[]>(INITIAL_TASKS);
 
-    <div className="p-4">
+
+
+  function handleDragEnd(event : DragEndEvent) {
+    const { active, over } = event;
+
+    if(!over) return
+
+    const taskId = active.id as string;
+    const newStatus = over.id as Task['status'];
+
+    setTasks(() =>
+      tasks.map((task) =>
+        task.id === taskId
+          ? {
+              ...task,
+              status: newStatus,
+            }
+          : task,
+      ),
+    );
+  }
+
+    return (
+        <div className="p-4 flex w-full justify-center items-center">
     <div className="flex gap-8">
 
+    <DndContext onDragEnd={handleDragEnd}>
         {COLUMNS.map((column) => {
           return (
             <KanbanBoard
@@ -52,9 +77,11 @@ const page = () => {
             />
           );
         })}
+</DndContext>
 
     </div>
   </div>
+    )
 }
 
 export default page;
